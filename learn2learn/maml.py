@@ -77,13 +77,12 @@ def maml_update(model, lr, grads):
         model._modules[module_key] = maml_update(model._modules[module_key],
                                                  lr=lr,
                                                  grads=None)
-
     return model
 
 
-class Learner(nn.Module):
+class MAMLLearner(nn.Module):
     def __init__(self, module, lr, first_order=False):
-        super(Learner, self).__init__()
+        super(MAMLLearner, self).__init__()
         self.module = module
         self.lr = lr
         self.second_order = not first_order
@@ -113,6 +112,6 @@ class MAML(nn.Module):
     def new(self, first_order=None):
         if first_order is None:
             first_order = self.first_order
-        return Learner(clone_module(self.model),
-                       lr=self.lr,
-                       first_order=first_order)
+        return MAMLLearner(clone_module(self.model),
+                           lr=self.lr,
+                           first_order=first_order)

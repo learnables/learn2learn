@@ -68,7 +68,7 @@ def main(
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    maml = l2l.MAML(policy, lr=meta_lr, first_order=True)
+    maml = l2l.MetaSGD(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
 
