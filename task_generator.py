@@ -4,7 +4,7 @@ import numpy as np
 from torch.utils.data import Dataset
 
 
-class SampleDataset:
+class SampleDataset(Dataset):
     """
     SampleDataset to be used by TaskGenerator
     """
@@ -44,8 +44,8 @@ class TaskGenerator:
 
         """
         target_to_indices = defaultdict(list)
-        for i, (_, target) in enumerate(self.dataset):
-            target_to_indices[target].append(i)
+        for i in range(len(self.dataset)):
+            target_to_indices[self.dataset[i][1]].append(i)
         return target_to_indices
 
     def get_random_label_pair(self):
