@@ -15,7 +15,6 @@ import learn2learn as l2l
 from torch import autograd, optim
 from cherry.algorithms import a2c
 
-import maml_envs  # Registers MAML environments
 from policies import DiagNormalPolicy, LinearValue
 
 
