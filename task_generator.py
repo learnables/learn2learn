@@ -9,9 +9,10 @@ class SampleDataset(Dataset):
     SampleDataset to be used by TaskGenerator
     """
 
-    def __init__(self, data, labels):
+    def __init__(self, data, labels, sampled_classes):
         self.data = data
         self.label = labels
+        self.sampled_classes = sampled_classes
 
     def __len__(self):
         return len(self.data)
@@ -21,19 +22,17 @@ class SampleDataset(Dataset):
 
 
 class TaskGenerator:
-    def __init__(self, dataset: Dataset, ways: int = 3, shots: int = 5):
+    def __init__(self, dataset: Dataset, ways: int = 3):
         """
 
         Args:
             dataset: should be a Dataset that returns (data, target)
             ways: number of labels to sample from
-            shots: sample size
 
         """
 
         self.dataset = dataset
         self.ways = ways
-        self.shots = shots
         self.__len__: len(dataset)
         self.target_to_indices = self.get_dict_of_target_to_indices()
 
@@ -56,29 +55,30 @@ class TaskGenerator:
         Returns: list of labels
 
         """
-        labels = list(self.target_to_indices.keys())
-        return np.random.choice(labels, size=self.ways, replace=False)
+        classes = list(self.target_to_indices.keys())
+        return np.random.choice(classes, size=self.ways, replace=False)
 
-    def sample(self, labels_to_sample=None):
+    def sample(self, shots: int = 5, classes_to_sample=None):
         """ Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
         The length of labels we have sampled is the same as `shots`.
 
         Args:
+            shots: sample size
             labels_to_sample: List of labels you want to sample from
 
         Returns: Dataset, list(labels)
 
         """
-        if labels_to_sample is None:
+        if classes_to_sample is None:
             labels_to_sample = self.get_random_label_pair()
         data_indices = []
-        labels = []
-        for label in labels_to_sample:
-            data_indices.extend(np.random.choice(self.target_to_indices[label], self.shots, replace=False))
-            labels.extend(np.full(self.shots, fill_value=label))
+        classes = []
+        for _class in classes_to_sample:
+            data_indices.extend(np.random.choice(self.target_to_indices[_class], shots, replace=False))
+            classes.extend(np.full(shots, fill_value=_class))
 
         data = [self.dataset[idx][0] for idx in data_indices]
 
-        return SampleDataset(data, labels), labels_to_sample
+        return SampleDataset(data, classes, classes_to_sample)
