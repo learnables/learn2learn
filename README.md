@@ -1,8 +1,6 @@
-<p align="center"><img src="./assets/learn2learn.png" height="150px" /></p>
+<p align="center"><img src="./assets/l2l-full.png" height="150px" /></p>
 
 --------------------------------------------------------------------------------
-
-# learn2learn
 
 learn2learn is a PyTorch library for meta-learning implementations.
 It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
