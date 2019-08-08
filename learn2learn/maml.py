@@ -77,15 +77,15 @@ def maml_update(model, lr, grads):
         model._modules[module_key] = maml_update(model._modules[module_key],
                                                  lr=lr,
                                                  grads=None)
-
     return model
 
 
-class Learner(nn.Module):
-    def __init__(self, module, lr):
-        super(Learner, self).__init__()
+class MAMLLearner(nn.Module):
+    def __init__(self, module, lr, first_order=False):
+        super(MAMLLearner, self).__init__()
         self.module = module
         self.lr = lr
+        self.second_order = not first_order
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
@@ -93,20 +93,25 @@ class Learner(nn.Module):
     def adapt(self, loss):
         gradients = grad(loss,
                          self.module.parameters(),
-                         retain_graph=True,
-                         create_graph=True)
+                         retain_graph=self.second_order,
+                         create_graph=self.second_order)
         self.module = maml_update(self.module, self.lr, gradients)
 
 
 class MAML(nn.Module):
 
-    def __init__(self, model, lr):
+    def __init__(self, model, lr, first_order=False):
         super(MAML, self).__init__()
         self.model = model
         self.lr = lr
+        self.first_order = first_order
     
     def forward(self, *args, **kwargs):
         return self.new(*args, **kwargs)
 
-    def new(self):
-        return Learner(clone_module(self.model), lr=self.lr)
+    def new(self, first_order=None):
+        if first_order is None:
+            first_order = self.first_order
+        return MAMLLearner(clone_module(self.model),
+                           lr=self.lr,
+                           first_order=first_order)

@@ -1,6 +1,15 @@
-# pytorch-hacks
+<p align="center"><img src="./assets/l2l-full.png" height="150px" /></p>
 
-PyTorch Hackathon Repo
+--------------------------------------------------------------------------------
+
+learn2learn is a PyTorch library for meta-learning implementations.
+It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
+
+# Supported Algorithms
+
+* MAML
+* FOMAML
+* MetaSGD
 
 # API Demo
 
@@ -9,7 +18,7 @@ import learn2learn as l2l
 
 task_generator = l2l.data.TaskGenerator(MNIST, ways=3)
 model = Net()
-maml = l2l.MAML(model, lr=1e-3)
+maml = l2l.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):
