@@ -1,6 +1,6 @@
 # pytorch-hacks
 
-PyTorch Hackation Repo
+PyTorch Hackathon Repo
 
 # API Demo
 
@@ -16,7 +16,7 @@ for X, y in task_generator:
     error = loss(learner(X), y)
 
     # Optionally compute pre-accuracy, etc...
-    learner.adapt(error)  # Fast-adapt the parameters with maml_update() and backward(True)
+    learner.adapt(error)  # Fast-adapt the parameters with maml_update() and backward(create_graph=True)
     adapt_error = loss(learner(X), y)
     opt.zero_grad()
     adapt_error.backward()
