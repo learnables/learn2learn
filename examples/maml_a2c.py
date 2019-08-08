@@ -63,12 +63,12 @@ def main(
 
     if task_name == 'nav2d':
         env_name = '2DNavigation-v0'
-        env = gym.make(env_name)
 
+    env = gym.make(env_name)
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    maml = l2l.MAML(policy, lr=meta_lr)
+    maml = l2l.MAML(policy, lr=meta_lr, first_order=True)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
 

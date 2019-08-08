@@ -62,4 +62,6 @@ class DiagNormalPolicy(nn.Module):
         scale = th.exp(th.clamp(self.sigma, min=math.log(EPSILON)))
         density = Normal(loc=loc, scale=scale)
         action = density.sample()
-        return action, {'density': density}
+        log_prob = density.log_prob(action).mean(dim=1,
+                                                 keepdim=True).detach()
+        return action, {'density': density, 'log_prob': log_prob}

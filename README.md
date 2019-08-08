@@ -2,6 +2,11 @@
 
 PyTorch Hackathon Repo
 
+# Supported Algorithms
+
+* MAML
+* FOMAML
+
 # API Demo
 
 ~~~python
@@ -9,7 +14,7 @@ import learn2learn as l2l
 
 task_generator = l2l.data.TaskGenerator(MNIST, ways=3)
 model = Net()
-maml = l2l.MAML(model, lr=1e-3)
+maml = l2l.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):
