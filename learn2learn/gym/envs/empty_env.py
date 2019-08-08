@@ -3,17 +3,20 @@ from gym_minigrid.register import register
 
 from enum import IntEnum
 
+
 class EmptyEnv(MiniGridEnv):
     def __init__(
             self,
             size=7,
-            start=None,
             agent_start_dir=0,
-            goal=None
+            task={}
     ):
+        self._task = task
+        start = task.get('start')
         if start == None:
             start = (int((size+1)/2), int((size+1)/2))
         
+        goal = task.get('goal')
         if goal == None:
             goal = (size-2, size-2)
 
@@ -57,7 +60,15 @@ class EmptyEnv(MiniGridEnv):
 
         self.mission = "get to the green goal square"
 
+    def sample_tasks(self, num_tasks):
+        goals = (self.np_random.randint(2, size=[num_tasks,2])*(self.size-3))+1
+        tasks = [{'goal': goal} for goal in goals]
+        return tasks
 
+    def reset_task(self, task):
+        self._task = task
+        self.goal_pos = task.get('goal')
+        self.reset()
 
     def reset(self):
         self._gen_grid(self.width, self.height)
@@ -139,5 +150,5 @@ class EmptyEnv(MiniGridEnv):
         obs = ((self.width - 2) * (self.agent_pos[1] - 1) + self.agent_pos[0]) - 1
         reward = self._reward()
 
-        return obs, reward, done, {}
+        return obs, reward, done, self._task
 
