@@ -1,11 +1,17 @@
-# pytorch-hacks
+<p align="center"><img src="./assets/learn2learn.png" height="150px" /></p>
 
-PyTorch Hackathon Repo
+--------------------------------------------------------------------------------
+
+# learn2learn
+
+learn2learn is a PyTorch library for meta-learning implementations.
+It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
 
 # Supported Algorithms
 
 * MAML
 * FOMAML
+* MetaSGD
 
 # API Demo
 
