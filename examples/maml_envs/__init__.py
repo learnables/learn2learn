@@ -66,3 +66,10 @@ register(
     entry_point='maml_envs.navigation:Navigation2DEnv',
     max_episode_steps=100
 )
+
+# Grid World
+# ----------------------------------------
+register(
+        id='MiniGrid-Empty-v0',
+        entry_point = 'maml_envs.empty_env:EmptyEnv'
+)
