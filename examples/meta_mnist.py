@@ -12,7 +12,7 @@ from torchvision.datasets import MNIST
 
 WAYS = 3
 SHOTS = 5
-
+TASKS_PER_STEPS = 32
 
 class Net(nn.Module):
 
@@ -59,7 +59,7 @@ def main():
 
     for iteration in range(1000):
         iteration_error = 0.0
-        for _ in range(10):
+        for _ in range(TASKS_PER_STEPS):
             learner = meta_model.new()
             train_task = train_gen.sample(shots=SHOTS)
             valid_task = train_gen.sample(shots=SHOTS,
@@ -67,17 +67,17 @@ def main():
 
             # Fast Adaptation
             for step in range(5):
-                error = sum([loss(learner(X), y) for X, y in train_task])
+                error = sum([loss(learner(X), th.tensor(y).view(-1)) for X, y in train_task])
                 error /= len(train_task)
-                print(error.item())
                 learner.adapt(error)
 
             # Compute validation loss
-            valid_error = sum([loss(learner(X), y) for X, y in valid_task])
+            valid_error = sum([loss(learner(X), th.tensor(y).view(-1)) for X, y in valid_task])
             valid_error /= len(valid_task)
             iteration_error += valid_error
 
 
+        iteration_error /= TASKS_PER_STEPS
         print('Valid error:', iteration_error.item())
         # Take the meta-learning step
         opt.zero_grad()
