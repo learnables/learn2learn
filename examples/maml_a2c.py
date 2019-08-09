@@ -5,17 +5,17 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and A2C for meta-learning.
 """
 
-import gym
 import random
+
+import cherry as ch
+import gym
 import numpy as np
 import torch as th
-import cherry as ch
-import learn2learn as l2l
-
-from torch import autograd, optim
 from cherry.algorithms import a2c
-
 from policies import DiagNormalPolicy, LinearValue
+from torch import optim
+
+import learn2learn as l2l
 
 
 def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
@@ -54,8 +54,7 @@ def main(
         tau=1.00,
         gamma=0.99,
         seed=42,
-        ):
-
+):
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)

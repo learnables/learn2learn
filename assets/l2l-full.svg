@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="2000" height="512" viewBox="0, 0, 2000, 512">
-  <g id="Background">
-    <rect x="0" y="0" width="2000" height="512" fill="#FFFFFF"/>
-  </g>
-  <g id="Layer_1">
-    <text transform="matrix(1, 0, 0, 1, 434.209, 300.416)">
-      <tspan x="-308.825" y="82.062" font-family="Lato-Regular" font-size="275" fill="#000000">learn</tspan>
-    </text>
-    <g>
-      <path d="M1140.842,159.794 L1106.958,193.678 C1163.431,250.151 1163.431,342.121 1106.958,398.594 C1050.485,455.067 958.515,455.067 902.043,398.594 C845.57,342.121 845.57,250.151 902.043,193.678 L902.043,193.678 L992.399,103.322 L1003.694,90.414 L1003.694,90.414 L1003.694,22.646 L866.545,159.794 C790.71,235.629 790.71,356.643 866.545,432.477 C942.38,508.312 1063.394,508.312 1139.229,432.477 C1216.677,356.643 1216.677,234.016 1140.842,159.794 z" fill="#009CE8"/>
-      <path d="M1183.787,91.87 L1183.787,131.75 L1081.547,131.75 L1081.547,225.87 L1038.226,225.87 L1038.226,91.87 L1183.787,91.87 z" fill="#009CE8"/>
-      <g>
-        <path d="M1061.257,226.37 L1082.43,206.878" fill="#FFFFFF"/>
-        <path d="M1061.257,226.37 L1082.43,206.878" fill-opacity="0" stroke="#FFFFFF" stroke-width="40.5" stroke-linecap="square"/>
-      </g>
-      <g>
-        <path d="M1161.642,134.822 L1198.018,101.335" fill="#FFFFFF"/>
-        <path d="M1161.642,134.822 L1198.018,101.335" fill-opacity="0" stroke="#FFFFFF" stroke-width="40.5" stroke-linecap="square"/>
-      </g>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0"
+     width="2000" height="512" viewBox="0, 0, 2000, 512">
+    <g id="Background">
+        <rect x="0" y="0" width="2000" height="512" fill="#FFFFFF"/>
     </g>
-    <text transform="matrix(1, 0, 0, 1, 1565.791, 300.416)">
-      <tspan x="-308.825" y="82.062" font-family="Lato-Regular" font-size="275" fill="#000000">learn</tspan>
-    </text>
-  </g>
+    <g id="Layer_1">
+        <text transform="matrix(1, 0, 0, 1, 434.209, 300.416)">
+            <tspan x="-308.825" y="82.062" font-family="Lato-Regular" font-size="275" fill="#000000">learn</tspan>
+        </text>
+        <g>
+            <path d="M1140.842,159.794 L1106.958,193.678 C1163.431,250.151 1163.431,342.121 1106.958,398.594 C1050.485,455.067 958.515,455.067 902.043,398.594 C845.57,342.121 845.57,250.151 902.043,193.678 L902.043,193.678 L992.399,103.322 L1003.694,90.414 L1003.694,90.414 L1003.694,22.646 L866.545,159.794 C790.71,235.629 790.71,356.643 866.545,432.477 C942.38,508.312 1063.394,508.312 1139.229,432.477 C1216.677,356.643 1216.677,234.016 1140.842,159.794 z"
+                  fill="#009CE8"/>
+            <path d="M1183.787,91.87 L1183.787,131.75 L1081.547,131.75 L1081.547,225.87 L1038.226,225.87 L1038.226,91.87 L1183.787,91.87 z"
+                  fill="#009CE8"/>
+            <g>
+                <path d="M1061.257,226.37 L1082.43,206.878" fill="#FFFFFF"/>
+                <path d="M1061.257,226.37 L1082.43,206.878" fill-opacity="0" stroke="#FFFFFF" stroke-width="40.5"
+                      stroke-linecap="square"/>
+            </g>
+            <g>
+                <path d="M1161.642,134.822 L1198.018,101.335" fill="#FFFFFF"/>
+                <path d="M1161.642,134.822 L1198.018,101.335" fill-opacity="0" stroke="#FFFFFF" stroke-width="40.5"
+                      stroke-linecap="square"/>
+            </g>
+        </g>
+        <text transform="matrix(1, 0, 0, 1, 1565.791, 300.416)">
+            <tspan x="-308.825" y="82.062" font-family="Lato-Regular" font-size="275" fill="#000000">learn</tspan>
+        </text>
+    </g>
 </svg>

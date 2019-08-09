@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import re
+
 from setuptools import (
-        setup,
-        find_packages,
-        )
+    setup,
+    find_packages,
+)
 
 # Parses version number: https://stackoverflow.com/a/7071358
 VERSIONFILE = 'learn2learn/_version.py'

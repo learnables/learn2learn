@@ -7,9 +7,10 @@ Each task i consists of learning the parameters of a Normal distribution N(mu_i,
 The parameters mu_i, sigma_i are themselves sampled from a distribution N(mu, sigma).
 """
 
-import learn2learn as l2l
 import torch as th
 from torch import nn, optim, distributions as dist
+
+import learn2learn as l2l
 
 DIM = 5
 TIMESTEPS = 1000
@@ -28,7 +29,7 @@ class Model(nn.Module):
 
 
 def main():
-    task_dist = dist.Normal(th.zeros(2*DIM), th.ones(2*DIM))
+    task_dist = dist.Normal(th.zeros(2 * DIM), th.ones(2 * DIM))
     model = Model()
     maml = l2l.MAML(model, lr=1e-2)
     opt = optim.Adam(maml.parameters())

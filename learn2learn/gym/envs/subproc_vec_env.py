@@ -1,12 +1,15 @@
-import numpy as np
 import multiprocessing as mp
-import gym
 import sys
+
+import gym
+import numpy as np
+
 is_py2 = (sys.version[0] == '2')
 if is_py2:
     import Queue as queue
 else:
     import queue as queue
+
 
 class EnvWorker(mp.Process):
     def __init__(self, remote, env_fn, queue, lock):
@@ -32,7 +35,7 @@ class EnvWorker(mp.Process):
             except queue.Empty:
                 self.done = True
         observation = (np.zeros(self.env.observation_space.shape,
-            dtype=np.float32) if self.done else self.env.reset())
+                                dtype=np.float32) if self.done else self.env.reset())
         return observation
 
     def run(self):
@@ -40,7 +43,7 @@ class EnvWorker(mp.Process):
             command, data = self.remote.recv()
             if command == 'step':
                 observation, reward, done, info = (self.empty_step()
-                    if self.done else self.env.step(data))
+                                                   if self.done else self.env.step(data))
                 if done and (not self.done):
                     observation = self.try_reset()
                 self.remote.send((observation, reward, done, self.task_id, info))
@@ -55,16 +58,17 @@ class EnvWorker(mp.Process):
                 break
             elif command == 'get_spaces':
                 self.remote.send((self.env.observation_space,
-                                 self.env.action_space))
+                                  self.env.action_space))
             else:
                 raise NotImplementedError()
+
 
 class SubprocVecEnv(gym.Env):
     def __init__(self, env_factory, queue):
         self.lock = mp.Lock()
         self.remotes, self.work_remotes = zip(*[mp.Pipe() for _ in env_factory])
         self.workers = [EnvWorker(remote, env_fn, queue, self.lock)
-            for (remote, env_fn) in zip(self.work_remotes, env_factory)]
+                        for (remote, env_fn) in zip(self.work_remotes, env_factory)]
         for worker in self.workers:
             worker.daemon = True
             worker.start()
@@ -109,7 +113,7 @@ class SubprocVecEnv(gym.Env):
         if self.closed:
             return
         if self.waiting:
-            for remote in self.remotes:            
+            for remote in self.remotes:
                 remote.recv()
         for remote in self.remotes:
             remote.send(('close', None))
