@@ -48,11 +48,11 @@ for iteration in range(num_iterations):
 
 ![](./assets/meta_train.png)
 
-![](./assets/mnist_train.png.png)
+![](./assets/mnist_train.png)
 
-![](./assets/mnist_valid.png.png)
+![](./assets/mnist_valid.png)
 
-## torchvision
+## torchtext
 
 Too hard ! :(
 
