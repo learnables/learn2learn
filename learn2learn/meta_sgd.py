@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
 import torch as th
-
-from collections import OrderedDict
-
 from torch import nn
 from torch.autograd import grad
 
@@ -63,7 +60,7 @@ class MetaSGD(nn.Module):
         self.model = model
         self.lrs = [th.ones_like(p) * lr for p in model.parameters()]
         self.lrs = nn.ParameterList([nn.Parameter(lr) for lr in self.lrs])
-    
+
     def forward(self, *args, **kwargs):
         return self.new(*args, **kwargs)
 

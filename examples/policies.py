@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import math
-import torch as th
 
+import torch as th
 from torch import nn
 from torch.distributions import Normal
 
@@ -27,7 +27,7 @@ class LinearValue(nn.Module):
         length = states.size(0)
         ones = th.ones(length, 1)
         al = th.arange(length, dtype=th.float32).view(-1, 1) / 100.0
-        return th.cat([states, states**2, al, al**2, al**3, ones], dim=1)
+        return th.cat([states, states ** 2, al, al ** 2, al ** 3, ones], dim=1)
 
     def fit(self, states, returns):
         features = self._features(states)

@@ -39,6 +39,7 @@ class AntEnv(AntEnv_):
         elif mode == 'human':
             self._get_viewer().render()
 
+
 class AntVelEnv(AntEnv):
     """Ant environment with target velocity, as described in [1]. The 
     code is adapted from
@@ -57,6 +58,7 @@ class AntVelEnv(AntEnv):
         model-based control", 2012 
         (https://homes.cs.washington.edu/~todorov/papers/TodorovIROS12.pdf)
     """
+
     def __init__(self, task={}):
         self._task = task
         self._goal_vel = task.get('velocity', 0.0)
@@ -80,11 +82,11 @@ class AntVelEnv(AntEnv):
         reward = forward_reward - ctrl_cost - contact_cost + survive_reward
         state = self.state_vector()
         notdone = np.isfinite(state).all() \
-            and state[2] >= 0.2 and state[2] <= 1.0
+                  and state[2] >= 0.2 and state[2] <= 1.0
         done = not notdone
         infos = dict(reward_forward=forward_reward, reward_ctrl=-ctrl_cost,
-            reward_contact=-contact_cost, reward_survive=survive_reward,
-            task=self._task)
+                     reward_contact=-contact_cost, reward_survive=survive_reward,
+                     task=self._task)
         return (observation, reward, done, infos)
 
     def sample_tasks(self, num_tasks):
@@ -95,6 +97,7 @@ class AntVelEnv(AntEnv):
     def reset_task(self, task):
         self._task = task
         self._goal_vel = task['velocity']
+
 
 class AntDirEnv(AntEnv):
     """Ant environment with target direction, as described in [1]. The 
@@ -114,6 +117,7 @@ class AntDirEnv(AntEnv):
         model-based control", 2012 
         (https://homes.cs.washington.edu/~todorov/papers/TodorovIROS12.pdf)
     """
+
     def __init__(self, task={}):
         self._task = task
         self._goal_dir = task.get('direction', 1)
@@ -137,11 +141,11 @@ class AntDirEnv(AntEnv):
         reward = forward_reward - ctrl_cost - contact_cost + survive_reward
         state = self.state_vector()
         notdone = np.isfinite(state).all() \
-            and state[2] >= 0.2 and state[2] <= 1.0
+                  and state[2] >= 0.2 and state[2] <= 1.0
         done = not notdone
         infos = dict(reward_forward=forward_reward, reward_ctrl=-ctrl_cost,
-            reward_contact=-contact_cost, reward_survive=survive_reward,
-            task=self._task)
+                     reward_contact=-contact_cost, reward_survive=survive_reward,
+                     task=self._task)
         return (observation, reward, done, infos)
 
     def sample_tasks(self, num_tasks):
@@ -152,6 +156,7 @@ class AntDirEnv(AntEnv):
     def reset_task(self, task):
         self._task = task
         self._goal_dir = task['direction']
+
 
 class AntPosEnv(AntEnv):
     """Ant environment with target position. The code is adapted from
@@ -167,6 +172,7 @@ class AntPosEnv(AntEnv):
         model-based control", 2012 
         (https://homes.cs.washington.edu/~todorov/papers/TodorovIROS12.pdf)
     """
+
     def __init__(self, task={}):
         self._task = task
         self._goal_pos = task.get('position', np.zeros((2,), dtype=np.float32))
@@ -188,11 +194,11 @@ class AntPosEnv(AntEnv):
         reward = goal_reward - ctrl_cost - contact_cost + survive_reward
         state = self.state_vector()
         notdone = np.isfinite(state).all() \
-            and state[2] >= 0.2 and state[2] <= 1.0
+                  and state[2] >= 0.2 and state[2] <= 1.0
         done = not notdone
         infos = dict(reward_goal=goal_reward, reward_ctrl=-ctrl_cost,
-            reward_contact=-contact_cost, reward_survive=survive_reward,
-            task=self._task)
+                     reward_contact=-contact_cost, reward_survive=survive_reward,
+                     task=self._task)
         return (observation, reward, done, infos)
 
     def sample_tasks(self, num_tasks):

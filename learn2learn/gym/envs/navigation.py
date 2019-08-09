@@ -1,6 +1,5 @@
-import numpy as np
-
 import gym
+import numpy as np
 from gym import spaces
 from gym.utils import seeding
 
@@ -19,13 +18,14 @@ class Navigation2DEnv(gym.Env):
         Meta-Learning for Fast Adaptation of Deep Networks", 2017 
         (https://arxiv.org/abs/1703.03400)
     """
+
     def __init__(self, task={}):
         super(Navigation2DEnv, self).__init__()
 
         self.observation_space = spaces.Box(low=-np.inf, high=np.inf,
-            shape=(2,), dtype=np.float32)
+                                            shape=(2,), dtype=np.float32)
         self.action_space = spaces.Box(low=-0.1, high=0.1,
-            shape=(2,), dtype=np.float32)
+                                       shape=(2,), dtype=np.float32)
 
         self._task = task
         self._goal = task.get('goal', np.zeros(2, dtype=np.float32))

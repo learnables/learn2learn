@@ -38,7 +38,7 @@ def clone_module(module):
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         if clone._buffers[buffer_key] is not None and \
-           clone._buffers[buffer_key].requires_grad:
+                clone._buffers[buffer_key].requires_grad:
             clone._buffers[buffer_key] = module._buffers[buffer_key].clone()
 
     # Then, recurse for each submodule
@@ -105,7 +105,7 @@ class MAML(nn.Module):
         self.model = model
         self.lr = lr
         self.first_order = first_order
-    
+
     def forward(self, *args, **kwargs):
         return self.new(*args, **kwargs)
 

@@ -21,6 +21,24 @@ class SampleDataset(Dataset):
         return self.data[idx], self.label[idx]
 
 
+class LabelEncoder:
+    def __init__(self, classes):
+        """ Encodes a list of classes into indices, starting from 0.
+
+        Args:
+            classes: list, tuple of classes
+        """
+        # ensure we don't have duplicates in the list
+        classes = sorted(list(set(classes)))
+        new_class = 0
+        self.class_to_idx = dict()
+        self.idx_to_class = dict()
+        for old_class in classes:
+            self.class_to_idx.update({old_class: new_class})
+            self.idx_to_class.update({new_class: old_class})
+            new_class += 1
+
+
 class TaskGenerator:
     def __init__(self, dataset: Dataset, ways: int = 3):
         """
@@ -72,12 +90,13 @@ class TaskGenerator:
 
         """
         if classes_to_sample is None:
-            labels_to_sample = self.get_random_label_pair()
+            classes_to_sample = self.get_random_label_pair()
+        label_encoding = LabelEncoder(classes_to_sample)
         data_indices = []
         classes = []
         for _class in classes_to_sample:
             data_indices.extend(np.random.choice(self.target_to_indices[_class], shots, replace=False))
-            classes.extend(np.full(shots, fill_value=_class))
+            classes.extend(np.full(shots, fill_value=label_encoding.class_to_idx[_class]))
 
         data = [self.dataset[idx][0] for idx in data_indices]
 

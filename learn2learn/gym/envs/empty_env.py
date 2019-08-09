@@ -1,21 +1,23 @@
-from gym_minigrid.minigrid import *
-from gym_minigrid.register import register
-
 from enum import IntEnum
+
+from gym_minigrid.minigrid import *
+
 
 class EmptyEnv(MiniGridEnv):
     def __init__(
             self,
             size=7,
-            start=None,
             agent_start_dir=0,
-            goal=None
+            task={}
     ):
+        self._task = task
+        start = task.get('start')
         if start == None:
-            start = (int((size+1)/2), int((size+1)/2))
-        
+            start = (int((size + 1) / 2), int((size + 1) / 2))
+
+        goal = task.get('goal')
         if goal == None:
-            goal = (size-2, size-2)
+            goal = (size - 2, size - 2)
 
         self.agent_start_pos = start
         self.agent_start_dir = agent_start_dir
@@ -23,12 +25,12 @@ class EmptyEnv(MiniGridEnv):
         self.goal_pos = goal
 
         super().__init__(
-                grid_size = size,
-                max_steps = 4*size*size,
-                see_through_walls = True
+            grid_size=size,
+            max_steps=4 * size * size,
+            see_through_walls=True
         )
 
-        class Actions(IntEnum): 
+        class Actions(IntEnum):
             left = 0
             right = 1
             up = 2
@@ -45,19 +47,26 @@ class EmptyEnv(MiniGridEnv):
         self.observation_space = spaces.Discrete(width * height)
         self.reward_range = (-1 * (width + height - 2), 0)
 
-
     def _gen_grid(self, width, height):
 
         self.grid = Grid(width, height)
         self.grid.wall_rect(0, 0, width, height)
         self.grid.set(self.goal_pos[0], self.goal_pos[1], Goal())
-        
+
         self.start_pos = self.agent_start_pos
         self.start_dir = self.agent_start_dir
 
         self.mission = "get to the green goal square"
 
+    def sample_tasks(self, num_tasks):
+        goals = (self.np_random.randint(2, size=[num_tasks, 2]) * (self.size - 3)) + 1
+        tasks = [{'goal': goal} for goal in goals]
+        return tasks
 
+    def reset_task(self, task):
+        self._task = task
+        self.goal_pos = task.get('goal')
+        self.reset()
 
     def reset(self):
         self._gen_grid(self.width, self.height)
@@ -69,7 +78,7 @@ class EmptyEnv(MiniGridEnv):
         # Check that the agent doesn't overlap with an object
         start_cell = self.grid.get(*self.start_pos)
         assert start_cell is None or start_cell.can_overlap()
-        
+
         # Place agent
         self.agent_pos = self.start_pos
         self.aget_dir = self.start_dir
@@ -111,11 +120,11 @@ class EmptyEnv(MiniGridEnv):
         # ADD NOTE HERE
         if action == self.actions.left:
             if left_cell == None or left_cell.can_overlap():
-                self.agent_pos = left_pos 
+                self.agent_pos = left_pos
 
         elif action == self.actions.right:
             if right_cell == None or right_cell.can_overlap():
-                self.agent_pos = right_pos 
+                self.agent_pos = right_pos
 
         elif action == self.actions.up:
             if up_cell == None or up_cell.can_overlap():
@@ -127,7 +136,7 @@ class EmptyEnv(MiniGridEnv):
 
         new_cell = self.grid.get(*self.agent_pos)
 
-        if  new_cell != None and new_cell.type == 'lava':
+        if new_cell != None and new_cell.type == 'lava':
             done = True
 
         if new_cell != None and new_cell.type == 'goal':
@@ -139,5 +148,4 @@ class EmptyEnv(MiniGridEnv):
         obs = ((self.width - 2) * (self.agent_pos[1] - 1) + self.agent_pos[0]) - 1
         reward = self._reward()
 
-        return obs, reward, done, {}
-
+        return obs, reward, done, self._task
