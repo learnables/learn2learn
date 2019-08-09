@@ -27,9 +27,6 @@ class NewsClassification(Dataset):
         else:
             self.path = os.path.join(root, 'test_sample.csv')
         self.transform = transform
-        if transform == 'roberta':
-            self.roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
-
         if download:
             download_file_url = 'https://www.dropbox.com/s/g8hwl9pxftl36ww/test_sample.csv.zip?dl=1'
             if train:
@@ -51,7 +48,6 @@ class NewsClassification(Dataset):
 
     def __getitem__(self, idx):
         if self.transform:
-            return self.roberta.encode(self.df_data['headline'][idx]), \
+            return self.df_data['headline'][idx], \
                    self.labels_list[self.df_data['category'][idx]]
-
         return self.df_data['headline'][idx], self.labels_list[self.df_data['category'][idx]]

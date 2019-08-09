@@ -19,19 +19,15 @@ TASKS_PER_STEPS = 32
 class Net(nn.Module):
     """Head for sentence-level classification tasks."""
 
-    def __init__(self, roberta, num_classes, input_dim=1024, inner_dim=200, pooler_dropout=0.3):
+    def __init__(self, num_classes, input_dim=768, inner_dim=200, pooler_dropout=0.3):
         super().__init__()
-        self.roberta = roberta
         self.dense = nn.Linear(input_dim, inner_dim)
         self.activation_fn = nn.ReLU()
         self.dropout = nn.Dropout(p=pooler_dropout)
         self.out_proj = nn.Linear(inner_dim, num_classes)
 
-    def forward(self, features, **kwargs):
+    def forward(self, x, **kwargs):
         start = time.time()
-        x = self.roberta.extract_features(features)
-        print(f"Extracting took time {time.time() - start}")
-        x = x[:, 0, :]  # take <s> token (equiv. to [CLS])
         x = self.dropout(x)
         x = self.dense(x)
         x = self.activation_fn(x)
@@ -47,12 +43,39 @@ def accuracy(preds, targets):
     return acc.item()
 
 
-def inner_training_loop(task, device, learner, loss_func, batch=15):
+def collate_tokens(values, pad_idx, eos_idx=None, left_pad=False, move_eos_to_beginning=False):
+    """Convert a list of 1d tensors into a padded 2d tensor."""
+    size = max(v.size(0) for v in values)
+    res = values[0].new(len(values), size).fill_(pad_idx)
+
+    def copy_tensor(src, dst):
+        assert dst.numel() == src.numel()
+        if move_eos_to_beginning:
+            assert src[-1] == eos_idx
+            dst[0] = eos_idx
+            dst[1:] = src[:-1]
+        else:
+            dst.copy_(src)
+
+    for i, v in enumerate(values):
+        copy_tensor(v, res[i][size - len(v):] if left_pad else res[i][:len(v)])
+    return res
+
+
+def inner_training_loop(task, roberta, device, learner, loss_func, batch=15):
     loss = 0.0
     acc = 0.0
     for i, (X, y) in enumerate(torch.utils.data.DataLoader(
             task, batch_size=batch, shuffle=True, num_workers=0)):
-        X, y = X.squeeze(dim=1).to(device), torch.tensor(y).view(-1).to(device)
+
+        # RoBERTa ENCODING
+        X = collate_tokens([roberta.encode(sent) for sent in X], pad_idx=1)
+        X = roberta.extract_features(X)
+        X = X[:, 0, :]
+
+        # Moving to device
+        X, y = X.to(device), torch.tensor(y).view(-1).to(device)
+
         output = learner(X)
         curr_loss = loss_func(output, y)
         acc += accuracy(output, y)
@@ -65,14 +88,16 @@ def main(file_location="/tmp/mnist"):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     text_train = l2l.data.NewsClassification(root="/tmp/text", download=False, transform="roberta")
     train_gen = l2l.data.TaskGenerator(text_train, ways=WAYS)
-    roberta = text_train.roberta
-    model = Net(roberta, num_classes=WAYS)
-    for param in model.roberta.parameters():
-        param.requires_grad = False
+    roberta = torch.hub.load('pytorch/fairseq', 'roberta.base')
+    roberta.eval()
+    roberta.to(device)
+    model = Net(num_classes=WAYS)
+    # for param in model.roberta.parameters():
+    #     param.requires_grad = False
 
     model.to(device)
     meta_model = l2l.MAML(model, lr=0.01)
-    opt = optim.Adam(filter(lambda p: p.requires_grad, meta_model.parameters()), lr=0.005)
+    opt = optim.Adam(meta_model.parameters(), lr=0.005)
     loss_func = nn.NLLLoss(reduction="sum")
 
     for iteration in tqdm(range(1000)):
@@ -87,13 +112,15 @@ def main(file_location="/tmp/mnist"):
             # Fast Adaptation
             for step in range(5):
                 train_error, _ = inner_training_loop(train_task,
+                                                     roberta,
                                                      device,
                                                      learner,
                                                      loss_func, batch=SHOTS * WAYS)
                 learner.adapt(train_error)
 
             # Compute validation loss
-            valid_error, valid_acc = inner_training_loop(valid_task, device, learner, loss_func, batch=SHOTS * WAYS)
+            valid_error, valid_acc = inner_training_loop(valid_task, roberta, device, learner, loss_func,
+                                                         batch=SHOTS * WAYS)
             iteration_error += valid_error
             iteration_acc += valid_acc
 
