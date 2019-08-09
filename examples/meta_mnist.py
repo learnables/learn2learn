@@ -6,6 +6,8 @@ from torch.nn import functional as F
 from torchvision import transforms
 from torchvision.datasets import MNIST
 from tqdm import tqdm
+import wandb
+wandb.init(project="learn2learn")
 
 import learn2learn as l2l
 
@@ -104,6 +106,8 @@ def main(file_location="/tmp/mnist"):
 
         iteration_error /= TASKS_PER_STEPS
         iteration_acc /= TASKS_PER_STEPS
+        wandb.log({"Validation error": iteration_error.item()})
+        wandb.log({"Validation accuracy": iteration_acc})
         print(iteration, 'Valid error:', iteration_error.item())
         print(iteration, 'Valid acc:', iteration_acc)
 
