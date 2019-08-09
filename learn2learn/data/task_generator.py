@@ -72,7 +72,7 @@ class TaskGenerator:
 
         """
         if classes_to_sample is None:
-            labels_to_sample = self.get_random_label_pair()
+            classes_to_sample = self.get_random_label_pair()
         data_indices = []
         classes = []
         for _class in classes_to_sample:

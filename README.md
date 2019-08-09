@@ -38,7 +38,7 @@ for iteration in range(num_iterations):
 
     # Take the meta-learning step
     opt.zero_grad()
-    adapt_error.backward()
+    valid_error.backward()
     opt.step()
 ~~~
 
