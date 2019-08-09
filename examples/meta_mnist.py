@@ -34,16 +34,25 @@ class Net(nn.Module):
         return F.log_softmax(x, dim=1)
 
 
+def accuracy(preds, targets):
+    preds = preds.argmax(dim=1)
+    acc = (preds == targets).sum().float()
+    acc /= len(targets)
+    return acc.item()
+
+
 def inner_training_loop(task, device, learner, loss_func):
-    loss = 0
+    loss = 0.0
+    acc = 0.0
     for i, (X, y) in enumerate(torch.utils.data.DataLoader(
             task, batch_size=15, shuffle=True, num_workers=0)):
         X, y = X.squeeze(dim=1).to(device), torch.tensor(y).view(-1).to(device)
         output = learner(X)
         curr_loss = loss_func(output, y)
-        loss += curr_loss
-        loss /= len(task)
-    return loss
+        acc += accuracy(output, y)
+        loss += curr_loss / len(task)
+    loss /= len(task)
+    return loss, acc
 
 
 def main(file_location="/tmp/mnist"):
@@ -66,12 +75,14 @@ def main(file_location="/tmp/mnist"):
     test_gen = l2l.data.TaskGenerator(mnist_test, ways=WAYS)
 
     model = Net(WAYS)
+    model.to(device)
     meta_model = l2l.MAML(model, lr=0.01)
-    opt = optim.SGD(meta_model.parameters(), lr=0.001, momentum=0.9)
+    opt = optim.Adam(meta_model.parameters(), lr=0.005)
     loss_func = nn.NLLLoss(reduction="sum")
 
     for iteration in tqdm(range(1000)):
         iteration_error = 0.0
+        iteration_acc = 0.0
         for _ in range(TASKS_PER_STEPS):
             learner = meta_model.new()
             train_task = train_gen.sample(shots=SHOTS)
@@ -80,15 +91,22 @@ def main(file_location="/tmp/mnist"):
 
             # Fast Adaptation
             for step in range(5):
-                train_error = inner_training_loop(train_task, device, learner, loss_func)
+                train_error, _ = inner_training_loop(train_task,
+                                                     device,
+                                                     learner,
+                                                     loss_func)
                 learner.adapt(train_error)
 
             # Compute validation loss
-            valid_error = inner_training_loop(valid_task, device, learner, loss_func)
+            valid_error, valid_acc = inner_training_loop(valid_task, device, learner, loss_func)
             iteration_error += valid_error
+            iteration_acc += valid_acc
 
         iteration_error /= TASKS_PER_STEPS
-        print('Valid error:', iteration_error.item())
+        iteration_acc /= TASKS_PER_STEPS
+        print(iteration, 'Valid error:', iteration_error.item())
+        print(iteration, 'Valid acc:', iteration_acc)
+
         # Take the meta-learning step
         opt.zero_grad()
         iteration_error.backward()
