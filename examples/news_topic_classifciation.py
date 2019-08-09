@@ -19,7 +19,7 @@ TASKS_PER_STEPS = 32
 class Net(nn.Module):
     """Head for sentence-level classification tasks."""
 
-    def __init__(self, num_classes, input_dim=1024, inner_dim=200, pooler_dropout=0.3):
+    def __init__(self, num_classes, input_dim=768, inner_dim=200, pooler_dropout=0.3):
         super().__init__()
         self.dense = nn.Linear(input_dim, inner_dim)
         self.activation_fn = nn.ReLU()
@@ -88,7 +88,7 @@ def main(file_location="/tmp/mnist"):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     text_train = l2l.data.NewsClassification(root="/tmp/text", download=False, transform="roberta")
     train_gen = l2l.data.TaskGenerator(text_train, ways=WAYS)
-    roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
+    roberta = torch.hub.load('pytorch/fairseq', 'roberta.base')
     roberta.eval()
     roberta.to(device)
     model = Net(num_classes=WAYS)
