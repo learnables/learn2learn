@@ -1,16 +1,19 @@
-from torch.utils.data import Dataset, DataLoader
-import torch
-from torch.utils.data import DataLoader
-from torchvision import transforms
-import torchvision.datasets as datasets
+from torch.utils.data import Dataset
+import pandas as pd
 import requests
 import zipfile
 import io
 import os
 
-class TextClassification(Dataset):
+class NewsClassification(Dataset):
 
     def __init__(self, root, train=True, transform=None, download=False):
+        self.labels_list = {'QUEER VOICES': 0,'GREEN': 1, 'STYLE': 2, 'BUSINESS': 3, 'CULTURE & ARTS': 4, 'WEDDINGS': 5, 'ARTS': 6, 'HEALTHY LIVING': 7,
+                                     'LATINO VOICES': 8, 'ENVIRONMENT': 9, 'FIFTY': 10, 'COMEDY': 11, 'BLACK VOICES': 12, 'TRAVEL': 13, 'ENTERTAINMENT': 14, 'TASTE': 15,
+                                     'CRIME': 16, 'WOMEN': 17, 'TECH': 18, 'PARENTING': 19, 'SCIENCE': 20, 'WORLD NEWS': 21, 'WORLDPOST': 22, 'POLITICS': 23,
+                                     'ARTS & CULTURE': 24, 'RELIGION': 25, 'IMPACT': 26, 'MEDIA': 27, 'STYLE & BEAUTY': 28, 'SPORTS': 29, 'WEIRD NEWS': 30,
+                                     'HOME & LIVING': 31, 'THE WORLDPOST': 32, 'MONEY': 33, 'EDUCATION': 34, 'DIVORCE': 35, 'PARENTS': 36, 'GOOD NEWS': 37,
+                                     'FOOD & DRINK': 38, 'WELLNESS': 39, 'COLLEGE': 40}
         if train:
             self.path = os.path.join(root, 'train_sample.csv')
         else:
@@ -38,6 +41,6 @@ class TextClassification(Dataset):
         return self.df_data.shape[0]
 
     def __getitem__(self, idx):
-        return (self.df_data['headline'][idx], self.df_data['category'][idx])
+        return (self.df_data['headline'][idx], self.labels_list[self.df_data['category'][idx]])
     
-train_dataset = TextClassification(root='/tmp/dst/',transform=None, train=False, download=True)
+train_dataset = NewsClassification(root='/tmp/dst/',transform=None, train=False, download=True)
