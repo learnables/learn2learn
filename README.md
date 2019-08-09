@@ -32,7 +32,7 @@ for iteration in range(num_iterations):
         learner.adapt(error)
 
     # Compute validation loss
-    valid_task = task_generator.sample(shots=1, labels=task.labels)
+    valid_task = task_generator.sample(shots=1, classes_to_sample=task.sampled_classes)
     valid_error = sum([loss(learner(X), y) for X, y in valid_task])
     valid_error /= len(valid_task)
 
