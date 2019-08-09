@@ -9,8 +9,8 @@ from tqdm import tqdm
 
 import learn2learn as l2l
 
-WAYS = 3
-SHOTS = 5
+WAYS = 5
+SHOTS = 1
 TASKS_PER_STEPS = 32
 
 
