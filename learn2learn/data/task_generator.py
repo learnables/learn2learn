@@ -40,7 +40,7 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-    def __init__(self, dataset: Dataset, ways: int = 3, split=False, test_size=3):
+    def __init__(self, dataset: Dataset, ways: int = 3, split=False, test_size=3, test_classes=[]):
         """
 
         Args:
@@ -60,7 +60,7 @@ class TaskGenerator:
 
         self.classes = list(self.target_to_indices.keys())
         self.train_classes = list()
-        self.test_classes = list()
+        self.test_classes = test_classes
 
         if self.split:
             self.split_datasets(n=test_size)
@@ -72,7 +72,11 @@ class TaskGenerator:
 
         """
         if self.split:
-            self.test_classes = np.random.choice(self.classes, size=n, replace=False)
+            if len(self.test_classes) > 0:
+                self.test_classes = self.test_classes
+            else:
+                self.test_classes = np.random.choice(self.classes, size=n, replace=False)
+
             self.train_classes = list(set(self.classes) - set(self.test_classes))
 
     def get_dict_of_target_to_indices(self):

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import torch
+import wandb
 from torch import nn, optim
 from torch.nn import functional as F
 from torchvision import transforms
 from torchvision.datasets import MNIST
 from tqdm import tqdm
-import wandb
+
 wandb.init(project="learn2learn")
 
 import learn2learn as l2l

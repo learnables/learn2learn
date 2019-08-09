@@ -5,23 +5,20 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and PPO for meta-learning.
 """
 
-import ppt
-import gym
 import random
-import numpy as np
-import torch as th
-import randopt as ro
-import cherry as ch
-import learn2learn as l2l
-
 from copy import deepcopy
+
+import cherry as ch
+import gym
+import numpy as np
+import randopt as ro
+import torch as th
+from cherry.algorithms import a2c, ppo
+from policies import DiagNormalPolicy, LinearValue
+from torch import autograd, optim
 from tqdm import tqdm
 
-from torch import autograd, optim
-from cherry.algorithms import a2c, ppo
-
-import maml_envs
-from policies import DiagNormalPolicy, LinearValue
+import learn2learn as l2l
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states):
@@ -73,8 +70,7 @@ def run_rl(
         tau=1.00,
         gamma=0.99,
         seed=4210,
-        ):
-
+):
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)

@@ -1,10 +1,11 @@
-from torch.utils.data import Dataset
-import pandas as pd
-import torch
-import requests
-import zipfile
 import io
 import os
+import zipfile
+
+import pandas as pd
+import requests
+import torch
+from torch.utils.data import Dataset
 
 
 class NewsClassification(Dataset):
@@ -27,7 +28,7 @@ class NewsClassification(Dataset):
             self.path = os.path.join(root, 'test_sample.csv')
         self.transform = transform
         if transform == 'roberta':
-            self.transform_func = torch.hub.load('pytorch/fairseq', 'roberta.large')
+            self.roberta = torch.hub.load('pytorch/fairseq', 'roberta.large')
 
         if download:
             download_file_url = 'https://www.dropbox.com/s/g8hwl9pxftl36ww/test_sample.csv.zip?dl=1'
@@ -50,10 +51,7 @@ class NewsClassification(Dataset):
 
     def __getitem__(self, idx):
         if self.transform:
-            return self.transform_func.extract_features(self.transform_func.encode(self.df_data['headline'][idx])), \
+            return self.roberta.encode(self.df_data['headline'][idx]), \
                    self.labels_list[self.df_data['category'][idx]]
 
         return self.df_data['headline'][idx], self.labels_list[self.df_data['category'][idx]]
-
-
-train_dataset = NewsClassification(root='/tmp/dst/', transform='roberta', train=False, download=True)
