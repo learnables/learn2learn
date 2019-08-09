@@ -16,6 +16,7 @@ It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.
 ~~~python
 import learn2learn as l2l
 
+mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
 task_generator = l2l.data.TaskGenerator(MNIST, ways=3)
 model = Net()
 maml = l2l.MAML(model, lr=1e-3, first_order=False)
@@ -27,14 +28,12 @@ for iteration in range(num_iterations):
 
     # Fast adapt
     for step in range(adaptation_steps):
-        error = sum([loss(learner(X), y) for X, y in task])
-        error /= len(task)
+        error = l2l.inner_training_loop(task)
         learner.adapt(error)
 
     # Compute validation loss
     valid_task = task_generator.sample(shots=1, classes_to_sample=task.sampled_classes)
-    valid_error = sum([loss(learner(X), y) for X, y in valid_task])
-    valid_error /= len(valid_task)
+    valid_error = l2l.inner_training_loop(valid_task)
 
     # Take the meta-learning step
     opt.zero_grad()
