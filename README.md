@@ -17,7 +17,8 @@ It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.
 import learn2learn as l2l
 
 mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
-task_generator = l2l.data.TaskGenerator(MNIST, ways=3)
+
+task_generator = l2l.data.TaskGenerator(mnist, ways=3)
 model = Net()
 maml = l2l.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
