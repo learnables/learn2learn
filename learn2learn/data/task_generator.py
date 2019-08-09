@@ -64,8 +64,6 @@ class TaskGenerator:
 
         if self.split:
             self.split_datasets(n=test_size)
-            print(f"Test classes are {self.test_classes}")
-            print(f"Train classes are {self.train_classes}")
 
     def split_datasets(self, n):
         """ This method would randomly select n classes to belong in test classes.
@@ -98,13 +96,10 @@ class TaskGenerator:
         """
         if self.split:
             if sample_from_train:
-                print(f"Train Sampling {self.ways} objects from classes {self.train_classes}")
                 return np.random.choice(self.train_classes, size=self.ways, replace=False)
             else:
-                print(f"Test Sampling {self.ways} objects from classes {self.test_classes}")
                 return np.random.choice(self.test_classes, size=self.ways, replace=False)
         else:
-            print(f"Sampling {self.ways} objects from classes {self.classes}")
             return np.random.choice(self.classes, size=self.ways, replace=False)
 
     def sample(self, shots: int = 5, classes_to_sample=None, sample_from_train=True):
@@ -125,7 +120,6 @@ class TaskGenerator:
         label_encoding = LabelEncoder(classes_to_sample)
         data_indices = []
         classes = []
-        print(f"{classes_to_sample} are going to be sampled")
         for _class in classes_to_sample:
             data_indices.extend(np.random.choice(self.target_to_indices[_class], shots, replace=False))
             classes.extend(np.full(shots, fill_value=label_encoding.class_to_idx[_class]))
