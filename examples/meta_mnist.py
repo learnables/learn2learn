@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
-import torch as th
+import torch
 from torch import nn, optim
 from torch.nn import functional as F
 from torchvision import transforms
 from torchvision.datasets import MNIST
+from tqdm import tqdm
 
 import learn2learn as l2l
 
-WAYS = 3
-SHOTS = 5
+WAYS = 5
+SHOTS = 1
 TASKS_PER_STEPS = 32
 
 
@@ -33,7 +34,29 @@ class Net(nn.Module):
         return F.log_softmax(x, dim=1)
 
 
+def accuracy(preds, targets):
+    preds = preds.argmax(dim=1)
+    acc = (preds == targets).sum().float()
+    acc /= len(targets)
+    return acc.item()
+
+
+def inner_training_loop(task, device, learner, loss_func, batch=15):
+    loss = 0.0
+    acc = 0.0
+    for i, (X, y) in enumerate(torch.utils.data.DataLoader(
+            task, batch_size=batch, shuffle=True, num_workers=0)):
+        X, y = X.squeeze(dim=1).to(device), torch.tensor(y).view(-1).to(device)
+        output = learner(X)
+        curr_loss = loss_func(output, y)
+        acc += accuracy(output, y)
+        loss += curr_loss / len(task)
+    loss /= len(task)
+    return loss, acc
+
+
 def main(file_location="/tmp/mnist"):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     mnist_train = MNIST(file_location, train=True, download=True,
                         transform=transforms.Compose([
                             transforms.ToTensor(),
@@ -52,12 +75,14 @@ def main(file_location="/tmp/mnist"):
     test_gen = l2l.data.TaskGenerator(mnist_test, ways=WAYS)
 
     model = Net(WAYS)
+    model.to(device)
     meta_model = l2l.MAML(model, lr=0.01)
-    opt = optim.SGD(meta_model.parameters(), lr=0.001, momentum=0.9)
-    loss = F.nll_loss
+    opt = optim.Adam(meta_model.parameters(), lr=0.005)
+    loss_func = nn.NLLLoss(reduction="sum")
 
-    for iteration in range(1000):
+    for iteration in tqdm(range(1000)):
         iteration_error = 0.0
+        iteration_acc = 0.0
         for _ in range(TASKS_PER_STEPS):
             learner = meta_model.new()
             train_task = train_gen.sample(shots=SHOTS)
@@ -66,17 +91,22 @@ def main(file_location="/tmp/mnist"):
 
             # Fast Adaptation
             for step in range(5):
-                error = sum([loss(learner(X), th.tensor(y).view(-1)) for X, y in train_task])
-                error /= len(train_task)
-                learner.adapt(error)
+                train_error, _ = inner_training_loop(train_task,
+                                                     device,
+                                                     learner,
+                                                     loss_func, batch=SHOTS * WAYS)
+                learner.adapt(train_error)
 
             # Compute validation loss
-            valid_error = sum([loss(learner(X), th.tensor(y).view(-1)) for X, y in valid_task])
-            valid_error /= len(valid_task)
+            valid_error, valid_acc = inner_training_loop(valid_task, device, learner, loss_func, batch=SHOTS * WAYS)
             iteration_error += valid_error
+            iteration_acc += valid_acc
 
         iteration_error /= TASKS_PER_STEPS
-        print('Valid error:', iteration_error.item())
+        iteration_acc /= TASKS_PER_STEPS
+        print(iteration, 'Valid error:', iteration_error.item())
+        print(iteration, 'Valid acc:', iteration_acc)
+
         # Take the meta-learning step
         opt.zero_grad()
         iteration_error.backward()
@@ -86,4 +116,7 @@ def main(file_location="/tmp/mnist"):
 if __name__ == '__main__':
     import sys
 
-    main(sys.argv[1])
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        main()
