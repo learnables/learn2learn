@@ -1,6 +1,7 @@
 from enum import IntEnum
 
 from gym_minigrid.minigrid import *
+import cherry as ch
 
 
 class EmptyEnv(MiniGridEnv):
@@ -21,6 +22,7 @@ class EmptyEnv(MiniGridEnv):
 
         self.agent_start_pos = start
         self.agent_start_dir = agent_start_dir
+        self.agent_dir = agent_start_dir
         self.size = size
         self.goal_pos = goal
 
@@ -39,6 +41,7 @@ class EmptyEnv(MiniGridEnv):
             down = 3
 
         self.actions = Actions
+        self.action_space = spaces.Discrete(len(self.actions))
 
         width = size - 2
         height = size - 2
@@ -57,6 +60,7 @@ class EmptyEnv(MiniGridEnv):
 
         self.start_pos = self.agent_start_pos
         self.start_dir = self.agent_start_dir
+        self.start_dir = 0
 
         self.mission = "get to the green goal square"
 
@@ -69,7 +73,6 @@ class EmptyEnv(MiniGridEnv):
     def reset_task(self, task):
         self._task = task
         self.goal_pos = task.get('goal')
-        self.reset()
 
     def reset(self):
         self._gen_grid(self.width, self.height)
@@ -91,7 +94,7 @@ class EmptyEnv(MiniGridEnv):
 
         # Return first observation
         obs = ((self.width - 2) * (self.agent_pos[1] - 1) + self.agent_pos[0]) - 1
-        return obs
+        return ch.onehot(obs, 81)
 
     def _reward(self):
         return -1 * self._manhattan_distance()
@@ -121,6 +124,7 @@ class EmptyEnv(MiniGridEnv):
         right_cell = self.grid.get(*right_pos)
 
         # ADD NOTE HERE
+
         if action == self.actions.left:
             if left_cell == None or left_cell.can_overlap():
                 self.agent_pos = left_pos
