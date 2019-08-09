@@ -39,12 +39,14 @@ def main():
                         transform=transforms.Compose([
                            transforms.ToTensor(),
                            transforms.Normalize((0.1307,), (0.3081,)),
+                           lambda x: x.view(1, 1, 28, 28),
                         ])
             )
     mnist_test = MNIST('./data', train=False, download=True,
                        transform=transforms.Compose([
                            transforms.ToTensor(),
                            transforms.Normalize((0.1307,), (0.3081,)),
+                           lambda x: x.view(1, 1, 28, 28),
                        ])
             )
     train_gen = l2l.data.TaskGenerator(mnist_train, ways=WAYS)
@@ -67,6 +69,7 @@ def main():
             for step in range(5):
                 error = sum([loss(learner(X), y) for X, y in train_task])
                 error /= len(train_task)
+                print(error.item())
                 learner.adapt(error)
 
             # Compute validation loss

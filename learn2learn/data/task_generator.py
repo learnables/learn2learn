@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 import numpy as np
+import torch as th
 from torch.utils.data import Dataset
 
 
