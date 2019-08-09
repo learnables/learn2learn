@@ -41,11 +41,11 @@ def accuracy(preds, targets):
     return acc.item()
 
 
-def inner_training_loop(task, device, learner, loss_func):
+def inner_training_loop(task, device, learner, loss_func, batch=15):
     loss = 0.0
     acc = 0.0
     for i, (X, y) in enumerate(torch.utils.data.DataLoader(
-            task, batch_size=15, shuffle=True, num_workers=0)):
+            task, batch_size=batch, shuffle=True, num_workers=0)):
         X, y = X.squeeze(dim=1).to(device), torch.tensor(y).view(-1).to(device)
         output = learner(X)
         curr_loss = loss_func(output, y)
@@ -94,11 +94,11 @@ def main(file_location="/tmp/mnist"):
                 train_error, _ = inner_training_loop(train_task,
                                                      device,
                                                      learner,
-                                                     loss_func)
+                                                     loss_func, batch=SHOTS * WAYS)
                 learner.adapt(train_error)
 
             # Compute validation loss
-            valid_error, valid_acc = inner_training_loop(valid_task, device, learner, loss_func)
+            valid_error, valid_acc = inner_training_loop(valid_task, device, learner, loss_func, batch=SHOTS * WAYS)
             iteration_error += valid_error
             iteration_acc += valid_acc
 
