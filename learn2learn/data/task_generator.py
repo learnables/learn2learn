@@ -40,19 +40,42 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-    def __init__(self, dataset: Dataset, ways: int = 3):
+    def __init__(self, dataset: Dataset, ways: int = 3, split=False, test_size=3):
         """
 
         Args:
             dataset: should be a Dataset that returns (data, target)
             ways: number of labels to sample from
+            split: If set to True, it will split the labels into train and test.
+            test_size: If split is set to True, then it uses test_size samples in test
 
         """
 
         self.dataset = dataset
         self.ways = ways
+        self.split = split
+
         self.__len__: len(dataset)
         self.target_to_indices = self.get_dict_of_target_to_indices()
+
+        self.classes = list(self.target_to_indices.keys())
+        self.train_classes = list()
+        self.test_classes = list()
+
+        if self.split:
+            self.split_datasets(n=test_size)
+            print(f"Test classes are {self.test_classes}")
+            print(f"Train classes are {self.train_classes}")
+
+    def split_datasets(self, n):
+        """ This method would randomly select n classes to belong in test classes.
+        This way we can create two TaskGenerators and measure how easily
+        we learn on data we've never seen before.
+
+        """
+        if self.split:
+            self.test_classes = np.random.choice(self.classes, size=n, replace=False)
+            self.train_classes = list(set(self.classes) - set(self.test_classes))
 
     def get_dict_of_target_to_indices(self):
         """ Iterates over the entire dataset and creates a map of target to indices.
@@ -65,7 +88,7 @@ class TaskGenerator:
             target_to_indices[self.dataset[i][1]].append(i)
         return target_to_indices
 
-    def get_random_label_pair(self):
+    def get_random_label_pair(self, sample_from_train):
         """ Creates a random label tuple.
 
         Selects `ways` number of random labels from the set of labels.
@@ -73,10 +96,18 @@ class TaskGenerator:
         Returns: list of labels
 
         """
-        classes = list(self.target_to_indices.keys())
-        return np.random.choice(classes, size=self.ways, replace=False)
+        if self.split:
+            if sample_from_train:
+                print(f"Train Sampling {self.ways} objects from classes {self.train_classes}")
+                return np.random.choice(self.train_classes, size=self.ways, replace=False)
+            else:
+                print(f"Test Sampling {self.ways} objects from classes {self.test_classes}")
+                return np.random.choice(self.test_classes, size=self.ways, replace=False)
+        else:
+            print(f"Sampling {self.ways} objects from classes {self.classes}")
+            return np.random.choice(self.classes, size=self.ways, replace=False)
 
-    def sample(self, shots: int = 5, classes_to_sample=None):
+    def sample(self, shots: int = 5, classes_to_sample=None, sample_from_train=True):
         """ Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
@@ -90,10 +121,11 @@ class TaskGenerator:
 
         """
         if classes_to_sample is None:
-            classes_to_sample = self.get_random_label_pair()
+            classes_to_sample = self.get_random_label_pair(sample_from_train)
         label_encoding = LabelEncoder(classes_to_sample)
         data_indices = []
         classes = []
+        print(f"{classes_to_sample} are going to be sampled")
         for _class in classes_to_sample:
             data_indices.extend(np.random.choice(self.target_to_indices[_class], shots, replace=False))
             classes.extend(np.full(shots, fill_value=label_encoding.class_to_idx[_class]))
