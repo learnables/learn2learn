@@ -5,6 +5,7 @@ import time
 import torch
 # import wandb
 from torch import nn, optim
+from torch.nn import functional as F
 from tqdm import tqdm
 
 import learn2learn as l2l
@@ -32,7 +33,7 @@ class Net(nn.Module):
         x = self.dense(x)
         x = self.activation_fn(x)
         x = self.dropout(x)
-        x = self.out_proj(x)
+        x = F.log_softmax(self.out_proj(x), dim=1)
         return x
 
 
@@ -67,7 +68,6 @@ def inner_training_loop(task, roberta, device, learner, loss_func, batch=15):
     acc = 0.0
     for i, (X, y) in enumerate(torch.utils.data.DataLoader(
             task, batch_size=batch, shuffle=True, num_workers=0)):
-
         # RoBERTa ENCODING
         X = collate_tokens([roberta.encode(sent) for sent in X], pad_idx=1)
         with torch.no_grad():
