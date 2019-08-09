@@ -74,7 +74,7 @@ def inner_training_loop(task, roberta, device, learner, loss_func, batch=15):
         X = X[:, 0, :]
 
         # Moving to device
-        X, y = X.to(device), torch.LongTensor([y]).view(-1).to(device)
+        X, y = X.to(device), torch.tensor(y).view(-1).to(device)
 
         output = learner(X)
         curr_loss = loss_func(output, y)
