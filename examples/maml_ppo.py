@@ -20,6 +20,8 @@ from tqdm import tqdm
 
 import learn2learn as l2l
 
+import wandb
+wandb.init(project="learn2learn")
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states):
     # Update baseline
@@ -57,14 +59,13 @@ def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_
     return l2l.maml.maml_update(clone, adapt_lr, gradients)
 
 
-@ro.cli
-def run_rl(
+def main(
         experiment='dev',
         task_name='nav2d',
         adapt_lr=0.1,
         meta_lr=1e-4,
         adapt_steps=1,
-        num_iterations=200,
+        num_iterations=20,
         meta_bsz=40,
         adapt_bsz=20,
         tau=1.00,
@@ -86,6 +87,7 @@ def run_rl(
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr, eps=1e-5)
 
+    all_rewards = []
     for iteration in range(num_iterations):
         iteration_reward = 0.0
         iteration_replays = []
@@ -115,10 +117,12 @@ def run_rl(
         # Print statistics
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
+        all_rewards.append(adaptation_reward)
+        wandb.log({'PPO - Adaptation Reward': adaptation_reward})
         print('adaptation_reward', adaptation_reward)
 
         # PPO meta-optimization
-        for ppo_step in tqdm(range(10), leave=False, desc='Optim'):
+        for ppo_step in tqdm(range(5), leave=False, desc='Optim'):
             ppo_loss = 0.0
             for task_replays in iteration_replays:
                 train_replays = task_replays[:-1]
@@ -144,7 +148,8 @@ def run_rl(
             opt.zero_grad()
             ppo_loss.backward()
             opt.step()
+    th.save(all_rewards, 'ppo.data')
 
 
 if __name__ == '__main__':
-    ro.parse()
+    main()

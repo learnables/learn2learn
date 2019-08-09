@@ -27,8 +27,10 @@ class EmptyEnv(MiniGridEnv):
         super().__init__(
             grid_size=size,
             max_steps=4 * size * size,
-            see_through_walls=True
+            see_through_walls=True,
+#            agent_view_size=3,
         )
+        self.agent_dir = 0
 
         class Actions(IntEnum):
             left = 0
@@ -60,6 +62,7 @@ class EmptyEnv(MiniGridEnv):
 
     def sample_tasks(self, num_tasks):
         goals = (self.np_random.randint(2, size=[num_tasks, 2]) * (self.size - 3)) + 1
+        goals[:, 0] = 1
         tasks = [{'goal': goal} for goal in goals]
         return tasks
 

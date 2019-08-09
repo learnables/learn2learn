@@ -17,6 +17,9 @@ from torch import optim
 
 import learn2learn as l2l
 
+import wandb
+wandb.init(project="learn2learn")
+
 
 def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
     # Update policy and baseline
@@ -48,7 +51,7 @@ def main(
         adapt_lr=0.1,
         meta_lr=0.01,
         adapt_steps=1,
-        num_iterations=200,
+        num_iterations=20,
         meta_bsz=40,
         adapt_bsz=20,
         tau=1.00,
@@ -69,6 +72,7 @@ def main(
     maml = l2l.MetaSGD(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
+    all_rewards = []
 
     for iteration in range(num_iterations):
         iteration_loss = 0.0
@@ -98,10 +102,14 @@ def main(
         # Print statistics
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
+        wandb.log({'A2C - Adaptation Reward': adaptation_reward})
         print('adaptation_reward', adaptation_reward)
+        all_rewards.append(adaptation_reward)
 
         adaptation_loss = iteration_loss.item() / meta_bsz
         print('adaptation_loss', adaptation_loss)
+
+    th.save(all_rewards, 'a2c.data')
 
 
 if __name__ == '__main__':
