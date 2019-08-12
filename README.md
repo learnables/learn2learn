@@ -5,6 +5,8 @@
 learn2learn is a PyTorch library for meta-learning implementations.
 It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
 
+**Note** learn2learn was lucky to win the PyTorch Hackathon at MPK. We'll clean up the repo and resume development soon.
+
 # Supported Algorithms
 
 * MAML
