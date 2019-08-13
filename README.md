@@ -42,24 +42,6 @@ for iteration in range(num_iterations):
     opt.step()
 ~~~
 
-# Experiemntal Results
-
-## torchvision
-
-![](./assets/meta_train.png)
-
-![](./assets/mnist_train.png)
-
-![](./assets/mnist_valid.png)
-
-## torchtext
-
-Too hard ! :(
-
-## reinforcement learning
-
-Check [this link](https://app.wandb.ai/arnolds/learn2learn?workspace=user-arnolds)
-
 # Acknowledgements
 
 1. The RL environments are copied from: https://github.com/tristandeleu/pytorch-maml-rl
