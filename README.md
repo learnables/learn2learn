@@ -44,8 +44,7 @@ for iteration in range(num_iterations):
     opt.step()
 ~~~
 
-
-# Changelog
+# Changelog
 
 The following changelog is mostly for the hackathon period.
 
