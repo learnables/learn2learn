@@ -3,15 +3,15 @@
 --------------------------------------------------------------------------------
 
 learn2learn is a PyTorch library for meta-learning implementations.
-It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
+It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/). Edit: L2L was lucky to win the hackathon!
 
-**Note** learn2learn was lucky to win the PyTorch Hackathon at MPK. We'll clean up the repo and resume development soon.
+**Note** learn2learn is under active development and many things are breaking.
 
-# Supported Algorithms
+# Installation
 
-* MAML
-* FOMAML
-* MetaSGD
+~~~bash
+pip install learn2learn
+~~~
 
 # API Demo
 
@@ -43,6 +43,17 @@ for iteration in range(num_iterations):
     valid_error.backward()
     opt.step()
 ~~~
+
+# Changelog
+
+The following changelog is mostly for the hackathon period.
+
+## August 12, 2019
+
+* Basic implementation of MAML, FOMAML, Meta-SGD.
+* TaskGenerator code for classification tasks.
+* Environments for RL.
+* Small scale examples of MAML-A2C and MAML-PPO.
 
 # Acknowledgements
 
