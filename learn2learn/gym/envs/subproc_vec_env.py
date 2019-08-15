@@ -28,22 +28,14 @@ class EnvWorker(mp.Process):
         return observation, reward, done, {}
 
     def try_reset(self):
-        with self.lock:
-            try:
-                self.task_id = self.queue.get(True)
-                self.done = (self.task_id is None)
-            except queue.Empty:
-                self.done = True
-        observation = (np.zeros(self.env.observation_space.shape,
-                                dtype=np.float32) if self.done else self.env.reset())
+        observation = self.env.reset()
         return observation
 
     def run(self):
         while True:
             command, data = self.remote.recv()
             if command == 'step':
-                observation, reward, done, info = (self.empty_step()
-                                                   if self.done else self.env.step(data))
+                observation, reward, done, info = self.env.step(data)
                 if done and (not self.done):
                     observation = self.try_reset()
                 self.remote.send((observation, reward, done, self.task_id, info))

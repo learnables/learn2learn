@@ -6,47 +6,48 @@ and PPO for meta-learning.
 """
 
 import random
-from copy import deepcopy
-
-import cherry as ch
 import gym
 import numpy as np
-import randopt as ro
 import torch as th
-from cherry.algorithms import a2c, ppo
-from policies import DiagNormalPolicy, LinearValue
-from torch import autograd, optim
-from tqdm import tqdm
+import cherry as ch
 
 import learn2learn as l2l
 
-import wandb
-wandb.init(project="learn2learn")
+from cherry.algorithms import a2c, ppo
+from torch import autograd, optim
 
-def compute_advantages(baseline, tau, gamma, rewards, dones, states):
-    # Update baseline
-    returns = ch.td.discount(gamma, rewards, dones)
-    baseline.fit(states, returns)
-    values = baseline(states)
-    next_value = th.zeros(1, device=values.device)
-    return ch.pg.generalized_advantage(tau=tau,
-                                       gamma=gamma,
-                                       rewards=rewards,
-                                       dones=dones,
-                                       values=values,
-                                       next_value=next_value)
+from copy import deepcopy
+from tqdm import tqdm
 
+from maml_a2c import compute_advantages, maml_a2c_loss
+from policies import DiagNormalPolicy, LinearValue
 
-def maml_a2c_loss(train_episodes, clone, baseline, gamma, tau):
-    # Update policy and baseline
-    rewards = train_episodes.reward()
-    states = train_episodes.state()
-    densities = clone(states)[1]['density']
-    log_probs = densities.log_prob(train_episodes.action())
-    log_probs = log_probs.mean(dim=1, keepdim=True)
-    dones = train_episodes.done()
-    advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states)
-    return a2c.policy_loss(log_probs, advantages)
+#def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
+#    # Update baseline
+#    returns = ch.td.discount(gamma, rewards, dones)
+#    baseline.fit(states, returns)
+#    values = baseline(states)
+#    next_values = baseline(next_states)
+#    bootstraps = values * (1.0 - dones) + next_values * dones
+#    next_value = th.zeros(1, device=values.device)
+#    return ch.pg.generalized_advantage(tau=tau,
+#                                       gamma=gamma,
+#                                       rewards=rewards,
+#                                       dones=dones,
+#                                       values=bootstraps,
+#                                       next_value=next_value)
+#
+#
+#def maml_a2c_loss(train_episodes, clone, baseline, gamma, tau):
+#    # Update policy and baseline
+#    rewards = train_episodes.reward()
+#    states = train_episodes.state()
+#    densities = clone(states)[1]['density']
+#    log_probs = densities.log_prob(train_episodes.action())
+#    log_probs = log_probs.mean(dim=1, keepdim=True)
+#    dones = train_episodes.done()
+#    advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states)
+#    return a2c.policy_loss(log_probs, advantages)
 
 
 def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=False):
@@ -63,11 +64,11 @@ def main(
         experiment='dev',
         task_name='nav2d',
         adapt_lr=0.1,
-        meta_lr=1e-4,
+        meta_lr=0.01,
         adapt_steps=1,
         num_iterations=20,
-        meta_bsz=40,
-        adapt_bsz=20,
+        meta_bsz=10,
+        adapt_bsz=10,
         tau=1.00,
         gamma=0.99,
         seed=4210,
@@ -85,7 +86,7 @@ def main(
     policy = DiagNormalPolicy(env.state_size, env.action_size)
 
     baseline = LinearValue(env.state_size, env.action_size)
-    opt = optim.Adam(policy.parameters(), lr=meta_lr, eps=1e-5)
+    opt = optim.Adam(policy.parameters(), lr=meta_lr)
 
     all_rewards = []
     for iteration in range(num_iterations):
@@ -118,7 +119,6 @@ def main(
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
         all_rewards.append(adaptation_reward)
-        wandb.log({'PPO - Adaptation Reward': adaptation_reward})
         print('adaptation_reward', adaptation_reward)
 
         # PPO meta-optimization
@@ -139,16 +139,16 @@ def main(
                 actions = valid_replay.action()
                 rewards = valid_replay.reward()
                 dones = valid_replay.done()
+                next_states = valid_replay.next_state()
                 old_log_probs = valid_replay.log_prob()
                 new_densities = clone(states)[1]['density']
                 new_log_probs = new_densities.log_prob(actions).mean(dim=1, keepdim=True)
-                advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states)
+                advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states)
                 ppo_loss += ppo.policy_loss(new_log_probs, old_log_probs, advantages, clip=0.1)
             ppo_loss /= meta_bsz
             opt.zero_grad()
             ppo_loss.backward()
             opt.step()
-    th.save(all_rewards, 'ppo.data')
 
 
 if __name__ == '__main__':

@@ -6,42 +6,49 @@ and A2C for meta-learning.
 """
 
 import random
-
-import cherry as ch
 import gym
 import numpy as np
 import torch as th
-from cherry.algorithms import a2c
-from policies import DiagNormalPolicy, LinearValue
-from torch import optim
+import cherry as ch
 
 import learn2learn as l2l
 
-import wandb
-wandb.init(project="learn2learn")
+from torch import optim
+from cherry.algorithms import a2c
+from tqdm import tqdm
+
+from policies import DiagNormalPolicy, LinearValue
 
 
-def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
-    # Update policy and baseline
-    rewards = train_episodes.reward()
-    states = train_episodes.state()
-    densities = learner(states)[1]['density']
-    log_probs = densities.log_prob(train_episodes.action())
-    log_probs = log_probs.mean(dim=1, keepdim=True)
-    dones = train_episodes.done()
-
+def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
     # Update baseline
     returns = ch.td.discount(gamma, rewards, dones)
     baseline.fit(states, returns)
     values = baseline(states)
+    next_values = baseline(next_states)
+    bootstraps = values * (1.0 - dones) + next_values * dones
+    next_value = th.zeros(1, device=values.device)
+    return ch.pg.generalized_advantage(tau=tau,
+                                       gamma=gamma,
+                                       rewards=rewards,
+                                       dones=dones,
+                                       values=bootstraps,
+                                       next_value=next_value)
 
-    # Update model
-    advantages = ch.pg.generalized_advantage(tau=tau,
-                                             gamma=gamma,
-                                             rewards=rewards,
-                                             dones=dones,
-                                             values=values,
-                                             next_value=th.zeros(1))
+
+def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
+    # Update policy and baseline
+    states = train_episodes.state()
+    rewards = train_episodes.reward()
+    dones = train_episodes.done()
+    next_states = train_episodes.next_state()
+    densities = learner(states)[1]['density']
+    log_probs = densities.log_prob(train_episodes.action())
+    log_probs = log_probs.mean(dim=1, keepdim=True)
+
+    advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states)
+    advantages = ch.normalize(advantages).detach()
+
     return a2c.policy_loss(log_probs, advantages)
 
 
@@ -52,10 +59,11 @@ def main(
         meta_lr=0.01,
         adapt_steps=1,
         num_iterations=20,
-        meta_bsz=40,
-        adapt_bsz=20,
+        meta_bsz=10,
+        adapt_bsz=10,
         tau=1.00,
         gamma=0.99,
+        num_workers=2,
         seed=42,
 ):
     random.seed(seed)
@@ -65,11 +73,14 @@ def main(
     if task_name == 'nav2d':
         env_name = '2DNavigation-v0'
 
-    env = gym.make(env_name)
+        def make_env():
+            return gym.make(env_name)
+
+    env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    maml = l2l.MetaSGD(policy, lr=meta_lr)
+    maml = l2l.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
     all_rewards = []
@@ -77,7 +88,7 @@ def main(
     for iteration in range(num_iterations):
         iteration_loss = 0.0
         iteration_reward = 0.0
-        for task_config in env.sample_tasks(meta_bsz):  # Samples a new config
+        for task_config in tqdm(env.sample_tasks(meta_bsz)):  # Samples a new config
             learner = maml.new()
             env.reset_task(task_config)
             env.reset()
@@ -95,21 +106,18 @@ def main(
             iteration_loss += loss
             iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
 
-        opt.zero_grad()
-        iteration_loss.backward()
-        opt.step()
-
         # Print statistics
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
-        wandb.log({'A2C - Adaptation Reward': adaptation_reward})
         print('adaptation_reward', adaptation_reward)
         all_rewards.append(adaptation_reward)
 
-        adaptation_loss = iteration_loss.item() / meta_bsz
-        print('adaptation_loss', adaptation_loss)
+        adaptation_loss = iteration_loss / meta_bsz
+        print('adaptation_loss', adaptation_loss.item())
 
-    th.save(all_rewards, 'a2c.data')
+        opt.zero_grad()
+        adaptation_loss.backward()
+        opt.step()
 
 
 if __name__ == '__main__':
