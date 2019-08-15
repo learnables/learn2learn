@@ -4,11 +4,8 @@ import torch as th
 from torch import nn
 from torch.autograd import grad
 
-from learn2learn.maml import clone_module
-
-
-def clone_parameters(param_list):
-    return [p.clone() for p in param_list]
+from learn2learn.algorithms.utils import clone_module, clone_parameters
+from learn2learn.algorithms.base_learner import BaseLearner
 
 
 def meta_sgd_update(model, lrs=None, grads=None):
@@ -35,22 +32,12 @@ def meta_sgd_update(model, lrs=None, grads=None):
     return model
 
 
-class MetaSGDLearner(nn.Module):
+class MetaSGDLearner(BaseLearner):
 
     def __init__(self, module, lrs, first_order):
-        super(MetaSGDLearner, self).__init__()
-        self.module = module
+        super(MetaSGDLearner, self).__init__(module)
         self.lrs = lrs
         self.first_order = first_order
-
-    def __getattr__(self, attr):
-        try:
-            return super(MetaSGDLearner, self).__getattr__(attr)
-        except AttributeError:
-            return getattr(self.__dict__['_modules']['module'], attr)
-
-    def forward(self, *args, **kwargs):
-        return self.module(*args, **kwargs)
 
     def adapt(self, loss, first_order=None):
         if first_order is None:

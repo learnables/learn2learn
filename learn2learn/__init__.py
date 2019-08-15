@@ -2,5 +2,5 @@
 
 from . import data
 from . import gym
-from .maml import MAML
-from .meta_sgd import MetaSGD
+from . import algorithms
+from .algorithms import MAML, MetaSGD

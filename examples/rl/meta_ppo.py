@@ -13,7 +13,7 @@ import cherry as ch
 
 import learn2learn as l2l
 
-from cherry.algorithms import a2c, ppo
+from cherry.algorithms import ppo
 from torch import autograd, optim
 
 from copy import deepcopy
