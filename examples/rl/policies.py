@@ -58,14 +58,19 @@ class DiagNormalPolicy(nn.Module):
         self.sigma = nn.Parameter(th.Tensor(output_size))
         self.sigma.data.fill_(math.log(1))
 
-    def forward(self, state):
+    def density(self, state):
         loc = self.mean(state)
         scale = th.exp(th.clamp(self.sigma, min=math.log(EPSILON)))
-        density = Normal(loc=loc, scale=scale)
+        return Normal(loc=loc, scale=scale)
+
+    def log_prob(self, state, action):
+        density = self.density(state)
+        return density.log_prob(action).mean(dim=1, keepdim=True)
+
+    def forward(self, state):
+        density = self.density(state)
         action = density.sample()
-        log_prob = density.log_prob(action).mean(dim=1,
-                                                 keepdim=True).detach()
-        return action, {'density': density, 'log_prob': log_prob}
+        return action
 
 
 class CategoricalPolicy(nn.Module):

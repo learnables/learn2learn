@@ -39,16 +39,14 @@ def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states
 def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
     # Update policy and baseline
     states = train_episodes.state()
+    actions = train_episodes.action()
     rewards = train_episodes.reward()
     dones = train_episodes.done()
     next_states = train_episodes.next_state()
-    densities = learner(states)[1]['density']
-    log_probs = densities.log_prob(train_episodes.action())
-    log_probs = log_probs.mean(dim=1, keepdim=True)
-
-    advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states)
+    log_probs = learner.log_prob(states, actions)
+    advantages = compute_advantages(baseline, tau, gamma, rewards,
+                                    dones, states, next_states)
     advantages = ch.normalize(advantages).detach()
-
     return a2c.policy_loss(log_probs, advantages)
 
 
@@ -58,12 +56,12 @@ def main(
         adapt_lr=0.1,
         meta_lr=0.01,
         adapt_steps=1,
-        num_iterations=20,
-        meta_bsz=10,
-        adapt_bsz=10,
+        num_iterations=200,
+        meta_bsz=20,
+        adapt_bsz=20,
         tau=1.00,
         gamma=0.99,
-        num_workers=2,
+        num_workers=8,
         seed=42,
 ):
     random.seed(seed)
@@ -73,14 +71,14 @@ def main(
     if task_name == 'nav2d':
         env_name = '2DNavigation-v0'
 
-        def make_env():
-            return gym.make(env_name)
+    def make_env():
+        return gym.make(env_name)
 
     env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    maml = l2l.MAML(policy, lr=meta_lr)
+    meta_learner = l2l.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
     all_rewards = []
@@ -89,7 +87,7 @@ def main(
         iteration_loss = 0.0
         iteration_reward = 0.0
         for task_config in tqdm(env.sample_tasks(meta_bsz)):  # Samples a new config
-            learner = maml.new()
+            learner = meta_learner.new()
             env.reset_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)

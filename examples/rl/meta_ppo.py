@@ -19,45 +19,14 @@ from torch import autograd, optim
 from copy import deepcopy
 from tqdm import tqdm
 
-from maml_a2c import compute_advantages, maml_a2c_loss
+from meta_a2c import compute_advantages, maml_a2c_loss
 from policies import DiagNormalPolicy, LinearValue
-
-#def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
-#    # Update baseline
-#    returns = ch.td.discount(gamma, rewards, dones)
-#    baseline.fit(states, returns)
-#    values = baseline(states)
-#    next_values = baseline(next_states)
-#    bootstraps = values * (1.0 - dones) + next_values * dones
-#    next_value = th.zeros(1, device=values.device)
-#    return ch.pg.generalized_advantage(tau=tau,
-#                                       gamma=gamma,
-#                                       rewards=rewards,
-#                                       dones=dones,
-#                                       values=bootstraps,
-#                                       next_value=next_value)
-#
-#
-#def maml_a2c_loss(train_episodes, clone, baseline, gamma, tau):
-#    # Update policy and baseline
-#    rewards = train_episodes.reward()
-#    states = train_episodes.state()
-#    densities = clone(states)[1]['density']
-#    log_probs = densities.log_prob(train_episodes.action())
-#    log_probs = log_probs.mean(dim=1, keepdim=True)
-#    dones = train_episodes.done()
-#    advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states)
-#    return a2c.policy_loss(log_probs, advantages)
 
 
 def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=False):
-    second_order = not first_order
     loss = maml_a2c_loss(train_episodes, clone, baseline, gamma, tau)
-    gradients = autograd.grad(loss,
-                              clone.parameters(),
-                              retain_graph=second_order,
-                              create_graph=second_order)
-    return l2l.maml.maml_update(clone, adapt_lr, gradients)
+    clone.adapt(loss, first_order=first_order)
+    return clone
 
 
 def main(
@@ -71,7 +40,8 @@ def main(
         adapt_bsz=10,
         tau=1.00,
         gamma=0.99,
-        seed=4210,
+        num_workers=1,
+        seed=42,
 ):
     random.seed(seed)
     np.random.seed(seed)
@@ -80,23 +50,27 @@ def main(
     if task_name == 'nav2d':
         env_name = '2DNavigation-v0'
 
-    env = gym.make(env_name)
+    def make_env():
+        return gym.make(env_name)
+
+    env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-
+    meta_learner = l2l.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
-    opt = optim.Adam(policy.parameters(), lr=meta_lr)
+    opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
 
     all_rewards = []
     for iteration in range(num_iterations):
         iteration_reward = 0.0
         iteration_replays = []
+        iteration_policies = []
         policy.to('cpu')
         baseline.to('cpu')
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
-            clone = deepcopy(policy)
+            learner = meta_learner.new()
             env.reset_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)
@@ -104,16 +78,17 @@ def main(
 
             # Fast Adapt
             for step in range(adapt_steps):
-                train_episodes = task.run(clone, episodes=adapt_bsz)
-                clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
+                train_episodes = task.run(learner, episodes=adapt_bsz)
+                learner = fast_adapt_a2c(learner, train_episodes, adapt_lr,
                                        baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
 
             # Compute Validation Loss
-            valid_episodes = task.run(clone, episodes=adapt_bsz)
+            valid_episodes = task.run(learner, episodes=adapt_bsz)
             task_replay.append(valid_episodes)
             iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
             iteration_replays.append(task_replay)
+            iteration_policies.append(learner)
 
         # Print statistics
         print('\nIteration', iteration)
@@ -122,17 +97,17 @@ def main(
         print('adaptation_reward', adaptation_reward)
 
         # PPO meta-optimization
-        for ppo_step in tqdm(range(5), leave=False, desc='Optim'):
+        for ppo_step in tqdm(range(10), leave=False, desc='Optim'):
             ppo_loss = 0.0
-            for task_replays in iteration_replays:
+            for task_replays, old_policy in zip(iteration_replays, iteration_policies):
                 train_replays = task_replays[:-1]
                 valid_replay = task_replays[-1]
 
-                # Fast adapt clone, starting from the current init
-                clone = l2l.maml.clone_module(policy)
+                # Fast adapt new policy, starting from the current init
+                new_policy = meta_learner.new()
                 for train_episodes in train_replays:
-                    clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
-                                           baseline, gamma, tau, first_order=False)
+                    new_policy = fast_adapt_a2c(new_policy, train_episodes, adapt_lr,
+                                                baseline, gamma, tau)
 
                 # Compute PPO loss between old and new clones
                 states = valid_replay.state()
@@ -140,11 +115,11 @@ def main(
                 rewards = valid_replay.reward()
                 dones = valid_replay.done()
                 next_states = valid_replay.next_state()
-                old_log_probs = valid_replay.log_prob()
-                new_densities = clone(states)[1]['density']
-                new_log_probs = new_densities.log_prob(actions).mean(dim=1, keepdim=True)
+                old_log_probs = old_policy.log_prob(states, actions).detach()
+                new_log_probs = new_policy.log_prob(states, actions).detach()
                 advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states)
                 ppo_loss += ppo.policy_loss(new_log_probs, old_log_probs, advantages, clip=0.1)
+
             ppo_loss /= meta_bsz
             opt.zero_grad()
             ppo_loss.backward()

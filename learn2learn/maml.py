@@ -85,16 +85,25 @@ class MAMLLearner(nn.Module):
         super(MAMLLearner, self).__init__()
         self.module = module
         self.lr = lr
-        self.second_order = not first_order
+        self.first_order = first_order
+
+    def __getattr__(self, attr):
+        try:
+            return super(MAMLLearner, self).__getattr__(attr)
+        except AttributeError:
+            return getattr(self.__dict__['_modules']['module'], attr)
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
 
-    def adapt(self, loss):
+    def adapt(self, loss, first_order=None):
+        if first_order is None:
+            first_order = self.first_order
+        second_order = not first_order
         gradients = grad(loss,
                          self.module.parameters(),
-                         retain_graph=self.second_order,
-                         create_graph=self.second_order)
+                         retain_graph=second_order,
+                         create_graph=second_order)
         self.module = maml_update(self.module, self.lr, gradients)
 
 

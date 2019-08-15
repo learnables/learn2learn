@@ -37,36 +37,48 @@ def meta_sgd_update(model, lrs=None, grads=None):
 
 class MetaSGDLearner(nn.Module):
 
-    def __init__(self, module, lrs):
+    def __init__(self, module, lrs, first_order):
         super(MetaSGDLearner, self).__init__()
         self.module = module
         self.lrs = lrs
+        self.first_order = first_order
+
+    def __getattr__(self, attr):
+        try:
+            return super(MetaSGDLearner, self).__getattr__(attr)
+        except AttributeError:
+            return getattr(self.__dict__['_modules']['module'], attr)
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
 
-    def adapt(self, loss):
+    def adapt(self, loss, first_order=None):
+        if first_order is None:
+            first_order = self.first_order
+        second_order = not first_order
         gradients = grad(loss,
                          self.module.parameters(),
-                         retain_graph=True,
-                         create_graph=True)
+                         retain_graph=second_order,
+                         create_graph=second_order)
         self.module = meta_sgd_update(self.module, self.lrs, gradients)
 
 
 class MetaSGD(nn.Module):
 
-    def __init__(self, model, lr=1.0):
+    def __init__(self, model, lr=1.0, first_order=False):
         super(MetaSGD, self).__init__()
         self.model = model
         self.lrs = [th.ones_like(p) * lr for p in model.parameters()]
         self.lrs = nn.ParameterList([nn.Parameter(lr) for lr in self.lrs])
+        self.first_order = first_order
 
     def forward(self, *args, **kwargs):
         return self.new(*args, **kwargs)
 
     def new(self):
         return MetaSGDLearner(module=clone_module(self.model),
-                              lrs=clone_parameters(self.lrs))
+                              lrs=clone_parameters(self.lrs),
+                              first_order=self.first_order)
 
 
 if __name__ == '__main__':
