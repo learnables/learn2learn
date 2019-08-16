@@ -17,32 +17,6 @@ def linear_init(module):
     return module
 
 
-class LinearValue(nn.Module):
-
-    def __init__(self, input_size, reg=1e-5):
-        super(LinearValue, self).__init__()
-        self.linear = nn.Linear(2 * input_size + 4, 1, bias=False)
-        self.reg = reg
-
-    def _features(self, states):
-        length = states.size(0)
-        ones = th.ones(length, 1)
-        al = th.arange(length, dtype=th.float32).view(-1, 1) / 100.0
-        return th.cat([states, states ** 2, al, al ** 2, al ** 3, ones], dim=1)
-
-    def fit(self, states, returns):
-        features = self._features(states)
-        reg = self.reg * th.eye(features.size(1))
-        A = features.t() @ features + reg
-        b = features.t() @ returns
-        coeffs, _ = th.gels(b, A)
-        self.linear.weight.data = coeffs.data.t()
-
-    def forward(self, states):
-        features = self._features(states)
-        return self.linear(features)
-
-
 class DiagNormalPolicy(nn.Module):
 
     def __init__(self, input_size, output_size, hiddens=None):

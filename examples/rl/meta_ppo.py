@@ -13,14 +13,15 @@ import cherry as ch
 
 import learn2learn as l2l
 
-from cherry.algorithms import ppo
 from torch import autograd, optim
+from cherry.algorithms import ppo
+from cherry.models.robotics import LinearValue
 
 from copy import deepcopy
 from tqdm import tqdm
 
 from meta_a2c import compute_advantages, maml_a2c_loss
-from policies import DiagNormalPolicy, LinearValue
+from policies import DiagNormalPolicy
 
 
 def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=False):
@@ -31,7 +32,7 @@ def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_
 
 def main(
         experiment='dev',
-        task_name='nav2d',
+        env_name='2DNavigation-v0',
         adapt_lr=0.1,
         meta_lr=0.01,
         adapt_steps=1,
@@ -46,9 +47,6 @@ def main(
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)
-
-    if task_name == 'nav2d':
-        env_name = '2DNavigation-v0'
 
     def make_env():
         return gym.make(env_name)
@@ -70,7 +68,7 @@ def main(
         baseline.to('cpu')
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
-            learner = meta_learner.new()
+            learner = meta_learner.clone()
             env.reset_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)
@@ -104,7 +102,7 @@ def main(
                 valid_replay = task_replays[-1]
 
                 # Fast adapt new policy, starting from the current init
-                new_policy = meta_learner.new()
+                new_policy = meta_learner.clone()
                 for train_episodes in train_replays:
                     new_policy = fast_adapt_a2c(new_policy, train_episodes, adapt_lr,
                                                 baseline, gamma, tau)
@@ -116,8 +114,9 @@ def main(
                 dones = valid_replay.done()
                 next_states = valid_replay.next_state()
                 old_log_probs = old_policy.log_prob(states, actions).detach()
-                new_log_probs = new_policy.log_prob(states, actions).detach()
+                new_log_probs = new_policy.log_prob(states, actions)
                 advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states)
+                advantages = ch.normalize(advantages).detach()
                 ppo_loss += ppo.policy_loss(new_log_probs, old_log_probs, advantages, clip=0.1)
 
             ppo_loss /= meta_bsz

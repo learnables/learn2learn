@@ -4,7 +4,7 @@ import torch as th
 from torch import nn
 from torch.autograd import grad
 
-from learn2learn.algorithms.utils import clone_module, clone_parameters
+from learn2learn import clone_module, clone_parameters
 from learn2learn.algorithms.base_learner import BaseLearner
 
 
@@ -32,12 +32,24 @@ def meta_sgd_update(model, lrs=None, grads=None):
     return model
 
 
-class MetaSGDLearner(BaseLearner):
+class MetaSGD(BaseLearner):
 
-    def __init__(self, module, lrs, first_order):
-        super(MetaSGDLearner, self).__init__(module)
+    def __init__(self, model, lr=1.0, first_order=False, lrs=None):
+        super(MetaSGD, self).__init__()
+        self.module = model
+        if lrs is None:
+            lrs = [th.ones_like(p) * lr for p in model.parameters()]
+            lrs = nn.ParameterList([nn.Parameter(lr) for lr in lrs])
         self.lrs = lrs
         self.first_order = first_order
+
+    def forward(self, *args, **kwargs):
+        return self.module(*args, **kwargs)
+
+    def clone(self):
+        return MetaSGD(clone_module(self.module),
+                       lrs=clone_parameters(self.lrs),
+                       first_order=self.first_order)
 
     def adapt(self, loss, first_order=None):
         if first_order is None:
@@ -48,24 +60,6 @@ class MetaSGDLearner(BaseLearner):
                          retain_graph=second_order,
                          create_graph=second_order)
         self.module = meta_sgd_update(self.module, self.lrs, gradients)
-
-
-class MetaSGD(nn.Module):
-
-    def __init__(self, model, lr=1.0, first_order=False):
-        super(MetaSGD, self).__init__()
-        self.model = model
-        self.lrs = [th.ones_like(p) * lr for p in model.parameters()]
-        self.lrs = nn.ParameterList([nn.Parameter(lr) for lr in self.lrs])
-        self.first_order = first_order
-
-    def forward(self, *args, **kwargs):
-        return self.new(*args, **kwargs)
-
-    def new(self):
-        return MetaSGDLearner(module=clone_module(self.model),
-                              lrs=clone_parameters(self.lrs),
-                              first_order=self.first_order)
 
 
 if __name__ == '__main__':

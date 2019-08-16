@@ -48,3 +48,13 @@ def clone_module(module):
     return clone
 
 
+def detach_module(module):
+    raise NotImplementedError()
+
+
+def clone_distribution(dist):
+    raise NotImplementedError()
+
+
+def detach_distribution(dist):
+    raise NotImplementedError()

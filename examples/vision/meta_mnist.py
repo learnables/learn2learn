@@ -87,7 +87,7 @@ def main(file_location="/tmp/mnist"):
         iteration_error = 0.0
         iteration_acc = 0.0
         for _ in range(TASKS_PER_STEPS):
-            learner = meta_model.new()
+            learner = meta_model.clone()
             train_task = train_gen.sample(shots=SHOTS)
             valid_task = train_gen.sample(shots=SHOTS,
                                           classes_to_sample=train_task.sampled_classes)

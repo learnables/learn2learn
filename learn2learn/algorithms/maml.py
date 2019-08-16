@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-from torch import nn
 from torch.autograd import grad
 
-from learn2learn.algorithms.utils import clone_module
+from learn2learn import clone_module
 from learn2learn.algorithms.base_learner import BaseLearner
 
 
@@ -40,11 +39,16 @@ def maml_update(model, lr, grads):
     return model
 
 
-class MAMLLearner(BaseLearner):
-    def __init__(self, module, lr, first_order=False):
-        super(MAMLLearner, self).__init__(module)
+class MAML(BaseLearner):
+
+    def __init__(self, model, lr, first_order=False):
+        super(MAML, self).__init__()
+        self.module = model
         self.lr = lr
         self.first_order = first_order
+
+    def forward(self, *args, **kwargs):
+        return self.module(*args, **kwargs)
 
     def adapt(self, loss, first_order=None):
         if first_order is None:
@@ -56,21 +60,9 @@ class MAMLLearner(BaseLearner):
                          create_graph=second_order)
         self.module = maml_update(self.module, self.lr, gradients)
 
-
-class MAML(nn.Module):
-
-    def __init__(self, model, lr, first_order=False):
-        super(MAML, self).__init__()
-        self.model = model
-        self.lr = lr
-        self.first_order = first_order
-
-    def forward(self, *args, **kwargs):
-        return self.new(*args, **kwargs)
-
-    def new(self, first_order=None):
+    def clone(self, first_order=None):
         if first_order is None:
             first_order = self.first_order
-        return MAMLLearner(clone_module(self.model),
-                           lr=self.lr,
-                           first_order=first_order)
+        return MAML(clone_module(self.module),
+                    lr=self.lr,
+                    first_order=first_order)

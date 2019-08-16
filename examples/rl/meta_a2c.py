@@ -13,11 +13,12 @@ import cherry as ch
 
 import learn2learn as l2l
 
+from tqdm import tqdm
 from torch import optim
 from cherry.algorithms import a2c
-from tqdm import tqdm
+from cherry.models.robotics import LinearValue
 
-from policies import DiagNormalPolicy, LinearValue
+from policies import DiagNormalPolicy
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -52,7 +53,7 @@ def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
 
 def main(
         experiment='dev',
-        task_name='nav2d',
+        env_name='2DNavigation-v0',
         adapt_lr=0.1,
         meta_lr=0.01,
         adapt_steps=1,
@@ -67,9 +68,6 @@ def main(
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)
-
-    if task_name == 'nav2d':
-        env_name = '2DNavigation-v0'
 
     def make_env():
         return gym.make(env_name)
@@ -87,7 +85,7 @@ def main(
         iteration_loss = 0.0
         iteration_reward = 0.0
         for task_config in tqdm(env.sample_tasks(meta_bsz)):  # Samples a new config
-            learner = meta_learner.new()
+            learner = meta_learner.clone()
             env.reset_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)

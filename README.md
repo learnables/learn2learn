@@ -26,7 +26,7 @@ maml = l2l.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):
-    learner = maml.new()  # Creates a clone of model
+    learner = maml.clone()  # Creates a clone of model
     task = task_generator.sample(shots=1)
 
     # Fast adapt
