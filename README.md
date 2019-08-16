@@ -48,6 +48,12 @@ for iteration in range(num_iterations):
 
 The following changelog is mostly for the hackathon period.
 
+## August 15, 2019
+
+* Algorithm cleanup.
+* Added BaseLearner with unified API.
+* Support for vectorized environments.
+
 ## August 12, 2019
 
 * Basic implementation of MAML, FOMAML, Meta-SGD.
