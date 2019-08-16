@@ -64,7 +64,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
                                          leave=False):
         train_replays = task_replays[:-1]
         valid_episodes = task_replays[-1]
-        new_policy = l2l.algorithms.utils.clone_module(policy)
+        new_policy = l2l.clone_module(policy)
 
         # Fast Adapt
         for train_episodes in train_replays:
@@ -86,7 +86,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
         # Compute Surrogate Loss
         advantages = compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states)
-        advantages = advantages.detach()
+        advantages = ch.normalize(advantages).detach()
         old_log_probs = old_densities.log_prob(actions).mean(dim=1, keepdim=True).detach()
         new_log_probs = new_densities.log_prob(actions).mean(dim=1, keepdim=True)
         mean_loss += trpo.policy_loss(new_log_probs, old_log_probs, advantages)
@@ -97,7 +97,8 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 def main(
         experiment='dev',
-        task_name='nav2d',
+        task_name='cheedir',
+#        task_name='antdir',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,
@@ -107,7 +108,7 @@ def main(
         tau=1.00,
         gamma=0.99,
         seed=42,
-        num_workers=4,
+        num_workers=6,
         cuda=0,
         ):
     cuda = bool(cuda)
