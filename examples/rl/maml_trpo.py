@@ -5,7 +5,6 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and TRPO for meta-learning.
 """
 
-import ppt
 import gym
 import random
 import numpy as np
@@ -98,11 +97,10 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 def main(
         experiment='dev',
         task_name='cheedir',
-#        task_name='antdir',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,
-        num_iterations=200,
+        num_iterations=1000,
         meta_bsz=40,
         adapt_bsz=20,
         tau=1.00,
@@ -117,8 +115,6 @@ def main(
     exp = ro.Experiment(name=exp_name,
                         params=ro.dict_to_constants(locals()),
                         directory='rl_results')
-    plotter = ppt.Plotter(env=exp_name)
-    ch.debug.debug(log_dir='./logs/')
 
     random.seed(seed)
     np.random.seed(seed)
@@ -184,7 +180,6 @@ def main(
         # Print statistics
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
-        plotter.plot(adaptation_reward, 'adaptation_reward')
         print('adaptation_reward', adaptation_reward)
 
         # TRPO meta-optimization
@@ -224,12 +219,6 @@ def main(
                 for p, u in zip(policy.parameters(), step):
                     p.data.add_(-stepsize, u.data)
                 break
-
-        print('stepsize factor', ls_step)
-        print('kl', kl.item())
-        print('new_loss', new_loss.item())
-        print('old_loss', old_loss.item())
-        print('')
 
 
 if __name__ == '__main__':
