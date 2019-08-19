@@ -9,7 +9,6 @@ import gym
 import random
 import numpy as np
 import torch as th
-import randopt as ro
 import cherry as ch
 import learn2learn as l2l
 
@@ -110,12 +109,6 @@ def main(
         cuda=0,
         ):
     cuda = bool(cuda)
-
-    exp_name = 'rl-' + task_name + '-' + experiment + ro.dict_to_string(locals())
-    exp = ro.Experiment(name=exp_name,
-                        params=ro.dict_to_constants(locals()),
-                        directory='rl_results')
-
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)
