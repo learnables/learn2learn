@@ -12,11 +12,19 @@ def maml_update(model, lr, grads):
     The function re-routes the Python object, thus avoiding in-place
     operations. However, it seems like PyTorch handles in-place operations
     fairly well.
+    
+    NOTE: The model itself is updated in-place (no deepcopy), but the
+          parameters' tensors are not.
 
     NOTE: grads is None -> Don't set the gradients.
     """
     if grads is not None:
-        for p, g in zip(model.parameters(), grads):
+        params = list(model.parameters())
+        if not len(grads) == len(list(params)):
+            msg = 'WARNING:maml_update(): Parameters and gradients have different length. ('
+            msg += str(len(params)) + ' vs ' + str(len(grads)) + ')'
+            print(msg)
+        for p, g in zip(params, grads):
             p.grad = g
 
     # Update the params

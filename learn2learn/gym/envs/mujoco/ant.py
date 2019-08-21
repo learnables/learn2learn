@@ -31,13 +31,13 @@ class AntEnv(AntEnv_):
 
     def render(self, mode='human'):
         if mode == 'rgb_array':
-            self._get_viewer().render()
+            self._get_viewer(mode).render()
             # window size used for old mujoco-py:
             width, height = 500, 500
-            data = self._get_viewer().read_pixels(width, height, depth=False)
+            data = self._get_viewer(mode).read_pixels(width, height, depth=False)
             return data
         elif mode == 'human':
-            self._get_viewer().render()
+            self._get_viewer(mode).render()
 
 
 class AntVelEnv(AntEnv):
