@@ -94,7 +94,6 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
         iteration_error /= tps
         iteration_acc /= tps
-        print(iteration_error.item())
         tqdm_bar.set_description("Loss : {:.3f} Acc : {:.3f}".format(iteration_error.item(), iteration_acc))
 
         # Take the meta-learning step
