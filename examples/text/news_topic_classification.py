@@ -6,30 +6,28 @@ import random
 import torch
 from torch import nn, optim
 from torch.nn import functional as F
-from torchvision import transforms
-from torchvision.datasets import MNIST
 from tqdm import tqdm
 
 import learn2learn as l2l
 
 
 class Net(nn.Module):
-    def __init__(self, ways=3):
-        super(Net, self).__init__()
-        self.conv1 = nn.Conv2d(1, 20, 5, 1)
-        self.conv2 = nn.Conv2d(20, 50, 5, 1)
-        self.fc1 = nn.Linear(4 * 4 * 50, 500)
-        self.fc2 = nn.Linear(500, ways)
+    """Head for sentence-level classification tasks."""
 
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        x = F.max_pool2d(x, 2, 2)
-        x = F.relu(self.conv2(x))
-        x = F.max_pool2d(x, 2, 2)
-        x = x.view(-1, 4 * 4 * 50)
-        x = F.relu(self.fc1(x))
-        x = self.fc2(x)
-        return F.log_softmax(x, dim=1)
+    def __init__(self, num_classes, input_dim=768, inner_dim=200, pooler_dropout=0.3):
+        super().__init__()
+        self.dense = nn.Linear(input_dim, inner_dim)
+        self.activation_fn = nn.ReLU()
+        self.dropout = nn.Dropout(p=pooler_dropout)
+        self.out_proj = nn.Linear(inner_dim, num_classes)
+
+    def forward(self, x, **kwargs):
+        x = self.dropout(x)
+        x = self.dense(x)
+        x = self.activation_fn(x)
+        x = self.dropout(x)
+        x = F.log_softmax(self.out_proj(x), dim=1)
+        return x
 
 
 def accuracy(predictions, targets):
@@ -39,11 +37,39 @@ def accuracy(predictions, targets):
     return acc.item()
 
 
-def compute_loss(task, device, learner, loss_func, batch=5):
+def collate_tokens(values, pad_idx, eos_idx=None, left_pad=False, move_eos_to_beginning=False):
+    """Convert a list of 1d tensors into a padded 2d tensor."""
+    size = max(v.size(0) for v in values)
+    res = values[0].new(len(values), size).fill_(pad_idx)
+
+    def copy_tensor(src, dst):
+        assert dst.numel() == src.numel()
+        if move_eos_to_beginning:
+            assert src[-1] == eos_idx
+            dst[0] = eos_idx
+            dst[1:] = src[:-1]
+        else:
+            dst.copy_(src)
+
+    for i, v in enumerate(values):
+        copy_tensor(v, res[i][size - len(v):] if left_pad else res[i][:len(v)])
+    return res
+
+
+def compute_loss(task, roberta, device, learner, loss_func, batch=15):
     loss = 0.0
     acc = 0.0
-    for i, (x, y) in enumerate(torch.utils.data.DataLoader(task, batch_size=batch, shuffle=True, num_workers=0)):
-        x, y = x.squeeze(dim=1).to(device), y.view(-1).to(device)
+    for i, (x, y) in enumerate(torch.utils.data.DataLoader(
+            task, batch_size=batch, shuffle=True, num_workers=0)):
+        # RoBERTa ENCODING
+        x = collate_tokens([roberta.encode(sent) for sent in x], pad_idx=1)
+        with torch.no_grad():
+            x = roberta.extract_features(x)
+        x = x[:, 0, :]
+
+        # Moving to device
+        x, y = x.to(device), y.view(-1).to(device)
+
         output = learner(x)
         curr_loss = loss_func(output, y)
         acc += accuracy(output, y)
@@ -53,20 +79,15 @@ def compute_loss(task, device, learner, loss_func, batch=5):
 
 
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
-         download_location="/tmp/mnist"):
-    transformations = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,)),
-        lambda x: x.view(1, 1, 28, 28),
-    ])
+         download_location="/tmp/text"):
+    text_train = l2l.data.NewsClassification(root=download_location, download=True)
+    train_gen = l2l.data.TaskGenerator(text_train, ways=ways)
 
-    mnist_train = MNIST(download_location, train=True, download=True, transform=transformations)
-    # mnist_test = MNIST(file_location, train=False, download=True, transform=transformations)
-
-    train_gen = l2l.data.TaskGenerator(mnist_train, ways=ways)
-    # test_gen = l2l.data.TaskGenerator(mnist_test, ways=ways)
-
-    model = Net(ways)
+    torch.hub.set_dir(download_location)
+    roberta = torch.hub.load('pytorch/fairseq', 'roberta.base')
+    roberta.eval()
+    roberta.to(device)
+    model = Net(num_classes=ways)
     model.to(device)
     meta_model = l2l.MAML(model, lr=maml_lr)
     opt = optim.Adam(meta_model.parameters(), lr=lr)
@@ -83,11 +104,12 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
             # Fast Adaptation
             for step in range(fas):
-                train_error, _ = compute_loss(train_task, device, learner, loss_func, batch=shots * ways)
+                train_error, _ = compute_loss(train_task, roberta, device, learner, loss_func, batch=shots * ways)
                 learner.adapt(train_error)
 
             # Compute validation loss
-            valid_error, valid_acc = compute_loss(valid_task, device, learner, loss_func, batch=shots * ways)
+            valid_error, valid_acc = compute_loss(valid_task, roberta, device, learner, loss_func,
+                                                  batch=shots * ways)
             iteration_error += valid_error
             iteration_acc += valid_acc
 
@@ -102,7 +124,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Learn2Learn MNIST Example')
+    parser = argparse.ArgumentParser(description='Learn2Learn Text Classification Example')
 
     parser.add_argument('--ways', type=int, default=5, metavar='N',
                         help='number of ways (default: 5)')
@@ -127,8 +149,8 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=1, metavar='S',
                         help='random seed (default: 1)')
 
-    parser.add_argument('--download-location', type=str, default="/tmp/mnist", metavar='S',
-                        help='download location for train data (default : /tmp/mnist')
+    parser.add_argument('--download-location', type=str, default="/tmp/text", metavar='S',
+                        help='download location for train data and roberta(default : /tmp/text')
 
     args = parser.parse_args()
 
