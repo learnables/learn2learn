@@ -2,6 +2,7 @@
 
 import argparse
 import random
+import numpy as np
 
 import torch
 from torch import nn, optim
@@ -134,11 +135,22 @@ if __name__ == '__main__':
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
 
-    torch.manual_seed(args.seed)
     random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if use_cuda:
+        torch.cuda.manual_seed(args.seed)
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
 
     device = torch.device("cuda" if use_cuda else "cpu")
 
-    main(lr=args.lr, maml_lr=args.maml_lr, iterations=args.iterations, ways=args.ways, shots=args.shots,
-         tps=args.tasks_per_step, fas=args.fast_adaption_steps, device=device,
+    main(lr=args.lr,
+         maml_lr=args.maml_lr,
+         iterations=args.iterations,
+         ways=args.ways,
+         shots=args.shots,
+         tps=args.tasks_per_step,
+         fas=args.fast_adaption_steps,
+         device=device,
          download_location=args.download_location)
