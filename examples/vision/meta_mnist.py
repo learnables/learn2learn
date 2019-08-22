@@ -2,6 +2,7 @@
 
 import argparse
 import random
+import numpy as np
 
 import torch
 from torch import nn, optim
@@ -93,6 +94,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
         iteration_error /= tps
         iteration_acc /= tps
+        print(iteration_error.item())
         tqdm_bar.set_description("Loss : {:.3f} Acc : {:.3f}".format(iteration_error.item(), iteration_acc))
 
         # Take the meta-learning step
@@ -134,11 +136,22 @@ if __name__ == '__main__':
 
     use_cuda = not args.no_cuda and torch.cuda.is_available()
 
-    torch.manual_seed(args.seed)
     random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if use_cuda:
+        torch.cuda.manual_seed(args.seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
     device = torch.device("cuda" if use_cuda else "cpu")
 
-    main(lr=args.lr, maml_lr=args.maml_lr, iterations=args.iterations, ways=args.ways, shots=args.shots,
-         tps=args.tasks_per_step, fas=args.fast_adaption_steps, device=device,
+    main(lr=args.lr,
+         maml_lr=args.maml_lr,
+         iterations=args.iterations,
+         ways=args.ways,
+         shots=args.shots,
+         tps=args.tasks_per_step,
+         fas=args.fast_adaption_steps,
+         device=device,
          download_location=args.download_location)
