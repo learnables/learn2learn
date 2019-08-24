@@ -40,8 +40,6 @@ class MAMLLinearBlock(nn.Module):
                                         eps=1e-3,
                                         track_running_stats=False,
                                         )
-        # TODO: Remove affine and use AddBias
-        # self.bias = AddBias(output_size)
         self.linear = nn.Linear(input_size, output_size)
         maml_fc_init_(self.linear)
 
