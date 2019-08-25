@@ -16,6 +16,9 @@ class FullOmniglot(Dataset):
 
         self.dataset = ConcatDataset((omni_background, omni_evaluation))
 
+    def __len__(self):
+        return len(self.dataset)
+
     def __getitem__(self, item):
         image, character_class = self.dataset[item]
         if self.transform:
