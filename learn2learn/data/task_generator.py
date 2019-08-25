@@ -55,7 +55,6 @@ class TaskGenerator:
         self.ways = ways
         self.split = split
 
-        self.__len__: len(dataset)
         self.target_to_indices = self.get_dict_of_target_to_indices()
 
         self.classes = list(self.target_to_indices.keys())
@@ -64,6 +63,11 @@ class TaskGenerator:
 
         if self.split:
             self.split_datasets(n=test_size)
+
+
+    def __len__(self):
+        return len(self.dataset)
+
 
     def split_datasets(self, n):
         """ This method would randomly select n classes to belong in test classes.
