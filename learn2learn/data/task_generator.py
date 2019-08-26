@@ -28,15 +28,14 @@ class LabelEncoder:
         Args:
             classes: list, tuple of classes
         """
-        # ensure we don't have duplicates in the list
-        classes = sorted(list(set(classes)))
-        new_class = 0
+        # shuffle all our classes
+        classes = np.random.shuffle(classes)
+        assert len(set(classes)) == len(classes), "Classes contains duplicate values"
         self.class_to_idx = dict()
         self.idx_to_class = dict()
-        for old_class in classes:
-            self.class_to_idx.update({old_class: new_class})
-            self.idx_to_class.update({new_class: old_class})
-            new_class += 1
+        for idx, old_class in enumerate(classes):
+            self.class_to_idx.update({old_class: idx})
+            self.idx_to_class.update({idx: old_class})
 
 
 class TaskGenerator:
@@ -64,10 +63,8 @@ class TaskGenerator:
         if self.split:
             self.split_datasets(n=test_size)
 
-
     def __len__(self):
         return len(self.dataset)
-
 
     def split_datasets(self, n):
         """ This method would randomly select n classes to belong in test classes.
