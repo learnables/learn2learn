@@ -2,7 +2,7 @@
 
 from torch.autograd import grad
 
-from learn2learn import clone_module
+from learn2learn.utils import clone_module
 from learn2learn.algorithms.base_learner import BaseLearner
 
 
