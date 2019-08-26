@@ -80,8 +80,8 @@ def compute_loss(task, roberta, device, learner, loss_func, batch=15):
 
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
          download_location="/tmp/text"):
-    text_train = l2l.data.NewsClassification(root=download_location, download=True)
-    train_gen = l2l.data.TaskGenerator(text_train, ways=ways)
+    text_train = l2l.text.datasets.NewsClassification(root=download_location, download=True)
+    train_gen = l2l.text.datasets.TaskGenerator(text_train, ways=ways)
 
     torch.hub.set_dir(download_location)
     roberta = torch.hub.load('pytorch/fairseq', 'roberta.base')
@@ -89,7 +89,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
     roberta.to(device)
     model = Net(num_classes=ways)
     model.to(device)
-    meta_model = l2l.MAML(model, lr=maml_lr)
+    meta_model = l2l.algorithms.MAML(model, lr=maml_lr)
     opt = optim.Adam(meta_model.parameters(), lr=lr)
     loss_func = nn.NLLLoss(reduction="sum")
 
