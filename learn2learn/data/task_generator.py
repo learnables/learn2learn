@@ -75,7 +75,7 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-    def __init__(self, dataset: MetaDataset, classes: list, ways: int = 3):
+    def __init__(self, dataset: MetaDataset, classes: list = None, ways: int = 3):
         """
 
         Args:
@@ -89,9 +89,13 @@ class TaskGenerator:
         self.dataset = dataset
         self.ways = ways
         self.classes = classes
-        assert len(classes) >= ways, ValueError("Ways are more than the number of classes available")
+        if classes is None:
+            self.classes = self.dataset.labels
 
-    def sample(self, shots: int = 5):
+        assert len(classes) >= ways, ValueError("Ways are more than the number of classes available")
+        self._check_classes(self.classes)
+
+    def sample(self, classes: list = None, shots: int = 5):
         """ Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
@@ -99,12 +103,15 @@ class TaskGenerator:
 
         Args:
             shots: sample size
+            classes: Optional list,
             labels_to_sample: List of labels you want to sample from
 
         Returns: Dataset, list(labels)
 
         """
-        classes_to_sample = np.random.choice(self.classes, size=self.ways, replace=False)
+        classes = self.classes if classes is None else classes
+        self._check_classes(classes)
+        classes_to_sample = np.random.choice(classes, size=self.ways, replace=False)
         label_encoding = LabelEncoder(classes_to_sample)
         data_indices = []
         classes = []
@@ -115,3 +122,6 @@ class TaskGenerator:
         data = [self.dataset[idx][0] for idx in data_indices]
 
         return SampleDataset(data, classes, classes_to_sample)
+
+    def _check_classes(self, classes):
+        assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
