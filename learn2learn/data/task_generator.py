@@ -29,7 +29,7 @@ class LabelEncoder:
             classes: list, tuple of classes
         """
         # shuffle all our classes
-        classes = np.random.shuffle(classes)
+#        classes = np.random.shuffle(classes)
         assert len(set(classes)) == len(classes), "Classes contains duplicate values"
         self.class_to_idx = dict()
         self.idx_to_class = dict()
