@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import torch
-from torch import nn
-
 from scipy.stats import truncnorm
+from torch import nn
 
 
 def truncated_normal_(tensor, mean=0.0, std=1.0):
@@ -94,7 +93,6 @@ class ConvBlock(nn.Module):
 
 
 class ConvBase(nn.Sequential):
-
     """
     NOTE:
         Omniglot: hidden=64, channels=1, no max_pool
@@ -113,7 +111,7 @@ class ConvBase(nn.Sequential):
                           (3, 3),
                           max_pool=max_pool,
                           max_pool_factor=max_pool_factor),
-        ]
+                ]
         for l in range(layers - 1):
             core.append(ConvBlock(hidden,
                                   hidden,
@@ -145,10 +143,10 @@ class OmniglotCNN(nn.Module):
         super(OmniglotCNN, self).__init__()
         self.hidden_size = hidden_size
         self.base = ConvBase(output_size=hidden_size,
-                                 hidden=hidden_size,
-                                 channels=1,
-                                 max_pool=False,
-                                 layers=layers)
+                             hidden=hidden_size,
+                             channels=1,
+                             max_pool=False,
+                             layers=layers)
         self.linear = nn.Linear(hidden_size, output_size, bias=True)
         self.linear.weight.data.normal_()
         self.linear.bias.data.mul_(0.0)
@@ -169,12 +167,12 @@ class MiniImagenetCNN(nn.Module):
                              channels=3,
                              max_pool=True,
                              layers=layers,
-                             max_pool_factor=4//layers)
-        self.linear = nn.Linear(25*hidden_size, output_size, bias=True)
+                             max_pool_factor=4 // layers)
+        self.linear = nn.Linear(25 * hidden_size, output_size, bias=True)
         maml_init_(self.linear)
         self.hidden_size = hidden_size
 
     def forward(self, x):
         x = self.base(x)
-        x = self.linear(x.view(-1, 25*self.hidden_size))
+        x = self.linear(x.view(-1, 25 * self.hidden_size))
         return x
