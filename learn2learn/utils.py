@@ -49,10 +49,36 @@ def clone_module(module):
 
 
 def detach_module(module):
-    raise NotImplementedError()
+    severed = copy.deepcopy(module)
+
+    # First, re-write all parameters
+    for param_key in module._parameters:
+        if module._parameters[param_key] is not None:
+            detached = module._parameters[param_key].detach()
+            severed._parameters[param_key] = detached
+
+    # Second, handle the buffers if necessary
+    for buffer_key in module._buffers:
+        if severed._buffers[buffer_key] is not None and \
+                severed._buffers[buffer_key].requires_grad:
+            severed._buffers[buffer_key] = module._buffers[buffer_key].detach()
+
+    # Then, recurse for each submodule
+    for module_key in severed._modules:
+        severed._modules[module_key] = detach_module(module._modules[module_key])
+    return severed
 
 
 def clone_distribution(dist):
+    """
+    clone = copy.deepcopy(module)
+
+    for param_key in clone.__dict__:
+        if clone.__dict__[param_key] is a torch object:
+            if it requires_grad:
+                clone.__dict__[param_key] = dist.__dict__[param_key].clone()
+
+    """
     raise NotImplementedError()
 
 
