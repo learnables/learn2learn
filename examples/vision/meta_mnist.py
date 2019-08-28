@@ -7,6 +7,7 @@ import numpy as np
 import torch
 from torch import nn, optim
 from torch.nn import functional as F
+from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import MNIST
 from tqdm import tqdm
@@ -43,7 +44,7 @@ def accuracy(predictions, targets):
 def compute_loss(task, device, learner, loss_func, batch=5):
     loss = 0.0
     acc = 0.0
-    for i, (x, y) in enumerate(torch.utils.data.DataLoader(task, batch_size=batch, shuffle=True, num_workers=0)):
+    for i, (x, y) in enumerate(DataLoader(task, batch_size=batch, shuffle=True, num_workers=0)):
         x, y = x.squeeze(dim=1).to(device), y.view(-1).to(device)
         output = learner(x)
         curr_loss = loss_func(output, y)
@@ -61,7 +62,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
         lambda x: x.view(1, 1, 28, 28),
     ])
 
-    mnist_train = MNIST(download_location, train=True, download=True, transform=transformations)
+    mnist_train = l2l.data.MetaDataset(MNIST(download_location, train=True, download=True, transform=transformations))
     # mnist_test = MNIST(file_location, train=False, download=True, transform=transformations)
 
     train_gen = l2l.data.TaskGenerator(mnist_train, ways=ways)
@@ -80,7 +81,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
         for _ in range(tps):
             learner = meta_model.clone()
             train_task = train_gen.sample(shots=shots)
-            valid_task = train_gen.sample(shots=shots, classes_to_sample=train_task.sampled_classes)
+            valid_task = train_gen.sample(shots=shots, classes=train_task.sampled_classes)
 
             # Fast Adaptation
             for step in range(fas):
