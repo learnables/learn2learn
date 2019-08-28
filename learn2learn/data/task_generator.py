@@ -67,7 +67,8 @@ class LabelEncoder:
             classes: List of classes
         """
         # shuffle all our classes
-        np.random.shuffle(classes)
+        # TODO: Instead of sorted, it should be shuffle()
+        classes = sorted(classes)
         assert len(set(classes)) == len(classes), "Classes contains duplicate values"
         self.class_to_idx = dict()
         self.idx_to_class = dict()
