@@ -64,9 +64,12 @@ def main(
                                                    lambda x: 1.0 - x,
                                                 ]),
                                                 download=True)
-    train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways)
-    valid_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways)
-    test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways)
+    omniglot = l2l.data.MetaDataset(omniglot)
+    classes = list(range(1623))
+    random.shuffle(classes)
+    train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[:1100])
+    valid_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1100:1200])
+    test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
     # TODO: Implement an easy way to split one dataset into splits, based on classes.
 
     # Create model
@@ -89,7 +92,7 @@ def main(
             learner = maml.clone()
             adaptation_data = train_generator.sample(shots=shots)
             evaluation_data = train_generator.sample(shots=shots,
-                                                     classes_to_sample=adaptation_data.sampled_classes)
+                                                     classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -104,7 +107,7 @@ def main(
             learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
-                                                     classes_to_sample=adaptation_data.sampled_classes)
+                                                     classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -118,7 +121,7 @@ def main(
             learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
-                                                    classes_to_sample=adaptation_data.sampled_classes)
+                                                    classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,

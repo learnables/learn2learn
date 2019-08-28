@@ -74,6 +74,9 @@ def main(
     train_dataset = ImageFolder(train_images_path, transform)
     valid_dataset = ImageFolder(valid_images_path, transform)
     test_dataset = ImageFolder(test_images_path, transform)
+    train_dataset = l2l.data.MetaDataset(train_dataset)
+    valid_dataset = l2l.data.MetaDataset(valid_dataset)
+    test_dataset = l2l.data.MetaDataset(test_dataset)
     train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
     valid_generator = l2l.data.TaskGenerator(dataset=valid_dataset, ways=ways)
     test_generator = l2l.data.TaskGenerator(dataset=test_dataset, ways=ways)
@@ -98,7 +101,7 @@ def main(
             learner = maml.clone()
             adaptation_data = train_generator.sample(shots=shots)
             evaluation_data = train_generator.sample(shots=shots,
-                                                     classes_to_sample=adaptation_data.sampled_classes)
+                                                     classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -113,7 +116,7 @@ def main(
             learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
-                                                     classes_to_sample=adaptation_data.sampled_classes)
+                                                     classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -127,7 +130,7 @@ def main(
             learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
-                                                    classes_to_sample=adaptation_data.sampled_classes)
+                                                    classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
