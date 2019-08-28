@@ -67,7 +67,7 @@ class LabelEncoder:
             classes: List of classes
         """
         # shuffle all our classes
-#        classes = np.random.shuffle(classes)
+        #        classes = np.random.shuffle(classes)
         assert len(set(classes)) == len(classes), "Classes contains duplicate values"
         self.class_to_idx = dict()
         self.idx_to_class = dict()
@@ -94,7 +94,7 @@ class TaskGenerator:
         if classes is None:
             self.classes = self.dataset.labels
 
-        assert len(classes) >= ways, ValueError("Ways are more than the number of classes available")
+        assert len(self.classes) <= ways, ValueError("Ways are more than the number of classes available")
         self._check_classes(self.classes)
 
     def sample(self, classes: list = None, shots: int = 5):
