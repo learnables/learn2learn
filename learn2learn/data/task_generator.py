@@ -94,7 +94,7 @@ class TaskGenerator:
         if classes is None:
             self.classes = self.dataset.labels
 
-        assert len(self.classes) <= ways, ValueError("Ways are more than the number of classes available")
+        assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
         self._check_classes(self.classes)
 
     def sample(self, classes: list = None, shots: int = 5):
