@@ -43,7 +43,7 @@ def fast_adapt(adaptation_data, evaluation_data, learner, loss, adaptation_steps
 
 def main(
         ways=5,
-        shots=1,
+        shots=5,
         meta_lr=0.003,
         fast_lr=0.5,
         meta_batch_size=32,

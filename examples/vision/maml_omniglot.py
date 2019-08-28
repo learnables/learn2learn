@@ -70,7 +70,6 @@ def main(
     train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[:1100])
     valid_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1100:1200])
     test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
-    # TODO: Implement an easy way to split one dataset into splits, based on classes.
 
     # Create model
     model = l2l.models.OmniglotFC(28**2, ways)
