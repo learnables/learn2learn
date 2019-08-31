@@ -13,7 +13,7 @@ import cherry as ch
 
 import learn2learn as l2l
 
-from torch import autograd, optim
+from torch import optim
 from torch.distributions.kl import kl_divergence
 from cherry.algorithms import ppo, trpo
 from cherry.models.robotics import LinearValue
@@ -31,7 +31,7 @@ def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_
     return clone
 
 
-def precompute_quantities(states, actions, rewards, dones, next_states, old_policy, new_policy):
+def precompute_quantities(states, actions, old_policy, new_policy):
     old_density = old_policy.density(states)
     old_log_probs = old_density.log_prob(actions).mean(dim=1, keepdim=True).detach()
     new_density = new_policy.density(states)
@@ -133,9 +133,6 @@ def main(
                  old_log_probs,
                  new_log_probs) = precompute_quantities(states,
                                                         actions,
-                                                        rewards,
-                                                        dones,
-                                                        next_states,
                                                         old_policy,
                                                         new_policy)
                 for step in range(adapt_steps):
@@ -162,9 +159,6 @@ def main(
                      old_log_probs,
                      new_log_probs) = precompute_quantities(states,
                                                             actions,
-                                                            rewards,
-                                                            dones,
-                                                            next_states,
                                                             old_policy,
                                                             new_policy)
 
