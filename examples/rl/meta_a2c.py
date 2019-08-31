@@ -62,7 +62,7 @@ def main(
         adapt_bsz=20,
         tau=1.00,
         gamma=0.99,
-        num_workers=8,
+        num_workers=2,
         seed=42,
 ):
     random.seed(seed)

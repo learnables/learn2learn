@@ -95,7 +95,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 def main(
         experiment='dev',
-        task_name='cheedir',
+        task_name='nav2d',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,
@@ -146,8 +146,6 @@ def main(
         iteration_reward = 0.0
         iteration_replays = []
         iteration_policies = []
-        policy.to('cpu')
-        baseline.to('cpu')
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
             clone = deepcopy(policy)

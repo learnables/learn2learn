@@ -64,8 +64,6 @@ def main(
         iteration_reward = 0.0
         iteration_replays = []
         iteration_policies = []
-        policy.to('cpu')
-        baseline.to('cpu')
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
             learner = meta_learner.clone()
