@@ -70,17 +70,33 @@ def detach_module(module):
 
 
 def clone_distribution(dist):
-    """
-    clone = copy.deepcopy(module)
+    clone = copy.deepcopy(dist)
 
     for param_key in clone.__dict__:
-        if clone.__dict__[param_key] is a torch object:
-            if it requires_grad:
+        item = clone.__dict__[param_key]
+        if isinstance(item, th.Tensor):
+            if item.requires_grad:
                 clone.__dict__[param_key] = dist.__dict__[param_key].clone()
+        elif isinstance(item, th.nn.Module):
+            clone.__dict__[param_key] = clone_module(dist.__dict__[param_key])
+        elif isinstance(item, th.Distribution):
+            clone.__dict__[param_key] = clone_distribution(dist.__dict__[param_key])
 
-    """
-    raise NotImplementedError()
+    return clone
 
 
 def detach_distribution(dist):
-    raise NotImplementedError()
+
+    severed = copy.deepcopy(dist)
+
+    for param_key in severed.__dict__:
+        item = severed.__dict__[param_key]
+        if isinstance(item, th.Tensor):
+            if item.requires_grad:
+                severed.__dict__[param_key] = dist.__dict__[param_key].detach()
+        elif isinstance(item, th.nn.Module):
+            severed.__dict__[param_key] = detach_module(dist.__dict__[param_key])
+        elif isinstance(item, th.Distribution):
+            severed.__dict__[param_key] = detach_distribution(dist.__dict__[param_key])
+
+    return severed
