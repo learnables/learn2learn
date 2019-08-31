@@ -17,4 +17,3 @@ class BaseLearner(nn.Module):
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
-

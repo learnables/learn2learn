@@ -21,92 +21,83 @@ class SampleDataset(Dataset):
         return self.data[idx], self.label[idx]
 
 
-class LabelEncoder:
-    def __init__(self, classes):
-        """ Encodes a list of classes into indices, starting from 0.
+class MetaDataset(Dataset):
+    """ It wraps a torch dataset by creating a map of target to indices.
+    This comes in handy when we want to sample elements randomly for a particular label.
 
-        Args:
-            classes: list, tuple of classes
-        """
-        # ensure we don't have duplicates in the list
-        classes = sorted(list(set(classes)))
-        new_class = 0
-        self.class_to_idx = dict()
-        self.idx_to_class = dict()
-        for old_class in classes:
-            self.class_to_idx.update({old_class: new_class})
-            self.idx_to_class.update({new_class: old_class})
-            new_class += 1
+    Args:
+        dataset: A torch dataset
 
+    Notes:
+        For l2l to work its important that the dataset returns a (data, target) tuple.
+        If your dataset doesn't return that, it should be trivial to wrap your dataset
+        with another class to do that.
+        #TODO : Add example for wrapping a non standard l2l dataset
+    """
 
-class TaskGenerator:
-    def __init__(self, dataset: Dataset, ways: int = 3, split=False, test_size=3, test_classes=[]):
-        """
-
-        Args:
-            dataset: should be a Dataset that returns (data, target)
-            ways: number of labels to sample from
-            split: If set to True, it will split the labels into train and test.
-            test_size: If split is set to True, then it uses test_size samples in test
-
-        """
-
+    def __init__(self, dataset: Dataset):
         self.dataset = dataset
-        self.ways = ways
-        self.split = split
+        self.labels_to_indices = self.get_dict_of_labels_to_indices()
+        self.labels = list(self.labels_to_indices.keys())
 
-        self.__len__: len(dataset)
-        self.target_to_indices = self.get_dict_of_target_to_indices()
+    def __getitem__(self, item):
+        return self.dataset[item]
 
-        self.classes = list(self.target_to_indices.keys())
-        self.train_classes = list()
-        self.test_classes = test_classes
+    def __len__(self):
+        return len(self.dataset)
 
-        if self.split:
-            self.split_datasets(n=test_size)
-
-    def split_datasets(self, n):
-        """ This method would randomly select n classes to belong in test classes.
-        This way we can create two TaskGenerators and measure how easily
-        we learn on data we've never seen before.
-
-        """
-        if self.split:
-            if len(self.test_classes) > 0:
-                self.test_classes = self.test_classes
-            else:
-                self.test_classes = np.random.choice(self.classes, size=n, replace=False)
-
-            self.train_classes = list(set(self.classes) - set(self.test_classes))
-
-    def get_dict_of_target_to_indices(self):
+    def get_dict_of_labels_to_indices(self):
         """ Iterates over the entire dataset and creates a map of target to indices.
 
         Returns: A dict with key as the label and value as list of indices.
 
         """
-        target_to_indices = defaultdict(list)
+
+        classes_to_indices = defaultdict(list)
         for i in range(len(self.dataset)):
-            target_to_indices[self.dataset[i][1]].append(i)
-        return target_to_indices
+            classes_to_indices[self.dataset[i][1]].append(i)
+        return classes_to_indices
 
-    def get_random_label_pair(self, sample_from_train):
-        """ Creates a random label tuple.
 
-        Selects `ways` number of random labels from the set of labels.
+class LabelEncoder:
+    def __init__(self, classes):
+        """ Encodes a list of classes into indices, starting from 0.
 
-        Returns: list of labels
-
+        Args:
+            classes: List of classes
         """
-        if self.split:
-            if sample_from_train:
-                return np.random.choice(self.train_classes, size=self.ways, replace=False)
-            else:
-                return np.random.choice(self.test_classes, size=self.ways, replace=False)
-        else:
-            return np.random.choice(self.classes, size=self.ways, replace=False)
+        # shuffle all our classes
+        #        classes = np.random.shuffle(classes)
+        assert len(set(classes)) == len(classes), "Classes contains duplicate values"
+        self.class_to_idx = dict()
+        self.idx_to_class = dict()
+        for idx, old_class in enumerate(classes):
+            self.class_to_idx.update({old_class: idx})
+            self.idx_to_class.update({idx: old_class})
 
-    def sample(self, shots: int = 5, classes_to_sample=None, sample_from_train=True):
+
+class TaskGenerator:
+    def __init__(self, dataset: MetaDataset, classes: list = None, ways: int = 3):
+        """
+
+        Args:
+            dataset: should be a MetaDataset
+            classes: List of classes to sample from
+            ways: number of labels to sample from
+        """
+
+        # TODO : Add conditional check to work even when dataset isn't MetaDataset and a torch.Dataset
+        #  then also it should work
+        self.dataset = dataset
+        self.ways = ways
+        self.classes = classes
+        if classes is None:
+            self.classes = self.dataset.labels
+
+        assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
+        self._check_classes(self.classes)
+
+    def sample(self, classes: list = None, shots: int = 5):
         """ Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
@@ -114,20 +105,25 @@ class TaskGenerator:
 
         Args:
             shots: sample size
+            classes: Optional list,
             labels_to_sample: List of labels you want to sample from
 
         Returns: Dataset, list(labels)
 
         """
-        if classes_to_sample is None:
-            classes_to_sample = self.get_random_label_pair(sample_from_train)
+        classes = self.classes if classes is None else classes
+        self._check_classes(classes)
+        classes_to_sample = np.random.choice(classes, size=self.ways, replace=False)
         label_encoding = LabelEncoder(classes_to_sample)
         data_indices = []
         classes = []
         for _class in classes_to_sample:
-            data_indices.extend(np.random.choice(self.target_to_indices[_class], shots, replace=False))
+            data_indices.extend(np.random.choice(self.dataset.labels_to_indices[_class], shots, replace=False))
             classes.extend(np.full(shots, fill_value=label_encoding.class_to_idx[_class]))
 
         data = [self.dataset[idx][0] for idx in data_indices]
 
         return SampleDataset(data, classes, classes_to_sample)
+
+    def _check_classes(self, classes):
+        assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
