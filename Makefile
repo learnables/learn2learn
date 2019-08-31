@@ -5,7 +5,7 @@ pro:
 	python examples/rl/promp.py
 
 dice:
-	python examples/rl/maml_trpo_dice.py
+	python examples/rl/maml_dice.py
 
 publish:
 	python setup.py sdist
