@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# The code is adapted from Oscar Knagg
+# https://github.com/oscarknagg/few-shot
+# and he has a great set of medium articles around it.
+
 from torch.optim import Adam
 from torch.utils.data import DataLoader
 import argparse
@@ -14,7 +18,8 @@ from torch.nn import Module
 from typing import Callable
 
 import learn2learn as l2l
-from torchvision.datasets import Omniglot
+# from torchvision.datasets import Omniglot
+from learn2learn.vision.datasets import FullOmniglot
 from torchvision import transforms
 from PIL.Image import LANCZOS
 from torch.utils.data import ConcatDataset
@@ -38,13 +43,9 @@ parser.add_argument('--k-train', default=60, type=int)
 parser.add_argument('--k-test', default=5, type=int)
 parser.add_argument('--q-train', default=5, type=int)
 parser.add_argument('--q-test', default=1, type=int)
-args = parser.parse_args("".split())
+args = parser.parse_args()
 
-evaluation_episodes = 1000
-episodes_per_epoch = 100
-
-args.dataset = 'omniglot'
-
+evaluation_episodes = 100
 n_epochs = 40
 num_input_channels = 1
 drop_lr_every = 20
@@ -116,31 +117,45 @@ NAMED_METRICS = {
     'categorical_accuracy': categorical_accuracy
 }
 
-max_y = 964
-omni_background = Omniglot(root='./data',
-                               background=True,
-                               transform=transforms.Compose([
-                                   transforms.Resize(28, interpolation=LANCZOS),
-                                   transforms.ToTensor(),
-                                   # TODO: Add DiscreteRotations([0, 90, 180, 270])
-                                   lambda x: 1.0 - x,
-                               ]),
-                               download=True)
+# max_y = 964
+# omni_background = Omniglot(root='./data',
+#                                background=True,
+#                                transform=transforms.Compose([
+#                                    transforms.Resize(28, interpolation=LANCZOS),
+#                                    transforms.ToTensor(),
+#                                    # TODO: Add DiscreteRotations([0, 90, 180, 270])
+#                                    lambda x: 1.0 - x,
+#                                ]),
+#                                download=True)
 
-omni_evaluation = Omniglot(root='./data',
-                               background=False,
-                               transform=transforms.Compose([
-                                   transforms.Resize(28, interpolation=LANCZOS),
-                                   transforms.ToTensor(),
-                                   # TODO: Add DiscreteRotations([0, 90, 180, 270])
-                                   lambda x: 1.0 - x,
-                               ]),
-                               target_transform=transforms.Compose([
-                                   lambda x: max_y + x,
-                               ]),
-                               download=True)
-omniglot = ConcatDataset((omni_background, omni_evaluation))
+# omni_evaluation = Omniglot(root='./data',
+#                                background=False,
+#                                transform=transforms.Compose([
+#                                    transforms.Resize(28, interpolation=LANCZOS),
+#                                    transforms.ToTensor(),
+#                                    # TODO: Add DiscreteRotations([0, 90, 180, 270])
+#                                    lambda x: 1.0 - x,
+#                                ]),
+#                                target_transform=transforms.Compose([
+#                                    lambda x: max_y + x,
+#                                ]),
+#                                download=True)
+# omniglot = ConcatDataset((omni_background, omni_evaluation))
 
+omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
+                                            transform=transforms.Compose([
+                                               l2l.vision.transforms.RandomDiscreteRotation([0.0, 90.0, 180.0, 270.0]),
+                                               transforms.Resize(28, interpolation=LANCZOS),
+                                               transforms.ToTensor(),
+                                               lambda x: 1.0 - x,
+                                            ]),
+                                            download=True)
+omniglot = l2l.data.MetaDataset(omniglot)
+#     classes = list(range(1623))
+#     random.shuffle(classes)
+#     train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[:1100])
+#     valid_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1100:1200])
+#     test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
 
 model = nn.Sequential(
         conv_block(num_input_channels, 5),
@@ -150,7 +165,6 @@ model = nn.Sequential(
         Flatten(),
     )
 model.to(device, dtype=torch.double)
-
 
 optimiser = Adam(model.parameters(), lr=1e-3)
 loss_fn = torch.nn.NLLLoss().cuda()
@@ -299,7 +313,6 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
         verbose: bool =True, fit_function: Callable = gradient_step, fit_function_kwargs: dict = {}):
 
     # Determine number of samples:
-    num_batches = 100
     batch_size= None
     eval_dict = {
         'eval_fn':proto_net_episode,
@@ -328,7 +341,7 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
         optimiser = set_lr(epoch, optimiser,lrs)
         
         epoch_logs = {}
-        for batch_index in range(300):
+        for batch_index in range(training_episodes):
             batch_logs = dict(batch=batch_index, size=(batch_size or 1))
 
             support_t = train_generator.sample(shots=args.q_train)
@@ -348,7 +361,7 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
         seen = 0
         metric_name = f"{eval_dict['prefix']}{eval_dict['n_shot']}-shot_{eval_dict['k_way']}-way_acc"
         totals = {'loss': 0, metric_name: 0}
-        for batch_index in range(20):
+        for batch_index in range(evaluation_episodes):
 
 
             support_t_eval = eval_generator.sample(shots=args.q_test)
