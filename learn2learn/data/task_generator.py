@@ -111,19 +111,31 @@ class TaskGenerator:
         Returns: Dataset, list(labels)
 
         """
-        classes = self.classes if classes is None else classes
-        self._check_classes(classes)
-        classes_to_sample = np.random.choice(classes, size=self.ways, replace=False)
-        label_encoding = LabelEncoder(classes_to_sample)
+
+        # If classes aren't specified while calling the function, then we can
+        # sample from all the classes mentioned during the initialization of the TaskGenerator
+        classes_to_sample_from = classes if classes else self.classes
+
+        # assure that classes_to_sample_from is a subset of self.dataset.labels
+        self._check_classes(classes_to_sample_from)
+
+        # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
+        classes_to_sample = np.random.choice(classes_to_sample_from, size=self.ways, replace=False)
+
+        # encode labels (map 6,4,7 to 0,1,2 so that we can do a BCELoss)
+        label_encoder = LabelEncoder(classes_to_sample)
+
         data_indices = []
-        classes = []
+        data_labels = []
         for _class in classes_to_sample:
+            # select subset of indices from each of the classes and add it to data_indices
             data_indices.extend(np.random.choice(self.dataset.labels_to_indices[_class], shots, replace=False))
-            classes.extend(np.full(shots, fill_value=label_encoding.class_to_idx[_class]))
+            # add those labels to data_labels (6 mapped to 0, so add 0's initially then 1's (for 4) and so on)
+            data_labels.extend([label_encoder.class_to_idx[_class]] * shots)
 
+        # map data indices to actual data
         data = [self.dataset[idx][0] for idx in data_indices]
-
-        return SampleDataset(data, classes, classes_to_sample)
+        return SampleDataset(data, data_labels, classes_to_sample_from)
 
     def _check_classes(self, classes):
         assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
