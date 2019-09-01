@@ -17,7 +17,7 @@ pages:
 - Tutorials:
     - Getting Started: tutorials/getting_started.md
 - Documentation:
-    - cherry: docs/learn2learn.md
+    - learn2learn: docs/learn2learn.md
 - Examples: https://github.com/seba-1511/learn2learn/tree/master/examples 
 - GitHub: https://github.com/seba-1511/learn2learn/
 

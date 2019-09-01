@@ -82,12 +82,12 @@ code:not(.hljs) {
 }
 
 div.navbar-header {
-    background-image: url("https://seba-1511.github.io/cherry/img/apple-touch-icon-57x57.png");
+    background-image: url("http://seba1511.net/learn2learn/img/apple-icon-57x57.png");
     background-repeat: no-repeat, repeat-x;
     padding-left: 42px;
     background-position-x: left;
     background-position-y: bottom 14px;
-    background-size: 40px 40px;
+    background-size: 35px 35px;
 }
 
 .well, .bs-sidenav, .bs-sidebar {
