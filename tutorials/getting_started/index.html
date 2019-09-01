@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Getting Started - learn2learn</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">learn2learn</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li class="active">
+    <a href="./">Getting Started</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../docs/learn2learn/">cherry</a>
+</li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="https://github.com/seba-1511/learn2learn/tree/master/examples">Examples</a>
+                            </li>
+                            <li >
+                                <a href="https://github.com/seba-1511/learn2learn/">GitHub</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../..">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../../docs/learn2learn/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#getting-started-with-cherry">Getting Started with Cherry</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#core-features">Core Features</a></li>
+            <li><a href="#implementing-policy-gradient">Implementing Policy Gradient</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="getting-started-with-cherry">Getting Started with Cherry</h1>
+<p>This document provides an overview of the philosophy behind cherry, the tools it provides, and a small illustrative example.
+By the end of this tutorial, you should be well-equiped to incorporate cherry in your research workflow.</p>
+<p>We assume that you are already familiar with reinforcement learning.
+If, instead, you're looking for an introduction to the field we recommend looking at Josh Achiam's <a href="http://spinningup.openai.com/">Spinning Up in Deep RL</a>.</p>
+<h2 id="installation">Installation</h2>
+<p>The first step in getting started with cherry is to install it.
+You can easily do that by typing the following command in your favorite shell.</p>
+<pre><code class="shell">pip install cherry-rl
+</code></pre>
+
+<p>By default cherry only has two dependencies: <code>torch</code> and <code>gym</code>.
+However, more dependencies might be required if you plan to use some specific functionalities.
+For example, the <a href="http://cherry-rl.net/docs/cherry.envs/#openaiatari">OpenAIAtari</a> wrapper requires OpenCV (<code>pip install opencv-python</code>) and the <a href="http://cherry-rl.net/docs/cherry.envs/#visdomlogger">VisdomLogger</a> requires visdom (<code>pip install visdom</code>).</p>
+<p><strong>Note</strong>
+While cherry depends on Gym for its environment wrappers, it doesn't restrict you to Gym environments.
+For instance, check the examples using <a href="https://github.com/seba-1511/cherry/tree/master/examples/simple_rl">simple_rl</a> and <a href="https://github.com/seba-1511/cherry/tree/master/examples/pycolab">pycolab</a> environments for Gym-free usage of cherry.</p>
+<h2 id="overview">Overview</h2>
+<p><strong>Why do we need cherry ?</strong>
+There are many reinforcement learning libraries, many of which feature high-quality implementations.
+However, few of them provide the kind of low-level utilities useful to researchers.
+Cherry aims to alleviate this issue.
+Instead of an interface akin to <code>PPO(env_name).train(1000)</code>, it provides researchers with a set of tools they can use to write readable, replicable, and flexible implementations.
+Cherry prioritizes time-to-correct-implementation over time-to-run, by explicitely helping you check, debug, and reliably report your results.</p>
+<p><strong>How to use cherry ?</strong>
+Our goal is to make cherry a natural extension to PyTorch, with reinforcement learning in mind.
+To this end, we closely follow the package structure of PyTorch while providing additional utilities where we see fit.
+So if your goal is to implement a novel distributed off-policy policy gradient algorithm, you can count on cherry to provide you experience replays, policy gradient losses, discounting/advantage functions, and distributed optimizers.
+Those functions not only reduce the time spent writing code, they also check that your implementation is sane.
+(e.g. do the log probabilities and rewards have identical shapes?)
+Moreover, cherry provides the implementation details necessary to make deep reinforcement learning work.
+(e.g. initializations, modules, and wrappers commonly used in robotic or Atari benchmarks.)
+Importantly, it includes built-in debugging functionalities: cherry can help you visualize what is happening under the hood of your algorithm to help you find bugs faster.</p>
+<p><strong>What's the future of cherry ?</strong>
+Reinforcement learning is a fast moving field, and it is difficult to predict which advances are safe bets for the future.
+Our long-term development strategy can be summarized as follows.</p>
+<ol>
+<li>Have as many recent and high-quality <a href="https://github.com/seba-1511/cherry/tree/master/examples">examples</a> as possible.</li>
+<li>Merge advances that turn up to be fundamental in theory or practice into the core library.</li>
+</ol>
+<p>We hope to combat the reproducibility crisis by extensively <a href="https://github.com/seba-1511/cherry/tree/master/tests">testing</a> and <a href="https://github.com/seba-1511/cherry/tree/master/benchmarks">benchmarking</a> our implementations.</p>
+<p><strong>Note</strong> Cherry is in its early days and is still missing some of the well-established methods from the past 60 years.
+Those ones are being implemented as fast as we can :)</p>
+<h2 id="core-features">Core Features</h2>
+<p>The following features are fundamental components of cherry.</p>
+<h4 id="transitions-and-experience-replay">Transitions and Experience Replay</h4>
+<p>A majority of algorithms needs to store, retrieve, and sample past experience.
+To that end, you can use cherry's <a href="http://cherry-rl.net/docs/cherry/#experiencereplay">ExperienceReplay</a>.
+An experience replay is implemented as a wrapper around a standard Python list.
+The major difference is that the <a href="http://cherry-rl.net/docs/cherry/#append">append()</a> method expects arguments used to create a <a href="http://cherry-rl.net/docs/cherry/#transition">Transition</a>.
+In addition to behaving like a list, it exposes methods that act on this list, such as <a href="http://cherry-rl.net/docs/cherry/#to_1">to(device)</a> (moves the replay to a device), <a href="http://cherry-rl.net/docs/cherry/#sample">sample()</a> (randomly samples some experience), or <a href="http://cherry-rl.net/docs/cherry/#load">load()</a>/<a href="http://cherry-rl.net/docs/cherry/#save">save()</a> (for convenient serialization).
+An <a href="http://cherry-rl.net/docs/cherry/#experiencereplay">ExperienceReplay</a> contains <a href="http://cherry-rl.net/docs/cherry/#transition">Transition</a>s, which are akin to (<code>state</code>, <code>action</code>, <code>reward</code>, <code>next_state</code>, <code>done</code>) named tuples with possibly additional custom fields.
+Those fields are easily accessible directly from the replay by accessing the method named after them.
+For example, calling <code>replay.action()</code> will fetch the action field from every transition stored in <code>replay</code>, stack them along the first dimension, and return that large tensor.
+The same is true for custom fields; if all transitions have a <code>logprob</code> field, <code>replay.logprob()</code> will return the result of stacking them.</p>
+<h4 id="temporal-difference-and-policy-gradients">Temporal Difference and Policy Gradients</h4>
+<p>Many low-level utilities used to implement temporal difference and policy gradient algorithms are available in the <a href="http://cherry-rl.net/docs/cherry.td/">cherry.td</a> and <a href="http://cherry-rl.net/docs/cherry.pg/">cherry.pg</a> modules, respectively.
+Those modules include classical methods such as <a href="http://cherry-rl.net/docs/cherry.td/#discount">discounting rewards</a> or computing the <a href="http://cherry-rl.net/docs/cherry.td/#temporal_difference">temporal difference</a>, as well as more recent advances such as the <a href="http://cherry-rl.net/docs/cherry.pg/#generalized_advantage">generalized advantage estimator</a>.
+We tried our best to avoid philosophical dissonance when a method belonged to both families of algorithms.</p>
+<h4 id="models-and-pytorch">Models and PyTorch</h4>
+<p>Similar to PyTorch, we provide differentiable modules in <a href="http://cherry-rl.net/docs/cherry.nn/">cherry.nn</a>, domain-specific initialization schemes in <a href="http://cherry-rl.net/docs/cherry.nn.init/">cherry.nn.init</a>, and optimization utilities in <a href="http://cherry-rl.net/docs/cherry.optim/">cherry.optim</a>.
+In addition, popular higher-level models are available in <a href="http://cherry-rl.net/docs/cherry.models/">cherry.models</a>; for instance, those include <a href="http://cherry-rl.net/docs/cherry.models/#cherrymodelstabular">tabular modules</a>, the Atari CNN <a href="http://cherry-rl.net/docs/cherry.models/#naturefeatures">features extractor</a>, and a <a href="http://cherry-rl.net/docs/cherry.models/#controlmlp">Multi-Layer Perceptron</a> for continuous control.</p>
+<h4 id="gym-wrappers">Gym Wrappers</h4>
+<p>Given the popularity of OpenAI Gym environment in modern reinforcement learning benchmarks, cherry includes convenient wrappers in the <a href="http://cherry-rl.net/docs/cherry.envs/">cherry.envs</a> package.
+Examples include normalization of <a href="http://cherry-rl.net/docs/cherry.envs/#normalizer">states and actions</a>, <a href="http://cherry-rl.net/docs/cherry.envs/#openaiatari&lt;Paste&gt;">Atari</a> frames pre-processing, customizable <a href="http://cherry-rl.net/docs/cherry.envs/#statelambda">state</a> / <a href="http://cherry-rl.net/docs/cherry.envs/#actionlambda">action</a> processing, and automatic collection of <a href="http://cherry-rl.net/docs/cherry.envs/#runner">experience</a> in a replay.</p>
+<h4 id="plots">Plots</h4>
+<p>Reporting comparable results has become a central problem in modern reinforcement learning.
+In order to alleviate this issue, cherry provides utilities to smooth and compute confidence intervals over lists of rewards.
+Those are available in the <a href="http://cherry-rl.net/docs/cherry.plot/">cherry.plot</a> submodule.</p>
+<h2 id="implementing-policy-gradient">Implementing Policy Gradient</h2>
+<p>As an introductory example let us dissect the following snippet, which demonstrates how to implement the policy gradient theorem using cherry.</p>
+<pre><code class="python">import cherry as ch
+
+env = gym.make('CartPole-v0')
+env = ch.envs.Logger(env, interval=1000)
+env = ch.envs.Torch(env)
+env = ch.envs.Runner(env)
+env.seed(42)
+
+policy = PolicyNet()
+optimizer = optim.Adam(policy.parameters(), lr=1e-2)
+action_dist = ch.distributions.ActionDistribution(env)
+
+def get_action(state):
+    mass = action_dist(policy(state))
+    action = mass.sample()
+    log_prob = mass.log_prob(action)
+    return action, {'log_prob': log_prob}
+
+for step in range(1000):
+    replay = env.run(get_action, episodes=1)
+
+    rewards = ch.td.discount(0.99, replay.reward(), replay.done())
+    rewards = ch.normalize(rewards)
+
+    loss = -th.sum(replay.log_prob() * rewards)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+</code></pre>
+
+<p>After importing cherry, the first step is to instanciate, wrap, and seed the desired gym environment.</p>
+<pre><code class="python">env = gym.make('CartPole-v0')
+env = ch.envs.Logger(env, interval=1000)
+env = ch.envs.Torch(env)
+env = ch.envs.Runner(env)
+env.seed(42)
+</code></pre>
+
+<p>The <a href="http://cherry-rl.net/docs/cherry.envs/#logger">Logger</a>, <a href="http://cherry-rl.net/docs/cherry.envs/#torch">Torch</a>, and <a href="http://cherry-rl.net/docs/cherry.envs/#runner">Runner</a> classes are Gym <a href="http://cherry-rl.net/docs/cherry.envs/">environment wrappers</a> that systematically modify the behaviour of an environment:</p>
+<ul>
+<li><code>Logger</code> keeps track of metrics and prints them at a given interval.</li>
+<li><code>Torch</code> converts Gym states into PyTorch tensors, and action tensors into numpy arrays.</li>
+<li><code>Runner</code> implements a <code>run()</code> method which allows to easily gather transitions for a number of steps or episodes.</li>
+</ul>
+<p>One particularity of wrappers is that they automatically expose methods of the wrapped environment: <code>env.seed(42)</code> calls the <code>seed()</code> method from the <code>CartPole-v0</code> environment.</p>
+<p>Second, we instanciate the policy, optimizer, as well as the action distribution.
+The action distribution is created with</p>
+<pre><code class="python">action_dist = ch.distributions.ActionDistribution(env)
+</code></pre>
+
+<p>which will automatically choose a diagonal Gaussian for continuous action-spaces and a categorical distribution for discrete ones.</p>
+<p>Next, we define <code>get_action()</code> which specifies how to get an action from our agent and will be used in conjuction to <code>env.run()</code> to quickly collect experience data:</p>
+<pre><code class="python">replay = env.run(get_action, episodes=1)
+</code></pre>
+
+<p><code>env.run()</code> assumes that the first returned value by <code>get_action</code> is the action to be passed to the environment and the second, optional, returned value is a dictionary to be saved into the experience replay.
+Under the hood, <code>env.run()</code> creates a new <a href="http://cherry-rl.net/docs/cherry/#experiencereplay">ExperienceReplay</a> and fills it with the desired number of transitions;
+instead of <code>episodes=1</code> we could have passed <code>steps=100</code>.</p>
+<p>Finally, we discount and normalize the rewards and take an optimization step on the policy gradient loss.</p>
+<pre><code class="python">rewards = ch.td.discount(0.99, replay.reward(), replay.done())
+rewards = ch.normalize(rewards)
+
+loss = -th.sum(replay.log_prob() * rewards)
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+</code></pre>
+
+<p>When calling <code>replay.reward()</code>, <code>replay.done()</code>, or <code>replay.log_prob()</code>, the experience replay will concatenate the corresponding attribute across all of its transitions and <strong>return a new tensor</strong>.
+This means that this operation is rather expensive (you should cache it when possible) and that modifying this tensor does not modify the corresponding transitions in <code>replay</code>.
+Note that in this case <code>log_prob</code> is a custom attribute which is not declared in the original implementation of <code>ExperienceReplay</code>, and we could have given it any name by changing the dictionary key in <code>get_action()</code>.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>You should now be able to use cherry in your own work.
+For more information, have a look at the <a href="http://cherry-rl.net/docs/cherry/">documentation</a>, the other <a href="http://cherry-rl.net/tutorials/distributed_ppo/">tutorials</a>, or the numerous <a href="https://github.com/seba-1511/cherry/tree/master/examples">examples</a>. 
+Since one of the characteristics of cherry is to avoid providing "pre-baked" algorithms, we tried our best to heavily document its usage.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
