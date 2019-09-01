@@ -6,23 +6,48 @@
 # and he has a great set of medium articles around it.
 
 from torch.optim import Adam
-from torch.utils.data import DataLoader
+from torch.utils.data import 
 import argparse
 import numpy as np
-from torch import nn
 from typing import List, Iterable, Callable, Tuple, Union
-from torch.utils.data import Sampler
 import torch
 from torch.optim import Optimizer
 from torch.nn import Module
-from typing import Callable
-
 import learn2learn as l2l
+from learn2learn.models import OmniglotCNN
 # from torchvision.datasets import Omniglot
-from learn2learn.vision.datasets import FullOmniglot
+# from learn2learn.vision.datasets import FullOmniglot
 from torchvision import transforms
 from PIL.Image import LANCZOS
-from torch.utils.data import ConcatDataset
+from torch.utils.data import Dataset, ConcatDataset, DataLoader
+
+
+class FullOmniglot(Dataset):
+    def __init__(self, root, transform=None, target_transform=None, download=False):
+        self.transform = transform
+        self.target_transform = target_transform
+
+        # Set up both the background and eval dataset
+        omni_background = Omniglot(root, background=True, download=download)
+        # Eval labels also start from 0.
+        # It's important to add 964 to label values in eval so they don't overwrite background dataset.
+        omni_evaluation = Omniglot(root, background=False, download=download,
+                                   target_transform=lambda x: x + len(omni_background._characters))
+
+        self.dataset = ConcatDataset((omni_background, omni_evaluation))
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, item):
+        image, character_class = self.dataset[item]
+        if self.transform:
+            image = self.transform(image)
+
+        if self.target_transform:
+            character_class = self.target_transform(character_class)
+
+        return image, character_class
 
 
 
@@ -45,6 +70,7 @@ parser.add_argument('--q-train', default=5, type=int)
 parser.add_argument('--q-test', default=1, type=int)
 args = parser.parse_args()
 
+training_episodes = 1000
 evaluation_episodes = 100
 n_epochs = 40
 num_input_channels = 1
@@ -63,10 +89,12 @@ def lr_schedule(epoch, lr):
         return lr / 2
     else:
         return lr
+    
+def categorical_accuracy(y, y_pred):
+    return torch.eq(y_pred.argmax(dim=-1), y).sum().item() / y_pred.shape[0]
 
 
-
-def batch_metrics(model: Module, y_pred: torch.Tensor, y: torch.Tensor, metrics: List[Union[str, Callable]],
+def batch_metrics(model: Module, y_pred: torch.Tensor, y: torch.Tensor,
                   batch_logs: dict):
     """Calculates metrics for the current training batch
 
@@ -77,27 +105,10 @@ def batch_metrics(model: Module, y_pred: torch.Tensor, y: torch.Tensor, metrics:
         batch_logs: Dictionary of logs for the current batch
     """
     model.eval()
-    for m in metrics:
-        if isinstance(m, str):
-            batch_logs[m] = NAMED_METRICS[m](y, y_pred)
-        else:
-            # Assume metric is a callable function
-            batch_logs = m(y, y_pred)
+    batch_logs['categorical_accuracy'] = categorical_accuracy(y, y_pred)
 
     return batch_logs
 
-
-def conv_block(in_channels: int, out_channels: int) -> nn.Module:
-    return nn.Sequential(
-        nn.Conv2d(in_channels, out_channels, 3, padding=1),
-        nn.BatchNorm2d(out_channels),
-        nn.ReLU(),
-        nn.MaxPool2d(kernel_size=2, stride=2)
-    )
-
-class Flatten(nn.Module):
-    def forward(self, input):
-        return input.view(input.size(0), -1)
     
 def gradient_step(model: Module, optimiser: Optimizer, loss_fn: Callable, x: torch.Tensor, y: torch.Tensor, **kwargs):
     model.train()
@@ -109,61 +120,16 @@ def gradient_step(model: Module, optimiser: Optimizer, loss_fn: Callable, x: tor
 
     return loss, y_pred
 
-    
-def categorical_accuracy(y, y_pred):
-    return torch.eq(y_pred.argmax(dim=-1), y).sum().item() / y_pred.shape[0]
-
-NAMED_METRICS = {
-    'categorical_accuracy': categorical_accuracy
-}
-
-# max_y = 964
-# omni_background = Omniglot(root='./data',
-#                                background=True,
-#                                transform=transforms.Compose([
-#                                    transforms.Resize(28, interpolation=LANCZOS),
-#                                    transforms.ToTensor(),
-#                                    # TODO: Add DiscreteRotations([0, 90, 180, 270])
-#                                    lambda x: 1.0 - x,
-#                                ]),
-#                                download=True)
-
-# omni_evaluation = Omniglot(root='./data',
-#                                background=False,
-#                                transform=transforms.Compose([
-#                                    transforms.Resize(28, interpolation=LANCZOS),
-#                                    transforms.ToTensor(),
-#                                    # TODO: Add DiscreteRotations([0, 90, 180, 270])
-#                                    lambda x: 1.0 - x,
-#                                ]),
-#                                target_transform=transforms.Compose([
-#                                    lambda x: max_y + x,
-#                                ]),
-#                                download=True)
-# omniglot = ConcatDataset((omni_background, omni_evaluation))
-
-omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
+omniglot = FullOmniglot(root='./data',
                                             transform=transforms.Compose([
-                                               l2l.vision.transforms.RandomDiscreteRotation([0.0, 90.0, 180.0, 270.0]),
                                                transforms.Resize(28, interpolation=LANCZOS),
                                                transforms.ToTensor(),
                                                lambda x: 1.0 - x,
                                             ]),
                                             download=True)
 omniglot = l2l.data.MetaDataset(omniglot)
-#     classes = list(range(1623))
-#     random.shuffle(classes)
-#     train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[:1100])
-#     valid_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1100:1200])
-#     test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
 
-model = nn.Sequential(
-        conv_block(num_input_channels, 5),
-        conv_block(5,5),
-        conv_block(5,5),
-        conv_block(5,5),
-        Flatten(),
-    )
+model = OmniglotCNN()
 model.to(device, dtype=torch.double)
 
 optimiser = Adam(model.parameters(), lr=1e-3)
@@ -309,7 +275,6 @@ def set_lr(epoch, optimiser,lrs):
 
 
 def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int, 
-        metrics: List[Union[str, Callable]] = None,
         verbose: bool =True, fit_function: Callable = gradient_step, fit_function_kwargs: dict = {}):
 
     # Determine number of samples:
@@ -353,7 +318,7 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
             loss, y_pred = fit_function(model, optimiser, loss_fn, x_support_query, y_support, **fit_function_kwargs)
             batch_logs['loss'] = loss.item()
 
-            batch_logs = batch_metrics(model, y_pred, y_support, metrics, batch_logs)
+            batch_logs = batch_metrics(model, y_pred, y_support, batch_logs)
 
     
         
@@ -410,15 +375,13 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
             torch.save(model.state_dict(), filepath)
 
 
-    if verbose:
-        print('Finished.')
+    print('Done.')
 
 fit(
     model,
     optimiser,
     loss_fn,
     epochs=n_epochs,
-    metrics=['categorical_accuracy'],
     fit_function=proto_net_episode,
     fit_function_kwargs={'n_shot': args.n_train, 'k_way': args.k_train, 'q_queries': args.q_train, 'train': True,
                          'distance': args.distance},
