@@ -58,7 +58,7 @@ def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
     cum_log_probs = weighted_cumsum(log_probs, weights)
     advantages = compute_advantages(baseline, tau, gamma, rewards,
                                     dones, states, next_states)
-    return a2c.policy_loss(cum_log_probs, advantages)
+    return a2c.policy_loss(l2l.magic_box(cum_log_probs), advantages)
 
 
 def main(
