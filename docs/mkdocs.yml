@@ -1,0 +1,17 @@
+docs_dir: _build/pydocmd
+markdown_extensions:
+- mdx_math
+pages:
+- Home: index.md
+- Tutorials:
+  - Getting Started: tutorials/getting_started.md
+- Documentation:
+  - cherry: docs/learn2learn.md
+- Examples: https://github.com/seba-1511/learn2learn/tree/master/examples
+- GitHub: https://github.com/seba-1511/learn2learn/
+site_dir: _build/site
+site_name: learn2learn
+theme:
+  custom_dir: l2l_theme/
+  highlightjs: true
+  name: mkdocs
