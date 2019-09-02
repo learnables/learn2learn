@@ -132,7 +132,7 @@ class TaskGenerator:
             # select subset of indices from each of the classes and add it to data_indices
             data_indices.extend(np.random.choice(self.dataset.labels_to_indices[_class], shots, replace=False))
             # add those labels to data_labels (6 mapped to 0, so add 0's initially then 1's (for 4) and so on)
-            data_labels.extend([label_encoder.class_to_idx[_class]] * shots)
+            data_labels.extend([label_encoder.class_to_idx[_class] for _ in range(shots)])
 
         # map data indices to actual data
         data = [self.dataset[idx][0] for idx in data_indices]
