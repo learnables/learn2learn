@@ -97,7 +97,7 @@ class TaskGenerator:
         assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
         self._check_classes(self.classes)
 
-    def sample(self, classes: list = None, shots: int = 5):
+    def sample(self, classes: list = None, shots: int = 1):
         """ Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
@@ -114,13 +114,14 @@ class TaskGenerator:
 
         # If classes aren't specified while calling the function, then we can
         # sample from all the classes mentioned during the initialization of the TaskGenerator
-        classes_to_sample_from = classes if classes else self.classes
+        if classes is None:
+            # assure that self.classes is a subset of self.dataset.labels
+            self._check_classes(self.classes)
 
-        # assure that classes_to_sample_from is a subset of self.dataset.labels
-        self._check_classes(classes_to_sample_from)
-
-        # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
-        classes_to_sample = np.random.choice(classes_to_sample_from, size=self.ways, replace=False)
+            # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
+            classes_to_sample = np.random.choice(self.classes, size=self.ways, replace=False)
+        else:
+            classes_to_sample = classes
 
         # encode labels (map 6,4,7 to 0,1,2 so that we can do a BCELoss)
         label_encoder = LabelEncoder(classes_to_sample)
@@ -135,7 +136,7 @@ class TaskGenerator:
 
         # map data indices to actual data
         data = [self.dataset[idx][0] for idx in data_indices]
-        return SampleDataset(data, data_labels, classes_to_sample_from)
+        return SampleDataset(data, data_labels, classes_to_sample)
 
     def _check_classes(self, classes):
         assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
