@@ -6,7 +6,6 @@
 # and he has a great set of medium articles around it.
 
 from torch.optim import Adam
-from torch.utils.data import 
 import argparse
 import numpy as np
 from typing import List, Iterable, Callable, Tuple, Union
@@ -15,42 +14,10 @@ from torch.optim import Optimizer
 from torch.nn import Module
 import learn2learn as l2l
 from learn2learn.models import OmniglotCNN
-from learn2learn.vision.datasets import FullOmniglot
+from learn2learn.vision.datasets.full_omniglot import FullOmniglot
 from torchvision import transforms
 from PIL.Image import LANCZOS
 from torch.utils.data import Dataset, ConcatDataset, DataLoader
-
-
-assert torch.cuda.is_available()
-device = torch.device('cuda')
-torch.backends.cudnn.benchmark = True
-
-
-##############
-# Parameters #
-##############
-parser = argparse.ArgumentParser()
-parser.add_argument('--dataset')
-parser.add_argument('--distance', default='l2')
-parser.add_argument('--n-train', default=1, type=int)
-parser.add_argument('--n-test', default=1, type=int)
-parser.add_argument('--k-train', default=60, type=int)
-parser.add_argument('--k-test', default=5, type=int)
-parser.add_argument('--q-train', default=5, type=int)
-parser.add_argument('--q-test', default=1, type=int)
-args = parser.parse_args()
-
-training_episodes = 1000
-evaluation_episodes = 100
-n_epochs = 40
-num_input_channels = 1
-drop_lr_every = 20
-
-param_str = f'{args.dataset}_nt={args.n_train}_kt={args.k_train}_qt={args.q_train}_' \
-            f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
-print(param_str)
-
-filepath=f'./data/{param_str}.pth'
 
 
 def lr_schedule(epoch, lr):
@@ -90,24 +57,6 @@ def gradient_step(model: Module, optimiser: Optimizer, loss_fn: Callable, x: tor
 
     return loss, y_pred
 
-omniglot = FullOmniglot(root='./data',
-                                            transform=transforms.Compose([
-                                               transforms.Resize(28, interpolation=LANCZOS),
-                                               transforms.ToTensor(),
-                                               lambda x: 1.0 - x,
-                                            ]),
-                                            download=True)
-omniglot = l2l.data.MetaDataset(omniglot)
-
-model = OmniglotCNN()
-model.to(device, dtype=torch.double)
-
-optimiser = Adam(model.parameters(), lr=1e-3)
-loss_fn = torch.nn.NLLLoss().cuda()
-
-eval_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_test)
-support_t = eval_generator.sample(shots=args.q_test)
-query_t = eval_generator.sample(shots=args.q_test)
 
 def proto_net_episode(model: Module,
                       optimiser: Optimizer,
@@ -146,27 +95,16 @@ def proto_net_episode(model: Module,
 
 
     embeddings = model(x)
-
-    # Samples are ordered by the NShotWrapper class as follows:
-    # k lots of n support samples from a particular class
-    # k lots of q query samples from those classes
     support = embeddings[:n_shot*k_way]
     queries = embeddings[n_shot*k_way:]
     prototypes = compute_prototypes(support, k_way, n_shot)
-
-    # Calculate squared distances between all queries and all prototypes
-    # Output should have shape (q_queries * k_way, k_way) = (num_queries, k_way)
     distances = pairwise_distances(queries, prototypes, distance)
 
-    # Calculate log p_{phi} (y = k | x)
     log_p_y = (-distances).log_softmax(dim=1)
     loss = loss_fn(log_p_y, y)
-
-    # Prediction probabilities are softmax over distances
     y_pred = (-distances).softmax(dim=1)
 
     if train:
-        # Take gradient step
         loss.backward()
         optimiser.step()
     else:
@@ -187,9 +125,6 @@ def compute_prototypes(support: torch.Tensor, k: int, n: int) -> torch.Tensor:
     # Returns
         class_prototypes: Prototypes aka mean embeddings for each class
     """
-    # Reshape so the first dimension indexes by class then take the mean
-    # along that dimension to generate the "prototypes" for each class
-#     print("Support shape is ", support.shape)
     class_prototypes = support.reshape(k, n, -1).mean(dim=1)
     
     return class_prototypes
@@ -244,25 +179,13 @@ def set_lr(epoch, optimiser,lrs):
 
 
 
-def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int, 
-        verbose: bool =True, fit_function: Callable = gradient_step, fit_function_kwargs: dict = {}):
+def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int, 
+        fit_function: Callable = gradient_step, fit_function_kwargs: dict = {}):
 
-    # Determine number of samples:
     batch_size= None
-    eval_dict = {
-        'eval_fn':proto_net_episode,
-        'num_tasks':evaluation_episodes,
-        'n_shot':args.n_test,
-        'k_way':args.k_test,
-        'q_queries':args.q_test,
-        'distance':args.distance,
-        'prefix':'val_',
-    }
 
-    if verbose:
-        print('Begin training...')
-        
-        
+    print('Begin training...')
+
     train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_train)
     eval_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_test)
 
@@ -294,7 +217,7 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
         
         logs = epoch_logs or {}
         seen = 0
-        metric_name = f"{eval_dict['prefix']}{eval_dict['n_shot']}-shot_{eval_dict['k_way']}-way_acc"
+        metric_name = f"val_{args.n_test}-shot_{args.k_test}-way_acc"
         totals = {'loss': 0, metric_name: 0}
         for batch_index in range(evaluation_episodes):
 
@@ -308,17 +231,17 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
             x_support_query = torch.cat([x_support_eval, x_query_eval], dim=0)
             
             
-            loss, y_pred = eval_dict['eval_fn'](
+            loss, y_pred = proto_net_episode(
                 model = model,
                 optimiser= optimiser,
                 loss_fn=loss_fn,
                 x=x_support_query,
                 y=y_support_eval,
-                n_shot=eval_dict['n_shot'],
-                k_way=eval_dict['k_way'],
-                q_queries=eval_dict['q_queries'],
+                n_shot=args.n_test,
+                k_way=args.k_test,
+                q_queries=args.q_test,
                 train=False,
-                distance=eval_dict['distance']
+                distance=args.distance
             )
 
             seen += y_pred.shape[0]
@@ -326,7 +249,7 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
             totals['loss'] += loss.item() * y_pred.shape[0]
             totals[metric_name] += categorical_accuracy(y_support_eval, y_pred) * y_pred.shape[0]
 
-        logs[eval_dict['prefix'] + 'loss'] = totals['loss'] / seen
+        logs['val_loss'] = totals['loss'] / seen
         logs[metric_name] = totals[metric_name] / seen
         if len(optimiser.param_groups) == 1:
             logs['lr'] = optimiser.param_groups[0]['lr']
@@ -346,16 +269,60 @@ def fit(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
 
 
     print('Done.')
+    
+if __name__ == '__main__':
 
-fit(
-    model,
-    optimiser,
-    loss_fn,
-    epochs=n_epochs,
-    fit_function=proto_net_episode,
-    fit_function_kwargs={'n_shot': args.n_train, 'k_way': args.k_train, 'q_queries': args.q_train, 'train': True,
-                         'distance': args.distance},
-)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--distance', default='l2')
+    parser.add_argument('--n-train', default=1, type=int)
+    parser.add_argument('--n-test', default=1, type=int)
+    parser.add_argument('--k-train', default=60, type=int)
+    parser.add_argument('--k-test', default=5, type=int)
+    parser.add_argument('--q-train', default=5, type=int)
+    parser.add_argument('--q-test', default=1, type=int)
+    args = parser.parse_args()
+    
+    training_episodes = 1000
+    evaluation_episodes = 100
+    n_epochs = 40
+    num_input_channels = 1
+    drop_lr_every = 20
+
+    assert torch.cuda.is_available()
+    device = torch.device('cuda')
+    torch.backends.cudnn.benchmark = True
+
+    param_str = f'omniglot_nt={args.n_train}_kt={args.k_train}_qt={args.q_train}_' \
+                f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
 
 
+    filepath=f'./data/{param_str}.pth'
+    
+    omniglot = FullOmniglot(root='./data',
+                                            transform=transforms.Compose([
+                                               transforms.Resize(28, interpolation=LANCZOS),
+                                               transforms.ToTensor(),
+                                               lambda x: 1.0 - x,
+                                            ]),
+                                            download=True)
+    omniglot = l2l.data.MetaDataset(omniglot)
 
+    model = OmniglotCNN()
+    model.to(device, dtype=torch.double)
+
+    optimiser = Adam(model.parameters(), lr=1e-3)
+    loss_fn = torch.nn.NLLLoss().cuda()
+
+    eval_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_test)
+    support_t = eval_generator.sample(shots=args.q_test)
+    query_t = eval_generator.sample(shots=args.q_test)
+    
+    main(
+        model,
+        optimiser,
+        loss_fn,
+        epochs=n_epochs,
+        fit_function=proto_net_episode,
+        fit_function_kwargs={'n_shot': args.n_train, 'k_way': args.k_train, 'q_queries': args.q_train, 'train': True,
+                             'distance': args.distance},
+    )
