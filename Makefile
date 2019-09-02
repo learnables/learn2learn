@@ -1,8 +1,6 @@
 
 .PHONY: *
 
-docs:
-
 
 # Admin
 dev:
