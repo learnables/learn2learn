@@ -2,7 +2,7 @@
 .PHONY: *
 
 
-# Admin
+# Admin
 dev:
 	pip install --progress-bar off torch gym pycodestyle >> log_install.txt
 	python setup.py develop

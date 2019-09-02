@@ -7,6 +7,7 @@ import numpy as np
 import torch as th
 from torch import nn
 from torch import optim
+
 from torch.utils.data import ConcatDataset
 from torchvision import transforms
 from torchvision.datasets import Omniglot, ImageFolder
