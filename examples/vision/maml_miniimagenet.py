@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import random
 import numpy as np
 
@@ -7,87 +8,14 @@ import torch as th
 from torch import nn
 from torch import optim
 
+from torch.utils.data import ConcatDataset
+from torchvision import transforms
+from torchvision.datasets import Omniglot, ImageFolder
+
 import learn2learn as l2l
 
-
-def maml_init_(module):
-    nn.init.xavier_uniform_(module.weight.data, gain=1.0)
-    nn.init.constant_(module.bias.data, 0.0)
-    return module
-
-
-class MAMLConvBlock(nn.Module):
-
-    def __init__(self, in_channels, out_channels, kernel_size, max_pool=True, max_pool_factor=1.0):
-        super(MAMLConvBlock, self).__init__()
-        stride = (int(2 * max_pool_factor), int(2 * max_pool_factor))
-        if max_pool:
-            self.max_pool = nn.MaxPool2d(kernel_size=stride,  # TODO: Correct ?
-                                         stride=stride,
-                                         ceil_mode=False,  # pad='VALID' (?)
-                                         )
-            stride = (1, 1)
-        else:
-            self.max_pool = lambda x: x
-        self.normalize = nn.BatchNorm2d(out_channels,
-                                        affine=True,
-                                        eps=1e-3,
-                                        momentum=0.999,
-                                        track_running_stats=False,
-                                        )
-        self.relu = nn.ReLU()
-
-        self.conv = nn.Conv2d(in_channels,
-                              out_channels,
-                              kernel_size,
-                              stride=stride,
-                              padding=1,
-                              bias=True)
-        maml_init_(self.conv)
-
-    def forward(self, x):
-        x = self.conv(x)
-        x = self.normalize(x)
-        x = self.relu(x)
-        x = self.max_pool(x)
-        return x
-
-
-class MAMLConvBase(nn.Sequential):
-
-    """
-    NOTE:
-        Omniglot: hidden=64, channels=1, no max_pool
-        MiniImagenet: hidden=32, channels=3, max_pool
-    """
-
-    def __init__(self, output_size, hidden=64, channels=1, max_pool=False, layers=4, mp_factor=1.0):
-        core = [MAMLConvBlock(channels, hidden, (3, 3), max_pool=max_pool, max_pool_factor=mp_factor),]
-        for l in range(layers - 1):
-            core.append(MAMLConvBlock(hidden, hidden, (3, 3), max_pool=max_pool, max_pool_factor=mp_factor))
-        super(MAMLConvBase, self).__init__(*core)
-
-
-
-class MiniImageNetCNN(nn.Module):
-
-    def __init__(self, output_size, hidden_size=32, layers=4):
-        super(MiniImageNetCNN, self).__init__()
-        self.base = MAMLConvBase(output_size=hidden_size,
-                                 hidden=hidden_size,
-                                 channels=3,
-                                 max_pool=True,
-                                 layers=layers,
-                                 mp_factor=4//layers)
-        self.linear = nn.Linear(25*hidden_size, output_size, bias=True)
-        maml_init_(self.linear)
-        self.hidden_size = hidden_size
-
-    def forward(self, x):
-        x = self.base(x)
-        x = self.linear(x.view(-1, 25*self.hidden_size))
-        return x
-
+from PIL import Image
+from PIL.Image import LANCZOS
 
 
 def accuracy(predictions, targets):
@@ -116,7 +44,7 @@ def fast_adapt(adaptation_data, evaluation_data, learner, loss, adaptation_steps
 
 def main(
         ways=5,
-        shots=1,
+        shots=5,
         meta_lr=0.003,
         fast_lr=0.5,
         meta_batch_size=32,
@@ -125,12 +53,6 @@ def main(
         cuda=True,
         seed=42,
     ):
-    import os
-    from PIL.Image import LANCZOS
-    from torchvision.datasets import Omniglot, ImageFolder
-    from torchvision import transforms
-    from torch.utils.data import ConcatDataset
-    from PIL import Image
 
     MI_PATH = '~/Dropbox/Temporary/mini-imagenet-l2l/miniimagenet/resized/'
 
@@ -144,7 +66,6 @@ def main(
 
     # Create Dataset
     transform = transforms.Compose([
-#        lambda x: Image.open(x),
         transforms.ToTensor(),
         lambda x: x.float() / 255.,
     ])
@@ -154,14 +75,17 @@ def main(
     train_dataset = ImageFolder(train_images_path, transform)
     valid_dataset = ImageFolder(valid_images_path, transform)
     test_dataset = ImageFolder(test_images_path, transform)
+    train_dataset = l2l.data.MetaDataset(train_dataset)
+    valid_dataset = l2l.data.MetaDataset(valid_dataset)
+    test_dataset = l2l.data.MetaDataset(test_dataset)
     train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
     valid_generator = l2l.data.TaskGenerator(dataset=valid_dataset, ways=ways)
     test_generator = l2l.data.TaskGenerator(dataset=test_dataset, ways=ways)
 
     # Create model
-    model = MiniImageNetCNN(ways)
+    model = l2l.models.MiniImagenetCNN(ways)
     model.to(device)
-    maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
+    maml = l2l.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
     loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
 
@@ -178,7 +102,7 @@ def main(
             learner = maml.clone()
             adaptation_data = train_generator.sample(shots=shots)
             evaluation_data = train_generator.sample(shots=shots,
-                                                     classes_to_sample=adaptation_data.sampled_classes)
+                                                     classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -193,7 +117,7 @@ def main(
             learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
-                                                     classes_to_sample=adaptation_data.sampled_classes)
+                                                     classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -207,7 +131,7 @@ def main(
             learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
-                                                    classes_to_sample=adaptation_data.sampled_classes)
+                                                    classes=adaptation_data.sampled_classes)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
