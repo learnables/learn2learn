@@ -1,0 +1,4 @@
+# Config options for 'flatly' theme
+
+extends: mkdocs
+highlightjs: true
