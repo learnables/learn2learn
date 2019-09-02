@@ -5,6 +5,7 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and PPO for meta-learning.
 """
 
+import ppt
 import random
 import gym
 import numpy as np
@@ -43,18 +44,18 @@ def main(
         env_name='HalfCheetahDir-v1',
         adapt_lr=0.1,
         meta_lr=0.001,
-        adapt_steps=3,
-        num_iterations=300,
-        meta_bsz=20,
-        adapt_bsz=40,
+        adapt_steps=1,
+        num_iterations=1000,
+        meta_bsz=40,
+        adapt_bsz=20,
         ppo_clip=0.3,
         ppo_steps=5,
         tau=1.00,
         gamma=0.99,
         eta=0.0005,
-        adaptive_penalty=True,
+        adaptive_penalty=False,
         kl_target=0.01,
-        num_workers=2,
+        num_workers=4,
         seed=42,
 ):
     random.seed(seed)
@@ -69,7 +70,8 @@ def main(
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(input_size=env.state_size,
                               output_size=env.action_size,
-                              hiddens=[64, 64])
+                              hiddens=[64, 64],
+                              activation='tanh')
     meta_learner = l2l.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
@@ -115,6 +117,7 @@ def main(
         adaptation_reward = iteration_reward / meta_bsz
         all_rewards.append(adaptation_reward)
         print('adaptation_reward', adaptation_reward)
+        ppt.plot(adaptation_reward, 'PROMP: Rewards')
 
         # ProMP meta-optimization
         for ppo_step in tqdm(range(ppo_steps), leave=False, desc='Optim'):
@@ -172,7 +175,7 @@ def main(
                                                 clip=ppo_clip)
 
                     # Combine into ProMP loss
-                    promp_loss += clip_loss - eta * kl_pen
+                    promp_loss += clip_loss + eta * kl_pen
 
             kl_total /= meta_bsz * adapt_steps
             promp_loss /= meta_bsz * adapt_steps
