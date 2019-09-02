@@ -135,7 +135,7 @@ class TaskGenerator:
 
         # map data indices to actual data
         data = [self.dataset[idx][0] for idx in data_indices]
-        return SampleDataset(data, data_labels, classes_to_sample_from)
+        return SampleDataset(data, data_labels, classes_to_sample)
 
     def _check_classes(self, classes):
         assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
