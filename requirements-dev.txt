@@ -1,0 +1,6 @@
+twine
+mkdocs==1.0.4
+mkdocs-bootswatch==1.0
+pycodestyle>=2.3.1
+https://github.com/mitya57/python-markdown-math/archive/1a87235b87b9e39b3206345c5a830448a513c9a1.zip
+https://github.com/NiklasRosenstein/pydoc-markdown/archive/d2fa3540a9c85da8f33c374c5b21638bfcc2c745.zip
