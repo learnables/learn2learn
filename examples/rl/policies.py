@@ -19,14 +19,18 @@ def linear_init(module):
 
 class DiagNormalPolicy(nn.Module):
 
-    def __init__(self, input_size, output_size, hiddens=None):
+    def __init__(self, input_size, output_size, hiddens=None, activation='relu'):
         super(DiagNormalPolicy, self).__init__()
         if hiddens is None:
             hiddens = [100, 100]
-        layers = [linear_init(nn.Linear(input_size, hiddens[0])), nn.ReLU()]
+        if activation == 'relu':
+            activation = nn.ReLU
+        elif activation == 'tanh':
+            activation = nn.Tanh
+        layers = [linear_init(nn.Linear(input_size, hiddens[0])), activation()]
         for i, o in zip(hiddens[:-1], hiddens[1:]):
             layers.append(linear_init(nn.Linear(i, o)))
-            layers.append(nn.ReLU())
+            layers.append(activation())
         layers.append(linear_init(nn.Linear(hiddens[-1], output_size)))
         self.mean = nn.Sequential(*layers)
         self.sigma = nn.Parameter(th.Tensor(output_size))
