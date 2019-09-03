@@ -44,13 +44,14 @@ def accuracy(predictions, targets):
 def compute_loss(task, device, learner, loss_func, batch=5):
     loss = 0.0
     acc = 0.0
-    for i, (x, y) in enumerate(DataLoader(task, batch_size=batch, shuffle=True, num_workers=0)):
+    dataloader = DataLoader(task, batch_size=batch, shuffle=False, num_workers=0)
+    for i, (x, y) in enumerate(dataloader):
         x, y = x.squeeze(dim=1).to(device), y.view(-1).to(device)
         output = learner(x)
         curr_loss = loss_func(output, y)
         acc += accuracy(output, y)
-        loss += curr_loss / len(task)
-    loss /= len(task)
+        loss += curr_loss / x.size(0)
+    loss /= len(dataloader)
     return loss, acc
 
 

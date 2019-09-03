@@ -21,6 +21,13 @@ from cherry.models.robotics import LinearValue
 from policies import DiagNormalPolicy
 
 
+def weighted_cumsum(values, weights):
+    for i in range(values.size(0)):
+        values[i] += values[i-1] * weights[i]
+    return values
+
+
+
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
     # Update baseline
     returns = ch.td.discount(gamma, rewards, dones)
@@ -45,17 +52,20 @@ def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
     dones = train_episodes.done()
     next_states = train_episodes.next_state()
     log_probs = learner.log_prob(states, actions)
+    weights = th.ones_like(dones)
+    weights[1:].add_(-1.0, dones[:-1])
+    weights /= dones.sum()
+    cum_log_probs = weighted_cumsum(log_probs, weights)
     advantages = compute_advantages(baseline, tau, gamma, rewards,
                                     dones, states, next_states)
-    advantages = ch.normalize(advantages).detach()
-    return a2c.policy_loss(log_probs, advantages)
+    return a2c.policy_loss(l2l.magic_box(cum_log_probs), advantages)
 
 
 def main(
         experiment='dev',
         env_name='2DNavigation-v0',
         adapt_lr=0.1,
-        meta_lr=0.01,
+        meta_lr=0.001,
         adapt_steps=1,
         num_iterations=200,
         meta_bsz=20,
@@ -76,7 +86,7 @@ def main(
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    meta_learner = l2l.MetaSGD(policy, lr=meta_lr)
+    meta_learner = l2l.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
     all_rewards = []
@@ -84,7 +94,7 @@ def main(
     for iteration in range(num_iterations):
         iteration_loss = 0.0
         iteration_reward = 0.0
-        for task_config in tqdm(env.sample_tasks(meta_bsz)):  # Samples a new config
+        for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
             learner = meta_learner.clone()
             env.reset_task(task_config)
             env.reset()

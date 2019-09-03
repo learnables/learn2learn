@@ -20,11 +20,10 @@ from torch.distributions import Normal
 from torch.distributions.kl import kl_divergence
 from torch.nn.utils import parameters_to_vector, vector_to_parameters
 
-from cherry.algorithms import a2c, ppo, trpo
+from cherry.algorithms import a2c, trpo
 from cherry.models.robotics import LinearValue
 
 from policies import DiagNormalPolicy
-from meta_a2c import maml_a2c_loss
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -41,6 +40,20 @@ def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states
                                        dones=dones,
                                        values=bootstraps,
                                        next_value=next_value)
+
+
+def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
+    # Update policy and baseline
+    states = train_episodes.state()
+    actions = train_episodes.action()
+    rewards = train_episodes.reward()
+    dones = train_episodes.done()
+    next_states = train_episodes.next_state()
+    log_probs = learner.log_prob(states, actions)
+    advantages = compute_advantages(baseline, tau, gamma, rewards,
+                                    dones, states, next_states)
+    advantages = ch.normalize(advantages).detach()
+    return a2c.policy_loss(log_probs, advantages)
 
 
 def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=False):
@@ -146,8 +159,6 @@ def main(
         iteration_reward = 0.0
         iteration_replays = []
         iteration_policies = []
-        policy.to('cpu')
-        baseline.to('cpu')
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
             clone = deepcopy(policy)

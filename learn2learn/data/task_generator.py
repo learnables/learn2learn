@@ -66,8 +66,6 @@ class LabelEncoder:
         Args:
             classes: List of classes
         """
-        # shuffle all our classes
-        #        classes = np.random.shuffle(classes)
         assert len(set(classes)) == len(classes), "Classes contains duplicate values"
         self.class_to_idx = dict()
         self.idx_to_class = dict()
@@ -97,7 +95,7 @@ class TaskGenerator:
         assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
         self._check_classes(self.classes)
 
-    def sample(self, classes: list = None, shots: int = 5):
+    def sample(self, classes: list = None, shots: int = 1):
         """ Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
@@ -111,19 +109,32 @@ class TaskGenerator:
         Returns: Dataset, list(labels)
 
         """
-        classes = self.classes if classes is None else classes
-        self._check_classes(classes)
-        classes_to_sample = np.random.choice(classes, size=self.ways, replace=False)
-        label_encoding = LabelEncoder(classes_to_sample)
+
+        # If classes aren't specified while calling the function, then we can
+        # sample from all the classes mentioned during the initialization of the TaskGenerator
+        if classes is None:
+            # assure that self.classes is a subset of self.dataset.labels
+            self._check_classes(self.classes)
+
+            # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
+            classes_to_sample = np.random.choice(self.classes, size=self.ways, replace=False)
+        else:
+            classes_to_sample = classes
+
+        # encode labels (map 6,4,7 to 0,1,2 so that we can do a BCELoss)
+        label_encoder = LabelEncoder(classes_to_sample)
+
         data_indices = []
-        classes = []
+        data_labels = []
         for _class in classes_to_sample:
+            # select subset of indices from each of the classes and add it to data_indices
             data_indices.extend(np.random.choice(self.dataset.labels_to_indices[_class], shots, replace=False))
-            classes.extend(np.full(shots, fill_value=label_encoding.class_to_idx[_class]))
+            # add those labels to data_labels (6 mapped to 0, so add 0's initially then 1's (for 4) and so on)
+            data_labels.extend([label_encoder.class_to_idx[_class] for _ in range(shots)])
 
+        # map data indices to actual data
         data = [self.dataset[idx][0] for idx in data_indices]
-
-        return SampleDataset(data, classes, classes_to_sample)
+        return SampleDataset(data, data_labels, classes_to_sample)
 
     def _check_classes(self, classes):
         assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
