@@ -31,55 +31,61 @@ class UtilTests(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_module_clone(self):
-        output = self.model(self.input)
-        loss = self.loss_func(output, th.tensor([[0., 0.]]))
+    def optimizer_step(self, model, gradients):
+        for param, gradient in zip(model.parameters(), gradients):
+            param = param - .01 * gradient
 
-        gradients = th.autograd.grad(loss,
-                                     self.model.parameters(),
-                                     retain_graph=True,
-                                     create_graph=True)
+    def test_module_clone(self):
+        original_output = self.model(self.input)
+        original_loss = self.loss_func(original_output, th.tensor([[0., 0.]]))
+
+        original_gradients = th.autograd.grad(original_loss,
+                                              self.model.parameters(),
+                                              retain_graph=True,
+                                              create_graph=True)
 
         cloned_model = l2l.clone_module(self.model)
 
-        for param, gradient in zip(self.model.parameters(), gradients):
+        print(list(self.model.parameters())[-1])
+
+        for param, gradient in zip(self.model.parameters(), original_gradients):
             param = param - .01 * gradient
 
-        output = cloned_model(self.input)
-        loss = self.loss_func(output, th.tensor([[0., 0.]]))
+        print(list(self.model.parameters())[-1])
 
-        gradients = th.autograd.grad(loss,
-                                     cloned_model.parameters(),
-                                     retain_graph=True,
-                                     create_graph=True)
+        cloned_output = cloned_model(self.input)
+        cloned_loss = self.loss_func(cloned_output, th.tensor([[0., 0.]]))
 
-        for param, gradient in zip(cloned_model.parameters(), gradients):
-            param = param - .01 * gradient
+        cloned_gradients = th.autograd.grad(cloned_loss,
+                                            cloned_model.parameters(),
+                                            retain_graph=True,
+                                            create_graph=True)
+
+        self.optimizer_step(cloned_model, cloned_gradients)
 
         for a, b in zip(self.model.parameters(), cloned_model.parameters()):
             assert th.equal(a, b)
 
     def test_module_detach(self):
-        x = self.model(self.input)
-        y = self.loss_func(x, th.tensor([[0., 0.]]))
+        original_output = self.model(self.input)
+        original_loss = self.loss_func(original_output, th.tensor([[0., 0.]]))
 
-        gradients = th.autograd.grad(y,
-                                     self.model.parameters(),
-                                     retain_graph=True,
-                                     create_graph=True)
+        original_gradients = th.autograd.grad(original_loss,
+                                              self.model.parameters(),
+                                              retain_graph=True,
+                                              create_graph=True)
 
         l2l.detach_module(self.model)
         severed = self.model
 
-        for param, gradient in zip(self.model.parameters(), gradients):
-            param = param - .01 * gradient
+        self.optimizer_step(self.model, original_gradients)
 
-        x = severed(self.input)
-        y = self.loss_func(x, th.tensor([[0., 0.]]))
+        severed_output = severed(self.input)
+        severed_loss = self.loss_func(severed_output, th.tensor([[0., 0.]]))
 
         fail = False
         try:
-            gradients = th.autograd.grad(y,
+            gradients = th.autograd.grad(severed_loss,
                                          severed.parameters(),
                                          retain_graph=True,
                                          create_graph=True)
