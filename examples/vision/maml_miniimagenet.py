@@ -2,20 +2,15 @@
 
 import os
 import random
-import numpy as np
 
+import numpy as np
 import torch as th
 from torch import nn
 from torch import optim
-
-from torch.utils.data import ConcatDataset
 from torchvision import transforms
-from torchvision.datasets import Omniglot, ImageFolder
+from torchvision.datasets import ImageFolder
 
 import learn2learn as l2l
-
-from PIL import Image
-from PIL.Image import LANCZOS
 
 
 def accuracy(predictions, targets):
@@ -41,7 +36,6 @@ def fast_adapt(adaptation_data, evaluation_data, learner, loss, adaptation_steps
     return valid_error, valid_accuracy
 
 
-
 def main(
         ways=5,
         shots=5,
@@ -52,8 +46,7 @@ def main(
         num_iterations=60000,
         cuda=True,
         seed=42,
-    ):
-
+):
     MI_PATH = '~/Dropbox/Temporary/mini-imagenet-l2l/miniimagenet/resized/'
 
     random.seed(seed)

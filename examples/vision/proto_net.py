@@ -5,19 +5,20 @@
 # https://github.com/oscarknagg/few-shot
 # and he has a great set of medium articles around it.
 
-from torch.optim import Adam
 import argparse
+from typing import Callable
+
 import numpy as np
-from typing import List, Iterable, Callable, Tuple, Union
 import torch
-from torch.optim import Optimizer
+from PIL.Image import LANCZOS
 from torch.nn import Module
+from torch.optim import Adam
+from torch.optim import Optimizer
+from torchvision import transforms
+
 import learn2learn as l2l
 from learn2learn.models import OmniglotCNN
 from learn2learn.vision.datasets.full_omniglot import FullOmniglot
-from torchvision import transforms
-from PIL.Image import LANCZOS
-from torch.utils.data import Dataset, ConcatDataset, DataLoader
 
 
 def lr_schedule(epoch, lr):
@@ -26,7 +27,8 @@ def lr_schedule(epoch, lr):
         return lr / 2
     else:
         return lr
-    
+
+
 def categorical_accuracy(y, y_pred):
     return torch.eq(y_pred.argmax(dim=-1), y).sum().item() / y_pred.shape[0]
 
@@ -46,7 +48,7 @@ def batch_metrics(model: Module, y_pred: torch.Tensor, y: torch.Tensor,
 
     return batch_logs
 
-    
+
 def gradient_step(model: Module, optimiser: Optimizer, loss_fn: Callable, x: torch.Tensor, y: torch.Tensor, **kwargs):
     model.train()
     optimiser.zero_grad()
@@ -93,10 +95,9 @@ def proto_net_episode(model: Module,
     else:
         model.eval()
 
-
     embeddings = model(x)
-    support = embeddings[:n_shot*k_way]
-    queries = embeddings[n_shot*k_way:]
+    support = embeddings[:n_shot * k_way]
+    queries = embeddings[n_shot * k_way:]
     prototypes = compute_prototypes(support, k_way, n_shot)
     distances = pairwise_distances(queries, prototypes, distance)
 
@@ -126,9 +127,8 @@ def compute_prototypes(support: torch.Tensor, k: int, n: int) -> torch.Tensor:
         class_prototypes: Prototypes aka mean embeddings for each class
     """
     class_prototypes = support.reshape(k, n, -1).mean(dim=1)
-    
-    return class_prototypes
 
+    return class_prototypes
 
 
 def pairwise_distances(x: torch.Tensor,
@@ -166,10 +166,10 @@ def pairwise_distances(x: torch.Tensor,
 
         return -(expanded_x * expanded_y).sum(dim=2)
     else:
-        raise(ValueError('Unsupported similarity function'))
+        raise (ValueError('Unsupported similarity function'))
 
 
-def set_lr(epoch, optimiser,lrs):
+def set_lr(epoch, optimiser, lrs):
     for i, param_group in enumerate(optimiser.param_groups):
         new_lr = lrs[i]
         param_group['lr'] = new_lr
@@ -178,26 +178,24 @@ def set_lr(epoch, optimiser,lrs):
     return optimiser
 
 
-
-def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int, 
-        fit_function: Callable = gradient_step, fit_function_kwargs: dict = {}):
-
-    batch_size= None
+def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
+         fit_function: Callable = gradient_step, fit_function_kwargs: dict = {}):
+    batch_size = None
 
     print('Begin training...')
 
     train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_train)
     eval_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_test)
 
-    monitor=f'val_{args.n_test}-shot_{args.k_test}-way_acc'
+    monitor = f'val_{args.n_test}-shot_{args.k_test}-way_acc'
     monitor_op = np.less
     best = np.Inf
     epochs_since_last_save = 0
-    for epoch in range(1, epochs+1):
+    for epoch in range(1, epochs + 1):
         lrs = [lr_schedule(epoch, param_group['lr']) for param_group in optimiser.param_groups]
-        
-        optimiser = set_lr(epoch, optimiser,lrs)
-        
+
+        optimiser = set_lr(epoch, optimiser, lrs)
+
         epoch_logs = {}
         for batch_index in range(training_episodes):
             batch_logs = dict(batch=batch_index, size=(batch_size or 1))
@@ -213,15 +211,11 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
 
             batch_logs = batch_metrics(model, y_pred, y_support, batch_logs)
 
-    
-        
         logs = epoch_logs or {}
         seen = 0
         metric_name = f"val_{args.n_test}-shot_{args.k_test}-way_acc"
         totals = {'loss': 0, metric_name: 0}
         for batch_index in range(evaluation_episodes):
-
-
             support_t_eval = eval_generator.sample(shots=args.q_test)
             query_t_eval = eval_generator.sample(shots=args.q_test)
             x_support_eval = torch.stack(support_t_eval.data).double().to(device)
@@ -229,11 +223,10 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
             x_query_eval = torch.stack(query_t_eval.data).double().to(device)
 
             x_support_query = torch.cat([x_support_eval, x_query_eval], dim=0)
-            
-            
+
             loss, y_pred = proto_net_episode(
-                model = model,
-                optimiser= optimiser,
+                model=model,
+                optimiser=optimiser,
                 loss_fn=loss_fn,
                 x=x_support_query,
                 y=y_support_eval,
@@ -253,25 +246,24 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
         logs[metric_name] = totals[metric_name] / seen
         if len(optimiser.param_groups) == 1:
             logs['lr'] = optimiser.param_groups[0]['lr']
-        else:    
+        else:
             for i, param_group in enumerate(optimiser.param_groups):
                 logs['lr_{}'.format(i)] = param_group['lr']
-                
+
         epochs_since_last_save += 1
         current = logs.get(monitor)
         if np.less(current, best):
             print('\nEpoch %05d: %s improved from %0.5f to %0.5f,'
-          ' saving model to %s'
-          % (epoch + 1, monitor, best,
-             current, filepath))
+                  ' saving model to %s'
+                  % (epoch + 1, monitor, best,
+                     current, filepath))
             best = current
             torch.save(model.state_dict(), filepath)
 
-
     print('Done.')
-    
-if __name__ == '__main__':
 
+
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--distance', default='l2')
     parser.add_argument('--n-train', default=1, type=int)
@@ -281,7 +273,7 @@ if __name__ == '__main__':
     parser.add_argument('--q-train', default=5, type=int)
     parser.add_argument('--q-test', default=1, type=int)
     args = parser.parse_args()
-    
+
     training_episodes = 1000
     evaluation_episodes = 100
     n_epochs = 40
@@ -293,18 +285,17 @@ if __name__ == '__main__':
     torch.backends.cudnn.benchmark = True
 
     param_str = f'omniglot_nt={args.n_train}_kt={args.k_train}_qt={args.q_train}_' \
-                f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
+        f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
 
+    filepath = f'./data/{param_str}.pth'
 
-    filepath=f'./data/{param_str}.pth'
-    
     omniglot = FullOmniglot(root='./data',
-                                            transform=transforms.Compose([
-                                               transforms.Resize(28, interpolation=LANCZOS),
-                                               transforms.ToTensor(),
-                                               lambda x: 1.0 - x,
-                                            ]),
-                                            download=True)
+                            transform=transforms.Compose([
+                                transforms.Resize(28, interpolation=LANCZOS),
+                                transforms.ToTensor(),
+                                lambda x: 1.0 - x,
+                            ]),
+                            download=True)
     omniglot = l2l.data.MetaDataset(omniglot)
 
     model = OmniglotCNN()
@@ -316,7 +307,7 @@ if __name__ == '__main__':
     eval_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=args.k_test)
     support_t = eval_generator.sample(shots=args.q_test)
     query_t = eval_generator.sample(shots=args.q_test)
-    
+
     main(
         model,
         optimiser,

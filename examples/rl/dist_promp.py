@@ -6,24 +6,21 @@ and PPO for meta-learning.
 """
 
 import random
+from copy import deepcopy
+
+import cherry as ch
 import gym
 import numpy as np
 import torch as th
-import cherry as ch
-
-import learn2learn as l2l
-
-from torch import optim, distributed as dist
-from torch.distributions.kl import kl_divergence
 from cherry.algorithms import ppo, trpo
 from cherry.models.robotics import LinearValue
-
-from copy import deepcopy
-from tqdm import tqdm
-
 from meta_a2c import compute_advantages, maml_a2c_loss
 from policies import DiagNormalPolicy
+from torch import optim, distributed as dist
+from torch.distributions.kl import kl_divergence
+from tqdm import tqdm
 
+import learn2learn as l2l
 
 WORLD_SIZE = 4
 
@@ -65,15 +62,14 @@ def main(
     parser.add_argument("--local_rank", type=int)
     args = parser.parse_args()
     dist.init_process_group('gloo',
-   			    init_method='file:///home/seba-1511/.dist_init_promp',
-			    rank=args.local_rank,
-			    world_size=WORLD_SIZE)
+                            init_method='file:///home/seba-1511/.dist_init_promp',
+                            rank=args.local_rank,
+                            world_size=WORLD_SIZE)
 
     rank = dist.get_rank()
     meta_bsz /= WORLD_SIZE
     seed += rank
     th.set_num_threads(1)
-
 
     random.seed(seed)
     np.random.seed(seed)
@@ -126,7 +122,6 @@ def main(
             iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
             iteration_replays.append(task_replay)
             iteration_policies.append(task_policies)
-
 
         # Print statistics
         print('\nIteration', iteration)

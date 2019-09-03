@@ -5,25 +5,22 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and TRPO for meta-learning.
 """
 
-import gym
 import random
+from copy import deepcopy
+
+import cherry as ch
+import gym
 import numpy as np
 import torch as th
-import cherry as ch
-import learn2learn as l2l
-
-from copy import deepcopy
-from tqdm import tqdm
-
-from torch import autograd, optim
-from torch.distributions import Normal
-from torch.distributions.kl import kl_divergence
-from torch.nn.utils import parameters_to_vector, vector_to_parameters
-
 from cherry.algorithms import a2c, trpo
 from cherry.models.robotics import LinearValue
-
 from policies import DiagNormalPolicy
+from torch import autograd
+from torch.distributions.kl import kl_divergence
+from torch.nn.utils import parameters_to_vector, vector_to_parameters
+from tqdm import tqdm
+
+import learn2learn as l2l
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -80,7 +77,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
         # Fast Adapt
         for train_episodes in train_replays:
             new_policy = fast_adapt_a2c(new_policy, train_episodes, adapt_lr,
-                                   baseline, gamma, tau, first_order=False)
+                                        baseline, gamma, tau, first_order=False)
 
         # Useful values
         states = valid_episodes.state()
@@ -120,7 +117,7 @@ def main(
         seed=42,
         num_workers=6,
         cuda=0,
-        ):
+):
     cuda = bool(cuda)
     random.seed(seed)
     np.random.seed(seed)
@@ -193,10 +190,12 @@ def main(
         if cuda:
             policy.to('cuda', non_blocking=True)
             baseline.to('cuda', non_blocking=True)
-            iteration_replays = [[r.to('cuda', non_blocking=True) for r in task_replays] for task_replays in iteration_replays]
+            iteration_replays = [[r.to('cuda', non_blocking=True) for r in task_replays] for task_replays in
+                                 iteration_replays]
 
         # Compute CG step direction
-        old_loss, old_kl = meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline, tau, gamma, adapt_lr)
+        old_loss, old_kl = meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline, tau, gamma,
+                                               adapt_lr)
         grad = autograd.grad(old_loss,
                              policy.parameters(),
                              retain_graph=True)
@@ -214,11 +213,12 @@ def main(
 
         # Line-search
         for ls_step in range(ls_max_steps):
-            stepsize = backtrack_factor**ls_step * meta_lr
+            stepsize = backtrack_factor ** ls_step * meta_lr
             clone = deepcopy(policy)
             for p, u in zip(clone.parameters(), step):
                 p.data.add_(-stepsize, u.data)
-            new_loss, kl = meta_surrogate_loss(iteration_replays, iteration_policies, clone, baseline, tau, gamma, adapt_lr)
+            new_loss, kl = meta_surrogate_loss(iteration_replays, iteration_policies, clone, baseline, tau, gamma,
+                                               adapt_lr)
             if new_loss < old_loss and kl < max_kl:
                 for p, u in zip(policy.parameters(), step):
                     p.data.add_(-stepsize, u.data)
