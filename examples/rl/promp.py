@@ -16,14 +16,43 @@ import learn2learn as l2l
 
 from torch import optim
 from torch.distributions.kl import kl_divergence
-from cherry.algorithms import ppo, trpo
+from cherry.algorithms import a2c, ppo, trpo
 from cherry.models.robotics import LinearValue
 
 from copy import deepcopy
 from tqdm import tqdm
 
-from meta_a2c import compute_advantages, maml_a2c_loss
 from policies import DiagNormalPolicy
+
+
+def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
+    # Update baseline
+    returns = ch.td.discount(gamma, rewards, dones)
+    baseline.fit(states, returns)
+    values = baseline(states)
+    next_values = baseline(next_states)
+    bootstraps = values * (1.0 - dones) + next_values * dones
+    next_value = th.zeros(1, device=values.device)
+    return ch.pg.generalized_advantage(tau=tau,
+                                       gamma=gamma,
+                                       rewards=rewards,
+                                       dones=dones,
+                                       values=bootstraps,
+                                       next_value=next_value)
+
+
+def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
+    # Update policy and baseline
+    states = train_episodes.state()
+    actions = train_episodes.action()
+    rewards = train_episodes.reward()
+    dones = train_episodes.done()
+    next_states = train_episodes.next_state()
+    log_probs = learner.log_prob(states, actions)
+    advantages = compute_advantages(baseline, tau, gamma, rewards,
+                                    dones, states, next_states)
+    advantages = ch.normalize(advantages).detach()
+    return a2c.policy_loss(log_probs, advantages)
 
 
 def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=False):
@@ -43,7 +72,7 @@ def precompute_quantities(states, actions, old_policy, new_policy):
 def main(
         env_name='HalfCheetahDir-v1',
         adapt_lr=0.1,
-        meta_lr=0.001,
+        meta_lr=3e-4,
         adapt_steps=1,
         num_iterations=1000,
         meta_bsz=40,
@@ -56,7 +85,7 @@ def main(
         adaptive_penalty=False,
         kl_target=0.01,
         num_workers=4,
-        seed=42,
+        seed=421,
 ):
     random.seed(seed)
     np.random.seed(seed)
@@ -67,6 +96,7 @@ def main(
 
     env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
+    env = ch.envs.ActionSpaceScaler(env)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(input_size=env.state_size,
                               output_size=env.action_size,
@@ -76,7 +106,6 @@ def main(
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
 
-    all_rewards = []
     for iteration in range(num_iterations):
         iteration_reward = 0.0
         iteration_replays = []
@@ -115,9 +144,8 @@ def main(
         # Print statistics
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
-        all_rewards.append(adaptation_reward)
         print('adaptation_reward', adaptation_reward)
-        ppt.plot(adaptation_reward, 'PROMP: Rewards')
+        ppt.plot(adaptation_reward, 'PROMP: Rewards -- lr=4e-3')
 
         # ProMP meta-optimization
         for ppo_step in tqdm(range(ppo_steps), leave=False, desc='Optim'):
@@ -138,15 +166,15 @@ def main(
                                                         actions,
                                                         old_policy,
                                                         new_policy)
+                advantages = compute_advantages(baseline, tau, gamma, rewards,
+                                                dones, states, next_states)
+                advantages = ch.normalize(advantages).detach()
                 for step in range(adapt_steps):
                     # Compute KL penalty
                     kl_pen = kl_divergence(old_density, new_density).mean()
                     kl_total += kl_pen.item()
 
                     # Update the clone
-                    advantages = compute_advantages(baseline, tau, gamma, rewards,
-                                                    dones, states, next_states)
-                    advantages = ch.normalize(advantages).detach()
                     surr_loss = trpo.policy_loss(new_log_probs, old_log_probs, advantages)
                     new_policy.adapt(surr_loss)
 
