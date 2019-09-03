@@ -33,25 +33,18 @@ class UtilTests(unittest.TestCase):
 
     def optimizer_step(self, model, gradients):
         for param, gradient in zip(model.parameters(), gradients):
-            param = param - .01 * gradient
+            param.data.sub_(0.01 * gradient)
 
     def test_module_clone(self):
         original_output = self.model(self.input)
         original_loss = self.loss_func(original_output, th.tensor([[0., 0.]]))
-
         original_gradients = th.autograd.grad(original_loss,
                                               self.model.parameters(),
                                               retain_graph=True,
                                               create_graph=True)
 
         cloned_model = l2l.clone_module(self.model)
-
-        print(list(self.model.parameters())[-1])
-
-        for param, gradient in zip(self.model.parameters(), original_gradients):
-            param = param - .01 * gradient
-
-        print(list(self.model.parameters())[-1])
+        self.optimizer_step(self.model, original_gradients)
 
         cloned_output = cloned_model(self.input)
         cloned_loss = self.loss_func(cloned_output, th.tensor([[0., 0.]]))
@@ -85,11 +78,11 @@ class UtilTests(unittest.TestCase):
 
         fail = False
         try:
-            gradients = th.autograd.grad(severed_loss,
-                                         severed.parameters(),
-                                         retain_graph=True,
-                                         create_graph=True)
-        except:
+            severed_gradients = th.autograd.grad(severed_loss,
+                                                 severed.parameters(),
+                                                 retain_graph=True,
+                                                 create_graph=True)
+        except Exception as e:
             fail = True
 
         finally:
