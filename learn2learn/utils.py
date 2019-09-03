@@ -52,18 +52,21 @@ def detach_module(module):
     # First, re-write all parameters
     for param_key in module._parameters:
         if module._parameters[param_key] is not None:
-            detached = module._parameters[param_key].detach()
-            module._parameters[param_key] = detached
+            detached = module._parameters[param_key].detach_()
+#            detached = module._parameters[param_key].detach()
+#            module._parameters[param_key] = detached
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         if module._buffers[buffer_key] is not None and \
                 module._buffers[buffer_key].requires_grad:
-            module._buffers[buffer_key] = module._buffers[buffer_key].detach()
+            module._buffers[buffer_key] = module._buffers[buffer_key].detach_()
+#            module._buffers[buffer_key] = module._buffers[buffer_key].detach()
 
     # Then, recurse for each submodule
     for module_key in module._modules:
-        module._modules[module_key] = detach_module(module._modules[module_key])
+        detach_module(module._modules[module_key])
+#        module._modules[module_key] = detach_module(module._modules[module_key])
 
 
 def clone_distribution(dist):

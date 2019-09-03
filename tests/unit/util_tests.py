@@ -4,6 +4,7 @@ import unittest
 import torch as th
 import learn2learn as l2l 
 
+
 class Model(th.nn.Module):
 
     def __init__(self):
@@ -16,6 +17,7 @@ class Model(th.nn.Module):
 
     def forward(self, x):
         return self.model(x)
+
 
 class UtilTests(unittest.TestCase):
 
@@ -54,7 +56,7 @@ class UtilTests(unittest.TestCase):
             param = param - .01 * gradient
 
         for a,b in zip(self.model.parameters(), clone.parameters()):
-            assert (th.equal(a,b))
+            assert th.equal(a,b)
 
     
     def test_module_detach(self):
@@ -66,7 +68,8 @@ class UtilTests(unittest.TestCase):
                          retain_graph=True,
                          create_graph=True)
 
-        severed = l2l.detach_module(self.model) 
+        l2l.detach_module(self.model) 
+        severed = self.model
 
         for param, gradient in zip(self.model.parameters(), gradients):
             param = param - .01 * gradient
@@ -77,14 +80,14 @@ class UtilTests(unittest.TestCase):
         fail = False
         try:
             gradients = th.autograd.grad(y,
-                             severed.parameters(),
-                             retain_graph=True,
-                             create_graph=True)
+                                         severed.parameters(),
+                                         retain_graph=True,
+                                         create_graph=True)
         except:
             fail = True
 
         finally:
-            assert (fail == True)
+            assert fail == True
 
     def test_distribution_clone(self):
         pass
