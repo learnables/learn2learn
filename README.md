@@ -63,4 +63,5 @@ The following changelog is mostly for the hackathon period.
 
 # Acknowledgements
 
-1. The RL environments are copied from: https://github.com/tristandeleu/pytorch-maml-rl
+1. The RL environments are copied from: https://github.com/tristandeleu/pytorch-maml-rl with some rewards computed according to the ProMP code release: https://github.com/jonasrothfuss/ProMP/
+

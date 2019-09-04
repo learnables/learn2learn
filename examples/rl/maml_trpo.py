@@ -108,7 +108,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 def main(
         experiment='dev',
-        task_name='cheedir',
+        task_name='antdir',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,
