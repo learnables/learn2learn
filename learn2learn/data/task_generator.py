@@ -75,7 +75,7 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-    def __init__(self, dataset: MetaDataset, classes: list = None, ways: int = 3):
+    def __init__(self, dataset: MetaDataset, classes: list = None, ways: int = 3, tasks: list = 10):
         """
 
         Args:
