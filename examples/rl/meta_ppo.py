@@ -6,21 +6,18 @@ and PPO for meta-learning.
 """
 
 import random
+
+import cherry as ch
 import gym
 import numpy as np
 import torch as th
-import cherry as ch
-
-import learn2learn as l2l
-
-from torch import optim
 from cherry.algorithms import a2c, ppo
 from cherry.models.robotics import LinearValue
-
-from copy import deepcopy
+from policies import DiagNormalPolicy
+from torch import optim
 from tqdm import tqdm
 
-from policies import DiagNormalPolicy
+import learn2learn as l2l
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -105,7 +102,7 @@ def main(
             for step in range(adapt_steps):
                 train_episodes = task.run(learner, episodes=adapt_bsz)
                 learner = fast_adapt_a2c(learner, train_episodes, adapt_lr,
-                                       baseline, gamma, tau, first_order=True)
+                                         baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
 
             # Compute Validation Loss

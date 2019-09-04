@@ -6,9 +6,9 @@ import numpy as np
 
 is_py2 = (sys.version[0] == '2')
 if is_py2:
-    import Queue as queue
+    pass
 else:
-    import queue as queue
+    pass
 
 
 class EnvWorker(mp.Process):

@@ -5,22 +5,23 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and A2C for meta-learning.
 """
 
-import gym
 import random
+
+import cherry as ch
+import gym
 import numpy as np
 import torch as th
-import cherry as ch
-import learn2learn as l2l
-
-from torch import autograd, optim
 from cherry.algorithms import a2c
 from cherry.models.control import Actor
+from policies import LinearValue
+from torch import optim
 
-from policies import DiagNormalPolicy, LinearValue
+import learn2learn as l2l
 
 ENV_SIZE = 11
-START = (int((ENV_SIZE+1)/2), int((ENV_SIZE+1)/2))
+START = (int((ENV_SIZE + 1) / 2), int((ENV_SIZE + 1) / 2))
 GOAL = (1, 1)
+
 
 def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
     # Update policy and baseline
@@ -58,8 +59,7 @@ def main(
         tau=1.00,
         gamma=0.99,
         seed=42,
-        ):
-
+):
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)
@@ -67,7 +67,7 @@ def main(
     if task_name == 'nav2d':
         env_name = '2DNavigation-v0'
 
-    env_name ='MiniGrid-Empty-v0'
+    env_name = 'MiniGrid-Empty-v0'
     env = gym.make(env_name, size=ENV_SIZE)
     env.seed(seed)
     env = ch.envs.Torch(env)

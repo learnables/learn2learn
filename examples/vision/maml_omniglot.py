@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 
 import random
-import numpy as np
 
+import numpy as np
 import torch as th
+from PIL.Image import LANCZOS
 from torch import nn
 from torch import optim
-
 from torchvision import transforms
 
 import learn2learn as l2l
-
-from PIL.Image import LANCZOS
 
 
 def accuracy(predictions, targets):
@@ -36,7 +34,7 @@ def fast_adapt(adaptation_data, evaluation_data, learner, loss, adaptation_steps
     valid_accuracy = accuracy(predictions, y)
     return valid_error, valid_accuracy
 
-  
+
 def main(
         ways=5,
         shots=1,
@@ -47,8 +45,7 @@ def main(
         num_iterations=60000,
         cuda=True,
         seed=42,
-    ):
-
+):
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)
@@ -59,10 +56,11 @@ def main(
 
     omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
                                                 transform=transforms.Compose([
-                                                   l2l.vision.transforms.RandomDiscreteRotation([0.0, 90.0, 180.0, 270.0]),
-                                                   transforms.Resize(28, interpolation=LANCZOS),
-                                                   transforms.ToTensor(),
-                                                   lambda x: 1.0 - x,
+                                                    l2l.vision.transforms.RandomDiscreteRotation(
+                                                        [0.0, 90.0, 180.0, 270.0]),
+                                                    transforms.Resize(28, interpolation=LANCZOS),
+                                                    transforms.ToTensor(),
+                                                    lambda x: 1.0 - x,
                                                 ]),
                                                 download=True)
     omniglot = l2l.data.MetaDataset(omniglot)
@@ -73,7 +71,7 @@ def main(
     test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
 
     # Create model
-    model = l2l.models.OmniglotFC(28**2, ways)
+    model = l2l.models.OmniglotFC(28 ** 2, ways)
     model.to(device)
     maml = l2l.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)

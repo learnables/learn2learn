@@ -6,19 +6,18 @@ and A2C for meta-learning.
 """
 
 import random
+
+import cherry as ch
 import gym
 import numpy as np
 import torch as th
-import cherry as ch
-
-import learn2learn as l2l
-
-from tqdm import tqdm
-from torch import optim
 from cherry.algorithms import a2c
 from cherry.models.robotics import LinearValue
-
 from policies import DiagNormalPolicy
+from torch import optim
+from tqdm import tqdm
+
+import learn2learn as l2l
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
