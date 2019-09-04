@@ -12,7 +12,7 @@ def maml_update(model, lr, grads):
     The function re-routes the Python object, thus avoiding in-place
     operations. However, it seems like PyTorch handles in-place operations
     fairly well.
-    
+
     NOTE: The model itself is updated in-place (no deepcopy), but the
           parameters' tensors are not.
 
