@@ -5,24 +5,22 @@ Trains MAML using PG + Baseline + GAE for fast adaptation,
 and PPO for meta-learning.
 """
 
-import ppt
 import random
+from copy import deepcopy
+
+import cherry as ch
 import gym
 import numpy as np
+import ppt
 import torch as th
-import cherry as ch
-
-import learn2learn as l2l
-
-from torch import optim
-from torch.distributions.kl import kl_divergence
 from cherry.algorithms import a2c, ppo, trpo
 from cherry.models.robotics import LinearValue
-
-from copy import deepcopy
+from policies import DiagNormalPolicy
+from torch import optim
+from torch.distributions.kl import kl_divergence
 from tqdm import tqdm
 
-from policies import DiagNormalPolicy
+import learn2learn as l2l
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -139,7 +137,6 @@ def main(
             iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
             iteration_replays.append(task_replay)
             iteration_policies.append(task_policies)
-
 
         # Print statistics
         print('\nIteration', iteration)

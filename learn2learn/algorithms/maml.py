@@ -2,8 +2,8 @@
 
 from torch.autograd import grad
 
-from learn2learn.utils import clone_module
 from learn2learn.algorithms.base_learner import BaseLearner
+from learn2learn.utils import clone_module
 
 
 def maml_update(model, lr, grads):
@@ -12,7 +12,7 @@ def maml_update(model, lr, grads):
     The function re-routes the Python object, thus avoiding in-place
     operations. However, it seems like PyTorch handles in-place operations
     fairly well.
-    
+
     NOTE: The model itself is updated in-place (no deepcopy), but the
           parameters' tensors are not.
 

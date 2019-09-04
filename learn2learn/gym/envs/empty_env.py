@@ -1,7 +1,7 @@
 from enum import IntEnum
 
-from gym_minigrid.minigrid import *
 import cherry as ch
+from gym_minigrid.minigrid import *
 
 
 class EmptyEnv(MiniGridEnv):
@@ -30,7 +30,7 @@ class EmptyEnv(MiniGridEnv):
             grid_size=size,
             max_steps=4 * size * size,
             see_through_walls=True,
-#            agent_view_size=3,
+            #            agent_view_size=3,
         )
         self.agent_dir = 0
 
