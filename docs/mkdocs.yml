@@ -1,7 +1,9 @@
 docs_dir: _build/pydocmd
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML
 markdown_extensions:
   - mdx_math
-pages:
+nav:
   - Home: index.md
   - Tutorials:
       - Getting Started: tutorials/getting_started.md
