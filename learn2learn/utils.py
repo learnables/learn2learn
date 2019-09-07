@@ -96,12 +96,48 @@ def detach_module(module):
     error.backward()  # Gradients are back-propagate on clone, not net.
     ~~~
     """
-    raise NotImplementedError()
+    # First, re-write all parameters
+    for param_key in module._parameters:
+        if module._parameters[param_key] is not None:
+            detached = module._parameters[param_key].detach_()
+
+    # Second, handle the buffers if necessary
+    for buffer_key in module._buffers:
+        if module._buffers[buffer_key] is not None and \
+                module._buffers[buffer_key].requires_grad:
+            module._buffers[buffer_key] = module._buffers[buffer_key].detach_()
+
+    # Then, recurse for each submodule
+    for module_key in module._modules:
+        detach_module(module._modules[module_key])
 
 
 def clone_distribution(dist):
-    raise NotImplementedError()
+    # TODO: This function was never tested.
+    clone = copy.deepcopy(dist)
+
+    for param_key in clone.__dict__:
+        item = clone.__dict__[param_key]
+        if isinstance(item, th.Tensor):
+            if item.requires_grad:
+                clone.__dict__[param_key] = dist.__dict__[param_key].clone()
+        elif isinstance(item, th.nn.Module):
+            clone.__dict__[param_key] = clone_module(dist.__dict__[param_key])
+        elif isinstance(item, th.Distribution):
+            clone.__dict__[param_key] = clone_distribution(dist.__dict__[param_key])
+
+    return clone
 
 
 def detach_distribution(dist):
-    raise NotImplementedError()
+    # TODO: This function was never tested.
+    for param_key in dist.__dict__:
+        item = dist.__dict__[param_key]
+        if isinstance(item, th.Tensor):
+            if item.requires_grad:
+                dist.__dict__[param_key] = dist.__dict__[param_key].detach()
+        elif isinstance(item, th.nn.Module):
+            dist.__dict__[param_key] = detach_module(dist.__dict__[param_key])
+        elif isinstance(item, th.Distribution):
+            dist.__dict__[param_key] = detach_distribution(dist.__dict__[param_key])
+    return dist
