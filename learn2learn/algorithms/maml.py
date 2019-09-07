@@ -13,8 +13,7 @@ def maml_update(model, lr, grads=None):
 
     Performs a MAML update on model using grads and lr.
     The function re-routes the Python object, thus avoiding in-place
-    operations. However, it seems like PyTorch handles in-place operations
-    fairly well.
+    operations.
 
     NOTE: The model itself is updated in-place (no deepcopy), but the
           parameters' tensors are not.
@@ -25,6 +24,14 @@ def maml_update(model, lr, grads=None):
     * **lr** (float) - The learning rate used to update the model.
     * **grads** (list, *optional*, default=None) - A list of gradients for each parameter
         of the model. If None, will use the gradients in .grad attributes.
+
+    **Example**
+    ~~~python
+    maml = l2l.algorithms.MAML(Model(), lr=0.1)
+    model = maml.clone() # The next two lines essentially implement model.adapt(loss)
+    grads = autograd.grad(loss, model.parameters(), create_graph=True)
+    maml_update(model, lr=0.1, grads)
+    ~~~
     """
     if grads is not None:
         params = list(model.parameters())
@@ -84,7 +91,7 @@ class MAML(BaseLearner):
     **Example**
 
     ~~~python
-    linear = l2l.algorithms.MAML(nn.Linear(20, 10))
+    linear = l2l.algorithms.MAML(nn.Linear(20, 10), lr=0.01)
     clone = linear.clone()
     error = loss(clone(X), y)
     clone.adapt(error)
