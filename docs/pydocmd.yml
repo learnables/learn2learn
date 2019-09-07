@@ -10,7 +10,7 @@ generate:
       - learn2learn.detach_module
       - learn2learn.magic_box
   - docs/learn2learn.data.md:
-      - learn2learn.data++
+      - learn2learn.data.MetaDataset
   - docs/learn2learn.algorithms.md:
       - learn2learn.algorithms.MAML++
       - learn2learn.algorithms.maml_update

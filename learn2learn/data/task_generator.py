@@ -22,20 +22,31 @@ class SampleDataset(Dataset):
 
 
 class MetaDataset(Dataset):
-    """ It wraps a torch dataset by creating a map of target to indices.
-    This comes in handy when we want to sample elements randomly for a particular label.
+    """ 
+    
+    **Descritpion**
 
-    Args:
-        dataset: A torch dataset
+    It wraps a torch dataset by creating a map of target to indices.
+    This comes in handy when we want to sample elements randomly for a particular label.
 
     Notes:
         For l2l to work its important that the dataset returns a (data, target) tuple.
         If your dataset doesn't return that, it should be trivial to wrap your dataset
         with another class to do that.
         #TODO : Add example for wrapping a non standard l2l dataset
+
+    **Arguments**
+    
+    * **dataset** (Dataset) -  A torch dataset.
+
+    **Example**
+    ~~~python
+    mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
+    mnist = l2l.data.MetaDataset(mnist)
+    ~~~
     """
 
-    def __init__(self, dataset: Dataset):
+    def __init__(self, dataset):
         self.dataset = dataset
         self.labels_to_indices = self.get_dict_of_labels_to_indices()
         self.labels = list(self.labels_to_indices.keys())
@@ -75,15 +86,23 @@ class LabelEncoder:
 
 
 class TaskGenerator:
+
+    """
+
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
+
+    **Description**
+
+    A wrapper to generate few-shot classification tasks.
+
+    **Arguments**
+
+    * **dataset** (MetaDataset or Dataset) - The (meta) dataset to wrap.
+    * **classes: List of classes to sample from
+    * **ways: number of labels to sample from
+    """
+
     def __init__(self, dataset: MetaDataset, classes: list = None, ways: int = 3):
-        """
-
-        Args:
-            dataset: should be a MetaDataset
-            classes: List of classes to sample from
-            ways: number of labels to sample from
-        """
-
         # TODO : Add conditional check to work even when dataset isn't MetaDataset and a torch.Dataset
         #  then also it should work
         self.dataset = dataset
