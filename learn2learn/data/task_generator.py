@@ -178,6 +178,7 @@ class TaskGenerator:
             task_to_sample = np.random.choice(self.tasks, size=1)
         else:
             task_to_sample = task
+            assert self._check_task(task_to_sample), ValueError("Task is malformed.")
 
         # encode labels (map 6,4,7 to 0,1,2 so that we can do a BCELoss)
         label_encoder = LabelEncoder(task_to_sample)
