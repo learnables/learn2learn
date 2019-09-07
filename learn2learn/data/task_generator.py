@@ -81,8 +81,8 @@ class TaskGenerator:
                  dataset: MetaDataset,
                  classes: Optional[list] = None,
                  ways: int = 3,
-                 shots: Optional[int] = 1,
-                 tasks: Union[List[int], int] = 10):
+                 tasks: Union[List[int], int] = 10,
+                 shots: Optional[int] = 1):
         """
 
         Args:
@@ -136,8 +136,12 @@ class TaskGenerator:
         Returns: A list of shape `n * w` where n is the number of tasks to generate and w is the ways.
 
         """
-        random.shuffle(self.classes)
-        return [self.classes[:self.ways] for _ in range(n)]
+
+        def get_samples():
+            random.shuffle(self.classes)
+            return self.classes[:self.ways]
+
+        return [get_samples() for _ in range(n)]
 
     def __next__(self):
         try:
@@ -197,13 +201,14 @@ class TaskGenerator:
         return SampleDataset(data, data_labels, task_to_sample)
 
     def _check_classes(self, classes):
+        """ ensure that classes are a subset of dataset.labels """
         assert len(set(classes) - set(self.dataset.labels)) == 0, "classes contains a label that isn't in dataset"
 
-    def _check_task(self, task):
-        # check if each individual task is a subset of self.classes and has no duplicates
-        return (set(task) - set(self.classes) == 0) and (len(set(task)) - len(task) == 0)
+    def _check_task(self, task) -> bool:
+        """ check if each individual task is a subset of self.classes and has no duplicates """
+        return (len(set(task) - set(self.classes)) == 0) and (len(set(task)) - len(task) == 0)
 
     def _check_tasks(self, tasks):
-        # ensure that all tasks are correctly defined.
-        assert len(list(filter(self._check_task, tasks))) - len(
-            tasks) == 0, "Some task in mentioned tasks contain extra variables"
+        """ ensure that all tasks are correctly defined. """
+        invalid_tasks = list(filter(lambda task: not self._check_task(task), tasks))
+        assert len(invalid_tasks) == 0, f"Following task in mentioned tasks are unacceptable. \n {invalid_tasks}"
