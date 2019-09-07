@@ -11,6 +11,7 @@ generate:
       - learn2learn.magic_box
   - docs/learn2learn.data.md:
       - learn2learn.data.MetaDataset
+      - learn2learn.data.TaskGenerator++
   - docs/learn2learn.algorithms.md:
       - learn2learn.algorithms.MAML++
       - learn2learn.algorithms.maml_update

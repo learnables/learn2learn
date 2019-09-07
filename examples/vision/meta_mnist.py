@@ -66,7 +66,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
     mnist_train = l2l.data.MetaDataset(MNIST(download_location, train=True, download=True, transform=transformations))
     # mnist_test = MNIST(file_location, train=False, download=True, transform=transformations)
 
-    train_gen = l2l.data.TaskGenerator(mnist_train, ways=ways)
+    train_gen = l2l.data.TaskGenerator(mnist_train, ways=ways, tasks=10000)
     # test_gen = l2l.data.TaskGenerator(mnist_test, ways=ways)
 
     model = Net(ways)
@@ -81,8 +81,8 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
         iteration_acc = 0.0
         for _ in range(tps):
             learner = meta_model.clone()
-            train_task = train_gen.sample(shots=shots)
-            valid_task = train_gen.sample(shots=shots, classes=train_task.sampled_classes)
+            train_task = train_gen.sample()
+            valid_task = train_gen.sample(task=train_task.sampled_task)
 
             # Fast Adaptation
             for step in range(fas):
