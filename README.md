@@ -14,7 +14,7 @@ pip install learn2learn
 # API Demo
 
 The following is an example of using the high-level MAML implementation on MNIST.
-For more algorithms and lower-level utilities, please refer to [the documentation](http://learn2learn.net/docs/learn2learn/) or the [examples](https://github.com/learnables/learn2learn/tree/master/examples).
+For more algorithms and lower-level utilities, please refer to the [documentation](http://learn2learn.net/docs/learn2learn/) or the [examples](https://github.com/learnables/learn2learn/tree/master/examples).
 
 ~~~python
 import learn2learn as l2l

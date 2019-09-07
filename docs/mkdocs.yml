@@ -9,8 +9,8 @@ nav:
   - {Getting Started: tutorials/getting_started.md}
 - Documentation:
   - {learn2learn: docs/learn2learn.md}
-- {Examples: 'https://github.com/seba-1511/learn2learn/tree/master/examples'}
-- {GitHub: 'https://github.com/seba-1511/learn2learn/'}
+- {Examples: 'https://github.com/learnables/learn2learn/tree/master/examples'}
+- {GitHub: 'https://github.com/learnables/learn2learn/'}
 site_author: Seb Arnold
 site_dir: _build/site
 site_name: learn2learn

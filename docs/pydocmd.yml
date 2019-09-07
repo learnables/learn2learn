@@ -6,7 +6,8 @@ site_name: "learn2learn"
 # documented. Higher indentation leads to smaller header size.
 generate:
   - docs/learn2learn.md:
-      - learn2learn+
+      - learn2learn.clone_module
+      - learn2learn.detach_module
 
 # MkDocs pages configuration. The `<<` operator is sugar added by pydocmd
 # that allows you to use an external Markdown file (eg. your project's README)
@@ -18,8 +19,8 @@ pages:
       - Getting Started: tutorials/getting_started.md
   - Documentation:
       - learn2learn: docs/learn2learn.md
-  - Examples: https://github.com/seba-1511/learn2learn/tree/master/examples
-  - GitHub: https://github.com/seba-1511/learn2learn/
+  - Examples: https://github.com/learnables/learn2learn/tree/master/examples
+  - GitHub: https://github.com/learnables/learn2learn/
 
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
