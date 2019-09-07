@@ -1,26 +1,31 @@
 #!/usr/bin/env python3
 
 """
-Trains MAML using PG + Baseline + GAE for fast adaptation,
-and TRPO for meta-learning.
+Trains a 2-layer MLP with MAML-TRPO.
+
+Usage:
+
+python examples/rl/maml_trpo.py
 """
 
 import random
-from copy import deepcopy
-
-import cherry as ch
 import gym
 import numpy as np
+import learn2learn as l2l
+
 import torch as th
-from cherry.algorithms import a2c, trpo
-from cherry.models.robotics import LinearValue
-from policies import DiagNormalPolicy
 from torch import autograd
 from torch.distributions.kl import kl_divergence
 from torch.nn.utils import parameters_to_vector, vector_to_parameters
+
+import cherry as ch
+from cherry.algorithms import a2c, trpo
+from cherry.models.robotics import LinearValue
+
+from copy import deepcopy
 from tqdm import tqdm
 
-import learn2learn as l2l
+from policies import DiagNormalPolicy
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -104,7 +109,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 
 def main(
-        env_name='HumanoidDirection-v1',
+        env_name='AntDirection-v1',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,

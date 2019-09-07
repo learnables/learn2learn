@@ -1,23 +1,27 @@
 #!/usr/bin/env python3
 
 """
-Trains MAML using PG + Baseline + GAE for fast adaptation,
-and A2C for meta-learning.
+Trains a 2-layer MLP with MetaSGD-VPG.
+
+Usage:
+
+python examples/rl/maml_trpo.py
 """
 
 import random
-
-import cherry as ch
 import gym
 import numpy as np
+import learn2learn as l2l
+
 import torch as th
-from cherry.algorithms import a2c
-from cherry.models.robotics import LinearValue
-from policies import DiagNormalPolicy
 from torch import optim
 from tqdm import tqdm
 
-import learn2learn as l2l
+import cherry as ch
+from cherry.algorithms import a2c
+from cherry.models.robotics import LinearValue
+
+from policies import DiagNormalPolicy
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -52,7 +56,7 @@ def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
 
 def main(
         experiment='dev',
-        env_name='2DNavigation-v0',
+        env_name='Particles2D-v1',
         adapt_lr=0.1,
         meta_lr=0.01,
         adapt_steps=1,
@@ -85,7 +89,7 @@ def main(
         iteration_reward = 0.0
         for task_config in tqdm(env.sample_tasks(meta_bsz)):  # Samples a new config
             learner = meta_learner.clone()
-            env.reset_task(task_config)
+            env.set_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)
 
