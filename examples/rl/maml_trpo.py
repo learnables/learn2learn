@@ -1,26 +1,31 @@
 #!/usr/bin/env python3
 
 """
-Trains MAML using PG + Baseline + GAE for fast adaptation,
-and TRPO for meta-learning.
+Trains a 2-layer MLP with MAML-TRPO.
+
+Usage:
+
+python examples/rl/maml_trpo.py
 """
 
 import random
-from copy import deepcopy
-
-import cherry as ch
 import gym
 import numpy as np
+import learn2learn as l2l
+
 import torch as th
-from cherry.algorithms import a2c, trpo
-from cherry.models.robotics import LinearValue
-from policies import DiagNormalPolicy
 from torch import autograd
 from torch.distributions.kl import kl_divergence
 from torch.nn.utils import parameters_to_vector, vector_to_parameters
+
+import cherry as ch
+from cherry.algorithms import a2c, trpo
+from cherry.models.robotics import LinearValue
+
+from copy import deepcopy
 from tqdm import tqdm
 
-import learn2learn as l2l
+from policies import DiagNormalPolicy
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -104,8 +109,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 
 def main(
-        experiment='dev',
-        task_name='antdir',
+        env_name='AntDirection-v1',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,
@@ -115,7 +119,7 @@ def main(
         tau=1.00,
         gamma=0.99,
         seed=42,
-        num_workers=6,
+        num_workers=2,
         cuda=0,
 ):
     cuda = bool(cuda)
@@ -125,27 +129,14 @@ def main(
     if cuda:
         th.cuda.manual_seed(seed)
 
-    if task_name == 'nav2d':
-        env_name = '2DNavigation-v0'
-    elif task_name == 'cheedir':
-        env_name = 'HalfCheetahDir-v1'
-    elif task_name == 'cheevel':
-        env_name = 'HalfCheetahVel-v1'
-    elif task_name == 'antdir':
-        env_name = 'AntDir-v1'
-    elif task_name == 'antvel':
-        env_name = 'AntVel-v1'
-    elif task_name == 'antpos':
-        env_name = 'AntPos-v1'
-    else:
-        raise Exception('Unknown task_name.')
-
     def make_env():
-        return gym.make(env_name)
+        env = gym.make(env_name)
+        env = ch.envs.ActionSpaceScaler(env)
+        return env
 
     env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
-    env.reset_task(env.sample_tasks(1)[0])
+    env.set_task(env.sample_tasks(1)[0])
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
     if cuda:
@@ -159,7 +150,7 @@ def main(
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
             clone = deepcopy(policy)
-            env.reset_task(task_config)
+            env.set_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)
             task_replay = []

@@ -1,26 +1,30 @@
 #!/usr/bin/env python3
 
 """
-Trains MAML using PG + Baseline + GAE for fast adaptation,
-and PPO for meta-learning.
+Trains a 2-layer MLP with ProMP.
+
+Usage:
+
+python examples/rl/promp.py
 """
 
 import random
-from copy import deepcopy
-
-import cherry as ch
 import gym
 import numpy as np
-import ppt
+import learn2learn as l2l
+
 import torch as th
-from cherry.algorithms import a2c, ppo, trpo
-from cherry.models.robotics import LinearValue
-from policies import DiagNormalPolicy
 from torch import optim
 from torch.distributions.kl import kl_divergence
+
+import cherry as ch
+from cherry.algorithms import a2c, ppo, trpo
+from cherry.models.robotics import LinearValue
+
+from copy import deepcopy
 from tqdm import tqdm
 
-import learn2learn as l2l
+from policies import DiagNormalPolicy
 
 
 def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
@@ -68,7 +72,7 @@ def precompute_quantities(states, actions, old_policy, new_policy):
 
 
 def main(
-        env_name='HalfCheetahDir-v1',
+        env_name='Particles2D-v1',
         adapt_lr=0.1,
         meta_lr=3e-4,
         adapt_steps=1,
@@ -112,7 +116,7 @@ def main(
         # Sample Trajectories
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):
             clone = deepcopy(meta_learner)
-            env.reset_task(task_config)
+            env.set_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)
             task_replay = []
@@ -142,7 +146,6 @@ def main(
         print('\nIteration', iteration)
         adaptation_reward = iteration_reward / meta_bsz
         print('adaptation_reward', adaptation_reward)
-        ppt.plot(adaptation_reward, 'PROMP: Rewards -- lr=4e-3')
 
         # ProMP meta-optimization
         for ppo_step in tqdm(range(ppo_steps), leave=False, desc='Optim'):

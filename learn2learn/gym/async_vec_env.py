@@ -16,9 +16,9 @@ class AsyncVectorEnv(SubprocVecEnv):
         self._env = env
         self.reset()
 
-    def reset_task(self, task):
+    def set_task(self, task):
         tasks = [task for _ in range(self.num_envs)]
-        reset = super(AsyncVectorEnv, self).reset_task(tasks)
+        reset = super(AsyncVectorEnv, self).set_task(tasks)
         return all(reset)
 
     def sample_tasks(self, num_tasks):

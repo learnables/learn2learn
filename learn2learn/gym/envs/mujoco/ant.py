@@ -166,6 +166,38 @@ class AntDirEnv(AntEnv):
         return self._get_obs()
 
 
+class AntRandDirEnv(AntDirEnv):
+
+    def step(self, action):
+        posbefore = np.copy(self.get_body_com("torso")[:2])
+        self.do_simulation(action, self.frame_skip)
+        posafter = self.get_body_com("torso")[:2]
+
+        forward_reward = np.sum(self._goal_dir * (posafter - posbefore)) /self.dt
+
+        survive_reward = 1.0
+        ctrl_cost = 0.5 * np.sum(np.square(action))
+        contact_cost = 0.5 * 1e-3 * np.sum(
+            np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))
+
+        observation = self._get_obs()
+        reward = forward_reward - ctrl_cost - contact_cost + survive_reward
+        state = self.state_vector()
+        notdone = np.isfinite(state).all() \
+                  and state[2] >= 0.0 and state[2] <= 1.0
+        done = not notdone
+        infos = dict(reward_forward=forward_reward, reward_ctrl=-ctrl_cost,
+                     reward_contact=-contact_cost, reward_survive=survive_reward,
+                     task=self._task)
+        return (observation, reward, done, infos)
+
+    def sample_tasks(self, num_tasks):
+        directions = np.random.normal(size=(num_tasks, 2))
+        directions /= np.linalg.norm(directions, axis=1)[..., np.newaxis]
+        tasks = [{'direction': direction} for direction in directions]
+        return tasks
+
+
 class AntPosEnv(AntEnv):
     """Ant environment with target position. The code is adapted from
     https://github.com/cbfinn/maml_rl/blob/9c8e2ebd741cb0c7b8bf2d040c4caeeb8e06cc95/rllab/envs/mujoco/ant_env_rand_goal.py

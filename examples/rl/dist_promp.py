@@ -1,28 +1,68 @@
 #!/usr/bin/env python3
 
 """
-Trains MAML using PG + Baseline + GAE for fast adaptation,
-and PPO for meta-learning.
+Trains a 2-layer MLP with ProMP distributed across the 4 training processes.
+
+Usage:
+
+OMP_NUM_THREADS=1 \
+MKL_NUM_THREADS=1 \
+python -m torch.distributed.launch \
+          --nproc_per_node=4 \
+            examples/rl/dist_promp.py
 """
 
 import random
-from copy import deepcopy
-
-import cherry as ch
 import gym
 import numpy as np
-import torch as th
-from cherry.algorithms import ppo, trpo
-from cherry.models.robotics import LinearValue
-from meta_a2c import compute_advantages, maml_a2c_loss
-from policies import DiagNormalPolicy
-from torch import optim, distributed as dist
-from torch.distributions.kl import kl_divergence
-from tqdm import tqdm
 
 import learn2learn as l2l
 
+import cherry as ch
+from cherry.algorithms import ppo, trpo
+from cherry.models.robotics import LinearValue
+
+import torch as th
+from torch import optim, distributed as dist
+from torch.distributions.kl import kl_divergence
+
+from copy import deepcopy
+from tqdm import tqdm
+
+
+from policies import DiagNormalPolicy
+
 WORLD_SIZE = 4
+
+
+def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states):
+    # Update baseline
+    returns = ch.td.discount(gamma, rewards, dones)
+    baseline.fit(states, returns)
+    values = baseline(states)
+    next_values = baseline(next_states)
+    bootstraps = values * (1.0 - dones) + next_values * dones
+    next_value = th.zeros(1, device=values.device)
+    return ch.pg.generalized_advantage(tau=tau,
+                                       gamma=gamma,
+                                       rewards=rewards,
+                                       dones=dones,
+                                       values=bootstraps,
+                                       next_value=next_value)
+
+
+def maml_a2c_loss(train_episodes, learner, baseline, gamma, tau):
+    # Update policy and baseline
+    states = train_episodes.state()
+    actions = train_episodes.action()
+    rewards = train_episodes.reward()
+    dones = train_episodes.done()
+    next_states = train_episodes.next_state()
+    log_probs = learner.log_prob(states, actions)
+    advantages = compute_advantages(baseline, tau, gamma, rewards,
+                                    dones, states, next_states)
+    advantages = ch.normalize(advantages).detach()
+    return a2c.policy_loss(log_probs, advantages)
 
 
 def fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=False):
@@ -40,7 +80,7 @@ def precompute_quantities(states, actions, old_policy, new_policy):
 
 
 def main(
-        env_name='HalfCheetahDir-v1',
+        env_name='Particles2D-v1',
         adapt_lr=0.1,
         meta_lr=0.001,
         adapt_steps=3,
@@ -62,7 +102,7 @@ def main(
     parser.add_argument("--local_rank", type=int)
     args = parser.parse_args()
     dist.init_process_group('gloo',
-                            init_method='file:///home/seba-1511/.dist_init_promp',
+                            init_method='file://.dist_init_promp',
                             rank=args.local_rank,
                             world_size=WORLD_SIZE)
 
@@ -97,7 +137,7 @@ def main(
         # Sample Trajectories
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):
             clone = deepcopy(meta_learner)
-            env.reset_task(task_config)
+            env.set_task(task_config)
             env.reset()
             task = ch.envs.Runner(env)
             task_replay = []
