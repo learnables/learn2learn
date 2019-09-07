@@ -77,7 +77,8 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-    def __init__(self, dataset: MetaDataset,
+    def __init__(self,
+                 dataset: MetaDataset,
                  classes: Optional[list] = None,
                  ways: int = 3,
                  shots: Optional[int] = 1,
