@@ -5,6 +5,20 @@
 learn2learn is a PyTorch library for meta-learning implementations.
 It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
 
+**Here goes a 3 sentences explanation of meta-learning.**
+
+**Demonstrative video goes here**
+
+**Features**
+
+learn2learn provides high- and low-level utilities for meta-learning. **TODO: Expand this**
+
+* Modular API: implement your own training loops with our low-level utilities.
+* Provides various meta-learning algorithms (e.g. MAML, FOMAML, MetaSGD, ProtoNets, DiCE)
+* Task generator with unified API, compatible with torchvision, torchtext, torchaudio, and cherry.
+* Provides standardized meta-learning tasks for vision (Omniglot, mini-ImageNet), reinforcement learning (Particles, Mujoco), and even text (news classification).
+* 100% compatible with PyTorch -- use your own modules, datasets, or libraries!
+
 # Installation
 
 ~~~bash
@@ -50,6 +64,6 @@ for iteration in range(num_iterations):
     opt.step()
 ~~~
 
-# Acknowledgements
+### Acknowledgements
 
 1. The RL environments are adapted from Tristan Deleu's [implementations](https://github.com/tristandeleu/pytorch-maml-rl) and from the ProMP [repository](https://github.com/jonasrothfuss/ProMP/). Both shared with permission, under the MIT License.

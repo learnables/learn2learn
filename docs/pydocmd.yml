@@ -12,8 +12,10 @@ generate:
   - docs/learn2learn.data.md:
       - learn2learn.data++
   - docs/learn2learn.algorithms.md:
-      - learn2learn.algorithms.MAML
-      - learn2learn.algorithms.MetaSGD
+      - learn2learn.algorithms.MAML++
+      - learn2learn.algorithms.maml_update
+      - learn2learn.algorithms.MetaSGD++
+      - learn2learn.algorithms.meta_sgd_update
   - docs/learn2learn.gym.md:
       - learn2learn.gym++
   - docs/learn2learn.vision.md:

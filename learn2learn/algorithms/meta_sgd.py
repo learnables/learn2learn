@@ -34,6 +34,41 @@ def meta_sgd_update(model, lrs=None, grads=None):
 
 class MetaSGD(BaseLearner):
 
+    """
+
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py)
+
+    **Description**
+
+    High-level implementation of *Model-Agnostic Meta-Learning*.
+
+    This class wraps an arbitrary nn.Module and augments it with `clone()` and `adapt`
+    methods.
+
+    For the first-order version of MAML (i.e. FOMAML), set the `first_order` flag to `True`
+    upon initialization.
+
+    **Arguments**
+
+    * **model** (Module) - Module to be wrapped.
+    * **lr** (float) - Fast adaptation learning rate.
+    * **first_order** (bool, *optional*, default=False) - Whether to use the
+
+    **References**
+
+    1. Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.”
+
+    **Example**
+
+    ~~~python
+    linear = l2l.algorithms.MAML(nn.Linear(20, 10))
+    clone = linear.clone()
+    error = loss(clone(X), y)
+    clone.adapt(error)
+    error = loss(clone(X), y)
+    error.backward()
+    ~~~
+    """
     def __init__(self, model, lr=1.0, first_order=False, lrs=None):
         super(MetaSGD, self).__init__()
         self.module = model
