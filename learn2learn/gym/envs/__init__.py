@@ -26,8 +26,8 @@ register(
 # ----------------------------------------
 
 register(
-    'AntDirection-v1',
-    entry_point='learn2learn.gym.envs.mujoco.ant_direction:AntDirectionEnv',
+    'HalfCheetahForwardBackward-v1',
+    entry_point='learn2learn.gym.envs.mujoco.halfcheetah_forward_backward:HalfCheetahForwardBackwardEnv',
     max_episode_steps=100,
 )
 
@@ -38,59 +38,27 @@ register(
 )
 
 register(
-    'HalfCheetahForwardBackward-v1',
-    entry_point='learn2learn.gym.envs.mujoco.halfcheetah_forward_backward:HalfCheetahForwardBackwardEnv',
+    'AntDirection-v1',
+    entry_point='learn2learn.gym.envs.mujoco.ant_direction:AntDirectionEnv',
     max_episode_steps=100,
 )
 
-
-
-
-
-
-
-
 register(
-    'AntVel-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntVelEnv'},
-    max_episode_steps=200
+    'HumanoidForwardBackward-v1',
+    entry_point='learn2learn.gym.envs.mujoco.humanoid_forward_backward:HumanoidForwardBackwardEnv',
+    max_episode_steps=200,
 )
 
 register(
-    'AntDir-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntDirEnv'},
-    max_episode_steps=200
+    'HumanoidDirection-v1',
+    entry_point='learn2learn.gym.envs.mujoco.humanoid_direction:HumanoidDirectionEnv',
+    max_episode_steps=200,
 )
 
-register(
-    'AntRandDir-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntRandDirEnv'},
-    max_episode_steps=100
-)
 
-register(
-    'AntPos-v0',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntPosEnv'},
-    max_episode_steps=200
-)
 
-register(
-    'HalfCheetahVel-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.half_cheetah:HalfCheetahVelEnv'},
-    max_episode_steps=200
-)
 
-register(
-    'HalfCheetahDir-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.half_cheetah:HalfCheetahDirEnv'},
-    max_episode_steps=200
-)
+
 
 # 2D Navigation
 # ----------------------------------------
@@ -99,11 +67,4 @@ register(
     '2DNavigation-v0',
     entry_point='learn2learn.gym.envs.navigation:Navigation2DEnv',
     max_episode_steps=100
-)
-
-# Grid World
-# ----------------------------------------
-register(
-    id='MiniGrid-Empty-v0',
-    entry_point='learn2learn.gym.envs.empty_env:EmptyEnv'
 )
