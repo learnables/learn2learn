@@ -27,7 +27,7 @@ task_generator = l2l.data.TaskGenerator(mnist,
                                         classes=[0, 1, 4, 6, 8, 9],
                                         tasks=10)
 model = Net()
-maml = l2l.MAML(model, lr=1e-3, first_order=False)
+maml = l2l.algorithms.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):

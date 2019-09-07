@@ -71,7 +71,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
     model = Net(ways)
     model.to(device)
-    meta_model = l2l.MAML(model, lr=maml_lr)
+    meta_model = l2l.algorithms.MAML(model, lr=maml_lr)
     opt = optim.Adam(meta_model.parameters(), lr=lr)
     loss_func = nn.NLLLoss(reduction="sum")
 

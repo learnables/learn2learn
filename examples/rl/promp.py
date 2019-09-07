@@ -104,7 +104,7 @@ def main(
                               output_size=env.action_size,
                               hiddens=[64, 64],
                               activation='tanh')
-    meta_learner = l2l.MAML(policy, lr=meta_lr)
+    meta_learner = l2l.algorithms.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
 

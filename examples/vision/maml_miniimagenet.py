@@ -78,7 +78,7 @@ def main(
     # Create model
     model = l2l.models.MiniImagenetCNN(ways)
     model.to(device)
-    maml = l2l.MAML(model, lr=fast_lr, first_order=False)
+    maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
     loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
 

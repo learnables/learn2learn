@@ -1,6 +1,47 @@
 #!/usr/bin/env python3
 
+import torch
 import copy
+
+
+def magic_box(x):
+    """
+
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
+
+    **Description**
+
+    The magic box operator, which evaluates to 1 but whose gradient is $dx$:
+
+    $$\\msquare(x) = \\exp(x - \\top(x)),$$
+
+    where $\\top$ is the stop-gradient (or detach) operator.
+
+    This operator is useful when computing higher-order derivatives of stochastic graphs.
+    For more informations, please refer to the DiCE paper. (Reference 1)
+
+    **References**
+
+    1. Foerster et al. 2018. “DiCE: The Infinitely Differentiable Monte-Carlo Estimator.” arXiv.
+
+    **Arguments**
+
+    * **x** (Variable) - Variable to transform.
+
+    **Return**
+
+    * (Variable) - Tensor of 1, but it's gradient is the gradient of x.
+
+    **Example**
+
+    ~~~python
+    loss = (magic_box(cum_log_probs) * advantages).mean()  # loss is the mean advantage
+    loss.backward()
+    ~~~
+    """
+    if isinstance(x, torch.Tensor):
+        return torch.exp(x - x.detach())
+    return x
 
 
 def clone_parameters(param_list):
