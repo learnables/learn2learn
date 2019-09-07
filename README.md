@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/seba-1511/learn2learn/gh-pages/assets/img/l2l-full.png" height="150px" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/seba-1511/learn2learn/gh-pages/assets/img/l2l-full.png" height="120px" /></p>
 
 --------------------------------------------------------------------------------
 
