@@ -193,7 +193,8 @@ class TaskGenerator:
         # sample from all the classes mentioned during the initialization of the TaskGenerator
         if task is None:
             # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
-            task_to_sample = np.random.choice(self.tasks, size=1)
+            rand_idx = random.randint(0, len(self.tasks))
+            task_to_sample = self.tasks[rand_idx]
         else:
             task_to_sample = task
             assert self._check_task(task_to_sample), ValueError("Task is malformed.")
