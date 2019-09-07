@@ -1,25 +1,17 @@
+#!/usr/bin/env python3
+
 from gym.envs.registration import register
 
 from .subproc_vec_env import SubprocVecEnv
 
-# Bandit
-# ----------------------------------------
 
-for k in [5, 10, 50]:
-    register(
-        'Bandit-K{0}-v0'.format(k),
-        entry_point='learn2learn.gym.envs.bandit:BernoulliBanditEnv',
-        kwargs={'k': k}
-    )
-
-# TabularMDP
+# 2D Navigation
 # ----------------------------------------
 
 register(
-    'TabularMDP-v0',
-    entry_point='learn2learn.gym.envs.mdp:TabularMDPEnv',
-    kwargs={'num_states': 10, 'num_actions': 5},
-    max_episode_steps=10
+    'Particles2D-v1',
+    entry_point='learn2learn.gym.envs.particles.particles_2d:Particles2DEnv',
+    max_episode_steps=100
 )
 
 # Mujoco
@@ -53,18 +45,4 @@ register(
     'HumanoidDirection-v1',
     entry_point='learn2learn.gym.envs.mujoco.humanoid_direction:HumanoidDirectionEnv',
     max_episode_steps=200,
-)
-
-
-
-
-
-
-# 2D Navigation
-# ----------------------------------------
-
-register(
-    '2DNavigation-v0',
-    entry_point='learn2learn.gym.envs.navigation:Navigation2DEnv',
-    max_episode_steps=100
 )

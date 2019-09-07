@@ -8,6 +8,7 @@ class MetaEnv(Env):
     """
 
     def __init__(self, task=None):
+        super(Env, self).__init__()
         if task is None:
             task = self.sample_tasks(1)[0]
         self.set_task(task)

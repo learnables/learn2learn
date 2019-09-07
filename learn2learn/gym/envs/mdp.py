@@ -1,10 +1,14 @@
+#!/usr/bin/env python3
+
 import gym
 import numpy as np
 from gym import spaces
 from gym.utils import seeding
 
+from learn2learn.gym.envs.meta_env import MetaEnv
 
-class TabularMDPEnv(gym.Env):
+
+class TabularMDPEnv(MetaEnv):
     """Tabular MDP problems, as described in [1].
 
     At each time step, the agent chooses one of `num_actions` actions, say `i`, 
@@ -21,7 +25,8 @@ class TabularMDPEnv(gym.Env):
     """
 
     def __init__(self, num_states, num_actions, task={}):
-        super(TabularMDPEnv, self).__init__()
+#        super(TabularMDPEnv, self).__init__(task)
+        MetaEnv.__init__(self, task)
         self.num_states = num_states
         self.num_actions = num_actions
 
@@ -29,7 +34,6 @@ class TabularMDPEnv(gym.Env):
         self.observation_space = spaces.Box(low=0.0,
                                             high=1.0, shape=(num_states,), dtype=np.float32)
 
-        self._task = task
         self._transitions = task.get('transitions', np.full((num_states,
                                                              num_actions, num_states), 1.0 / num_states,
                                                             dtype=np.float32))
@@ -38,9 +42,11 @@ class TabularMDPEnv(gym.Env):
         self._state = 0
         self.seed()
 
-    def seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
-        return [seed]
+    # -------- MetaEnv Methods -------- 
+    def set_task(self, task):
+        MetaEnv.set_task(self, task)
+        self._transitions = task['transitions']
+        self._rewards_mean = task['rewards_mean']
 
     def sample_tasks(self, num_tasks):
         transitions = self.np_random.dirichlet(np.ones(self.num_states),
@@ -51,7 +57,12 @@ class TabularMDPEnv(gym.Env):
                  for (transition, reward_mean) in zip(transitions, rewards_mean)]
         return tasks
 
-    def reset_task(self, task):
+    # -------- Gym Methods -------- 
+    def seed(self, seed=None):
+        self.np_random, seed = seeding.np_random(seed)
+        return [seed]
+
+    def set_task(self, task):
         self._task = task
         self._transitions = task['transitions']
         self._rewards_mean = task['rewards_mean']
