@@ -78,8 +78,6 @@ def detach_module(module):
 
     Detaches all parameters/buffers of a previously cloned module from its computational graph.
 
-    $$\\int_\\Omega$$
-
     Note: detach works in-place, so it does not return a copy.
 
     **Arguments**
