@@ -143,7 +143,21 @@ class TaskGenerator:
 
         return [get_samples() for _ in range(n)]
 
+    def __iter__(self):
+        self.tasks_idx = 0
+        return self
+
+    def __len__(self):
+        return len(self.tasks)
+
     def __next__(self):
+        """
+        TODO : Add the following test case
+        for i, task in enumerate(tg):
+            assert task.sampled_task == tg.tasks[i]
+        Returns:
+
+        """
         try:
             task = self.sample(self.tasks[self.tasks_idx])
         except IndexError:
@@ -160,8 +174,7 @@ class TaskGenerator:
 
         Args:
             shots: number of data points to return per class, if none then gets the (default : None)
-            classes: Optional list,
-            labels_to_sample: List of labels you want to sample from
+            task: List of labels you want to sample from
 
         Returns: Dataset, list(labels)
 
