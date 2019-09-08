@@ -8,7 +8,7 @@ learn2learn is a PyTorch library for meta-learning implementations.
 
 The goal of meta-learning is to enable agents to *learn how to learn*.
 That is, we would like our agents to become better learners as they solve more and more tasks.
-For example, the animation below shows an agent able to learn to run after a only one parameter update.
+For example, the animation below shows an agent that learns to run after a only one parameter update.
 
 <p align="center"><img src="assets/img/halfcheetah.gif" height="250px" /></p>
 
