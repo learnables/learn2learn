@@ -7,6 +7,14 @@ site_name: "learn2learn"
 generate:
   - docs/learn2learn.md:
       - learn2learn+
+  - docs/learn2learn.gym.envs.md:
+      - learn2learn.gym.envs.meta_env.MetaEnv++
+        #- learn2learn.gym.envs.mujoco.ant_direction.AntDirectionEnv++
+        #- learn2learn.gym.envs.mujoco.ant_forward_backward.AntForwardBackwardEnv++
+        #- learn2learn.gym.envs.mujoco.halfcheetah_forward_backward.HalfCheetahForwardBackwardEnv++
+        #- learn2learn.gym.envs.mujoco.humanoid_direction.HumanoidDirectionEnv++
+        #- learn2learn.gym.envs.mujoco.humanoid_forward_backward.HumanoidForwardBackwardEnv++
+      - learn2learn.gym.envs.particles.particles_2d.Particles2DEnv++
 
 # MkDocs pages configuration. The `<<` operator is sugar added by pydocmd
 # that allows you to use an external Markdown file (eg. your project's README)
@@ -18,6 +26,7 @@ pages:
       - Getting Started: tutorials/getting_started.md
   - Documentation:
       - learn2learn: docs/learn2learn.md
+      - learn2learn.envs: docs/learn2learn.gym.envs.md
   - Examples: https://github.com/seba-1511/learn2learn/tree/master/examples
   - GitHub: https://github.com/seba-1511/learn2learn/
 
