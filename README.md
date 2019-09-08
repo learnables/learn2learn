@@ -5,11 +5,10 @@
 [![Build Status](https://travis-ci.com/learnables/learn2learn.svg?branch=master)](https://travis-ci.com/learnables/learn2learn)
 
 learn2learn is a PyTorch library for meta-learning implementations.
-It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
 
-**Here goes a 3 sentences explanation of meta-learning.**
-
-**Demonstrative video goes here**
+The goal of meta-learning is to enable agents to *learn how to learn*.
+That is, we would like our agents to become better learners over time such that learning to solve the 1000th task should happen faster when learning the 1st task.
+For example, once an agent has learned how to move north and south, we expect it to quickly pick up how to move east and west.
 
 **Features**
 
