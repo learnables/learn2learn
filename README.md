@@ -12,7 +12,11 @@ For example, once an agent has learned how to move north and south, we expect it
 
 **Features**
 
-learn2learn provides high- and low-level utilities for meta-learning. **TODO: Expand this**
+learn2learn provides high- and low-level utilities for meta-learning.
+The high-level utilities allow arbitrary users to take advantage of exisiting meta-learning algorithms.
+The low-level utilities enable researchers to develop new and better meta-learning algorithms.
+
+Some features of learn2learn include:
 
 * Modular API: implement your own training loops with our low-level utilities.
 * Provides various meta-learning algorithms (e.g. MAML, FOMAML, MetaSGD, ProtoNets, DiCE)
