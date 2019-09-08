@@ -94,7 +94,9 @@ def main(
     th.manual_seed(seed)
 
     def make_env():
-        return gym.make(env_name)
+        env = gym.make(env_name)
+        env = ch.envs.ActionSpaceScaler(env)
+        return env
 
     env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
