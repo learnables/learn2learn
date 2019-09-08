@@ -8,6 +8,12 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 
 class HalfCheetahForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    **Description**
+
+    The Cheetah must learn to run forward or backward.
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

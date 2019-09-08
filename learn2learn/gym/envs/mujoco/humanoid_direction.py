@@ -14,6 +14,12 @@ def mass_center(model, sim):
 
 
 class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    **Description**
+
+    The humanoid must learn to run in an arbitrary direction in the X,Y plane.
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

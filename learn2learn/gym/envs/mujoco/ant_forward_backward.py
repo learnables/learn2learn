@@ -8,6 +8,12 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 
 class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    **Description**
+
+    The Ant must learn to run either forward or backward
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

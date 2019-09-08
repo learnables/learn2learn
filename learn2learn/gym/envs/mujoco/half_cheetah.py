@@ -3,6 +3,12 @@ from gym.envs.mujoco import HalfCheetahEnv as HalfCheetahEnv_
 
 
 class HalfCheetahEnv(HalfCheetahEnv_):
+    """
+    **Description**
+
+    The Cheetah must learn to run in an arbitrary direction in the X,Y plane.
+
+    """
     def _get_obs(self):
         return np.concatenate([
             self.sim.data.qpos.flat[1:],

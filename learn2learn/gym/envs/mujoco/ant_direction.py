@@ -8,6 +8,19 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 
 class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    **Description**
+
+    This environment requires the Mujoco Ant to learn to run
+    in a random direction in the X,Y plane.
+
+    **Credit**
+
+    All mujoco envs adapted from the ProMP [specifications](https://arxiv.org/abs/1810.06784)
+    and [implementations](https://github.com/jonasrothfuss/ProMP/tree/master/meta_policy_search/envs/mujoco_envs)
+    unless otherwise noted.
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

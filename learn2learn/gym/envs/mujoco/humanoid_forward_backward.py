@@ -14,6 +14,12 @@ def mass_center(model, sim):
 
 
 class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    **Description**
+
+    The humanoid must learn to run either forward or backward
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)
