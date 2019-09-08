@@ -5,21 +5,21 @@ site_name: "learn2learn"
 # is a tree of Python member names (modules, classes, etc.) that should be
 # documented. Higher indentation leads to smaller header size.
 generate:
-- docs/learn2learn.md:
-    - learn2learn+
+  - docs/learn2learn.md:
+      - learn2learn+
 
 # MkDocs pages configuration. The `<<` operator is sugar added by pydocmd
 # that allows you to use an external Markdown file (eg. your project's README)
 # in the documentation. The path must be relative to current working directory.
 # This configuration is not mandatory if you have your own mkdocs.yml config file.
 pages:
-- Home: index.md << ../README.md
-- Tutorials:
-    - Getting Started: tutorials/getting_started.md
-- Documentation:
-    - learn2learn: docs/learn2learn.md
-- Examples: https://github.com/seba-1511/learn2learn/tree/master/examples 
-- GitHub: https://github.com/seba-1511/learn2learn/
+  - Home: index.md << ../README.md
+  - Tutorials:
+      - Getting Started: tutorials/getting_started.md
+  - Documentation:
+      - learn2learn: docs/learn2learn.md
+  - Examples: https://github.com/seba-1511/learn2learn/tree/master/examples
+  - GitHub: https://github.com/seba-1511/learn2learn/
 
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
@@ -30,11 +30,11 @@ site_url: http://learn2learn.net
 site_author: Seb Arnold
 google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
 theme:
-    name: mkdocs
-    custom_dir: 'l2l_theme/'
-    highlightjs: true
+  name: mkdocs
+  custom_dir: 'l2l_theme/'
+  highlightjs: true
 loader: pydocmd.loader.PythonLoader
-preprocessor: pydocmd.preprocessor.Preprocessor
+preprocessor: pydocmd.preprocessors.simple.Preprocessor
 # Whether to output headers as markdown or HTML.  Used to workaround
 # https://github.com/NiklasRosenstein/pydoc-markdown/issues/11.  The default is
 # to generate HTML with unique and meaningful id tags, which can't be done with
@@ -48,14 +48,14 @@ headers: markdown
 # subdirectory of your project (eg. docs/), you may want to add the parent
 # directory here.
 additional_search_paths:
-- ..
+  - ..
 
-extra_javascript: 
-    - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js
-    - https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js
 
 extra_css:
-    - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
+  - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
 
 markdown_extensions:
-    - mdx_math
+  - mdx_math

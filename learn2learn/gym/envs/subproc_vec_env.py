@@ -6,9 +6,9 @@ import numpy as np
 
 is_py2 = (sys.version[0] == '2')
 if is_py2:
-    import Queue as queue
+    pass
 else:
-    import queue as queue
+    pass
 
 
 class EnvWorker(mp.Process):
@@ -42,8 +42,8 @@ class EnvWorker(mp.Process):
             elif command == 'reset':
                 observation = self.try_reset()
                 self.remote.send((observation, self.task_id))
-            elif command == 'reset_task':
-                self.env.unwrapped.reset_task(data)
+            elif command == 'set_task':
+                self.env.unwrapped.set_task(data)
                 self.remote.send(True)
             elif command == 'close':
                 self.remote.close()
@@ -96,9 +96,9 @@ class SubprocVecEnv(gym.Env):
         observations, task_ids = zip(*results)
         return np.stack(observations), task_ids
 
-    def reset_task(self, tasks):
+    def set_task(self, tasks):
         for remote, task in zip(self.remotes, tasks):
-            remote.send(('reset_task', task))
+            remote.send(('set_task', task))
         return np.stack([remote.recv() for remote in self.remotes])
 
     def close(self):

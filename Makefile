@@ -7,7 +7,7 @@ dev:
 	python setup.py develop
 
 lint:
-	pycodestyle cherry/ --max-line-length=160
+	pycodestyle learn2learn/ --max-line-length=160
 
 lint-examples:
 	pycodestyle examples/ --max-line-length=80

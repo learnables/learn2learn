@@ -1,76 +1,48 @@
+#!/usr/bin/env python3
+
 from gym.envs.registration import register
+
 from .subproc_vec_env import SubprocVecEnv
 
-# Bandit
-# ----------------------------------------
 
-for k in [5, 10, 50]:
-    register(
-        'Bandit-K{0}-v0'.format(k),
-        entry_point='learn2learn.gym.envs.bandit:BernoulliBanditEnv',
-        kwargs={'k': k}
-    )
-
-# TabularMDP
+# 2D Navigation
 # ----------------------------------------
 
 register(
-    'TabularMDP-v0',
-    entry_point='learn2learn.gym.envs.mdp:TabularMDPEnv',
-    kwargs={'num_states': 10, 'num_actions': 5},
-    max_episode_steps=10
+    'Particles2D-v1',
+    entry_point='learn2learn.gym.envs.particles.particles_2d:Particles2DEnv',
+    max_episode_steps=100
 )
 
 # Mujoco
 # ----------------------------------------
 
 register(
-    'AntVel-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntVelEnv'},
-    max_episode_steps=200
+    'HalfCheetahForwardBackward-v1',
+    entry_point='learn2learn.gym.envs.mujoco.halfcheetah_forward_backward:HalfCheetahForwardBackwardEnv',
+    max_episode_steps=100,
 )
 
 register(
-    'AntDir-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntDirEnv'},
-    max_episode_steps=200
+    'AntForwardBackward-v1',
+    entry_point='learn2learn.gym.envs.mujoco.ant_forward_backward:AntForwardBackwardEnv',
+    max_episode_steps=100,
 )
 
 register(
-    'AntPos-v0',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.ant:AntPosEnv'},
-    max_episode_steps=200
+    'AntDirection-v1',
+    entry_point='learn2learn.gym.envs.mujoco.ant_direction:AntDirectionEnv',
+    max_episode_steps=100,
 )
 
 register(
-    'HalfCheetahVel-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.half_cheetah:HalfCheetahVelEnv'},
-    max_episode_steps=200
+    'HumanoidForwardBackward-v1',
+    entry_point='learn2learn.gym.envs.mujoco.humanoid_forward_backward:HumanoidForwardBackwardEnv',
+    max_episode_steps=200,
 )
 
 register(
-    'HalfCheetahDir-v1',
-    entry_point='learn2learn.gym.envs.utils:mujoco_wrapper',
-    kwargs={'entry_point': 'learn2learn.gym.envs.mujoco.half_cheetah:HalfCheetahDirEnv'},
-    max_episode_steps=200
-)
-
-# 2D Navigation
-# ----------------------------------------
-
-register(
-    '2DNavigation-v0',
-    entry_point='learn2learn.gym.envs.navigation:Navigation2DEnv',
-    max_episode_steps=100
-)
-
-# Grid World
-# ----------------------------------------
-register(
-    id='MiniGrid-Empty-v0',
-    entry_point='learn2learn.gym.envs.empty_env:EmptyEnv'
+    'HumanoidDirection-v1',
+    entry_point='learn2learn.gym.envs.mujoco.humanoid_direction:HumanoidDirectionEnv',
+    max_episode_steps=200,
 )

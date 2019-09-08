@@ -72,9 +72,9 @@ class AntVelEnv(AntEnv):
 
         forward_vel = (xposafter - xposbefore) / self.dt
         forward_reward = -1.0 * np.abs(forward_vel - self._goal_vel) + 1.0
-        survive_reward = 0.05
+        survive_reward = 1.0
 
-        ctrl_cost = 0.5 * 1e-2 * np.sum(np.square(action / self.action_scaling))
+        ctrl_cost = 0.5 * np.sum(np.square(action))
         contact_cost = 0.5 * 1e-3 * np.sum(
             np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))
 
@@ -131,9 +131,9 @@ class AntDirEnv(AntEnv):
 
         forward_vel = (xposafter - xposbefore) / self.dt
         forward_reward = self._goal_dir * forward_vel
-        survive_reward = 0.05
+        survive_reward = 1.0
 
-        ctrl_cost = 0.5 * 1e-2 * np.sum(np.square(action / self.action_scaling))
+        ctrl_cost = 0.5 * np.sum(np.square(action))
         contact_cost = 0.5 * 1e-3 * np.sum(
             np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))
 
@@ -141,7 +141,7 @@ class AntDirEnv(AntEnv):
         reward = forward_reward - ctrl_cost - contact_cost + survive_reward
         state = self.state_vector()
         notdone = np.isfinite(state).all() \
-                  and state[2] >= 0.2 and state[2] <= 1.0
+                  and state[2] >= 0.0 and state[2] <= 1.0
         done = not notdone
         infos = dict(reward_forward=forward_reward, reward_ctrl=-ctrl_cost,
                      reward_contact=-contact_cost, reward_survive=survive_reward,
@@ -156,6 +156,46 @@ class AntDirEnv(AntEnv):
     def reset_task(self, task):
         self._task = task
         self._goal_dir = task['direction']
+
+    def reset(self, *args, **kwargs):
+        super(AntDirEnv, self).reset(*args, **kwargs)
+        # Custom reset of the model, following Rothfuss et al. (ProMP)
+        qpos = self.init_qpos + self.np_random.uniform(size=self.model.nq, low=-.1, high=.1)
+        qvel = self.init_qvel + self.np_random.randn(self.model.nv) * .1
+        self.set_state(qpos, qvel)
+        return self._get_obs()
+
+
+class AntRandDirEnv(AntDirEnv):
+
+    def step(self, action):
+        posbefore = np.copy(self.get_body_com("torso")[:2])
+        self.do_simulation(action, self.frame_skip)
+        posafter = self.get_body_com("torso")[:2]
+
+        forward_reward = np.sum(self._goal_dir * (posafter - posbefore)) /self.dt
+
+        survive_reward = 1.0
+        ctrl_cost = 0.5 * np.sum(np.square(action))
+        contact_cost = 0.5 * 1e-3 * np.sum(
+            np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))
+
+        observation = self._get_obs()
+        reward = forward_reward - ctrl_cost - contact_cost + survive_reward
+        state = self.state_vector()
+        notdone = np.isfinite(state).all() \
+                  and state[2] >= 0.0 and state[2] <= 1.0
+        done = not notdone
+        infos = dict(reward_forward=forward_reward, reward_ctrl=-ctrl_cost,
+                     reward_contact=-contact_cost, reward_survive=survive_reward,
+                     task=self._task)
+        return (observation, reward, done, infos)
+
+    def sample_tasks(self, num_tasks):
+        directions = np.random.normal(size=(num_tasks, 2))
+        directions /= np.linalg.norm(directions, axis=1)[..., np.newaxis]
+        tasks = [{'direction': direction} for direction in directions]
+        return tasks
 
 
 class AntPosEnv(AntEnv):
@@ -183,10 +223,10 @@ class AntPosEnv(AntEnv):
         self.do_simulation(action, self.frame_skip)
         xyposafter = self.get_body_com("torso")[:2]
 
-        goal_reward = -np.sum(np.abs(xyposafter - self._goal_pos)) + 4.0
-        survive_reward = 0.05
+        goal_reward = -np.sum(np.abs(xyposafter - self._goal_pos))
+        survive_reward = 0.0
 
-        ctrl_cost = 0.5 * 1e-2 * np.sum(np.square(action / self.action_scaling))
+        ctrl_cost = 0.1 * np.sum(np.square(action))
         contact_cost = 0.5 * 1e-3 * np.sum(
             np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))
 
@@ -209,3 +249,10 @@ class AntPosEnv(AntEnv):
     def reset_task(self, task):
         self._task = task
         self._goal_pos = task['position']
+
+    def reset(self, *args, **kwargs):
+        super(AntPosEnv, self).reset(*args, **kwargs)
+        qpos = self.init_qpos + self.np_random.uniform(size=self.model.nq, low=-.1, high=.1)
+        qvel = self.init_qvel + self.np_random.randn(self.model.nv) * .1
+        self.set_state(qpos, qvel)
+        return self._get_obs()
