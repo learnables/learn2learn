@@ -38,5 +38,6 @@ setup(
         'torch>=1.0.0',
         'torchvision>=0.3.0',
         'pandas',
+        'requests',
     ],
 )
