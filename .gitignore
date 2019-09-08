@@ -106,3 +106,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 data/*
+docs/mkdocs.yml

@@ -6,7 +6,37 @@ site_name: "learn2learn"
 # documented. Higher indentation leads to smaller header size.
 generate:
   - docs/learn2learn.md:
-      - learn2learn+
+      - learn2learn.clone_module
+      - learn2learn.detach_module
+      - learn2learn.magic_box
+  - docs/learn2learn.data.md:
+      - learn2learn.data.MetaDataset
+      - learn2learn.data.TaskGenerator++
+  - docs/learn2learn.algorithms.md:
+      - learn2learn.algorithms.MAML++
+      - learn2learn.algorithms.maml_update
+      - learn2learn.algorithms.MetaSGD++
+      - learn2learn.algorithms.meta_sgd_update
+  - docs/learn2learn.gym.md:
+      - learn2learn.gym++
+      - learn2learn.gym.envs.mujoco
+      - learn2learn.gym.envs.mujoco.HalfCheetahForwardBackwardEnv
+      - learn2learn.gym.envs.mujoco.AntForwardBackwardEnv
+      - learn2learn.gym.envs.mujoco.AntDirectionEnv
+      - learn2learn.gym.envs.mujoco.HumanoidForwardBackwardEnv
+      - learn2learn.gym.envs.mujoco.HumanoidDirectionEnv
+      - learn2learn.gym.envs.particles
+      - learn2learn.gym.envs.particles.Particles2DEnv
+  - docs/learn2learn.vision.md:
+      - learn2learn.vision.models
+      - learn2learn.vision.models.OmniglotFC
+      - learn2learn.vision.models.OmniglotCNN
+      - learn2learn.vision.datasets
+      - learn2learn.vision.datasets.FullOmniglot
+      - learn2learn.vision.transforms
+      - learn2learn.vision.transforms.RandomDiscreteRotation
+  - docs/learn2learn.text.md:
+      - learn2learn.text.datasets.NewsClassification
 
 # MkDocs pages configuration. The `<<` operator is sugar added by pydocmd
 # that allows you to use an external Markdown file (eg. your project's README)
@@ -18,8 +48,13 @@ pages:
       - Getting Started: tutorials/getting_started.md
   - Documentation:
       - learn2learn: docs/learn2learn.md
-  - Examples: https://github.com/seba-1511/learn2learn/tree/master/examples
-  - GitHub: https://github.com/seba-1511/learn2learn/
+      - learn2learn.algorithms: docs/learn2learn.algorithms.md
+      - learn2learn.data: docs/learn2learn.data.md
+      - learn2learn.gym: docs/learn2learn.gym.md
+      - learn2learn.text: docs/learn2learn.text.md
+      - learn2learn.vision: docs/learn2learn.vision.md
+  - Examples: https://github.com/learnables/learn2learn/tree/master/examples
+  - GitHub: https://github.com/learnables/learn2learn/
 
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
@@ -34,7 +69,7 @@ theme:
   custom_dir: 'l2l_theme/'
   highlightjs: true
 loader: pydocmd.loader.PythonLoader
-preprocessor: pydocmd.preprocessors.simple.Preprocessor
+preprocessor: pydocmd.preprocessor.Preprocessor
 # Whether to output headers as markdown or HTML.  Used to workaround
 # https://github.com/NiklasRosenstein/pydoc-markdown/issues/11.  The default is
 # to generate HTML with unique and meaningful id tags, which can't be done with

@@ -34,7 +34,12 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         ])
 
     def viewer_setup(self):
+        camera_id = self.model.camera_name2id('track')
+        self.viewer.cam.type = 2
+        self.viewer.cam.fixedcamid = camera_id
         self.viewer.cam.distance = self.model.stat.extent * 0.5
+        # Hide the overlay
+        self.viewer._hide_overlay = True
 
     def reset_model(self):
         qpos = self.init_qpos + self.np_random.uniform(size=self.model.nq, low=-.1, high=.1)

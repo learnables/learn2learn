@@ -31,7 +31,7 @@ class Model(nn.Module):
 def main():
     task_dist = dist.Normal(th.zeros(2 * DIM), th.ones(2 * DIM))
     model = Model()
-    maml = l2l.MAML(model, lr=1e-2)
+    maml = l2l.algorithms.MAML(model, lr=1e-2)
     opt = optim.Adam(maml.parameters())
 
     for i in range(TIMESTEPS):

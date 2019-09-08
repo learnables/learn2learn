@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
 
-from .dice import magic_box
-from .maml import MAML
-from .meta_sgd import MetaSGD
+from .maml import MAML, maml_update
+from .meta_sgd import MetaSGD, meta_sgd_update
