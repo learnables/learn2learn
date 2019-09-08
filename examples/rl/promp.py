@@ -72,10 +72,10 @@ def precompute_quantities(states, actions, old_policy, new_policy):
 
 
 def main(
-        env_name='Particles2D-v1',
+        env_name='AntDirection-v1',
         adapt_lr=0.1,
         meta_lr=3e-4,
-        adapt_steps=1,
+        adapt_steps=3,
         num_iterations=1000,
         meta_bsz=40,
         adapt_bsz=20,
