@@ -3,9 +3,7 @@
 --------------------------------------------------------------------------------
 
 learn2learn is a PyTorch library for meta-learning implementations.
-It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/). Edit: L2L was lucky to win the hackathon!
-
-**Note** learn2learn is under active development and many things are breaking.
+It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
 
 # Installation
 
@@ -15,53 +13,43 @@ pip install learn2learn
 
 # API Demo
 
+The following is an example of using the high-level MAML implementation on MNIST.
+For more algorithms and lower-level utilities, please refer to [the documentation](http://learn2learn.net/docs/learn2learn/) or the [examples](https://github.com/learnables/learn2learn/tree/master/examples).
+
 ~~~python
 import learn2learn as l2l
 
 mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
 
-task_generator = l2l.data.TaskGenerator(mnist, ways=3)
+mnist = l2l.data.MetaDataset(mnist)
+task_generator = l2l.data.TaskGenerator(mnist,
+                                        ways=3,
+                                        classes=[0, 1, 4, 6, 8, 9],
+                                        tasks=10)
 model = Net()
 maml = l2l.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):
     learner = maml.clone()  # Creates a clone of model
-    task = task_generator.sample(shots=1)
+    adaptation_task = task_generator.sample(shots=1)
 
     # Fast adapt
     for step in range(adaptation_steps):
-        error = compute_loss(task)
+        error = compute_loss(adaptation_task)
         learner.adapt(error)
 
-    # Compute validation loss
-    valid_task = task_generator.sample(shots=1, classes_to_sample=task.sampled_classes)
-    valid_error = compute_loss(valid_task)
+    # Compute evaluation loss
+    evaluation_task = task_generator.sample(shots=1,
+                                            classes=adaptation_task.sampled_classes)
+    evaluation_error = compute_loss(evaluation_task)
 
-    # Take the meta-learning step
+    # Meta-update the model parameters
     opt.zero_grad()
-    valid_error.backward()
+    evaluation_error.backward()
     opt.step()
 ~~~
 
-# Changelog
-
-The following changelog is mostly for the hackathon period.
-
-## August 15, 2019
-
-* Algorithm cleanup.
-* Added BaseLearner with unified API.
-* Support for vectorized environments.
-
-## August 12, 2019
-
-* Basic implementation of MAML, FOMAML, Meta-SGD.
-* TaskGenerator code for classification tasks.
-* Environments for RL.
-* Small scale examples of MAML-A2C and MAML-PPO.
-
 # Acknowledgements
 
-1. The RL environments are copied from: https://github.com/tristandeleu/pytorch-maml-rl with some rewards computed according to the ProMP code release: https://github.com/jonasrothfuss/ProMP/
-
+1. The RL environments are adapted from Tristan Deleu's [implementations](https://github.com/tristandeleu/pytorch-maml-rl) and from the ProMP [repository](https://github.com/jonasrothfuss/ProMP/). Both shared with permission, under the MIT License.
