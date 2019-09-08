@@ -90,7 +90,7 @@ def main(
             learner = maml.clone()
             adaptation_data = train_generator.sample(shots=shots)
             evaluation_data = train_generator.sample(shots=shots,
-                                                     classes=adaptation_data.sampled_classes)
+                                                     task=adaptation_data.sampled_task)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -105,7 +105,7 @@ def main(
             learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
-                                                     classes=adaptation_data.sampled_classes)
+                                                     task=adaptation_data.sampled_task)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -119,7 +119,7 @@ def main(
             learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
-                                                    classes=adaptation_data.sampled_classes)
+                                                    task=adaptation_data.sampled_task)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,

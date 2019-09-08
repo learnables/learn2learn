@@ -176,20 +176,24 @@ class TaskGenerator:
         self.tasks_idx += 1
         return task
 
-    def sample(self, task=None, shots=None):
-        """ Returns a dataset and the labels that we have sampled.
+    def sample(self, shots=None, task=None):
+        """
+
+        **Description**
+
+        Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
         The length of labels we have sampled is the same as `shots`.
 
-        Args:
-            shots: number of data points to return per class, if none then gets the (default : None)
-            task: List of labels you want to sample from
+        **Arguments**
 
-        Returns: Dataset, list(labels)
+        **shots** (int, *optional*, default=None) - Number of data points to return per class, if None gets self.shots.
+        **task** (list, *optional*, default=None) - List of labels you want to sample from.
 
-        Raises:
-            ValueError : when shots is undefined both in class definition and method
+        **Returns**
+        
+        * Dataset - Containing the sampled task.
 
         """
         # If shots isn't defined, then try to inherit from object

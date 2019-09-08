@@ -55,7 +55,7 @@ for iteration in range(num_iterations):
 
     # Compute evaluation loss
     evaluation_task = task_generator.sample(shots=1,
-                                            classes=adaptation_task.sampled_classes)
+                                            task=adaptation_task.sampled_task)
     evaluation_error = compute_loss(evaluation_task)
 
     # Meta-update the model parameters
