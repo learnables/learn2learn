@@ -34,7 +34,7 @@ theme:
   custom_dir: 'l2l_theme/'
   highlightjs: true
 loader: pydocmd.loader.PythonLoader
-preprocessor: pydocmd.preprocessor.Preprocessor
+preprocessor: pydocmd.preprocessors.simple.Preprocessor
 # Whether to output headers as markdown or HTML.  Used to workaround
 # https://github.com/NiklasRosenstein/pydoc-markdown/issues/11.  The default is
 # to generate HTML with unique and meaningful id tags, which can't be done with
