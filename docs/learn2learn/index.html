@@ -5,14 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="Seb Arnold">
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>learn2learn - learn2learn</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -22,7 +23,16 @@
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
         <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-68693545-3', 'seba-1511.github.com');
+            ga('send', 'pageview');
+        </script> 
     </head>
 
     <body>
@@ -65,13 +75,33 @@
 <li class="active">
     <a href="./">learn2learn</a>
 </li>
+                                    
+<li >
+    <a href="../learn2learn.algorithms/">learn2learn.algorithms</a>
+</li>
+                                    
+<li >
+    <a href="../learn2learn.data/">learn2learn.data</a>
+</li>
+                                    
+<li >
+    <a href="../learn2learn.gym/">learn2learn.gym</a>
+</li>
+                                    
+<li >
+    <a href="../learn2learn.vision/">learn2learn.vision</a>
+</li>
+                                    
+<li >
+    <a href="../learn2learn.vision.models/">learn2learn.vision.models</a>
+</li>
                                 </ul>
                             </li>
                             <li >
-                                <a href="https://github.com/seba-1511/learn2learn/tree/master/examples">Examples</a>
+                                <a href="https://github.com/learnables/learn2learn/tree/master/examples">Examples</a>
                             </li>
                             <li >
-                                <a href="https://github.com/seba-1511/learn2learn/">GitHub</a>
+                                <a href="https://github.com/learnables/learn2learn/">GitHub</a>
                             </li>
                         </ul>
 
@@ -86,8 +116,8 @@
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="disabled">
-                                <a rel="prev" >
+                            <li >
+                                <a rel="prev" href="../learn2learn.algorithms/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -99,12 +129,88 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#learn2learn">learn2learn</a></li>
+        <li class="main active"><a href="#clone_module">clone_module</a></li>
+        <li class="main "><a href="#detach_module">detach_module</a></li>
+        <li class="main "><a href="#magic_box">magic_box</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="learn2learn">learn2learn</h1></div>
+<h1 id="clone_module">clone_module</h1>
+<pre><code class="python">clone_module(module)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Creates a copy of a module, whose parameters/buffers/submodules
+are created using PyTorch's torch.clone().</p>
+<p>This implies that the computational graph is kept, and you can compute
+the derivatives of the new modules' parameters w.r.t the original
+parameters.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>module</strong> (Module) - Module to be cloned.</li>
+</ul>
+<p><strong>Return</strong></p>
+<ul>
+<li>(Module) - The cloned module.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">net = nn.Sequential(Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
+clone = clone_module(net)
+error = loss(clone(X), y)
+error.backward()  # Gradients are back-propagate all the way to net.
+</code></pre>
+
+<h1 id="detach_module">detach_module</h1>
+<pre><code class="python">detach_module(module)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Detaches all parameters/buffers of a previously cloned module from its computational graph.</p>
+<p>Note: detach works in-place, so it does not return a copy.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>module</strong> (Module) - Module to be detached.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">net = nn.Sequential(Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
+clone = clone_module(net)
+detach_module(clone)
+error = loss(clone(X), y)
+error.backward()  # Gradients are back-propagate on clone, not net.
+</code></pre>
+
+<h1 id="magic_box">magic_box</h1>
+<pre><code class="python">magic_box(x)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The magic box operator, which evaluates to 1 but whose gradient is <script type="math/tex">dx</script>:</p>
+<p>
+<script type="math/tex; mode=display">\boxdot (x) = \exp(x - \bot(x))</script>
+</p>
+<p>where <script type="math/tex">\bot</script> is the stop-gradient (or detach) operator.</p>
+<p>This operator is useful when computing higher-order derivatives of stochastic graphs.
+For more informations, please refer to the DiCE paper. (Reference 1)</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Foerster et al. 2018. “DiCE: The Infinitely Differentiable Monte-Carlo Estimator.” arXiv.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>x</strong> (Variable) - Variable to transform.</li>
+</ul>
+<p><strong>Return</strong></p>
+<ul>
+<li>(Variable) - Tensor of 1, but it's gradient is the gradient of x.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">loss = (magic_box(cum_log_probs) * advantages).mean()  # loss is the mean advantage
+loss.backward()
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
@@ -116,6 +222,8 @@
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
         <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

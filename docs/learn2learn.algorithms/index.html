@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Seb Arnold">
-        <link rel="canonical" href="http://learn2learn.net/tutorials/getting_started/">
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.algorithms/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Getting Started - learn2learn</title>
+        <title>learn2learn.algorithms - learn2learn</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -59,41 +59,41 @@
                             <li >
                                 <a href="../..">Home</a>
                             </li>
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li class="active">
-    <a href="./">Getting Started</a>
+<li >
+    <a href="../../tutorials/getting_started/">Getting Started</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../../docs/learn2learn/">learn2learn</a>
+    <a href="../learn2learn/">learn2learn</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">learn2learn.algorithms</a>
 </li>
                                     
 <li >
-    <a href="../../docs/learn2learn.algorithms/">learn2learn.algorithms</a>
+    <a href="../learn2learn.data/">learn2learn.data</a>
 </li>
                                     
 <li >
-    <a href="../../docs/learn2learn.data/">learn2learn.data</a>
+    <a href="../learn2learn.gym/">learn2learn.gym</a>
 </li>
                                     
 <li >
-    <a href="../../docs/learn2learn.gym/">learn2learn.gym</a>
+    <a href="../learn2learn.vision/">learn2learn.vision</a>
 </li>
                                     
 <li >
-    <a href="../../docs/learn2learn.vision/">learn2learn.vision</a>
-</li>
-                                    
-<li >
-    <a href="../../docs/learn2learn.vision.models/">learn2learn.vision.models</a>
+    <a href="../learn2learn.vision.models/">learn2learn.vision.models</a>
 </li>
                                 </ul>
                             </li>
@@ -112,12 +112,12 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../..">
+                                <a rel="next" href="../learn2learn/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../../docs/learn2learn/">
+                                <a rel="prev" href="../learn2learn.data/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -129,52 +129,169 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#getting-started">Getting Started</a></li>
-        <li class="main "><a href="#what-is-meta-learning">What is meta-learning?</a></li>
-        <li class="main "><a href="#how-to-use-l2l">How to Use L2L</a></li>
-            <li><a href="#installing">Installing</a></li>
-            <li><a href="#source-files">Source Files</a></li>
+        <li class="main active"><a href="#maml">MAML</a></li>
+            <li><a href="#adapt">adapt</a></li>
+            <li><a href="#clone">clone</a></li>
+        <li class="main "><a href="#maml_update">maml_update</a></li>
+        <li class="main "><a href="#metasgd">MetaSGD</a></li>
+            <li><a href="#clone_1">clone</a></li>
+            <li><a href="#adapt_1">adapt</a></li>
+        <li class="main "><a href="#meta_sgd_update">meta_sgd_update</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="getting-started">Getting Started</h1>
-<p>L2L is a meta-learning library providing three levels of functionality for users.
-At a high level, there are many examples using meta-learning algorithms to train
-on a myriad of datasets/environments. At a mid level, it provides a functional
-interface for several popular meta-learning algorithms as well as a data loader
-to make it easier to import other data sets. At a low level, it provides extended
-functionality for modules.</p>
-<h1 id="what-is-meta-learning">What is meta-learning?</h1>
-<p>Machine learning is typically concerned with the process of adapting an agent
-or model to perform well on a given task <script type="math/tex"> \mathcal{T} </script>. If any aspect of <script type="math/tex"> \mathcal{T} </script>
-changes then we must begin training anew; however, it is easy to imagine several
-situations where we may want to teach an agent or train a model to perform several
-tasks that are very similar in nature or skill required. In this case, we would like
-to extract "general" knowledge from training on an individual task to reduce the
-amount of time and data needed to train on a subsequent later task. To formalize
-this notion we assume that the tasks trained on are <em>i.i.d.</em> samples <script type="math/tex"> \{\mathcal{T}_{1}
-\dotsb \mathcal{T}_{m}\} </script>, and we have a loss function <script type="math/tex"> \mathcal{L} </script> defined for all <script type="math/tex">
-\mathcal{T} </script>. We can then phrase the problem of meta-learning a few ways. One way is
-as k-shot learning, where we aim to find a model or policy M that minimizes <script type="math/tex"> E_{\mathcal{T}
-}[\mathcal{L}(M_{k}(\mathcal{T}))] </script>, where <script type="math/tex"> M_{k} </script> denotes the model M after training on
-<script type="math/tex"> \mathcal{T} </script> for k episodes.</p>
-<p>For more information about specific meta-learning algorithms, please refer to the
-appropriate tutorial.</p>
-<h1 id="how-to-use-l2l">How to Use L2L</h1>
-<h2 id="installing">Installing</h2>
-<p>A pip package is available, updated periodically. Use the command:</p>
-<p><code>pip install learn2learn</code></p>
-<p>For the most update-to-date version clone the <a href="https://github.com/learnables/learn2learn">repository</a> and use:</p>
-<p><code>pip install -e .</code></p>
-<p>A list of dependencies is maintained and periodically updated in requirements-dev.txt. To install them all use </p>
-<p><code>pip install -r requirements-dev.txt</code></p>
-<p><strong>Important:</strong> As learn2learn is still in the developmental stage, breaking changes are likely to occur. If you
-encounter a problem, feel free to an open an <a href="https://github.com/learnables/learn2learn/issues">issue</a> and we'll
-look into it.</p>
-<h2 id="source-files">Source Files</h2>
-<p>Examples of learn2learn in action can be found <a href="https://github.com/learnables/learn2learn/tree/master/examples">here</a>.
-The source code for algorithm implementations is also available <a href="https://github.com/learnables/learn2learn/tree/master/learn2learn/algorithms">here</a>.</p></div>
+<h1 id="maml">MAML</h1>
+<pre><code class="python">MAML(model, lr, first_order=False)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>High-level implementation of <em>Model-Agnostic Meta-Learning</em>.</p>
+<p>This class wraps an arbitrary nn.Module and augments it with <code>clone()</code> and <code>adapt</code>
+methods.</p>
+<p>For the first-order version of MAML (i.e. FOMAML), set the <code>first_order</code> flag to <code>True</code>
+upon initialization.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>model</strong> (Module) - Module to be wrapped.</li>
+<li><strong>lr</strong> (float) - Fast adaptation learning rate.</li>
+<li><strong>first_order</strong> (bool, <em>optional</em>, default=False) - Whether to use the</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.”</li>
+</ol>
+<p><strong>Example</strong></p>
+<pre><code class="python">linear = l2l.algorithms.MAML(nn.Linear(20, 10), lr=0.01)
+clone = linear.clone()
+error = loss(clone(X), y)
+clone.adapt(error)
+error = loss(clone(X), y)
+error.backward()
+</code></pre>
+
+<h2 id="adapt">adapt</h2>
+<pre><code class="python">MAML.adapt(loss, first_order=None)
+</code></pre>
+
+<p><strong>Description</strong></p>
+<p>Updates the clone parameters in place using the MAML update.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>loss</strong> (Tensor) - Loss to minimize upon update.</li>
+<li><strong>first_order</strong> (bool, <em>optional</em>, default=None) - Whether to use first- or
+    second-order updates. Defaults to self.first_order.</li>
+</ul>
+<h2 id="clone">clone</h2>
+<pre><code class="python">MAML.clone(first_order=None)
+</code></pre>
+
+<p><strong>Description</strong></p>
+<p>Returns a <code>MAML</code>-wrapped copy of the module whose parameters and buffers
+are <code>torch.clone</code>d from the original module.</p>
+<p>This implies that back-propagating losses on the cloned module will
+populate the buffers of the original module.
+For more information, refer to learn2learn.clone_module().</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>first_order</strong> (bool, <em>optional</em>, default=None) - Whether the clone uses first-
+    or second-order updates. Defaults to self.first_order.</li>
+</ul>
+<h1 id="maml_update">maml_update</h1>
+<pre><code class="python">maml_update(model, lr, grads=None)
+</code></pre>
+
+<p><strong>Description</strong></p>
+<p>Performs a MAML update on model using grads and lr.
+The function re-routes the Python object, thus avoiding in-place
+operations.</p>
+<p>NOTE: The model itself is updated in-place (no deepcopy), but the
+      parameters' tensors are not.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>model</strong> (Module) - The model to update.</li>
+<li><strong>lr</strong> (float) - The learning rate used to update the model.</li>
+<li><strong>grads</strong> (list, <em>optional</em>, default=None) - A list of gradients for each parameter
+    of the model. If None, will use the gradients in .grad attributes.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">maml = l2l.algorithms.MAML(Model(), lr=0.1)
+model = maml.clone() # The next two lines essentially implement model.adapt(loss)
+grads = autograd.grad(loss, model.parameters(), create_graph=True)
+maml_update(model, lr=0.1, grads)
+</code></pre>
+
+<h1 id="metasgd">MetaSGD</h1>
+<pre><code class="python">MetaSGD(model, lr=1.0, first_order=False, lrs=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/meta_sgd.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>High-level implementation of <em>Meta-SGD</em>.</p>
+<p>This class wraps an arbitrary nn.Module and augments it with <code>clone()</code> and <code>adapt</code>
+methods.
+It behaves similarly to <code>MAML</code>, but in addition a set of per-parameters learning rates
+are learned for fast-adaptation.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>model</strong> (Module) - Module to be wrapped.</li>
+<li><strong>lr</strong> (float) - Initialization value of the per-parameter fast adaptation learning rates.</li>
+<li><strong>first_order</strong> (bool, <em>optional</em>, default=False) - Whether to use the first-order version.</li>
+<li><strong>lrs</strong> (list of Parameters, <em>optional</em>, default=None) - If not None, overrides <code>lr</code>, and uses the list
+    as learning rates for fast-adaptation.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Li et al. 2017. “Meta-SGD: Learning to Learn Quickly for Few-Shot Learning.” arXiv.</li>
+</ol>
+<p><strong>Example</strong></p>
+<pre><code class="python">linear = l2l.algorithms.MetaSGD(nn.Linear(20, 10), lr=0.01)
+clone = linear.clone()
+error = loss(clone(X), y)
+clone.adapt(error)
+error = loss(clone(X), y)
+error.backward()
+</code></pre>
+
+<h2 id="clone_1">clone</h2>
+<pre><code class="python">MetaSGD.clone()
+</code></pre>
+
+<p><strong>Descritpion</strong></p>
+<p>Akin to <code>MAML.clone()</code> but for MetaSGD: it includes a set of learnable fast-adaptation
+learning rates.</p>
+<h2 id="adapt_1">adapt</h2>
+<pre><code class="python">MetaSGD.adapt(loss, first_order=None)
+</code></pre>
+
+<p><strong>Descritpion</strong></p>
+<p>Akin to <code>MAML.adapt()</code> but for MetaSGD: it updates the model with the learnable
+per-parameter learning rates.</p>
+<h1 id="meta_sgd_update">meta_sgd_update</h1>
+<pre><code class="python">meta_sgd_update(model, lrs=None, grads=None)
+</code></pre>
+
+<p><strong>Description</strong></p>
+<p>Performs a MetaSGD update on model using grads and lrs.
+The function re-routes the Python object, thus avoiding in-place
+operations.</p>
+<p>NOTE: The model itself is updated in-place (no deepcopy), but the
+      parameters' tensors are not.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>model</strong> (Module) - The model to update.</li>
+<li><strong>lrs</strong> (list) - The meta-learned learning rates used to update the model.</li>
+<li><strong>grads</strong> (list, <em>optional</em>, default=None) - A list of gradients for each parameter
+    of the model. If None, will use the gradients in .grad attributes.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">meta = l2l.algorithms.MetaSGD(Model(), lr=1.0)
+lrs = [th.ones_like(p) for p in meta.model.parameters()]
+model = meta.clone() # The next two lines essentially implement model.adapt(loss)
+grads = autograd.grad(loss, model.parameters(), create_graph=True)
+meta_sgd_update(model, lrs=lrs, grads)
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">

@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Seb Arnold">
-        
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>learn2learn</title>
-        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.data/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>learn2learn.data - learn2learn</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
         <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -20,8 +20,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
         <script>
@@ -49,7 +49,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href=".">learn2learn</a>
+                    <a class="navbar-brand" href="../..">learn2learn</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -57,43 +57,43 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href=".">Home</a>
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="tutorials/getting_started/">Getting Started</a>
+    <a href="../../tutorials/getting_started/">Getting Started</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="docs/learn2learn/">learn2learn</a>
+    <a href="../learn2learn/">learn2learn</a>
 </li>
                                     
 <li >
-    <a href="docs/learn2learn.algorithms/">learn2learn.algorithms</a>
+    <a href="../learn2learn.algorithms/">learn2learn.algorithms</a>
+</li>
+                                    
+<li class="active">
+    <a href="./">learn2learn.data</a>
 </li>
                                     
 <li >
-    <a href="docs/learn2learn.data/">learn2learn.data</a>
+    <a href="../learn2learn.gym/">learn2learn.gym</a>
 </li>
                                     
 <li >
-    <a href="docs/learn2learn.gym/">learn2learn.gym</a>
+    <a href="../learn2learn.vision/">learn2learn.vision</a>
 </li>
                                     
 <li >
-    <a href="docs/learn2learn.vision/">learn2learn.vision</a>
-</li>
-                                    
-<li >
-    <a href="docs/learn2learn.vision.models/">learn2learn.vision.models</a>
+    <a href="../learn2learn.vision.models/">learn2learn.vision.models</a>
 </li>
                                 </ul>
                             </li>
@@ -111,21 +111,88 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li >
+                                <a rel="next" href="../learn2learn.algorithms/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../learn2learn.gym/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#metadataset">MetaDataset</a></li>
+        <li class="main "><a href="#taskgenerator">TaskGenerator</a></li>
+            <li><a href="#sample">sample</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
 
-    <div class="row-fluid">
-      <div id="main-content" class="span12">
-        <h1 id="404-page-not-found" style="text-align: center">404</h1>
-        <p style="text-align: center"><strong>Page not found</strong></p>
-      </div>
-    </div>
+<h1 id="metadataset">MetaDataset</h1>
+<pre><code class="python">MetaDataset(dataset)
+</code></pre>
 
+<p><strong>Descritpion</strong></p>
+<p>It wraps a torch dataset by creating a map of target to indices.
+This comes in handy when we want to sample elements randomly for a particular label.</p>
+<p>Notes:
+    For l2l to work its important that the dataset returns a (data, target) tuple.
+    If your dataset doesn't return that, it should be trivial to wrap your dataset
+    with another class to do that.
+    <a href="#TODO"><code>TODO</code></a> : Add example for wrapping a non standard l2l dataset</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) -  A torch dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">mnist = torchvision.datasets.MNIST(root=&quot;/tmp/mnist&quot;, train=True)
+mnist = l2l.data.MetaDataset(mnist)
+</code></pre>
 
+<h1 id="taskgenerator">TaskGenerator</h1>
+<pre><code class="python">TaskGenerator(dataset, classes=None, ways=2, tasks=1, shots=1)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A wrapper to generate few-shot classification tasks.</p>
+<p><code>tasks</code> can both indicate predefined tasks, or just the number of tasks to sample.
+If specified as an int, a list of size <code>task</code> would be generated from which we'll sample.
+If specified as a list, then that list of tasks would be used to sample always.</p>
+<p>The acceptable shape of list would be <code>n * w</code>, with n the number of tasks to sample and w the number of ways.</p>
+<p>Each of the task should have w distinct elements all of which are required to be a subset of ways.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (MetaDataset or Dataset) - The (meta-) dataset to wrap.</li>
+<li><strong>classes</strong> (list, <em>optional</em>, default=None) - List of classes to sample from,
+    if none then sample from all available classes in dataset. (default: None)</li>
+<li><strong>ways</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from.</li>
+<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data points per task to sample.</li>
+<li><strong>tasks</strong> (int or list, <em>optional</em>, default=1) - Tasks to be generated.</li>
+</ul>
+<h2 id="sample">sample</h2>
+<pre><code class="python">TaskGenerator.sample(shots=None, task=None)
+</code></pre>
+
+<p><strong>Description</strong></p>
+<p>Returns a dataset and the labels that we have sampled.</p>
+<p>The dataset is of length <code>shots * ways</code>.
+The length of labels we have sampled is the same as <code>shots</code>.</p>
+<p><strong>Arguments</strong></p>
+<p><strong>shots</strong> (int, <em>optional</em>, default=None) - Number of data points to return per class, if None gets self.shots.
+<strong>task</strong> (list, <em>optional</em>, default=None) - List of labels you want to sample from.</p>
+<p><strong>Returns</strong></p>
+<ul>
+<li>Dataset - Containing the sampled task.</li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">
@@ -133,13 +200,13 @@
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = "",
+            var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="js/base.js" defer></script>
+        <script src="../../js/base.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
-        <script src="search/main.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">

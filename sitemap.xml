@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>None</loc>
-     <lastmod>2019-09-04</lastmod>
+     <loc>http://learn2learn.net/</loc>
+     <lastmod>2019-09-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-09-04</lastmod>
+     <loc>http://learn2learn.net/tutorials/getting_started/</loc>
+     <lastmod>2019-09-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2019-09-04</lastmod>
+     <loc>http://learn2learn.net/docs/learn2learn/</loc>
+     <lastmod>2019-09-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://learn2learn.net/docs/learn2learn.algorithms/</loc>
+     <lastmod>2019-09-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://learn2learn.net/docs/learn2learn.data/</loc>
+     <lastmod>2019-09-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://learn2learn.net/docs/learn2learn.gym/</loc>
+     <lastmod>2019-09-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://learn2learn.net/docs/learn2learn.vision/</loc>
+     <lastmod>2019-09-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://learn2learn.net/docs/learn2learn.vision.models/</loc>
+     <lastmod>2019-09-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
