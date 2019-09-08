@@ -72,10 +72,10 @@ def precompute_quantities(states, actions, old_policy, new_policy):
 
 
 def main(
-        env_name='Particles2D-v1',
+        env_name='AntDirection-v1',
         adapt_lr=0.1,
         meta_lr=3e-4,
-        adapt_steps=1,
+        adapt_steps=3,
         num_iterations=1000,
         meta_bsz=40,
         adapt_bsz=20,
@@ -94,7 +94,9 @@ def main(
     th.manual_seed(seed)
 
     def make_env():
-        return gym.make(env_name)
+        env = gym.make(env_name)
+        env = ch.envs.ActionSpaceScaler(env)
+        return env
 
     env = l2l.gym.AsyncVectorEnv([make_env for _ in range(num_workers)])
     env.seed(seed)
@@ -104,7 +106,7 @@ def main(
                               output_size=env.action_size,
                               hiddens=[64, 64],
                               activation='tanh')
-    meta_learner = l2l.MAML(policy, lr=meta_lr)
+    meta_learner = l2l.algorithms.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
 
