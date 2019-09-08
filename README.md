@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/seba-1511/learn2learn/gh-pages/assets/img/l2l-full.png" height="120px" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/learnables/learn2learn/gh-pages/assets/img/l2l-full.png" height="120px" /></p>
 
 --------------------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ The goal of meta-learning is to enable agents to *learn how to learn*.
 That is, we would like our agents to become better learners as they solve more and more tasks.
 For example, the animation below shows an agent that learns to run after a only one parameter update.
 
-<p align="center"><img src="assets/img/halfcheetah.gif" height="250px" /></p>
+<p align="center"><img src="http://learn2learn.net/assets/img/halfcheetah.gif" height="250px" /></p>
 
 **Features**
 
