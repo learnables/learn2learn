@@ -9,7 +9,6 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import MNIST
-from tqdm import tqdm
 
 import learn2learn as l2l
 
@@ -74,8 +73,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
     opt = optim.Adam(meta_model.parameters(), lr=lr)
     loss_func = nn.NLLLoss(reduction="sum")
 
-    tqdm_bar = tqdm(range(iterations))
-    for iteration in tqdm_bar:
+    for iteration in range(iterations):
         iteration_error = 0.0
         iteration_acc = 0.0
         for _ in range(tps):
@@ -95,7 +93,6 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
         iteration_error /= tps
         iteration_acc /= tps
-        tqdm_bar.set_description("Loss : {:.3f} Acc : {:.3f}".format(iteration_error.item(), iteration_acc))
 
         # Take the meta-learning step
         opt.zero_grad()
