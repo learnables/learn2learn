@@ -76,7 +76,7 @@ def main(
     test_generator = l2l.data.TaskGenerator(dataset=test_dataset, ways=ways)
 
     # Create model
-    model = l2l.models.MiniImagenetCNN(ways)
+    model = l2l.vision.models.MiniImagenetCNN(ways)
     model.to(device)
     maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)

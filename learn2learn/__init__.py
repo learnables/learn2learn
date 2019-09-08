@@ -3,7 +3,6 @@
 from . import algorithms
 from . import data
 from . import gym
-from . import models
 from . import text
 from . import vision
 from ._version import __version__

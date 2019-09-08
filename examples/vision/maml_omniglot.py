@@ -71,7 +71,7 @@ def main(
     test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
 
     # Create model
-    model = l2l.models.OmniglotFC(28 ** 2, ways)
+    model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
     model.to(device)
     maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)

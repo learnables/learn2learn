@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+"""
+**Description**
+
+A set of commonly used models for meta-learning vision tasks.
+"""
+
+
 import torch
 from scipy.stats import truncnorm
 from torch import nn
@@ -93,11 +100,10 @@ class ConvBlock(nn.Module):
 
 
 class ConvBase(nn.Sequential):
-    """
-    NOTE:
-        Omniglot: hidden=64, channels=1, no max_pool
-        MiniImagenet: hidden=32, channels=3, max_pool
-    """
+
+    # NOTE:
+    #     Omniglot: hidden=64, channels=1, no max_pool
+    #     MiniImagenet: hidden=32, channels=3, max_pool
 
     def __init__(self,
                  output_size,
@@ -123,6 +129,22 @@ class ConvBase(nn.Sequential):
 
 class OmniglotFC(nn.Sequential):
 
+    """
+
+    [[Source]]()
+
+    **Description**
+
+    **References**
+
+    * TODO: Cite ...
+
+    **Arguments**
+
+    **Example**
+    
+    """
+
     def __init__(self, input_size, output_size, sizes=None):
         if sizes is None:
             sizes = [256, 128, 64, 64]
@@ -138,6 +160,22 @@ class OmniglotFC(nn.Sequential):
 
 
 class OmniglotCNN(nn.Module):
+
+    """
+
+    [Source]()
+
+    **Description**
+
+    **References**
+
+    * TODO: Cite MAML? Or wherever MAML gets their network from. (Matching nets?)
+
+    **Arguments**
+
+    **Example**
+    
+    """
 
     def __init__(self, output_size=5, hidden_size=64, layers=4):
         super(OmniglotCNN, self).__init__()
@@ -159,6 +197,22 @@ class OmniglotCNN(nn.Module):
 
 
 class MiniImagenetCNN(nn.Module):
+
+    """
+
+    [Source]()
+
+    **Description**
+
+    **References**
+
+    * TODO: Cite Ravi et Larochelle.
+
+    **Arguments**
+
+    **Example**
+    
+    """
 
     def __init__(self, output_size, hidden_size=32, layers=4):
         super(MiniImagenetCNN, self).__init__()
