@@ -5,15 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="None">
-        <meta name="author" content="Seb Arnold">
-        <link rel="canonical" href="http://learn2learn.net/">
+        
+        
         <link rel="shortcut icon" href="img/favicon.ico">
         <title>learn2learn</title>
         <link href="css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -23,16 +22,7 @@
         <script src="js/jquery-1.10.2.min.js" defer></script>
         <script src="js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-68693545-3', 'seba-1511.github.com');
-            ga('send', 'pageview');
-        </script> 
+        <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body class="homepage">
@@ -140,12 +130,15 @@
 
 <hr />
 <p><a href="https://travis-ci.com/learnables/learn2learn"><img alt="Build Status" src="https://travis-ci.com/learnables/learn2learn.svg?branch=master" /></a></p>
-<p>learn2learn is a PyTorch library for meta-learning implementations.
-It was developed during the <a href="http://pytorchmpk.devpost.com/">first PyTorch Hackathon</a>.</p>
-<p><strong>Here goes a 3 sentences explanation of meta-learning.</strong></p>
-<p><strong>Demonstrative video goes here</strong></p>
+<p>learn2learn is a PyTorch library for meta-learning implementations.</p>
+<p>The goal of meta-learning is to enable agents to <em>learn how to learn</em>.
+That is, we would like our agents to become better learners over time such that learning to solve the 1000th task should happen faster when learning the 1st task.
+For example, once an agent has learned how to move north and south, we expect it to quickly pick up how to move east and west.</p>
 <p><strong>Features</strong></p>
-<p>learn2learn provides high- and low-level utilities for meta-learning. <strong>TODO: Expand this</strong></p>
+<p>learn2learn provides high- and low-level utilities for meta-learning.
+The high-level utilities allow arbitrary users to take advantage of exisiting meta-learning algorithms.
+The low-level utilities enable researchers to develop new and better meta-learning algorithms.</p>
+<p>Some features of learn2learn include:</p>
 <ul>
 <li>Modular API: implement your own training loops with our low-level utilities.</li>
 <li>Provides various meta-learning algorithms (e.g. MAML, FOMAML, MetaSGD, ProtoNets, DiCE)</li>
@@ -208,8 +201,6 @@ for iteration in range(num_iterations):
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="js/base.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
         <script src="search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
@@ -281,5 +272,5 @@ for iteration in range(num_iterations):
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-09-08 00:57:12
+Build Date UTC : 2019-09-08 06:45:05
 -->
