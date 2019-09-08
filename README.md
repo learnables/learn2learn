@@ -2,6 +2,8 @@
 
 --------------------------------------------------------------------------------
 
+[![Build Status](https://travis-ci.com/learnables/learn2learn.svg?branch=master)](https://travis-ci.com/learnables/learn2learn)
+
 learn2learn is a PyTorch library for meta-learning implementations.
 It was developed during the [first PyTorch Hackathon](http://pytorchmpk.devpost.com/).
 
