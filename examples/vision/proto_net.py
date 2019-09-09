@@ -17,7 +17,7 @@ from torch.optim import Optimizer
 from torchvision import transforms
 
 import learn2learn as l2l
-from learn2learn.models import OmniglotCNN
+from learn2learn.vision.models import OmniglotCNN
 from learn2learn.vision.datasets.full_omniglot import FullOmniglot
 
 

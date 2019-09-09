@@ -6,6 +6,22 @@ from torchvision.datasets.omniglot import Omniglot
 
 class FullOmniglot(Dataset):
 
+    """
+
+    [[Source]]()
+
+    **Description**
+
+    **References**
+
+    * TODO: Cite Lake et al.
+
+    **Arguments**
+
+    **Example**
+    
+    """
+
     def __init__(self, root, transform=None, target_transform=None, download=False):
         self.transform = transform
         self.target_transform = target_transform

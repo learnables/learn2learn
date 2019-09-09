@@ -79,7 +79,7 @@ def main(
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    meta_learner = l2l.MetaSGD(policy, lr=meta_lr)
+    meta_learner = l2l.algorithms.MetaSGD(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
     all_rewards = []

@@ -30,7 +30,9 @@ For more information about specific meta-learning algorithms, please refer to th
 appropriate tutorial.
 
 # How to Use L2L
+
 ## Installing
+
 A pip package is available, updated periodically. Use the command:
 
 ```pip install learn2learn```
@@ -48,6 +50,7 @@ encounter a problem, feel free to an open an [issue](https://github.com/learnabl
 look into it.
 
 ## Source Files
+
 Examples of learn2learn in action can be found [here](https://github.com/learnables/learn2learn/tree/master/examples).
 The source code for algorithm implementations is also available [here](https://github.com/learnables/learn2learn/tree/master/learn2learn/algorithms).
 

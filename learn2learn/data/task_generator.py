@@ -24,20 +24,31 @@ class SampleDataset(Dataset):
 
 
 class MetaDataset(Dataset):
-    """ It wraps a torch dataset by creating a map of target to indices.
-    This comes in handy when we want to sample elements randomly for a particular label.
+    """ 
+    
+    **Descritpion**
 
-    Args:
-        dataset: A torch dataset
+    It wraps a torch dataset by creating a map of target to indices.
+    This comes in handy when we want to sample elements randomly for a particular label.
 
     Notes:
         For l2l to work its important that the dataset returns a (data, target) tuple.
         If your dataset doesn't return that, it should be trivial to wrap your dataset
         with another class to do that.
         #TODO : Add example for wrapping a non standard l2l dataset
+
+    **Arguments**
+    
+    * **dataset** (Dataset) -  A torch dataset.
+
+    **Example**
+    ~~~python
+    mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
+    mnist = l2l.data.MetaDataset(mnist)
+    ~~~
     """
 
-    def __init__(self, dataset: Dataset):
+    def __init__(self, dataset):
         self.dataset = dataset
         self.labels_to_indices = self.get_dict_of_labels_to_indices()
         self.labels = list(self.labels_to_indices.keys())
@@ -77,36 +88,42 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-    def __init__(self,
-                 dataset: MetaDataset,
-                 classes: Optional[list] = None,
-                 ways: int = 3,
-                 tasks: Union[List[int], int] = 10,
-                 shots: Optional[int] = 1):
-        """
 
-        Args:
-            dataset: should be a MetaDataset.
-            classes: List of classes to sample from, if none then sample from all available classes in dataset.
-                    (default: None)
-            ways: number of labels to sample from (default: 3)
-            shots: number of data points per task to sample (default: 1)
-            task: if specified as an int, a list of of size task would be generated from which we'll sample.
-                    if specified as a list, then that list of tasks would be used to sample always.
+    """
 
-                    The acceptable shape of list would be `n * w`
-                    n : the number of tasks to sample
-                    w : the number of ways
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
 
-                    Each of the task should have w distinct elements all of which are required to be a subset of ways.
-        """
+    **Description**
 
-        # TODO : Add conditional check to work even when dataset isn't MetaDataset and a torch.Dataset
-        #  then also it should work
+    A wrapper to generate few-shot classification tasks.
+
+
+
+    `tasks` can both indicate predefined tasks, or just the number of tasks to sample.
+    If specified as an int, a list of size `task` would be generated from which we'll sample.
+    If specified as a list, then that list of tasks would be used to sample always.
+
+    The acceptable shape of list would be `n * w`, with n the number of tasks to sample and w the number of ways.
+
+    Each of the task should have w distinct elements all of which are required to be a subset of ways.
+
+    **Arguments**
+
+    * **dataset** (MetaDataset or Dataset) - The (meta-) dataset to wrap.
+    * **classes** (list, *optional*, default=None) - List of classes to sample from,
+        if none then sample from all available classes in dataset. (default: None)
+    * **ways** (int, *optional*, default=2) - Number of labels to sample from.
+    * **shots** (int, *optional*, default=1) - Number of data points per task to sample.
+    * **tasks** (int or list, *optional*, default=1) - Tasks to be generated.
+    """
+    def __init__(self, dataset, classes=None, ways=2, tasks=1, shots=1):
         self.dataset = dataset
         self.ways = ways
         self.classes = classes
         self.shots = shots
+
+        if not isinstance(dataset, MetaDataset):
+            dataset = MetaDataset(dataset)
 
         if classes is None:
             self.classes = self.dataset.labels
@@ -128,14 +145,10 @@ class TaskGenerator:
         # TODO : assert that shots are always less than equal to min_samples for each class
 
     def generate_n_tasks(self, n):
-        """
+        # Args:
+        #     n: Number of tasks to generate
 
-        Args:
-            n: Number of tasks to generate
-
-        Returns: A list of shape `n * w` where n is the number of tasks to generate and w is the ways.
-
-        """
+        # Returns: A list of shape `n * w` where n is the number of tasks to generate and w is the ways.
 
         def get_samples():
             random.shuffle(self.classes)
@@ -151,13 +164,10 @@ class TaskGenerator:
         return len(self.tasks)
 
     def __next__(self):
-        """
-        TODO : Add the following test case
-        for i, task in enumerate(tg):
-            assert task.sampled_task == tg.tasks[i]
-        Returns:
-
-        """
+        # TODO : Add the following test case
+        # for i, task in enumerate(tg):
+        #     assert task.sampled_task == tg.tasks[i]
+        # Returns:
         try:
             task = self.sample(self.tasks[self.tasks_idx])
         except IndexError:
@@ -166,20 +176,24 @@ class TaskGenerator:
         self.tasks_idx += 1
         return task
 
-    def sample(self, task: list = None, shots: Optional[int] = None):
-        """ Returns a dataset and the labels that we have sampled.
+    def sample(self, shots=None, task=None):
+        """
+
+        **Description**
+
+        Returns a dataset and the labels that we have sampled.
 
         The dataset is of length `shots * ways`.
         The length of labels we have sampled is the same as `shots`.
 
-        Args:
-            shots: number of data points to return per class, if none then gets the (default : None)
-            task: List of labels you want to sample from
+        **Arguments**
 
-        Returns: Dataset, list(labels)
+        **shots** (int, *optional*, default=None) - Number of data points to return per class, if None gets self.shots.
+        **task** (list, *optional*, default=None) - List of labels you want to sample from.
 
-        Raises:
-            ValueError : when shots is undefined both in class definition and method
+        **Returns**
+        
+        * Dataset - Containing the sampled task.
 
         """
         # If shots isn't defined, then try to inherit from object
@@ -193,7 +207,7 @@ class TaskGenerator:
         # sample from all the classes mentioned during the initialization of the TaskGenerator
         if task is None:
             # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
-            rand_idx = random.randint(0, len(self.tasks))
+            rand_idx = random.randint(0, len(self.tasks) - 1)
             task_to_sample = self.tasks[rand_idx]
         else:
             task_to_sample = task

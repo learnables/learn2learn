@@ -124,7 +124,7 @@ def main(
     policy = DiagNormalPolicy(input_size=env.state_size,
                               output_size=env.action_size,
                               hiddens=[64, 64])
-    meta_learner = l2l.MAML(policy, lr=meta_lr)
+    meta_learner = l2l.algorithms.MAML(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
 

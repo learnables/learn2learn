@@ -71,9 +71,9 @@ def main(
     test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
 
     # Create model
-    model = l2l.models.OmniglotFC(28 ** 2, ways)
+    model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
     model.to(device)
-    maml = l2l.MAML(model, lr=fast_lr, first_order=False)
+    maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
     loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
 
@@ -90,7 +90,7 @@ def main(
             learner = maml.clone()
             adaptation_data = train_generator.sample(shots=shots)
             evaluation_data = train_generator.sample(shots=shots,
-                                                     classes=adaptation_data.sampled_classes)
+                                                     task=adaptation_data.sampled_task)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -105,7 +105,7 @@ def main(
             learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
-                                                     classes=adaptation_data.sampled_classes)
+                                                     task=adaptation_data.sampled_task)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
@@ -119,7 +119,7 @@ def main(
             learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
-                                                    classes=adaptation_data.sampled_classes)
+                                                    task=adaptation_data.sampled_task)
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,

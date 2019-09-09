@@ -10,6 +10,23 @@ from torch.utils.data import Dataset
 
 class NewsClassification(Dataset):
 
+    """
+
+    [[Source]]()
+
+    **Description**
+
+    **References**
+
+    * TODO: Cite ...
+
+    **Arguments**
+
+    **Example**
+    
+    """
+
+
     def __init__(self, root, train=True, transform=None, download=False):
         self.labels_list = {'QUEER VOICES': 0, 'GREEN': 1, 'STYLE': 2, 'BUSINESS': 3, 'CULTURE & ARTS': 4,
                             'WEDDINGS': 5, 'ARTS': 6, 'HEALTHY LIVING': 7,

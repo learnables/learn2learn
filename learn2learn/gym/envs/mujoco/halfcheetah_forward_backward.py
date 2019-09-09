@@ -39,7 +39,12 @@ class HalfCheetahForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         ]).astype(np.float32).flatten()
 
     def viewer_setup(self):
+        camera_id = self.model.camera_name2id('track')
+        self.viewer.cam.type = 2
+        self.viewer.cam.fixedcamid = camera_id
         self.viewer.cam.distance = self.model.stat.extent * 0.5
+        # Hide the overlay
+        self.viewer._hide_overlay = True
 
     def reset_model(self):
         qpos = self.init_qpos + self.np_random.uniform(low=-.1, high=.1, size=self.model.nq)
