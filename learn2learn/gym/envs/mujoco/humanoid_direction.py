@@ -15,11 +15,33 @@ def mass_center(model, sim):
 
 class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_direction.py)
+
     **Description**
 
-    The humanoid must learn to run in an arbitrary direction in the X,Y plane.
+    Humanoid environment with target direction, as described in [1].
+    The humanoid follows the dynamics from MuJoCo [2], and receives at each 
+    time step a reward composed of a control cost and a reward equal to its 
+    velocity in the target direction. The tasks are sampled in [-1,1]x[-1,1],
+    with the direction indicated by the vector from the origin to the sampled
+    point. 
+    
+    **Credit**
+
+    Adapted from Jonas Rothfuss' implementation.
+
+    **References**
+
+    [1] Chelsea Finn, Pieter Abbeel, Sergey Levine, "Model-Agnostic 
+        Meta-Learning for Fast Adaptation of Deep Networks", 2017 
+        (https://arxiv.org/abs/1703.03400)
+
+    [2] Emanuel Todorov, Tom Erez, Yuval Tassa, "MuJoCo: A physics engine for 
+        model-based control", 2012 
+        (https://homes.cs.washington.edu/~todorov/papers/TodorovIROS12.pdf)
 
     """
+
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

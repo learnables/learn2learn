@@ -13,7 +13,7 @@ class MetaEnv(Env):
 
     **Credit**
 
-    Inspired by tristandeleu's implementation of MAML paper environments.
+    Adapted from Tristan Deleu's implementation.
 
     """
 
