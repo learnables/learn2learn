@@ -60,7 +60,6 @@ def meta_sgd_update(model, lrs=None, grads=None):
 
 
 class MetaSGD(BaseLearner):
-
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/meta_sgd.py)
@@ -97,6 +96,7 @@ class MetaSGD(BaseLearner):
     error.backward()
     ~~~
     """
+
     def __init__(self, model, lr=1.0, first_order=False, lrs=None):
         super(MetaSGD, self).__init__()
         self.module = model

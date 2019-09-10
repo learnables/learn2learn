@@ -20,7 +20,7 @@ class HalfCheetahForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         self.goal_direction = task['direction']
 
     def sample_tasks(self, num_tasks):
-        directions = np.random.choice((-1.0, 1.0), (num_tasks, ))
+        directions = np.random.choice((-1.0, 1.0), (num_tasks,))
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 

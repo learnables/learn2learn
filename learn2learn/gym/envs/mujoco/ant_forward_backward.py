@@ -20,7 +20,7 @@ class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         self.goal_direction = task['direction']
 
     def sample_tasks(self, num_tasks):
-        directions = np.random.choice((-1, 1), (num_tasks, ))
+        directions = np.random.choice((-1, 1), (num_tasks,))
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 
@@ -50,7 +50,7 @@ class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         xposbefore = np.copy(self.get_body_com("torso")[0])
         self.do_simulation(action, self.frame_skip)
         xposafter = self.get_body_com("torso")[0]
-        forward_reward = self.goal_direction * (xposafter - xposbefore)/self.dt
+        forward_reward = self.goal_direction * (xposafter - xposbefore) / self.dt
         ctrl_cost = .5 * np.square(action).sum()
         contact_cost = 0.5 * 1e-3 * np.sum(
             np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))

@@ -63,7 +63,6 @@ def maml_update(model, lr, grads=None):
 
 
 class MAML(BaseLearner):
-
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py)
@@ -99,6 +98,7 @@ class MAML(BaseLearner):
     error.backward()
     ~~~
     """
+
     def __init__(self, model, lr, first_order=False):
         super(MAML, self).__init__()
         self.module = model

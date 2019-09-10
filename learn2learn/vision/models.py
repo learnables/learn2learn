@@ -6,7 +6,6 @@
 A set of commonly used models for meta-learning vision tasks.
 """
 
-
 import torch
 from scipy.stats import truncnorm
 from torch import nn
@@ -128,7 +127,6 @@ class ConvBase(nn.Sequential):
 
 
 class OmniglotFC(nn.Sequential):
-
     """
 
     [[Source]]()
@@ -160,7 +158,6 @@ class OmniglotFC(nn.Sequential):
 
 
 class OmniglotCNN(nn.Module):
-
     """
 
     [Source]()
@@ -197,7 +194,6 @@ class OmniglotCNN(nn.Module):
 
 
 class MiniImagenetCNN(nn.Module):
-
     """
 
     [Source]()

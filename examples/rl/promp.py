@@ -9,21 +9,19 @@ python examples/rl/promp.py
 """
 
 import random
-import gym
-import numpy as np
-import learn2learn as l2l
-
-import torch as th
-from torch import optim
-from torch.distributions.kl import kl_divergence
+from copy import deepcopy
 
 import cherry as ch
+import gym
+import numpy as np
+import torch as th
 from cherry.algorithms import a2c, ppo, trpo
 from cherry.models.robotics import LinearValue
-
-from copy import deepcopy
+from torch import optim
+from torch.distributions.kl import kl_divergence
 from tqdm import tqdm
 
+import learn2learn as l2l
 from policies import DiagNormalPolicy
 
 

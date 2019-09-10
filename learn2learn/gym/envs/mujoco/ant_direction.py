@@ -51,7 +51,7 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         posbefore = np.copy(self.get_body_com("torso")[:2])
         self.do_simulation(action, self.frame_skip)
         posafter = self.get_body_com("torso")[:2]
-        forward_reward = np.sum(self.goal_direction * (posafter - posbefore))/self.dt
+        forward_reward = np.sum(self.goal_direction * (posafter - posbefore)) / self.dt
         ctrl_cost = .5 * np.square(action).sum()
         contact_cost = 0.5 * 1e-3 * np.sum(
             np.square(np.clip(self.sim.data.cfrc_ext, -1, 1)))

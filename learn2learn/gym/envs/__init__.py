@@ -4,7 +4,6 @@ from gym.envs.registration import register
 
 from .subproc_vec_env import SubprocVecEnv
 
-
 # 2D Navigation
 # ----------------------------------------
 
