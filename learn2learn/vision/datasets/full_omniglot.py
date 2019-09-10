@@ -5,7 +5,6 @@ from torchvision.datasets.omniglot import Omniglot
 
 
 class FullOmniglot(Dataset):
-
     """
 
     [[Source]]()

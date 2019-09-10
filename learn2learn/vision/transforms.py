@@ -7,14 +7,12 @@
 A set of transformations commonly used in meta-learning vision tasks.
 """
 
-
 import random
 
 from torchvision.transforms import RandomRotation
 
 
 class RandomDiscreteRotation(RandomRotation):
-
     """
 
     [[Source]]()
@@ -30,7 +28,6 @@ class RandomDiscreteRotation(RandomRotation):
     **Example**
     
     """
-
 
     def __init__(self, degrees, *args, **kwargs):
         super(RandomDiscreteRotation, self).__init__(degrees[0], *args, **kwargs)

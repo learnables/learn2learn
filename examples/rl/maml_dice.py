@@ -9,19 +9,17 @@ python examples/rl/maml_dice.py
 """
 
 import random
-import gym
-import numpy as np
-
-import torch as th
-from torch import optim
 
 import cherry as ch
+import gym
+import numpy as np
+import torch as th
 from cherry.algorithms import a2c
 from cherry.models.robotics import LinearValue
-
+from torch import optim
 from tqdm import tqdm
-import learn2learn as l2l
 
+import learn2learn as l2l
 from policies import DiagNormalPolicy
 
 

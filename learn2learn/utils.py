@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import torch
 import copy
+
+import torch
 
 
 def magic_box(x):
@@ -109,6 +110,7 @@ def clone_module(module):
     for module_key in clone._modules:
         clone._modules[module_key] = clone_module(module._modules[module_key])
     return clone
+
 
 def detach_module(module):
     """
