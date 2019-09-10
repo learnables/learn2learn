@@ -26,7 +26,7 @@ class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         self.goal_direction = task['direction']
 
     def sample_tasks(self, num_tasks):
-        directions = np.random.choice((-1, 1), (num_tasks, ))
+        directions = np.random.choice((-1, 1), (num_tasks,))
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 
@@ -49,7 +49,7 @@ class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         c = 0.01
         self.set_state(
             self.init_qpos + self.np_random.uniform(low=-c, high=c, size=self.model.nq),
-            self.init_qvel + self.np_random.uniform(low=-c, high=c, size=self.model.nv,)
+            self.init_qvel + self.np_random.uniform(low=-c, high=c, size=self.model.nv, )
         )
         return self._get_obs()
 
@@ -71,7 +71,6 @@ class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
                                                    reward_quadctrl=-quad_ctrl_cost,
                                                    reward_alive=alive_bonus,
                                                    reward_impact=-quad_impact_cost)
-
 
     def reset(self, *args, **kwargs):
         MujocoEnv.reset(self, *args, **kwargs)

@@ -9,7 +9,6 @@ from torch.utils.data import Dataset
 
 
 class NewsClassification(Dataset):
-
     """
 
     [[Source]]()
@@ -25,7 +24,6 @@ class NewsClassification(Dataset):
     **Example**
     
     """
-
 
     def __init__(self, root, train=True, transform=None, download=False):
         self.labels_list = {'QUEER VOICES': 0, 'GREEN': 1, 'STYLE': 2, 'BUSINESS': 3, 'CULTURE & ARTS': 4,

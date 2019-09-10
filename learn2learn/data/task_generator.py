@@ -1,6 +1,5 @@
 import random
 from collections import defaultdict
-from typing import Optional, List, Union
 
 import numpy as np
 from torch.utils.data import Dataset
@@ -88,7 +87,6 @@ class LabelEncoder:
 
 
 class TaskGenerator:
-
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
@@ -116,6 +114,7 @@ class TaskGenerator:
     * **shots** (int, *optional*, default=1) - Number of data points per task to sample.
     * **tasks** (int or list, *optional*, default=1) - Tasks to be generated.
     """
+
     def __init__(self, dataset, classes=None, ways=2, tasks=1, shots=1):
         self.dataset = dataset
         self.ways = ways

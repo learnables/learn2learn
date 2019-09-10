@@ -9,18 +9,17 @@ python examples/rl/maml_trpo.py
 """
 
 import random
+
+import cherry as ch
 import gym
 import numpy as np
-import learn2learn as l2l
-
 import torch as th
+from cherry.algorithms import a2c
+from cherry.models.robotics import LinearValue
 from torch import optim
 from tqdm import tqdm
 
-import cherry as ch
-from cherry.algorithms import a2c
-from cherry.models.robotics import LinearValue
-
+import learn2learn as l2l
 from policies import DiagNormalPolicy
 
 

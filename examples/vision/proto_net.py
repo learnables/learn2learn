@@ -6,7 +6,6 @@
 # and he has a great set of medium articles around it.
 
 import argparse
-from typing import Callable
 
 import numpy as np
 import torch
@@ -15,10 +14,11 @@ from torch.nn import Module
 from torch.optim import Adam
 from torch.optim import Optimizer
 from torchvision import transforms
+from typing import Callable
 
 import learn2learn as l2l
-from learn2learn.vision.models import OmniglotCNN
 from learn2learn.vision.datasets.full_omniglot import FullOmniglot
+from learn2learn.vision.models import OmniglotCNN
 
 
 def lr_schedule(epoch, lr):
@@ -285,7 +285,7 @@ if __name__ == '__main__':
     torch.backends.cudnn.benchmark = True
 
     param_str = f'omniglot_nt={args.n_train}_kt={args.k_train}_qt={args.q_train}_' \
-        f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
+                f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
 
     filepath = f'./data/{param_str}.pth'
 
