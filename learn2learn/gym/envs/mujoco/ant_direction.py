@@ -14,12 +14,14 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     **Description**
 
     This environment requires the Ant to learn to run in a random direction in the
-    XY plane, as described in [1].
-    The ant follows the dynamics from MuJoCo [2], and receives at each 
-    time step a reward composed of a control cost and a reward equal to its 
-    The tasks are sampled in [-1,1]x[-1,1], with the direction indicated
-    by the vector from the origin to the sampled point. 
-
+    XY plane. At each time step the ant receives a signal composed of a
+    control cost and a reward equal to its average velocity in the direction
+    of the plane. The tasks are 2d-arrays sampled uniformly along the unit circle.
+    The target direction is indicated by the vector from the origin to the sampled point. 
+    The velocity is calculated as the distance (in the target direction) of the ant's torso
+    position before and after taking the specified action divided by a small value dt.
+    As noted in [1], a small positive bonus is added to the reward to stop the ant from 
+    prematurely ending the episode.
 
     **Credit**
 
@@ -27,13 +29,10 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
 
     **References**
 
-    [1] Chelsea Finn, Pieter Abbeel, Sergey Levine, "Model-Agnostic 
-        Meta-Learning for Fast Adaptation of Deep Networks", 2017 
-        (https://arxiv.org/abs/1703.03400)
-    [2] Emanuel Todorov, Tom Erez, Yuval Tassa, "MuJoCo: A physics engine for 
-        model-based control", 2012 
-        (https://homes.cs.washington.edu/~todorov/papers/TodorovIROS12.pdf)
-    
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].
+
+    2. Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].
+
     """
 
     def __init__(self, task=None):
