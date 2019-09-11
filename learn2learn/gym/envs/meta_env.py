@@ -9,11 +9,22 @@ class MetaEnv(Env):
 
     **Description**
 
-    Interface for l2l envs.
+    Interface for l2l envs. Environments have a certain number of task specific parameters that uniquely
+    identify the environment. Tasks are then a dictionary with the names of these parameters as keys and the
+    values of these parameters as values. Environments must then implement functions to get, set and sample tasks.
+    The flow is then
+    ```
+    env = EnvClass()
+    tasks = env.sample_tasks(num_tasks)
+    for task in tasks:
+        env.set_task(task)
+        *training code here*
+        ...
+    ```
 
     **Credit**
 
-    Adapted from Tristan Deleu's implementation.
+    Adapted from Tristan Deleu and Jonas Rothfuss' implementations.
 
     """
 
