@@ -16,7 +16,7 @@ class AsyncVectorEnv(SubprocVecEnv):
 
     **Credit**
 
-    Adapted from openai's implementation.
+    Adapted from OpenAI and Tristan Deleu's implementations.
 
     """
     def __init__(self, env_fns, env=None):
