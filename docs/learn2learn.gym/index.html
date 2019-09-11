@@ -5,15 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <meta name="author" content="Seb Arnold">
-        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.gym/">
+        
+        
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>learn2learn.gym - learn2learn</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -23,16 +22,7 @@
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
         <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-68693545-3', 'seba-1511.github.com');
-            ga('send', 'pageview');
-        </script> 
+        <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
@@ -130,6 +120,8 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#learn2learngym">learn2learn.gym</a></li>
+        <li class="main "><a href="#metaenv">MetaEnv</a></li>
+        <li class="main "><a href="#asyncvectorenv">AsyncVectorEnv</a></li>
         <li class="main "><a href="#learn2learngymenvsmujoco">learn2learn.gym.envs.mujoco</a></li>
         <li class="main "><a href="#halfcheetahforwardbackwardenv">HalfCheetahForwardBackwardEnv</a></li>
         <li class="main "><a href="#antforwardbackwardenv">AntForwardBackwardEnv</a></li>
@@ -143,31 +135,159 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="learn2learngym">learn2learn.gym</h1>
+<h1 id="metaenv">MetaEnv</h1>
+<pre><code class="python">MetaEnv(self, task=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/meta_env.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Interface for l2l envs. Environments have a certain number of task specific parameters that uniquely
+identify the environment. Tasks are then a dictionary with the names of these parameters as keys and the
+values of these parameters as values. Environments must then implement functions to get, set and sample tasks.
+The flow is then</p>
+<pre><code>env = EnvClass()
+tasks = env.sample_tasks(num_tasks)
+for task in tasks:
+    env.set_task(task)
+    *training code here*
+    ...
+</code></pre>
+
+<p><strong>Credit</strong></p>
+<p>Adapted from Tristan Deleu and Jonas Rothfuss' implementations.</p>
+<h1 id="asyncvectorenv">AsyncVectorEnv</h1>
+<pre><code class="python">AsyncVectorEnv(self, env_fns, env=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/async_vec_env.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Asynchronous vectorized environment for working with l2l MetaEnvs.
+Allows multiple environments to be run as separate processes.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from OpenAI and Tristan Deleu's implementations.</p>
 <h1 id="learn2learngymenvsmujoco">learn2learn.gym.envs.mujoco</h1>
 <h1 id="halfcheetahforwardbackwardenv">HalfCheetahForwardBackwardEnv</h1>
-<pre><code class="python">HalfCheetahForwardBackwardEnv(task=None)
+<pre><code class="python">HalfCheetahForwardBackwardEnv(self, task=None)
 </code></pre>
 
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/halfcheetah_forward_backward.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the half-cheetah to learn to run forward or backward.
+At each time step the half-cheetah receives a signal composed of a
+control cost and a reward equal to its average velocity in the direction
+of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the half-cheetah should
+move backward and +1 indicates the half-cheetah should move forward.
+The velocity is calculated as the distance (in the target direction) of the half-cheetah's torso
+position before and after taking the specified action divided by a small value dt.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
 <h1 id="antforwardbackwardenv">AntForwardBackwardEnv</h1>
-<pre><code class="python">AntForwardBackwardEnv(task=None)
+<pre><code class="python">AntForwardBackwardEnv(self, task=None)
 </code></pre>
 
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the ant to learn to run forward or backward.
+At each time step the ant receives a signal composed of a
+control cost and a reward equal to its average velocity in the direction
+of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the ant should
+move backward and +1 indicates the ant should move forward.
+The velocity is calculated as the distance (in the direction of the plane) of the ant's torso
+position before and after taking the specified action divided by a small value dt.
+As noted in [1], a small positive bonus is added to the reward to stop the ant from
+prematurely ending the episode.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
 <h1 id="antdirectionenv">AntDirectionEnv</h1>
-<pre><code class="python">AntDirectionEnv(task=None)
+<pre><code class="python">AntDirectionEnv(self, task=None)
 </code></pre>
 
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the Ant to learn to run in a random direction in the
+XY plane. At each time step the ant receives a signal composed of a
+control cost and a reward equal to its average velocity in the direction
+of the plane. The tasks are 2d-arrays sampled uniformly along the unit circle.
+The target direction is indicated by the vector from the origin to the sampled point.
+The velocity is calculated as the distance (in the target direction) of the ant's torso
+position before and after taking the specified action divided by a small value dt.
+As noted in [1], a small positive bonus is added to the reward to stop the ant from
+prematurely ending the episode.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
 <h1 id="humanoidforwardbackwardenv">HumanoidForwardBackwardEnv</h1>
-<pre><code class="python">HumanoidForwardBackwardEnv(task=None)
+<pre><code class="python">HumanoidForwardBackwardEnv(self, task=None)
 </code></pre>
 
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the humanoid to learn to run forward or backward.
+At each time step the humanoid receives a signal composed of a
+control cost and a reward equal to its average velocity in the target direction.
+The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the humanoid should
+move backward and +1 indicates the humanoid should move forward.
+The velocity is calculated as the distance (in the target direction) of the humanoid's torso
+position before and after taking the specified action divided by a small value dt.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
 <h1 id="humanoiddirectionenv">HumanoidDirectionEnv</h1>
-<pre><code class="python">HumanoidDirectionEnv(task=None)
+<pre><code class="python">HumanoidDirectionEnv(self, task=None)
 </code></pre>
 
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_direction.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the humanoid to learn to run in a random direction in the
+XY plane. At each time step the humanoid receives a signal composed of a
+control cost and a reward equal to its average velocity in the target direction.
+The tasks are 2d-arrays sampled uniformly along the unit circle.
+The target direction is indicated by the vector from the origin to the sampled point.
+The velocity is calculated as the distance (in the target direction) of the humanoid's torso
+position before and after taking the specified action divided by a small value dt.
+A small positive bonus is added to the reward to stop the humanoid from
+prematurely ending the episode.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
 <h1 id="learn2learngymenvsparticles">learn2learn.gym.envs.particles</h1>
 <h1 id="particles2denv">Particles2DEnv</h1>
-<pre><code class="python">Particles2DEnv(task=None)
-</code></pre></div>
+<pre><code class="python">Particles2DEnv(self, task=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/particles/particles_2d.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Each task is defined by the location of the goal. A point mass
+receives a directional force and moves accordingly
+(clipped in [-0.1,0.1]). The reward is equal to the negative
+distance from the goal.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>Arguments</strong></p>
+<p>task (dict, <em>optional</em>) - Environment can optionally be initialized
+with a task. If no task is provided, one is randomly sampled.</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -179,8 +299,6 @@
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
         <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
