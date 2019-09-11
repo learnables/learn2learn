@@ -54,7 +54,7 @@ def download_pkl(google_drive_id, data_root, mode):
 def index_classes(items):
     idx = {}
     for i in items:
-        if (not i in idx):
+        if (i not in idx):
             idx[i] = len(idx)
     return idx
 
@@ -74,23 +74,22 @@ class MiniImagenetDataset(data.Dataset):
         self.target_transform = target_transform
         self.mode = mode
         if self.mode == 'test':
-            file_id = '1wpmY-hmiJUUlRBkO9ZDCXAcIpHEFdOhD'
+            google_drive_file_id = '1wpmY-hmiJUUlRBkO9ZDCXAcIpHEFdOhD'
         elif self.mode == 'train':
-            file_id = '1I3itTXpXxGV68olxM5roceUMG8itH9Xj'
+            google_drive_file_id = '1I3itTXpXxGV68olxM5roceUMG8itH9Xj'
         elif self.mode == 'val':
-            file_id = '1KY5e491bkLFqJDp0-UWou3463Mo8AOco'
+            google_drive_file_id = '1KY5e491bkLFqJDp0-UWou3463Mo8AOco'
         else:
             raise ('ValueError', 'Needs to be train, test or val')
 
         if not self._check_exists():
-            download_pkl(file_id, root, mode)
+            download_pkl(google_drive_file_id, root, mode)
 
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
         f = open(pickle_file, 'rb')
         self.data = pickle.load(f)
 
-        self.x = [np.transpose(x, (2, 0, 1)) for x in self.data['image_data']]
-        self.x = [torch.FloatTensor(x) for x in self.x]
+        self.x = torch.FloatTensor([np.transpose(x, (2, 0, 1)) for x in self.data['image_data']])
         self.y = [-1 for _ in range(len(self.x))]
         self.class_idx = index_classes(self.data['class_dict'].keys())
         for class_name, idxs in self.data['class_dict'].items():
