@@ -8,6 +8,31 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 
 class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py)  
+
+    **Description**
+
+    This environment requires the ant to learn to run forward or backward. 
+    At each time step the ant receives a signal composed of a
+    control cost and a reward equal to its average velocity in the direction
+    of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the ant should
+    move backward and +1 indicates the ant should move forward.
+    The velocity is calculated as the distance (in the direction of the plane) of the ant's torso
+    position before and after taking the specified action divided by a small value dt.
+    As noted in [1], a small positive bonus is added to the reward to stop the ant from 
+    prematurely ending the episode.
+
+    **Credit**
+
+    Adapted from Jonas Rothfuss' implementation.
+
+    **References**
+
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].
+    2. Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

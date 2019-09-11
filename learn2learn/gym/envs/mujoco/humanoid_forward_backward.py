@@ -14,6 +14,29 @@ def mass_center(model, sim):
 
 
 class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py)
+    
+    **Description**
+
+    This environment requires the humanoid to learn to run forward or backward. 
+    At each time step the humanoid receives a signal composed of a
+    control cost and a reward equal to its average velocity in the target direction.
+    The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the humanoid should
+    move backward and +1 indicates the humanoid should move forward.
+    The velocity is calculated as the distance (in the target direction) of the humanoid's torso
+    position before and after taking the specified action divided by a small value dt.
+
+    **Credit**
+
+    Adapted from Jonas Rothfuss' implementation.
+
+    **References**
+
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].
+    2. Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)

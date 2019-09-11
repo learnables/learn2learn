@@ -8,6 +8,29 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 
 class HalfCheetahForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/halfcheetah_forward_backward.py)
+    
+    **Description**
+
+    This environment requires the half-cheetah to learn to run forward or backward. 
+    At each time step the half-cheetah receives a signal composed of a
+    control cost and a reward equal to its average velocity in the direction
+    of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the half-cheetah should
+    move backward and +1 indicates the half-cheetah should move forward.
+    The velocity is calculated as the distance (in the target direction) of the half-cheetah's torso
+    position before and after taking the specified action divided by a small value dt.
+
+    **Credit**
+
+    Adapted from Jonas Rothfuss' implementation.
+
+    **References**
+
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].
+    2. Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)
@@ -81,7 +104,7 @@ class HalfCheetahForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
 
 
 if __name__ == '__main__':
-    env = AntDirectionEnv()
+    env = HalfCheetahForwardBackwardEnv()
     for task in [env.get_task(), env.sample_tasks(1)[0]]:
         env.set_task(task)
         env.reset()

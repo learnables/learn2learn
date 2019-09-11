@@ -8,6 +8,31 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 
 class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py)  
+
+    **Description**
+
+    This environment requires the Ant to learn to run in a random direction in the
+    XY plane. At each time step the ant receives a signal composed of a
+    control cost and a reward equal to its average velocity in the direction
+    of the plane. The tasks are 2d-arrays sampled uniformly along the unit circle.
+    The target direction is indicated by the vector from the origin to the sampled point. 
+    The velocity is calculated as the distance (in the target direction) of the ant's torso
+    position before and after taking the specified action divided by a small value dt.
+    As noted in [1], a small positive bonus is added to the reward to stop the ant from 
+    prematurely ending the episode.
+
+    **Credit**
+
+    Adapted from Jonas Rothfuss' implementation.
+
+    **References**
+
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].
+    2. Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].
+
+    """
 
     def __init__(self, task=None):
         MetaEnv.__init__(self, task)
