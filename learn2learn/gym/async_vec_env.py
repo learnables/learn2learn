@@ -7,6 +7,7 @@ from .envs import SubprocVecEnv
 
 class AsyncVectorEnv(SubprocVecEnv):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/async_vec_env.py)
     Asynchronous vectorized environment for working with l2l MetaEnvs.
     Allows multiple environments to be run as separate processes.
 
