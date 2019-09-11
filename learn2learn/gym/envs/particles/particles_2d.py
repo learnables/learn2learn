@@ -21,7 +21,7 @@ class Particles2DEnv(MetaEnv):
 
     **Credit**
 
-    Inspired by the [ProMP](https://arxiv.org/abs/1810.06784) environment and implementation of PointEnv. 
+    Adapted from Jonas Rothfuss' implementation.
 
     **Arguments**
 
@@ -82,16 +82,16 @@ class Particles2DEnv(MetaEnv):
 
         *state, reward, done, task*
 
-        + state (arr) - is a 2-element array encoding the x,y position of
+        * state (arr) - is a 2-element array encoding the x,y position of
         the point mass
 
-        + reward (float) - signal equal to the negative squared distance
+        * reward (float) - signal equal to the negative squared distance
         from the goal
 
-        + done (bool) - boolean indicating whether or not the point mass
+        * done (bool) - boolean indicating whether or not the point mass
         is epsilon or less distance from the goal
 
-        + task (dict) - dictionary of task specific parameters and their current
+        * task (dict) - dictionary of task specific parameters and their current
         values
 
         """

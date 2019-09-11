@@ -36,7 +36,6 @@ class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     **References**
 
     1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].
-
     2. Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].
 
     """
