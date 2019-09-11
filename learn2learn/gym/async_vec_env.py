@@ -6,7 +6,15 @@ from .envs import SubprocVecEnv
 
 
 class AsyncVectorEnv(SubprocVecEnv):
+    """
+    Asynchronous vectorized environment for working with l2l MetaEnvs.
+    Allows multiple environments to be run as separate processes.
 
+    **Credit**
+
+    Adapted from openai's implementation.
+
+    """
     def __init__(self, env_fns, env=None):
         self.num_envs = len(env_fns)
         self.queue = mp.Queue()
