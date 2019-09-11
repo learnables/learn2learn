@@ -61,13 +61,50 @@ def index_classes(items):
 
 class MiniImagenetDataset(data.Dataset):
     def __init__(self, root, mode='train', transform=None, target_transform=None):
-        '''
-        The items are (filename,category). The index of all the categories can be found in self.idx_classes
-        Args:
+        
+    """
+
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py)
+
+    **The dataset is from the Matching Networks paper by Vinyals et al. The train, test and valid splits are from the Meta learning for semi-supervised few-shot classification paper by Ren et al.**
+    
+    The 
+
+    **@inproceedings{vinyals2016matching,
+  title={Matching networks for one shot learning},
+  author={Vinyals, Oriol and Blundell, Charles and Lillicrap, Timothy and Wierstra, Daan and others},
+  booktitle={Advances in neural information processing systems},
+  pages={3630--3638},
+  year={2016}
+    }
+    
+    @article{ren2018meta,
+      title={Meta-learning for semi-supervised few-shot classification},
+      author={Ren, Mengye and Triantafillou, Eleni and Ravi, Sachin and Snell, Jake and Swersky, Kevin and Tenenbaum, Joshua B and Larochelle, Hugo and Zemel, Richard S},
+      journal={arXiv preprint arXiv:1803.00676},
+      year={2018}
+    }
+    
+    
+    **
+
+    * 
+
+    **Arguments**
         - root: the directory where the dataset will be stored or downloaded to if not available
         - transform: how to transform the input
         - target_transform: how to transform the target
-        '''
+
+    **Example**
+    
+    dataset = MiniImagenetDataset(mode='test', root=path)
+    print(len(dataset))
+    >>> 12000
+    dataset[0][0].shape
+    >>> torch.Size([3, 84, 84])
+    
+    """
+     
         super(MiniImagenetDataset, self).__init__()
         self.root = root
         self.transform = transform
