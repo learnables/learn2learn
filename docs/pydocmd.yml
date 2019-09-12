@@ -33,6 +33,7 @@ generate:
       - learn2learn.vision.models
       - learn2learn.vision.models.OmniglotFC
       - learn2learn.vision.models.OmniglotCNN
+      - learn2learn.vision.models.MiniImagenetCNN
       - learn2learn.vision.datasets
       - learn2learn.vision.datasets.FullOmniglot
       - learn2learn.vision.datasets.MiniImagenet

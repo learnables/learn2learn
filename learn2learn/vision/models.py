@@ -133,13 +133,24 @@ class OmniglotFC(nn.Sequential):
 
     **Description**
 
+    The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.
+
     **References**
 
-    * TODO: Cite ...
+    1. Santoro et al. 2016. “Meta-Learning with Memory-Augmented Neural Networks.” ICML.
 
     **Arguments**
 
+    * **input_size** (int) - The dimensionality of the input.
+    * **output_size** (int) - The dimensionality of the output.
+    * **sizes** (list, *optional*, default=None) - A list of hidden layer sizes.
+
     **Example**
+    ~~~python
+    net = OmniglotFC(input_size=28**2,
+                     output_size=10,
+                     sizes=[64, 64, 64])
+    ~~~
     
     """
 
