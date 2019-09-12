@@ -1,4 +1,4 @@
-# Getting Started
+### Getting Started
 
 L2L is a meta-learning library providing three levels of functionality for users.
 At a high level, there are many examples using meta-learning algorithms to train
@@ -8,7 +8,7 @@ to make it easier to import other data sets. At a low level, it provides extende
 functionality for modules.
 
 
-# What is meta-learning?
+### What is meta-learning?
 
 Machine learning is typically concerned with the process of adapting an agent
 or model to perform well on a given task \( \mathcal{T} \). If any aspect of \( \mathcal{T} \)
@@ -29,9 +29,9 @@ as k-shot learning, where we aim to find a model or policy M that minimizes \( E
 For more information about specific meta-learning algorithms, please refer to the
 appropriate tutorial.
 
-# How to Use L2L
+### How to Use L2L
 
-## Installing
+### Installing
 
 A pip package is available, updated periodically. Use the command:
 
@@ -49,7 +49,7 @@ A list of dependencies is maintained and periodically updated in requirements-de
 encounter a problem, feel free to an open an [issue](https://github.com/learnables/learn2learn/issues) and we'll
 look into it.
 
-## Source Files
+### Source Files
 
 Examples of learn2learn in action can be found [here](https://github.com/learnables/learn2learn/tree/master/examples).
 The source code for algorithm implementations is also available [here](https://github.com/learnables/learn2learn/tree/master/learn2learn/algorithms).

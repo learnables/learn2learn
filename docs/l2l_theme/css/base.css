@@ -1,6 +1,27 @@
 body {
     padding-top: 70px;
 }
+.col-md-9 h1::before {
+    content: "class ";
+    background-color: #ffffff;
+    color: #d2d2d2;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.col-md-9 h1 {
+    font-size:23px;
+}
+.col-md-9 h2::before {
+    content: "def ";
+    background-color: #ffffff;
+    color: #d2d2d2;
+    font-size: 16px;
+    font-weight: bold;
+}
+.col-md-9 h2 {
+    font-size:19px;
+}
 
 ul.nav .main {
     font-weight: bold;

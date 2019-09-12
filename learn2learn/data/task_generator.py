@@ -24,9 +24,9 @@ class SampleDataset(Dataset):
 
 class MetaDataset(Dataset):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
 
-    **Descritpion**
-
+    # Descritpion
     It wraps a torch dataset by creating a map of target to indices.
     This comes in handy when we want to sample elements randomly for a particular label.
 
@@ -34,23 +34,27 @@ class MetaDataset(Dataset):
         For l2l to work its important that the dataset returns a (data, target) tuple.
         If your dataset doesn't return that, it should be trivial to wrap your dataset
         with another class to do that.
-        #TODO : Add example for wrapping a non standard l2l dataset
 
-    **Arguments**
+    # Arguments
+        dataset (Dataset):  A torch dataset that reeturns a (data, target) tuple.
 
-    * **dataset** (Dataset) -  A torch dataset.
-
-    **Example**
+    # Example
     ~~~python
     mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
     mnist = l2l.data.MetaDataset(mnist)
     ~~~
+
+    # Attributes
+        dataset (Dataset): The original torch dataset
+        labels_to_indices (dict): A map from label to all it's indices
+        labels (list): List of labels that exist in the dataset
     """
 
     def __init__(self, dataset):
         self.dataset = dataset
         self.labels_to_indices = self.get_dict_of_labels_to_indices()
         self.labels = list(self.labels_to_indices.keys())
+        # TODO : Add example for wrapping a non standard l2l dataset
 
     def __getitem__(self, item):
         return self.dataset[item]
@@ -88,41 +92,40 @@ class LabelEncoder:
 
 class TaskGenerator:
     """
-
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
 
-    **Description**
-
+    # Description
     A wrapper to generate few-shot classification tasks.
 
-
-
-    `tasks` can both indicate predefined tasks, or just the number of tasks to sample.
-    If specified as an int, a list of size `task` would be generated from which we'll sample.
-    If specified as a list, then that list of tasks would be used to sample always.
-
-    The acceptable shape of list would be `n * w`, with n the number of tasks to sample and w the number of ways.
-
-    Each of the task should have w distinct elements all of which are required to be a subset of ways.
-
-    **Arguments**
-
-    * **dataset** (MetaDataset or Dataset) - The (meta-) dataset to wrap.
-    * **classes** (list, *optional*, default=None) - List of classes to sample from,
+    # Arguments
+    dataset (MetaDataset or Dataset): The (meta-) dataset to wrap.
+    classes (list, *optional*, default=None): List of classes to sample from,
         if none then sample from all available classes in dataset. (default: None)
-    * **ways** (int, *optional*, default=2) - Number of labels to sample from.
-    * **shots** (int, *optional*, default=1) - Number of data points per task to sample.
-    * **tasks** (int or list, *optional*, default=1) - Tasks to be generated.
+    ways (int, *optional*, default=2):  Number of labels to sample from.
+    shots (int, *optional*, default=1): Number of data points per task to sample.
+    tasks (int or list, *optional*, default=1): Tasks to be generated.
+        It Can indicate both predefined tasks, or just the number of tasks to sample.
+        If it's an int, then a list of size `task` would be generated from which we'll sample.
+        If it's a list then that list would be used to sample tasks.
+        The acceptable shape of list would be `n * w`, with n the number of tasks to sample and w the number of ways.
+        Each of the task should have w distinct elements all of which are required to be a subset of ways.
+
+    # Attributes
+    dataset (MetaDataset):
+    ways (int):
+    shots (int):
+    classes (list): Either a subset of classes specidied in init, or the list of all available classes in dataset.
+    tasks (list): List of tasks to sample from.
     """
 
-    def __init__(self, dataset, classes=None, ways=2, tasks=1, shots=1):
+    def __init__(self, dataset, classes=None, ways=2, tasks=10, shots=1):
         self.dataset = dataset
         self.ways = ways
         self.classes = classes
         self.shots = shots
 
         if not isinstance(dataset, MetaDataset):
-            dataset = MetaDataset(dataset)
+            self.dataset = MetaDataset(dataset)
 
         if classes is None:
             self.classes = self.dataset.labels
@@ -132,7 +135,7 @@ class TaskGenerator:
         elif isinstance(tasks, list):
             self.tasks = tasks
         else:
-            raise TypeError(f"tasks is not either of int/list but rather {type(tasks)}")
+            raise TypeError("tasks is not either of int/list but rather {}".format(type(tasks)))
 
         # used for next(taskgenerator)
         self.tasks_idx = 0
@@ -178,21 +181,16 @@ class TaskGenerator:
     def sample(self, shots=None, task=None):
         """
 
-        **Description**
+        # Description
+        Returns a SampleDataset and the labels that we have sampled. The dataset is of length `shots * ways`.
+        The length of labels we have sampled is the same as `shots.
 
-        Returns a dataset and the labels that we have sampled.
+        # Arguments
+        shots (int, *optional*, default=None): Number of data points to return per class, if None gets self.shots.
+        task (list, *optional*, default=None): List of labels you want to sample from.
 
-        The dataset is of length `shots * ways`.
-        The length of labels we have sampled is the same as `shots`.
-
-        **Arguments**
-
-        **shots** (int, *optional*, default=None) - Number of data points to return per class, if None gets self.shots.
-        **task** (list, *optional*, default=None) - List of labels you want to sample from.
-
-        **Returns**
-
-        * Dataset - Containing the sampled task.
+        # Returns
+        SampleDataset: Containing the sampled task.
 
         """
         # If shots isn't defined, then try to inherit from object
