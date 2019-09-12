@@ -22,7 +22,7 @@ class NewsClassification(Dataset):
     **Arguments**
 
     **Example**
-    
+
     """
 
     def __init__(self, root, train=True, transform=None, download=False):

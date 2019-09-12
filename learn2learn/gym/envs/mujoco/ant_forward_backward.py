@@ -9,18 +9,18 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py)  
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py)
 
     **Description**
 
-    This environment requires the ant to learn to run forward or backward. 
+    This environment requires the ant to learn to run forward or backward.
     At each time step the ant receives a signal composed of a
     control cost and a reward equal to its average velocity in the direction
     of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the ant should
     move backward and +1 indicates the ant should move forward.
     The velocity is calculated as the distance (in the direction of the plane) of the ant's torso
     position before and after taking the specified action divided by a small value dt.
-    As noted in [1], a small positive bonus is added to the reward to stop the ant from 
+    As noted in [1], a small positive bonus is added to the reward to stop the ant from
     prematurely ending the episode.
 
     **Credit**
@@ -39,7 +39,7 @@ class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         MujocoEnv.__init__(self, 'ant.xml', 5)
         gym.utils.EzPickle.__init__(self)
 
-    # -------- MetaEnv Methods -------- 
+    # -------- MetaEnv Methods --------
     def set_task(self, task):
         MetaEnv.set_task(self, task)
         self.goal_direction = task['direction']
@@ -49,7 +49,7 @@ class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 
-    # -------- Mujoco Methods -------- 
+    # -------- Mujoco Methods --------
     def _get_obs(self):
         return np.concatenate([
             self.sim.data.qpos.flat[2:],
@@ -70,7 +70,7 @@ class AntForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         qvel = self.init_qvel + self.np_random.randn(self.model.nv) * .1
         self.set_state(qpos, qvel)
 
-    # -------- Gym Methods -------- 
+    # -------- Gym Methods --------
     def step(self, action):
         xposbefore = np.copy(self.get_body_com("torso")[0])
         self.do_simulation(action, self.frame_skip)

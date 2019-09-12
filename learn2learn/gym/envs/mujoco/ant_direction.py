@@ -9,7 +9,7 @@ from learn2learn.gym.envs.meta_env import MetaEnv
 
 class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py)  
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py)
 
     **Description**
 
@@ -17,10 +17,10 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     XY plane. At each time step the ant receives a signal composed of a
     control cost and a reward equal to its average velocity in the direction
     of the plane. The tasks are 2d-arrays sampled uniformly along the unit circle.
-    The target direction is indicated by the vector from the origin to the sampled point. 
+    The target direction is indicated by the vector from the origin to the sampled point.
     The velocity is calculated as the distance (in the target direction) of the ant's torso
     position before and after taking the specified action divided by a small value dt.
-    As noted in [1], a small positive bonus is added to the reward to stop the ant from 
+    As noted in [1], a small positive bonus is added to the reward to stop the ant from
     prematurely ending the episode.
 
     **Credit**
@@ -39,7 +39,7 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         MujocoEnv.__init__(self, 'ant.xml', 5)
         gym.utils.EzPickle.__init__(self)
 
-    # -------- MetaEnv Methods -------- 
+    # -------- MetaEnv Methods --------
     def set_task(self, task):
         MetaEnv.set_task(self, task)
         self.goal_direction = task['direction']
@@ -50,7 +50,7 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 
-    # -------- Mujoco Methods -------- 
+    # -------- Mujoco Methods --------
     def _get_obs(self):
         return np.concatenate([
             self.sim.data.qpos.flat[2:],
@@ -71,7 +71,7 @@ class AntDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         qvel = self.init_qvel + self.np_random.randn(self.model.nv) * .1
         self.set_state(qpos, qvel)
 
-    # -------- Gym Methods -------- 
+    # -------- Gym Methods --------
     def step(self, action):
         posbefore = np.copy(self.get_body_com("torso")[:2])
         self.do_simulation(action, self.frame_skip)

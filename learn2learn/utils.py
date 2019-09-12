@@ -12,11 +12,11 @@ def magic_box(x):
 
     **Description**
 
-    The magic box operator, which evaluates to 1 but whose gradient is \(dx\):
+    The magic box operator, which evaluates to 1 but whose gradient is \\(dx\\):
 
-    $$\\boxdot (x) = \exp(x - \\bot(x))$$
+    $$\\boxdot (x) = \\exp(x - \\bot(x))$$
 
-    where \(\\bot\) is the stop-gradient (or detach) operator.
+    where \\(\\bot\\) is the stop-gradient (or detach) operator.
 
     This operator is useful when computing higher-order derivatives of stochastic graphs.
     For more informations, please refer to the DiCE paper. (Reference 1)

@@ -23,10 +23,10 @@ class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     XY plane. At each time step the humanoid receives a signal composed of a
     control cost and a reward equal to its average velocity in the target direction.
     The tasks are 2d-arrays sampled uniformly along the unit circle.
-    The target direction is indicated by the vector from the origin to the sampled point. 
+    The target direction is indicated by the vector from the origin to the sampled point.
     The velocity is calculated as the distance (in the target direction) of the humanoid's torso
     position before and after taking the specified action divided by a small value dt.
-    A small positive bonus is added to the reward to stop the humanoid from 
+    A small positive bonus is added to the reward to stop the humanoid from
     prematurely ending the episode.
 
     **Credit**
@@ -45,7 +45,7 @@ class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         MujocoEnv.__init__(self, 'humanoid.xml', 5)
         gym.utils.EzPickle.__init__(self)
 
-    # -------- MetaEnv Methods -------- 
+    # -------- MetaEnv Methods --------
     def set_task(self, task):
         MetaEnv.set_task(self, task)
         self.goal_direction = task['direction']
@@ -56,7 +56,7 @@ class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 
-    # -------- Mujoco Methods -------- 
+    # -------- Mujoco Methods --------
     def _get_obs(self):
         data = self.sim.data
         return np.concatenate([data.qpos.flat[2:],
@@ -79,7 +79,7 @@ class HumanoidDirectionEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         )
         return self._get_obs()
 
-    # -------- Gym Methods -------- 
+    # -------- Gym Methods --------
     def step(self, action):
         pos_before = np.copy(mass_center(self.model, self.sim)[:2])
         self.do_simulation(action, self.frame_skip)

@@ -46,6 +46,7 @@ def download_pkl(google_drive_id, data_root, mode):
     file_path = os.path.join(data_root, filename)
 
     if not os.path.exists(file_path + '.pkl'):
+        print('Downloading:', file_path + '.pkl')
         download_file_from_google_drive(google_drive_id, file_path + '.pkl')
         print("Download finished")
     else:
@@ -60,17 +61,48 @@ def index_classes(items):
     return idx
 
 
-class MiniImagenetDataset(data.Dataset):
+class MiniImagenet(data.Dataset):
+
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py)
+
+    **Description**
+
+    The *mini*-ImageNet dataset was originally introduced by Vinyals et al., 2016.
+
+
+    It consists of 60'000 colour images of sizes 84x84 pixels.
+    The dataset is divided in 3 splits of 64 training, 16 validation, and 20 testing classes each containing 600 examples.
+    The classes are sampled from the ImageNet dataset, and we use the splits from Ravi & Larochelle, 2017.
+
+    **References**
+
+    1. Vinyals et al. 2016. “Matching Networks for One Shot Learning.” NeurIPS.
+    2. Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.
+
+    **Arguments**
+
+    * **root** (str) - Path to download the data.
+    * **mode** (str, *optional*, default='train') - Which split to use.
+        Must be 'train', 'validation', or 'test'.
+    * **transform** (Transform, *optional*, default=None) - Input pre-processing.
+    * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
+
+    **Example**
+
+    ~~~python
+    train_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='train')
+    train_dataset = l2l.data.MetaDataset(train_dataset)
+    train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
+    ~~~
+
+    """
+
     def __init__(self, root, mode='train', transform=None, target_transform=None):
-        '''
-        The items are (filename,category). The index of all the categories can be found in self.idx_classes
-        Args:
-        - root: the directory where the dataset will be stored or downloaded to if not available
-        - transform: how to transform the input
-        - target_transform: how to transform the target
-        '''
-        super(MiniImagenetDataset, self).__init__()
+        super(MiniImagenet, self).__init__()
         self.root = root
+        if not os.path.exists(root):
+            os.mkdir(root)
         self.transform = transform
         self.target_transform = target_transform
         self.mode = mode
@@ -78,10 +110,10 @@ class MiniImagenetDataset(data.Dataset):
             google_drive_file_id = '1wpmY-hmiJUUlRBkO9ZDCXAcIpHEFdOhD'
         elif self.mode == 'train':
             google_drive_file_id = '1I3itTXpXxGV68olxM5roceUMG8itH9Xj'
-        elif self.mode == 'val':
+        elif self.mode == 'validation':
             google_drive_file_id = '1KY5e491bkLFqJDp0-UWou3463Mo8AOco'
         else:
-            raise ('ValueError', 'Needs to be train, test or val')
+            raise ('ValueError', 'Needs to be train, test or validation')
 
         if not self._check_exists():
             download_pkl(google_drive_file_id, root, mode)
@@ -108,4 +140,3 @@ class MiniImagenetDataset(data.Dataset):
 
     def _check_exists(self):
         return os.path.exists(os.path.join(self.root, 'mini-imagenet-cache-' + self.mode + '.pkl'))
-

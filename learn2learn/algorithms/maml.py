@@ -119,7 +119,7 @@ class MAML(BaseLearner):
         * **loss** (Tensor) - Loss to minimize upon update.
         * **first_order** (bool, *optional*, default=None) - Whether to use first- or
             second-order updates. Defaults to self.first_order.
-        
+
         """
         if first_order is None:
             first_order = self.first_order
@@ -145,7 +145,7 @@ class MAML(BaseLearner):
 
         * **first_order** (bool, *optional*, default=None) - Whether the clone uses first-
             or second-order updates. Defaults to self.first_order.
-        
+
         """
         if first_order is None:
             first_order = self.first_order

@@ -47,7 +47,7 @@ class MetaEnv(Env):
 
         **Returns**
 
-        tasks ([dict]) - returns a list of num_tasks tasks. Tasks are 
+        tasks ([dict]) - returns a list of num_tasks tasks. Tasks are
         dictionaries of task specific parameters. A
         minimal example for num_tasks = 1 is [{'goal': value}].
         """
@@ -57,7 +57,7 @@ class MetaEnv(Env):
         """
         **Description**
 
-        Sets the task specific parameters defined in task. 
+        Sets the task specific parameters defined in task.
 
         **Arguments**
 

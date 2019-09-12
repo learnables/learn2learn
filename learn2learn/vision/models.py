@@ -133,14 +133,25 @@ class OmniglotFC(nn.Sequential):
 
     **Description**
 
+    The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.
+
     **References**
 
-    * TODO: Cite ...
+    1. Santoro et al. 2016. “Meta-Learning with Memory-Augmented Neural Networks.” ICML.
 
     **Arguments**
 
+    * **input_size** (int) - The dimensionality of the input.
+    * **output_size** (int) - The dimensionality of the output.
+    * **sizes** (list, *optional*, default=None) - A list of hidden layer sizes.
+
     **Example**
-    
+    ~~~python
+    net = OmniglotFC(input_size=28**2,
+                     output_size=10,
+                     sizes=[64, 64, 64])
+    ~~~
+
     """
 
     def __init__(self, input_size, output_size, sizes=None):
@@ -164,14 +175,25 @@ class OmniglotCNN(nn.Module):
 
     **Description**
 
+    The convolutional network commonly used for Omniglot, as described by Finn et al, 2017.
+
+    This network assumes inputs of shapes (1, 28, 28).
+
     **References**
 
-    * TODO: Cite MAML? Or wherever MAML gets their network from. (Matching nets?)
+    1. Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.” ICML.
 
     **Arguments**
 
+    * **output_size** (int) - The dimensionality of the network's output.
+    * **hidden_size** (int, *optional*, default=64) - The dimensionality of the hidden representation.
+    * **layers** (int, *optional*, default=4) - The number of convolutional layers.
+
     **Example**
-    
+    ~~~python
+    model = OmniglotCNN(output_size=20, hidden_size=128, layers=3)
+    ~~~
+
     """
 
     def __init__(self, output_size=5, hidden_size=64, layers=4):
@@ -196,18 +218,28 @@ class OmniglotCNN(nn.Module):
 class MiniImagenetCNN(nn.Module):
     """
 
-    [Source]()
+    [[Source]]()
 
     **Description**
 
+    The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.
+
+    This network assumes inputs of shapes (3, 84, 84).
+
     **References**
 
-    * TODO: Cite Ravi et Larochelle.
+    1. Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.
 
     **Arguments**
 
+    * **output_size** (int) - The dimensionality of the network's output.
+    * **hidden_size** (int, *optional*, default=32) - The dimensionality of the hidden representation.
+    * **layers** (int, *optional*, default=4) - The number of convolutional layers.
+
     **Example**
-    
+    ~~~python
+    model = MiniImagenet(output_size=20, hidden_size=128, layers=3)
+    ~~~
     """
 
     def __init__(self, output_size, hidden_size=32, layers=4):
