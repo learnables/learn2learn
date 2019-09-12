@@ -22,11 +22,6 @@ class Particles2DEnv(MetaEnv):
 
     Adapted from Jonas Rothfuss' implementation.
 
-    **Arguments**
-
-    task (dict, *optional*) - Environment can optionally be initialized
-    with a task. If no task is provided, one is randomly sampled.
-
     """
 
     def __init__(self, task=None):
