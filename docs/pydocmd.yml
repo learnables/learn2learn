@@ -35,7 +35,7 @@ generate:
       - learn2learn.vision.models.OmniglotCNN
       - learn2learn.vision.datasets
       - learn2learn.vision.datasets.FullOmniglot
-      - learn2learn.vision.datasets.MiniImageNet
+      - learn2learn.vision.datasets.MiniImagenet
       - learn2learn.vision.transforms
       - learn2learn.vision.transforms.RandomDiscreteRotation
   - docs/learn2learn.text.md:

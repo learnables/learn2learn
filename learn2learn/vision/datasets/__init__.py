@@ -4,7 +4,7 @@
 
 **Description**
 
-A set of transformations commonly used in meta-learning vision tasks.
+Some datasets commonly used in meta-learning vision tasks.
 """
 
 from .full_omniglot import FullOmniglot
