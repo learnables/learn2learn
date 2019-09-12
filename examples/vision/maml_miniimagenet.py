@@ -55,19 +55,10 @@ def main(
         th.cuda.manual_seed(seed)
         device = th.device('cuda')
 
-    # Create Dataset
-    transform = transforms.Compose([
-        lambda x: x.float() / 255.,
-    ])
-    train_dataset = l2l.vision.datasets.MiniImagenet(root='./data',
-                                                     mode='train',
-                                                     transform=transform)
-    valid_dataset = l2l.vision.datasets.MiniImagenet(root='./data',
-                                                     mode='validation',
-                                                     transform=transform)
-    test_dataset = l2l.vision.datasets.MiniImagenet(root='./data',
-                                                    mode='test',
-                                                    transform=transform)
+    # Create Datasets
+    train_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='train')
+    valid_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='validation')
+    test_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='test')
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)

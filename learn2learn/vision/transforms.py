@@ -19,13 +19,16 @@ class RandomDiscreteRotation(RandomRotation):
 
     **Description**
 
-    **References**
-
-    * TODO: Cite ...
+    Samples rotations from a given list, uniformly at random.
 
     **Arguments**
 
+    * **degrees** (list) - The rotations to be sampled.
+
     **Example**
+    ~~~python
+    transform = RandomDiscreteRotation([0, 90, 180, 270])
+    ~~~
     
     """
 

@@ -91,13 +91,7 @@ class MiniImagenet(data.Dataset):
     **Example**
 
     ~~~python
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        lambda x: x.float() / 255.,
-    ])
-    train_dataset = l2l.vision.datasets.MiniImagenet(root='./data',
-                                                            mode='train',
-                                                            transform=transform)
+    train_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='train')
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
     ~~~
