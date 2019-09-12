@@ -19,6 +19,8 @@ generate:
       - learn2learn.algorithms.meta_sgd_update
   - docs/learn2learn.gym.md:
       - learn2learn.gym++
+      - learn2learn.gym.MetaEnv
+      - learn2learn.gym.AsyncVectorEnv
       - learn2learn.gym.envs.mujoco
       - learn2learn.gym.envs.mujoco.HalfCheetahForwardBackwardEnv
       - learn2learn.gym.envs.mujoco.AntForwardBackwardEnv

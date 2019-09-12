@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 
-import requests
 from __future__ import print_function
+import requests
 import torch.utils.data as data
 import numpy as np
 import os
