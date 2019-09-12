@@ -61,7 +61,7 @@ def index_classes(items):
     return idx
 
 
-class MiniImagenetDataset(data.Dataset):
+class MiniImagenet(data.Dataset):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py)
@@ -95,7 +95,7 @@ class MiniImagenetDataset(data.Dataset):
         transforms.ToTensor(),
         lambda x: x.float() / 255.,
     ])
-    train_dataset = l2l.vision.datasets.MiniImagenetDataset(root='./data',
+    train_dataset = l2l.vision.datasets.MiniImagenet(root='./data',
                                                             mode='train',
                                                             transform=transform)
     train_dataset = l2l.data.MetaDataset(train_dataset)
@@ -105,7 +105,7 @@ class MiniImagenetDataset(data.Dataset):
     """
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
-        super(MiniImagenetDataset, self).__init__()
+        super(MiniImagenet, self).__init__()
         self.root = root
         if not os.path.exists(root):
             os.mkdir(root)
