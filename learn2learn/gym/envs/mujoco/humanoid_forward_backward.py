@@ -16,10 +16,10 @@ def mass_center(model, sim):
 class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py)
-    
+
     **Description**
 
-    This environment requires the humanoid to learn to run forward or backward. 
+    This environment requires the humanoid to learn to run forward or backward.
     At each time step the humanoid receives a signal composed of a
     control cost and a reward equal to its average velocity in the target direction.
     The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the humanoid should
@@ -43,7 +43,7 @@ class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         MujocoEnv.__init__(self, 'humanoid.xml', 5)
         gym.utils.EzPickle.__init__(self)
 
-    # -------- MetaEnv Methods -------- 
+    # -------- MetaEnv Methods --------
     def set_task(self, task):
         MetaEnv.set_task(self, task)
         self.goal_direction = task['direction']
@@ -53,7 +53,7 @@ class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         tasks = [{'direction': direction} for direction in directions]
         return tasks
 
-    # -------- Mujoco Methods -------- 
+    # -------- Mujoco Methods --------
     def _get_obs(self):
         data = self.sim.data
         return np.concatenate([data.qpos.flat[2:],
@@ -76,7 +76,7 @@ class HumanoidForwardBackwardEnv(MetaEnv, MujocoEnv, gym.utils.EzPickle):
         )
         return self._get_obs()
 
-    # -------- Gym Methods -------- 
+    # -------- Gym Methods --------
     def step(self, action):
         pos_before = mass_center(self.model, self.sim)[0]
         self.do_simulation(action, self.frame_skip)

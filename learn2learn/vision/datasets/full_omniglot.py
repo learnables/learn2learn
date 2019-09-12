@@ -45,7 +45,7 @@ class FullOmniglot(Dataset):
                                                 download=True)
     omniglot = l2l.data.MetaDataset(omniglot)
     ~~~
-    
+
     """
 
     def __init__(self, root, transform=None, target_transform=None, download=False):

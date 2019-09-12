@@ -14,7 +14,7 @@ class Particles2DEnv(MetaEnv):
     **Description**
 
     Each task is defined by the location of the goal. A point mass
-    receives a directional force and moves accordingly 
+    receives a directional force and moves accordingly
     (clipped in [-0.1,0.1]). The reward is equal to the negative
     distance from the goal.
 
@@ -33,10 +33,10 @@ class Particles2DEnv(MetaEnv):
                                        shape=(2,), dtype=np.float32)
         self.reset()
 
-    # -------- MetaEnv Methods -------- 
+    # -------- MetaEnv Methods --------
     def sample_tasks(self, num_tasks):
         """
-        Tasks correspond to a goal point chosen uniformly at random. 
+        Tasks correspond to a goal point chosen uniformly at random.
         """
         goals = self.np_random.uniform(-0.5, 0.5, size=(num_tasks, 2))
         tasks = [{'goal': goal} for goal in goals]
@@ -46,7 +46,7 @@ class Particles2DEnv(MetaEnv):
         self._task = task
         self._goal = task['goal']
 
-    # -------- Gym Methods -------- 
+    # -------- Gym Methods --------
     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
@@ -61,7 +61,7 @@ class Particles2DEnv(MetaEnv):
     def step(self, action):
         """
         **Description**
-        
+
         Given an action, clips the action to be in the
         appropriate range and moves the point mass position
         according to the action.
@@ -71,7 +71,7 @@ class Particles2DEnv(MetaEnv):
         action (2-element array) - Array specifying the magnitude
         and direction of the forces to be applied in the x and y
         planes.
-        
+
         **Returns**
 
         *state, reward, done, task*

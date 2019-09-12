@@ -151,7 +151,7 @@ class OmniglotFC(nn.Sequential):
                      output_size=10,
                      sizes=[64, 64, 64])
     ~~~
-    
+
     """
 
     def __init__(self, input_size, output_size, sizes=None):
@@ -193,7 +193,7 @@ class OmniglotCNN(nn.Module):
     ~~~python
     model = OmniglotCNN(output_size=20, hidden_size=128, layers=3)
     ~~~
-    
+
     """
 
     def __init__(self, output_size=5, hidden_size=64, layers=4):

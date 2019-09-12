@@ -23,8 +23,8 @@ class SampleDataset(Dataset):
 
 
 class MetaDataset(Dataset):
-    """ 
-    
+    """
+
     **Descritpion**
 
     It wraps a torch dataset by creating a map of target to indices.
@@ -37,7 +37,7 @@ class MetaDataset(Dataset):
         #TODO : Add example for wrapping a non standard l2l dataset
 
     **Arguments**
-    
+
     * **dataset** (Dataset) -  A torch dataset.
 
     **Example**
@@ -191,7 +191,7 @@ class TaskGenerator:
         **task** (list, *optional*, default=None) - List of labels you want to sample from.
 
         **Returns**
-        
+
         * Dataset - Containing the sampled task.
 
         """

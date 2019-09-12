@@ -29,7 +29,7 @@ class RandomDiscreteRotation(RandomRotation):
     ~~~python
     transform = RandomDiscreteRotation([0, 90, 180, 270])
     ~~~
-    
+
     """
 
     def __init__(self, degrees, *args, **kwargs):

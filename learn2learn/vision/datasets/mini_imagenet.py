@@ -95,7 +95,7 @@ class MiniImagenet(data.Dataset):
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
     ~~~
-    
+
     """
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
