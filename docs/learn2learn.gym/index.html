@@ -5,14 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="Seb Arnold">
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.gym/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>learn2learn.gym - learn2learn</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -22,7 +23,16 @@
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
         <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-68693545-3', 'seba-1511.github.com');
+            ga('send', 'pageview');
+        </script> 
     </head>
 
     <body>
@@ -79,10 +89,6 @@
 </li>
                                     
 <li >
-    <a href="../learn2learn.text/">learn2learn.text</a>
-</li>
-                                    
-<li >
     <a href="../learn2learn.vision/">learn2learn.vision</a>
 </li>
                                 </ul>
@@ -107,7 +113,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../learn2learn.text/">
+                                <a rel="prev" href="../learn2learn.vision/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -136,7 +142,7 @@
 
 <h1 id="learn2learngym">learn2learn.gym</h1>
 <h1 id="metaenv">MetaEnv</h1>
-<pre><code class="python">MetaEnv(self, task=None)
+<pre><code class="python">MetaEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/meta_env.py">[Source]</a></p>
@@ -156,7 +162,7 @@ for task in tasks:
 <p><strong>Credit</strong></p>
 <p>Adapted from Tristan Deleu and Jonas Rothfuss' implementations.</p>
 <h1 id="asyncvectorenv">AsyncVectorEnv</h1>
-<pre><code class="python">AsyncVectorEnv(self, env_fns, env=None)
+<pre><code class="python">AsyncVectorEnv(env_fns, env=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/async_vec_env.py">[Source]</a></p>
@@ -167,7 +173,7 @@ Allows multiple environments to be run as separate processes.</p>
 <p>Adapted from OpenAI and Tristan Deleu's implementations.</p>
 <h1 id="learn2learngymenvsmujoco">learn2learn.gym.envs.mujoco</h1>
 <h1 id="halfcheetahforwardbackwardenv">HalfCheetahForwardBackwardEnv</h1>
-<pre><code class="python">HalfCheetahForwardBackwardEnv(self, task=None)
+<pre><code class="python">HalfCheetahForwardBackwardEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/halfcheetah_forward_backward.py">[Source]</a></p>
@@ -187,7 +193,7 @@ position before and after taking the specified action divided by a small value d
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h1 id="antforwardbackwardenv">AntForwardBackwardEnv</h1>
-<pre><code class="python">AntForwardBackwardEnv(self, task=None)
+<pre><code class="python">AntForwardBackwardEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py">[Source]</a></p>
@@ -209,7 +215,7 @@ prematurely ending the episode.</p>
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h1 id="antdirectionenv">AntDirectionEnv</h1>
-<pre><code class="python">AntDirectionEnv(self, task=None)
+<pre><code class="python">AntDirectionEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py">[Source]</a></p>
@@ -231,7 +237,7 @@ prematurely ending the episode.</p>
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h1 id="humanoidforwardbackwardenv">HumanoidForwardBackwardEnv</h1>
-<pre><code class="python">HumanoidForwardBackwardEnv(self, task=None)
+<pre><code class="python">HumanoidForwardBackwardEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py">[Source]</a></p>
@@ -251,7 +257,7 @@ position before and after taking the specified action divided by a small value d
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h1 id="humanoiddirectionenv">HumanoidDirectionEnv</h1>
-<pre><code class="python">HumanoidDirectionEnv(self, task=None)
+<pre><code class="python">HumanoidDirectionEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_direction.py">[Source]</a></p>
@@ -274,7 +280,7 @@ prematurely ending the episode.</p>
 </ol>
 <h1 id="learn2learngymenvsparticles">learn2learn.gym.envs.particles</h1>
 <h1 id="particles2denv">Particles2DEnv</h1>
-<pre><code class="python">Particles2DEnv(self, task=None)
+<pre><code class="python">Particles2DEnv(task=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/particles/particles_2d.py">[Source]</a></p>
@@ -284,10 +290,7 @@ receives a directional force and moves accordingly
 (clipped in [-0.1,0.1]). The reward is equal to the negative
 distance from the goal.</p>
 <p><strong>Credit</strong></p>
-<p>Adapted from Jonas Rothfuss' implementation.</p>
-<p><strong>Arguments</strong></p>
-<p>task (dict, <em>optional</em>) - Environment can optionally be initialized
-with a task. If no task is provided, one is randomly sampled.</p></div>
+<p>Adapted from Jonas Rothfuss' implementation.</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -299,6 +302,8 @@ with a task. If no task is provided, one is randomly sampled.</p></div>
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
         <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">

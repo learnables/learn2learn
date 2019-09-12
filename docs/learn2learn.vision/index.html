@@ -5,14 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        
-        
+        <meta name="author" content="Seb Arnold">
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.vision/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
         <title>learn2learn.vision - learn2learn</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -22,7 +23,16 @@
         <script src="../../js/jquery-1.10.2.min.js" defer></script>
         <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-68693545-3', 'seba-1511.github.com');
+            ga('send', 'pageview');
+        </script> 
     </head>
 
     <body>
@@ -78,10 +88,6 @@
     <a href="../learn2learn.gym/">learn2learn.gym</a>
 </li>
                                     
-<li >
-    <a href="../learn2learn.text/">learn2learn.text</a>
-</li>
-                                    
 <li class="active">
     <a href="./">learn2learn.vision</a>
 </li>
@@ -102,7 +108,7 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../learn2learn.text/">
+                                <a rel="next" href="../learn2learn.gym/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -122,8 +128,10 @@
         <li class="main active"><a href="#learn2learnvisionmodels">learn2learn.vision.models</a></li>
         <li class="main "><a href="#omniglotfc">OmniglotFC</a></li>
         <li class="main "><a href="#omniglotcnn">OmniglotCNN</a></li>
+        <li class="main "><a href="#miniimagenetcnn">MiniImagenetCNN</a></li>
         <li class="main "><a href="#learn2learnvisiondatasets">learn2learn.vision.datasets</a></li>
         <li class="main "><a href="#fullomniglot">FullOmniglot</a></li>
+        <li class="main "><a href="#miniimagenet">MiniImagenet</a></li>
         <li class="main "><a href="#learn2learnvisiontransforms">learn2learn.vision.transforms</a></li>
         <li class="main "><a href="#randomdiscreterotation">RandomDiscreteRotation</a></li>
     </ul>
@@ -134,59 +142,159 @@
 <p><strong>Description</strong></p>
 <p>A set of commonly used models for meta-learning vision tasks.</p>
 <h1 id="omniglotfc">OmniglotFC</h1>
-<pre><code class="python">OmniglotFC(self, input_size, output_size, sizes=None)
+<pre><code class="python">OmniglotFC(input_size, output_size, sizes=None)
 </code></pre>
 
 <p><a href="">[Source]</a></p>
 <p><strong>Description</strong></p>
+<p>The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.</p>
 <p><strong>References</strong></p>
-<ul>
-<li>TODO: Cite ...</li>
-</ul>
+<ol>
+<li>Santoro et al. 2016. “Meta-Learning with Memory-Augmented Neural Networks.” ICML.</li>
+</ol>
 <p><strong>Arguments</strong></p>
+<ul>
+<li><strong>input_size</strong> (int) - The dimensionality of the input.</li>
+<li><strong>output_size</strong> (int) - The dimensionality of the output.</li>
+<li><strong>sizes</strong> (list, <em>optional</em>, default=None) - A list of hidden layer sizes.</li>
+</ul>
 <p><strong>Example</strong></p>
+<pre><code class="python">net = OmniglotFC(input_size=28**2,
+                 output_size=10,
+                 sizes=[64, 64, 64])
+</code></pre>
+
 <h1 id="omniglotcnn">OmniglotCNN</h1>
-<pre><code class="python">OmniglotCNN(self, output_size=5, hidden_size=64, layers=4)
+<pre><code class="python">OmniglotCNN(output_size=5, hidden_size=64, layers=4)
 </code></pre>
 
 <p><a href="">Source</a></p>
 <p><strong>Description</strong></p>
+<p>The convolutional network commonly used for Omniglot, as described by Finn et al, 2017.</p>
+<p>This network assumes inputs of shapes (1, 28, 28).</p>
 <p><strong>References</strong></p>
-<ul>
-<li>TODO: Cite MAML? Or wherever MAML gets their network from. (Matching nets?)</li>
-</ul>
+<ol>
+<li>Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.” ICML.</li>
+</ol>
 <p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the network's output.</li>
+<li><strong>hidden_size</strong> (int, <em>optional</em>, default=64) - The dimensionality of the hidden representation.</li>
+<li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
+</ul>
 <p><strong>Example</strong></p>
-<h1 id="learn2learnvisiondatasets">learn2learn.vision.datasets</h1>
-<p><strong>Description</strong></p>
-<p>A set of transformations commonly used in meta-learning vision tasks.</p>
-<h1 id="fullomniglot">FullOmniglot</h1>
-<pre><code class="python">FullOmniglot(self, root, transform=None, target_transform=None, download=False)
+<pre><code class="python">model = OmniglotCNN(output_size=20, hidden_size=128, layers=3)
+</code></pre>
+
+<h1 id="miniimagenetcnn">MiniImagenetCNN</h1>
+<pre><code class="python">MiniImagenetCNN(output_size, hidden_size=32, layers=4)
 </code></pre>
 
 <p><a href="">[Source]</a></p>
 <p><strong>Description</strong></p>
+<p>The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.</p>
+<p>This network assumes inputs of shapes (3, 84, 84).</p>
 <p><strong>References</strong></p>
-<ul>
-<li>TODO: Cite Lake et al.</li>
-</ul>
+<ol>
+<li>Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.</li>
+</ol>
 <p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the network's output.</li>
+<li><strong>hidden_size</strong> (int, <em>optional</em>, default=32) - The dimensionality of the hidden representation.</li>
+<li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
+</ul>
 <p><strong>Example</strong></p>
+<pre><code class="python">model = MiniImagenet(output_size=20, hidden_size=128, layers=3)
+</code></pre>
+
+<h1 id="learn2learnvisiondatasets">learn2learn.vision.datasets</h1>
+<p><strong>Description</strong></p>
+<p>Some datasets commonly used in meta-learning vision tasks.</p>
+<h1 id="fullomniglot">FullOmniglot</h1>
+<pre><code class="python">FullOmniglot(root, transform=None, target_transform=None, download=False)
+</code></pre>
+
+<p><a href="">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This class provides an interface to the Omniglot dataset.</p>
+<p>The Omniglot dataset was introduced by Lake et al., 2015.
+Omniglot consists of 1623 character classes from 50 different alphabets, each containing 20 samples.
+While the original dataset is separated in background and evaluation sets,
+this class concatenates both sets and leaves to the user the choice of classes splitting
+as was done in Ravi and Larochelle, 2017.
+The background and evaluation splits are available in the <code>torchvision</code> package.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Lake et al. 2015. “Human-Level Concept Learning through Probabilistic Program Induction.” Science.</li>
+<li>Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
+                                            transform=transforms.Compose([
+                                                l2l.vision.transforms.RandomDiscreteRotation(
+                                                    [0.0, 90.0, 180.0, 270.0]),
+                                                transforms.Resize(28, interpolation=LANCZOS),
+                                                transforms.ToTensor(),
+                                                lambda x: 1.0 - x,
+                                            ]),
+                                            download=True)
+omniglot = l2l.data.MetaDataset(omniglot)
+</code></pre>
+
+<h1 id="miniimagenet">MiniImagenet</h1>
+<pre><code class="python">MiniImagenet(root, mode='train', transform=None, target_transform=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The <em>mini</em>-ImageNet dataset was originally introduced by Vinyals et al., 2016.</p>
+<p>It consists of 60'000 colour images of sizes 84x84 pixels.
+The dataset is divided in 3 splits of 64 training, 16 validation, and 20 testing classes each containing 600 examples.
+The classes are sampled from the ImageNet dataset, and we use the splits from Ravi &amp; Larochelle, 2017.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Vinyals et al. 2016. “Matching Networks for One Shot Learning.” NeurIPS.</li>
+<li>Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">train_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='train')
+train_dataset = l2l.data.MetaDataset(train_dataset)
+train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
+</code></pre>
+
 <h1 id="learn2learnvisiontransforms">learn2learn.vision.transforms</h1>
 <p><strong>Description</strong></p>
 <p>A set of transformations commonly used in meta-learning vision tasks.</p>
 <h1 id="randomdiscreterotation">RandomDiscreteRotation</h1>
-<pre><code class="python">RandomDiscreteRotation(self, degrees, *args, **kwargs)
+<pre><code class="python">RandomDiscreteRotation(degrees, *args, **kwargs)
 </code></pre>
 
 <p><a href="">[Source]</a></p>
 <p><strong>Description</strong></p>
-<p><strong>References</strong></p>
-<ul>
-<li>TODO: Cite ...</li>
-</ul>
+<p>Samples rotations from a given list, uniformly at random.</p>
 <p><strong>Arguments</strong></p>
-<p><strong>Example</strong></p></div>
+<ul>
+<li><strong>degrees</strong> (list) - The rotations to be sampled.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">transform = RandomDiscreteRotation([0, 90, 180, 270])
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
@@ -198,6 +306,8 @@
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
         <script src="../../js/base.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
         <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
