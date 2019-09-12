@@ -47,13 +47,11 @@ def main(
         cuda=True,
         seed=42,
 ):
-    MI_PATH = '~/Dropbox/Temporary/mini-imagenet-l2l/miniimagenet/resized/'
-
     random.seed(seed)
     np.random.seed(seed)
     th.manual_seed(seed)
     device = th.device('cpu')
-    if cuda:
+    if cuda and th.cuda.device_count():
         th.cuda.manual_seed(seed)
         device = th.device('cuda')
 
@@ -62,12 +60,9 @@ def main(
         transforms.ToTensor(),
         lambda x: x.float() / 255.,
     ])
-    train_images_path = os.path.join(MI_PATH, 'train')
-    valid_images_path = os.path.join(MI_PATH, 'val')
-    test_images_path = os.path.join(MI_PATH, 'test')
-    train_dataset = ImageFolder(train_images_path, transform)
-    valid_dataset = ImageFolder(valid_images_path, transform)
-    test_dataset = ImageFolder(test_images_path, transform)
+    train_dataset = l2l.vision.datasets.MiniImagenetDataset(root='./data', mode='train', transform=transform)
+    valid_dataset = l2l.vision.datasets.MiniImagenetDataset(root='./data', mode='validation', transform=transform)
+    test_dataset = l2l.vision.datasets.MiniImagenetDataset(root='./data', mode='test', transform=transform)
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)
