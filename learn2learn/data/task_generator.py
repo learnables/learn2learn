@@ -67,7 +67,16 @@ class MetaDataset(Dataset):
 
         classes_to_indices = defaultdict(list)
         for i in range(len(self.dataset)):
-            classes_to_indices[self.dataset[i][1]].append(i)
+            try:
+                # if label is a Tensor, then take get the scala value
+                label = self.dataset[i][1].item()
+            except AttributeError:
+                # if label is a scalar then use as is
+                label = self.dataset[i][1]
+            except ValueError as e:
+                raise ValueError("Currently l2l only supports scalar labels. \n" + str(e))
+
+            classes_to_indices[label].append(i)
         return classes_to_indices
 
 
@@ -122,10 +131,13 @@ class TaskGenerator:
         self.shots = shots
 
         if not isinstance(dataset, MetaDataset):
-            dataset = MetaDataset(dataset)
+            self.dataset = MetaDataset(dataset)
 
         if classes is None:
             self.classes = self.dataset.labels
+
+        assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
+        self._check_classes(self.classes)
 
         if isinstance(tasks, int):
             self.tasks = self.generate_n_tasks(tasks)
@@ -137,8 +149,6 @@ class TaskGenerator:
         # used for next(taskgenerator)
         self.tasks_idx = 0
 
-        assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
-        self._check_classes(self.classes)
         self._check_tasks(self.tasks)
 
         # TODO : assert that shots are always less than equal to min_samples for each class
@@ -149,9 +159,13 @@ class TaskGenerator:
 
         # Returns: A list of shape `n * w` where n is the number of tasks to generate and w is the ways.
 
+        # TODO : Investigate how this affects code
+        # def get_samples():
+        #     random.shuffle(self.classes)
+        #     return self.classes[:self.ways]
+
         def get_samples():
-            random.shuffle(self.classes)
-            return self.classes[:self.ways]
+            return random.sample(self.classes, k=self.ways)
 
         return [get_samples() for _ in range(n)]
 
@@ -168,7 +182,7 @@ class TaskGenerator:
         #     assert task.sampled_task == tg.tasks[i]
         # Returns:
         try:
-            task = self.sample(self.tasks[self.tasks_idx])
+            task = self.sample(task=self.tasks[self.tasks_idx])
         except IndexError:
             raise StopIteration()
 
