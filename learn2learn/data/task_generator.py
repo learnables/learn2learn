@@ -48,6 +48,10 @@ class MetaDataset(Dataset):
     """
 
     def __init__(self, dataset):
+
+        if not isinstance(dataset, Dataset):
+            raise TypeError("MetaDataset only accepts a torch dataset as input")
+
         self.dataset = dataset
         self.labels_to_indices = self.get_dict_of_labels_to_indices()
         self.labels = list(self.labels_to_indices.keys())
@@ -144,7 +148,8 @@ class TaskGenerator:
         elif isinstance(tasks, list):
             self.tasks = tasks
         else:
-            raise TypeError(f"tasks is not either of int/list but rather {type(tasks)}")
+            # TODO : allow numpy array as an input
+            raise TypeError("tasks is not either of int/list but rather {}".format(type(tasks)))
 
         # used for next(taskgenerator)
         self.tasks_idx = 0
