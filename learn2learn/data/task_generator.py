@@ -26,7 +26,6 @@ class MetaDataset(Dataset):
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
 
-    # Descritpion
     It wraps a torch dataset by creating a map of target to indices.
     This comes in handy when we want to sample elements randomly for a particular label.
 
@@ -94,7 +93,6 @@ class TaskGenerator:
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py)
 
-    # Description
     A wrapper to generate few-shot classification tasks.
 
     # Arguments
@@ -181,7 +179,6 @@ class TaskGenerator:
     def sample(self, shots=None, task=None):
         """
 
-        # Description
         Returns a SampleDataset and the labels that we have sampled. The dataset is of length `shots * ways`.
         The length of labels we have sampled is the same as `shots.
 
