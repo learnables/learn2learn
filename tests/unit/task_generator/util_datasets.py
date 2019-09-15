@@ -6,7 +6,6 @@ from torch.utils.data import Dataset, TensorDataset
 from torchvision.datasets import MNIST
 
 from learn2learn.vision.datasets import FullOmniglot
-from unittest import TestCase
 
 
 class TempDataset(Dataset):
@@ -50,7 +49,3 @@ class TestDatasets():
 
     def get_omniglot(self):
         return FullOmniglot(root=self.download_location, download=True)
-
-        # Use MNIST
-
-        # Use OMNIGLOT
