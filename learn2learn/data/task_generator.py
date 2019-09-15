@@ -1,5 +1,6 @@
 import random
 from collections import defaultdict
+from itertools import permutations
 
 import numpy as np
 from torch.utils.data import Dataset
@@ -143,13 +144,15 @@ class TaskGenerator:
         assert len(self.classes) >= ways, ValueError("Ways are more than the number of classes available")
         self._check_classes(self.classes)
 
-        if isinstance(tasks, int):
+        if tasks is None:
+            self.tasks = list(permutations(self.classes, self.ways))
+        elif isinstance(tasks, int):
             self.tasks = self.generate_n_tasks(tasks)
         elif isinstance(tasks, list):
             self.tasks = tasks
         else:
             # TODO : allow numpy array as an input
-            raise TypeError("tasks is not either of int/list but rather {}".format(type(tasks)))
+            raise TypeError("tasks is none of None/int/list but rather {}".format(type(tasks)))
 
         # used for next(taskgenerator)
         self.tasks_idx = 0

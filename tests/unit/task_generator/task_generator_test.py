@@ -24,6 +24,18 @@ class TestTaskGenerator(TestCase):
         except:
             return False
 
+    def test_tg_with_none_task(self):
+        ways = 2
+        tg = TaskGenerator(self.ds.tensor_dataset, tasks=None, ways=ways)
+
+        permutations_possible = [(0, 1), (0, 2), (0, 3), (0, 4),
+                                 (1, 0), (1, 2), (1, 3), (1, 4),
+                                 (2, 0), (2, 1), (2, 3), (2, 4),
+                                 (3, 0), (3, 1), (3, 2), (3, 4),
+                                 (4, 0), (4, 1), (4, 2), (4, 3)]
+
+        self.assertEqual(sorted(tg.tasks), sorted(permutations_possible))
+
     def test_tg_with_list_task(self):
         num_tasks = 20
         ways = 3
