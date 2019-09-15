@@ -97,7 +97,6 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
         opt.zero_grad()
         iteration_error.backward()
         opt.step()
-        print(iteration_acc)
     return iteration_acc
 
 
