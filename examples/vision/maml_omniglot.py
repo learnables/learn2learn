@@ -5,9 +5,12 @@ import random
 import numpy as np
 import torch as th
 from PIL.Image import LANCZOS
+
 from torch import nn
 from torch import optim
 from torchvision import transforms
+
+from copy import deepcopy
 
 import learn2learn as l2l
 
@@ -66,9 +69,18 @@ def main(
     omniglot = l2l.data.MetaDataset(omniglot)
     classes = list(range(1623))
     random.shuffle(classes)
-    train_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[:1100])
-    valid_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1100:1200])
-    test_generator = l2l.data.TaskGenerator(dataset=omniglot, ways=ways, classes=classes[1200:])
+    train_generator = l2l.data.TaskGenerator(dataset=omniglot,
+                                             ways=ways,
+                                             classes=classes[:1100],
+                                             tasks=20000)
+    valid_generator = l2l.data.TaskGenerator(dataset=omniglot,
+                                             ways=ways,
+                                             classes=classes[1100:1200],
+                                             tasks=1024)
+    test_generator = l2l.data.TaskGenerator(dataset=omniglot,
+                                            ways=ways,
+                                            classes=classes[1200:],
+                                            tasks=1024)
 
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
@@ -102,7 +114,7 @@ def main(
             meta_train_accuracy += evaluation_accuracy.item()
 
             # Compute meta-validation loss
-            learner = maml.clone()
+            learner = deepcopy(maml)
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
                                                      task=adaptation_data.sampled_task)
@@ -116,7 +128,7 @@ def main(
             meta_valid_accuracy += evaluation_accuracy.item()
 
             # Compute meta-testing loss
-            learner = maml.clone()
+            learner = deepcopy(maml)
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
                                                     task=adaptation_data.sampled_task)
