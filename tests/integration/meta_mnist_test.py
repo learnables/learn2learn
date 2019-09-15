@@ -110,7 +110,7 @@ class MNISTIntegrationTests(unittest.TestCase):
 
     def test_final_accuracy(self):
         result = main(iterations=10)
-        self.assertTrue(result > 0.4)
+        self.assertTrue(result > 0.3)
 
 
 if __name__ == '__main__':
