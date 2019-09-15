@@ -8,9 +8,6 @@ from learn2learn.data import MetaDataset
 from .util_datasets import TestDatasets
 
 
-# Set up test data
-
-
 class TestMetaDataset(TestCase):
     @classmethod
     def setUpClass(cls) -> None:

@@ -97,6 +97,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
         opt.zero_grad()
         iteration_error.backward()
         opt.step()
+        print(iteration_acc)
     return iteration_acc
 
 
@@ -109,7 +110,7 @@ class MNISTIntegrationTests(unittest.TestCase):
         pass
 
     def test_final_accuracy(self):
-        result = main(iterations=40)
+        result = main(iterations=10)
         self.assertTrue(result > 0.2)
 
 
