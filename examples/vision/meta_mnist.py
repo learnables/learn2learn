@@ -56,7 +56,7 @@ def compute_loss(task, device, learner, loss_func, batch=5):
 
 
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
-         download_location="/tmp/mnist", test=False):
+         download_location="/tmp/mnist"):
     transformations = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,)),
