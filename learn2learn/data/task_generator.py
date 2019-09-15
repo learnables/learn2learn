@@ -121,15 +121,16 @@ class TaskGenerator:
 
     **Arguments**
 
+    * **ways** (int, *optional*, default=2) - Number of labels to sample from.
+    * **shots** (int, *optional*, default=1) - Number of data points per task to sample.
     * **dataset** (MetaDataset or Dataset) - The (meta-) dataset to wrap.
     * **classes** (list, *optional*, default=None) - List of classes to sample from,
         if none then sample from all available classes in dataset. (default: None)
-    * **ways** (int, *optional*, default=2) - Number of labels to sample from.
-    * **shots** (int, *optional*, default=1) - Number of data points per task to sample.
-    * **tasks** (int or list, *optional*, default=1) - Tasks to be generated.
+    * **tasks** (int or list, *optional*, default=None) - Tasks to be generated.
+                If none, then all possible permutations are chosen from n classes and w ways.
     """
 
-    def __init__(self, dataset, classes=None, ways=2, tasks=None, shots=1):
+    def __init__(self, dataset, ways=2, shots=1, classes=None, tasks=None):
         self.dataset = dataset
         self.ways = ways
         self.classes = classes
