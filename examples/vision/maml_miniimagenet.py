@@ -62,9 +62,9 @@ def main(
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)
-    train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
-    valid_generator = l2l.data.TaskGenerator(dataset=valid_dataset, ways=ways)
-    test_generator = l2l.data.TaskGenerator(dataset=test_dataset, ways=ways)
+    train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways, tasks=20000)
+    valid_generator = l2l.data.TaskGenerator(dataset=valid_dataset, ways=ways, tasks=1024)
+    test_generator = l2l.data.TaskGenerator(dataset=test_dataset, ways=ways, tasks=1024)
 
     # Create model
     model = l2l.vision.models.MiniImagenetCNN(ways)

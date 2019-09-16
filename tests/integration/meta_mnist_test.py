@@ -2,6 +2,8 @@
 
 import unittest
 
+import random
+import numpy as np
 import torch
 from torch import nn, optim
 from torch.nn import functional as F
@@ -53,7 +55,11 @@ def compute_loss(task, device, learner, loss_func, batch=5):
 
 
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
-         download_location="/tmp/mnist"):
+         download_location="/tmp/datasets"):
+    random.seed(42)
+    np.random.seed(42)
+    torch.manual_seed(42)
+
     transformations = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,)),
@@ -109,7 +115,7 @@ class MNISTIntegrationTests(unittest.TestCase):
         pass
 
     def test_final_accuracy(self):
-        result = main(iterations=40)
+        result = main(iterations=20)
         self.assertTrue(result > 0.2)
 
 
