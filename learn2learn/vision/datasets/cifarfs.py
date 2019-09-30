@@ -77,7 +77,7 @@ class CIFARFS(ImageFolder):
             os.mkdir(self.root)
         zip_file = os.path.join(self.root, 'cifarfs.zip')
         download_file_from_google_drive('1pTsCCMDj45kzFYgrnO67BWVbKs48Q3NI',
-                                zip_file)
+                                        zip_file)
         with zipfile.ZipFile(zip_file, 'r') as zfile:
             zfile.extractall(self.raw_path)
         os.remove(zip_file)
