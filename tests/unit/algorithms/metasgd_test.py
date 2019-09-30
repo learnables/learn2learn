@@ -55,7 +55,7 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
         clone = meta.clone()
         out = clone(X)
         out.norm(p=2).backward()
-        for p in meta.parameters():
+        for p in model.parameters():
             self.assertTrue(hasattr(p, 'grad'))
             self.assertTrue(p.grad.norm(p=2).item() > 0.0)
 
