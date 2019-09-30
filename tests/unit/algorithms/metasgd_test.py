@@ -55,7 +55,7 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
         clone = meta.clone()
         out = clone(X)
         out.norm(p=2).backward()
-        for p in model.parameters():
+        for p in meta.parameters():
             self.assertTrue(hasattr(p, 'grad'))
             self.assertTrue(p.grad.norm(p=2).item() > 0.0)
 
@@ -74,6 +74,27 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
         self.assertEqual(2 * num_params, meta_params)
         for lr in meta.lrs:
             self.assertTrue(close(lr, INNER_LR))
+
+    def test_adaptation(self):
+        model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
+                                 th.nn.ReLU(),
+                                 th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                 th.nn.Sigmoid(),
+                                 th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                 th.nn.Softmax())
+        meta = l2l.algorithms.MetaSGD(model,
+                                      lr=INNER_LR,
+                                      first_order=False)
+        X = th.randn(NUM_INPUTS, INPUT_SIZE)
+        clone = meta.clone()
+        loss = clone(X).norm(p=2)
+        clone.adapt(loss)
+        new_loss = clone(X).norm(p=2)
+        self.assertTrue(loss >= new_loss)
+        new_loss.backward()
+        for p in meta.parameters():
+            self.assertTrue(hasattr(p, 'grad'))
+            self.assertTrue(p.grad.norm(p=2).item() > 0.0)
 
 
 if __name__ == '__main__':
