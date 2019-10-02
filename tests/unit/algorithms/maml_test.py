@@ -2,9 +2,8 @@
 
 import unittest
 
-import torch as th
-
 import learn2learn as l2l
+import torch as th
 
 NUM_INPUTS = 7
 INPUT_SIZE = 10
@@ -19,16 +18,15 @@ def close(x, y):
 
 class TestMAMLAlgorithm(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
-                                     th.nn.ReLU(),
-                                     th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                     th.nn.Sigmoid(),
-                                     th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                     th.nn.Softmax())
+    def setUp(self):
+        self.model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
+                                      th.nn.ReLU(),
+                                      th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                      th.nn.Sigmoid(),
+                                      th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                      th.nn.Softmax())
 
-        cls.model.register_buffer('dummy_buf', th.zeros(1, 2, 3, 4))
+        self.model.register_buffer('dummy_buf', th.zeros(1, 2, 3, 4))
 
     def tearDown(self):
         pass

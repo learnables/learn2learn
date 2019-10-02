@@ -19,15 +19,14 @@ def close(x, y):
 
 class TestMetaSGDAlgorithm(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
+    def setUp(self):
+        self.model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
                                      th.nn.ReLU(),
                                      th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
                                      th.nn.Sigmoid(),
                                      th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
                                      th.nn.Softmax())
-        cls.model.register_buffer('dummy_buf', th.zeros(1, 2, 3, 4))
+        self.model.register_buffer('dummy_buf', th.zeros(1, 2, 3, 4))
 
     def tearDown(self):
         pass
