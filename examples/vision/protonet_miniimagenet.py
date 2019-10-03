@@ -170,3 +170,4 @@ if __name__ == '__main__':
         n_acc += acc
         print('batch {}: {:.2f}({:.2f})'.format(
             i, n_acc/loss_ctr * 100, acc * 100))
+        
