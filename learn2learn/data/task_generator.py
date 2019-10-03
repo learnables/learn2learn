@@ -3,6 +3,7 @@ from collections import defaultdict
 from itertools import permutations
 
 import numpy as np
+import torch
 from torch.utils.data import Dataset
 
 
@@ -262,3 +263,43 @@ class TaskGenerator:
         """ ensure that all tasks are correctly defined. """
         invalid_tasks = list(filter(lambda task: not self._check_task(task), tasks))
         assert len(invalid_tasks) == 0, f"Following task in mentioned tasks are unacceptable. \n {invalid_tasks}"
+
+        
+class NShotKWayTaskSampler():
+
+    def __init__(self, label, episodes, ways, shots, query, fixed_classes=None):
+        self.episodes = episodes
+        self.ways = ways
+        self.fixed_classes = fixed_classes
+        self.total_subset_len = shots + query
+        label = torch.Tensor(label).int()
+        
+        if fixed_classes is not None:
+            raise ValueError("Currently fixed classes not supported. Will be supported in a week! ;)")
+        
+        #TODO: Need to add support for fixed classes 
+        
+        if shots < 1:
+            raise ValueError('shots have to be greater than 1.')
+        if ways > len(torch.unique(label)):
+            raise ValueError('ways has to be less than number of unique labels')
+
+        self.index_list = []
+        for i in range(max(label) + 1):
+            indices = (label == i).nonzero().reshape(-1)
+            self.index_list.append(indices)
+
+    def __len__(self):
+        return self.episodes
+    
+    def __iter__(self):
+        for i_batch in range(self.episodes):
+            batch = []
+            if self.fixed_classes is None:
+                classes = torch.randperm(len(self.index_list))[:self.ways]
+                for class_id in classes:
+                    class_subset = self.index_list[class_id]
+                    pos = torch.randperm(len(class_subset))[:self.total_subset_len]
+                    batch.append(class_subset[pos])
+                batch = torch.stack(batch).t().reshape(-1)
+            yield batch
