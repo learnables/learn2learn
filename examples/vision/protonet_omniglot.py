@@ -134,8 +134,8 @@ def pairwise_distances(x: torch.Tensor,
 
     if matching_fn == 'l2':
         distances = (
-                x.unsqueeze(1).expand(n_x, n_y, -1) -
-                y.unsqueeze(0).expand(n_x, n_y, -1)
+            x.unsqueeze(1).expand(n_x, n_y, -1) -
+            y.unsqueeze(0).expand(n_x, n_y, -1)
         ).pow(2).sum(dim=2)
         return distances
     elif matching_fn == 'cosine':
@@ -181,7 +181,8 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
     metric_name = f"val_{args.n_test}-shot_{args.k_test}-way_acc"
     totals = {'loss': 0, metric_name: 0}
     for epoch in range(1, epochs + 1):
-        lrs = [lr_schedule(epoch, param_group['lr']) for param_group in optimiser.param_groups]
+        lrs = [lr_schedule(epoch, param_group['lr'])
+               for param_group in optimiser.param_groups]
 
         optimiser = set_lr(epoch, optimiser, lrs)
 
@@ -191,12 +192,14 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
 #             prep_batch = prepare_nshot_task(args.n_train, args.k_train, args.q_train)
 #             x, y = prep_batch(batch)
             support_t_eval = train_generator.sample(shots=args.q_test)
-            query_t_eval = train_generator.sample(shots=args.q_test, task=support_t_eval.sampled_task)
+            query_t_eval = train_generator.sample(
+                shots=args.q_test, task=support_t_eval.sampled_task)
             x_support = torch.stack(support_t.data).double().to(device)
             y = torch.LongTensor(support_t.label).to(device)
             x_query = torch.stack(query_t.data).double().to(device)
             x = torch.cat([x_support, x_query], dim=0)
-            loss, y_pred = fit_function(model, optimiser, loss_fn, x, y, **fit_function_kwargs)
+            loss, y_pred = fit_function(
+                model, optimiser, loss_fn, x, y, **fit_function_kwargs)
             batch_logs['loss'] = loss.item()
 
             batch_logs = batch_metrics(model, y_pred, y, batch_logs)
@@ -206,11 +209,12 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
 #             prep_batch_eval = prepare_nshot_task(args.n_test, args.k_test, args.q_test)
 #             x_eval, y_eval = prep_batch_eval(batch_eval)
 
-            
         for batch_index in range(evaluation_episodes):
             support_t_eval = valid_generator.sample(shots=args.q_test)
-            query_t_eval = valid_generator.sample(shots=args.q_test, task=support_t_eval.sampled_task)
-            x_support_eval = torch.stack(support_t_eval.data).double().to(device)
+            query_t_eval = valid_generator.sample(
+                shots=args.q_test, task=support_t_eval.sampled_task)
+            x_support_eval = torch.stack(
+                support_t_eval.data).double().to(device)
             y_eval = torch.LongTensor(support_t_eval.label).to(device)
             x_query_eval = torch.stack(query_t_eval.data).double().to(device)
 
@@ -231,7 +235,8 @@ def main(model: Module, optimiser: Optimizer, loss_fn: Callable, epochs: int,
             seen += y_pred.shape[0]
 
             totals['loss'] += loss.item() * y_pred.shape[0]
-            totals[metric_name] += categorical_accuracy(y_eval, y_pred) * y_pred.shape[0]
+            totals[metric_name] += categorical_accuracy(
+                y_eval, y_pred) * y_pred.shape[0]
 
         logs['val_loss'] = totals['loss'] / seen
         logs[metric_name] = totals[metric_name] / seen
@@ -277,7 +282,7 @@ if __name__ == '__main__':
     torch.backends.cudnn.benchmark = True
 
     param_str = f'omniglot_nt={args.n_train}_kt={args.k_train}_qt={args.q_train}_' \
-                f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
+        f'nv={args.n_test}_kv={args.k_test}_qv={args.q_test}'
 
     filepath = f'./data/{param_str}.pth'
 
@@ -294,13 +299,13 @@ if __name__ == '__main__':
     classes = list(range(1623))
     random.shuffle(classes)
     train_generator = l2l.data.TaskGenerator(dataset=omniglot,
-                                            ways=args.k_train,
-                                            classes=classes[:1100],
-                                            tasks=20000)
+                                             ways=args.k_train,
+                                             classes=classes[:1100],
+                                             tasks=20000)
     valid_generator = l2l.data.TaskGenerator(dataset=omniglot,
-                                            ways=args.k_test,
-                                            classes=classes[1100:1200],
-                                            tasks=1024)
+                                             ways=args.k_test,
+                                             classes=classes[1100:1200],
+                                             tasks=1024)
     test_generator = l2l.data.TaskGenerator(dataset=omniglot,
                                             ways=args.k_test,
                                             classes=classes[1200:],
