@@ -48,29 +48,3 @@ python examples/vision/maml_miniimagenet.py
 ~~~
 
 **Colab** Follow [this link](https://colab.research.google.com/drive/1NIWbMYM3CercnoNMmlhre7hsJ8wMtAry) to see this example live on Google Colab.
-
-
-## protonet_miniimagenet.py
-
-This file reproduces protonet on the *mini*-ImageNet dataset.
-
-This implementation provides training and testing code.
-
-**Results**
-
-| Setup                         | Original      | learn2learn  |
-| ----------------------------- | ------------- | ------------ |
-| CNN, 1 shot, 5 ways           | 49.4%         | 49.1%        |
-| CNN, 5 shot, 5 ways           | 68.2%         | 66.5%        |
-
-**Usage**
-
-For 1 shot 5 ways
-~~~shell
-python examples/vision/protonet_miniimagenet.py
-~~~
-
-For 5 shot 5 ways
-~~~shell
-python examples/vision/protonet_miniimagenet.py --shot 5 --train-way 20
-~~~
