@@ -41,6 +41,8 @@ class MetaDataset(Dataset):
     **Arguments**
 
     * **dataset** (Dataset) -  A torch dataset.
+    * **labels_to_indices** (Dict) -  A dictionary mapping label to their indices.
+                                     If not specified then we loop through all the datapoints to understand the mapping. (default: None)
 
     **Example**
     ~~~python
@@ -49,14 +51,19 @@ class MetaDataset(Dataset):
     ~~~
     """
 
-    def __init__(self, dataset):
+    def __init__(self, dataset, labels_to_indices=None):
 
         if not isinstance(dataset, Dataset):
             raise TypeError(
                 "MetaDataset only accepts a torch dataset as input")
 
         self.dataset = dataset
-        self.labels_to_indices = self.get_dict_of_labels_to_indices()
+        self.labels_to_indices = labels_to_indices or self.get_dict_of_labels_to_indices()
+
+        if not isinstance(self.labels_to_indices, dict):
+            raise TypeError(
+                "Labels to indices should be only a dict mapping labels to keys")
+
         self.labels = list(self.labels_to_indices.keys())
 
     def __getitem__(self, item):
@@ -278,6 +285,16 @@ class TaskGenerator:
 class NShotKWayTaskSampler():
 
     def __init__(self, label, episodes, ways, shots, query, fixed_classes=None):
+        """
+
+        Args:
+            label:
+            episodes:
+            ways:
+            shots:
+            query:
+            fixed_classes:
+        """
         self.episodes = episodes
         self.ways = ways
         self.fixed_classes = fixed_classes
@@ -312,7 +329,7 @@ class NShotKWayTaskSampler():
                 for class_id in classes:
                     class_subset = self.index_list[class_id]
                     pos = torch.randperm(len(class_subset))[
-                        :self.total_subset_len]
+                          :self.total_subset_len]
                     batch.append(class_subset[pos])
                 batch = torch.stack(batch).t().reshape(-1)
             yield batch
