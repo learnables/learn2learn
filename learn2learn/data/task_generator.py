@@ -40,6 +40,8 @@ class MetaDataset(Dataset):
     **Arguments**
 
     * **dataset** (Dataset) -  A torch dataset.
+    * **labels_to_indices** (Dict) -  A dictionary mapping label to their indices.
+                                     If not specified then we loop through all the datapoints to understand the mapping. (default: None)
 
     **Example**
     ~~~python
@@ -48,13 +50,18 @@ class MetaDataset(Dataset):
     ~~~
     """
 
-    def __init__(self, dataset):
+    def __init__(self, dataset, labels_to_indices=None):
 
         if not isinstance(dataset, Dataset):
             raise TypeError("MetaDataset only accepts a torch dataset as input")
 
         self.dataset = dataset
-        self.labels_to_indices = self.get_dict_of_labels_to_indices()
+        self.labels_to_indices = labels_to_indices or self.get_dict_of_labels_to_indices()
+
+        if not isinstance(self.labels_to_indices, dict):
+            raise TypeError(
+                "labels_to_indices should be only a dict mapping labels to keys")
+
         self.labels = list(self.labels_to_indices.keys())
 
     def __getitem__(self, item):
