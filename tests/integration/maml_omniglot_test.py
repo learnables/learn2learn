@@ -166,7 +166,7 @@ class MAMLOmniglotIntegrationTests(unittest.TestCase):
         pass
 
     def test_final_accuracy(self):
-        train_acc, valid_acc, test_acc = main(num_iterations=100)
+        train_acc, valid_acc, test_acc = main(num_iterations=35)
         self.assertTrue(train_acc > 0.5)
         self.assertTrue(valid_acc > 0.5)
         self.assertTrue(test_acc > 0.5)
