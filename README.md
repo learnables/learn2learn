@@ -75,7 +75,7 @@ for iteration in range(num_iterations):
 
 To cite the `learn2learn` repository in your academic publications, please use the following reference.
 
-> Sébastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `learn2learn`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
+> Sébastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `"learn2learn"`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
 
 You can also use the following Bibtex entry.
 
