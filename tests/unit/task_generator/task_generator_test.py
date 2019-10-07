@@ -25,16 +25,44 @@ class TestTaskGenerator(TestCase):
             return False
 
     def test_tg_with_none_task(self):
+        """ In this test we want to ensure that we sample from all possible tasks i.e 20 given 1000 iterations.
+        """
         ways = 2
-        tg = TaskGenerator(self.ds.tensor_dataset, tasks=None, ways=ways)
+        # tg1 allows us to check if next() works
+        tg1 = TaskGenerator(self.ds.tensor_dataset, tasks=None, ways=ways)
 
-        permutations_possible = [(0, 1), (0, 2), (0, 3), (0, 4),
+        # tg2 allows us to check if .sample() works
+        tg2 = TaskGenerator(self.ds.tensor_dataset, tasks=None, ways=ways)
+
+        # tg3 allows us to check that if we loop less than 20 times i.e permutations possible
+        # then we don't generate all the possible tasks
+        tg3 = TaskGenerator(self.ds.tensor_dataset, tasks=None, ways=ways)
+
+        permutations_possible = {(0, 1), (0, 2), (0, 3), (0, 4),
                                  (1, 0), (1, 2), (1, 3), (1, 4),
                                  (2, 0), (2, 1), (2, 3), (2, 4),
                                  (3, 0), (3, 1), (3, 2), (3, 4),
-                                 (4, 0), (4, 1), (4, 2), (4, 3)]
+                                 (4, 0), (4, 1), (4, 2), (4, 3)}
 
-        self.assertEqual(sorted(tg.tasks), sorted(permutations_possible))
+        tasks_generated_1 = set()
+        tasks_generated_2 = set()
+        tasks_generated_3 = set()
+        for idx in range(1000):
+            task1 = next(tg1)
+            task2 = tg2.sample()
+
+            tasks_generated_1.add(tuple(task1.sampled_task))
+            tasks_generated_2.add(tuple(task2.sampled_task))
+            if idx < 15:
+                task3 = next(tg3)
+                tasks_generated_3.add(tuple(task3.sampled_task))
+            if idx == 200:
+                break
+
+        self.assertEqual(len(permutations_possible - tasks_generated_1), 0, "TG1 didn't generate all the possible tasks.")
+        self.assertEqual(len(permutations_possible - tasks_generated_2), 0, "TG2 didn't generate all the possible tasks.")
+        self.assertGreater(len(permutations_possible - tasks_generated_3), 1, "TG3, generated all the possible tasks")
+        self.assertEqual(len(tg1), 0, "Len of TG1 isn't as expected.")
 
     def test_tg_with_list_task(self):
         num_tasks = 20
