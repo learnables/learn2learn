@@ -180,11 +180,6 @@ class TaskGenerator:
 
         # Returns: A list of shape `n * w` where n is the number of tasks to generate and w is the ways.
 
-        # TODO : Investigate how this affects code
-        # def get_samples():
-        #     random.shuffle(self.classes)
-        #     return self.classes[:self.ways]
-
         return [self._get_sample_task() for _ in range(n)]
 
     def __iter__(self):
@@ -195,14 +190,10 @@ class TaskGenerator:
         if self.tasks is not None:
             return len(self.tasks)
         else:
-            # return -1 when tasks aren't specified
+            # return 0 when tasks aren't specified
             return 0
 
     def __next__(self):
-        # TODO : Add the following test case
-        # for i, task in enumerate(tg):
-        #     assert task.sampled_task == tg.tasks[i]
-        # Returns:
         if self.tasks is not None:
             try:
                 task = self.sample(task=self.tasks[self.tasks_idx])
