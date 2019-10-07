@@ -1,6 +1,5 @@
 import random
 from collections import defaultdict
-from itertools import permutations
 
 import numpy as np
 from torch.utils.data import Dataset
@@ -56,6 +55,9 @@ class MetaDataset(Dataset):
             raise TypeError("MetaDataset only accepts a torch dataset as input")
 
         self.dataset = dataset
+
+        # TODO add tests for `labels_to_indices`
+        # TODO add assertion to ensure `labels_to_indices` is valid
         self.labels_to_indices = labels_to_indices or self.get_dict_of_labels_to_indices()
 
         if not isinstance(self.labels_to_indices, dict):
@@ -153,7 +155,7 @@ class TaskGenerator:
         self._check_classes(self.classes)
 
         if tasks is None:
-            self.tasks = list(permutations(self.classes, self.ways))
+            self.tasks = None
         elif isinstance(tasks, int):
             self.tasks = self.generate_n_tasks(tasks)
         elif isinstance(tasks, list):
@@ -169,41 +171,39 @@ class TaskGenerator:
 
         # TODO : assert that shots are always less than equal to min_samples for each class
 
+    def _get_sample_task(self):
+        return random.sample(self.classes, k=self.ways)
+
     def generate_n_tasks(self, n):
         # Args:
         #     n: Number of tasks to generate
 
         # Returns: A list of shape `n * w` where n is the number of tasks to generate and w is the ways.
 
-        # TODO : Investigate how this affects code
-        # def get_samples():
-        #     random.shuffle(self.classes)
-        #     return self.classes[:self.ways]
-
-        def get_samples():
-            return random.sample(self.classes, k=self.ways)
-
-        return [get_samples() for _ in range(n)]
+        return [self._get_sample_task() for _ in range(n)]
 
     def __iter__(self):
         self.tasks_idx = 0
         return self
 
     def __len__(self):
-        return len(self.tasks)
+        if self.tasks is not None:
+            return len(self.tasks)
+        else:
+            # return 0 when tasks aren't specified
+            return 0
 
     def __next__(self):
-        # TODO : Add the following test case
-        # for i, task in enumerate(tg):
-        #     assert task.sampled_task == tg.tasks[i]
-        # Returns:
-        try:
-            task = self.sample(task=self.tasks[self.tasks_idx])
-        except IndexError:
-            raise StopIteration()
-
-        self.tasks_idx += 1
-        return task
+        if self.tasks is not None:
+            try:
+                task = self.sample(task=self.tasks[self.tasks_idx])
+                self.tasks_idx += 1
+                return task
+            except IndexError:
+                raise StopIteration()
+        else:
+            task = self.sample()
+            return task
 
     def sample(self, shots=None, task=None):
         """
@@ -225,6 +225,9 @@ class TaskGenerator:
         * Dataset - Containing the sampled task.
 
         """
+
+        # 1) Get how many number of data points to sample for every class
+
         # If shots isn't defined, then try to inherit from object
         if shots is None:
             if self.shots is None:
@@ -232,19 +235,31 @@ class TaskGenerator:
                     "Shots is undefined in object definition neither while calling the sample method.")
             shots = self.shots
 
-        # If classes aren't specified while calling the function, then we can
-        # sample from all the classes mentioned during the initialization of the TaskGenerator
+        # 2) Get a list of classes (aka tasks) that we want to sample from
+
+        # If tasks isn't specified while calling the function, then we can
+        # sample from all the tasks mentioned during the initialization of the TaskGenerator
+        # except when tasks are specified None during initialization
         if task is None:
             # select few classes that will be selected for this task (for eg, 6,4,7 from 0-9 in MNIST when ways are 3)
-            rand_idx = random.randint(0, len(self.tasks) - 1)
-            task_to_sample = self.tasks[rand_idx]
+            if self.tasks is not None:
+                rand_idx = random.randint(0, len(self.tasks) - 1)
+                task_to_sample = self.tasks[rand_idx]
+            else:
+                # Then generate a sample task on the fly
+                task_to_sample = self._get_sample_task()
+                assert self._check_task(task_to_sample), ValueError("Randomly generated task is malformed.")
+
         else:
             task_to_sample = task
             assert self._check_task(task_to_sample), ValueError("Task is malformed.")
 
+        # 3) Map the classes into 0 index int
+
         # encode labels (map 6,4,7 to 0,1,2 so that we can do a BCELoss)
         label_encoder = LabelEncoder(task_to_sample)
 
+        # 4) Get required number of data points (step 1) from the classes to sample from (step 2)
         data_indices = []
         data_labels = []
         for _class in task_to_sample:
@@ -252,6 +267,8 @@ class TaskGenerator:
             data_indices.extend(np.random.choice(self.dataset.labels_to_indices[_class], shots, replace=False))
             # add those labels to data_labels (6 mapped to 0, so add 0's initially then 1's (for 4) and so on)
             data_labels.extend(np.full(shots, fill_value=label_encoder.class_to_idx[_class]))
+
+        # 5) Return data from step 4  wrapped in Sample Dataset
 
         # map data indices to actual data
         data = [self.dataset[idx][0] for idx in data_indices]
@@ -267,5 +284,8 @@ class TaskGenerator:
 
     def _check_tasks(self, tasks):
         """ ensure that all tasks are correctly defined. """
-        invalid_tasks = list(filter(lambda task: not self._check_task(task), tasks))
-        assert len(invalid_tasks) == 0, f"Following task in mentioned tasks are unacceptable. \n {invalid_tasks}"
+
+        # This can be possible when our `tasks=None` during TG initialization
+        if tasks is not None:
+            invalid_tasks = list(filter(lambda task: not self._check_task(task), tasks))
+            assert len(invalid_tasks) == 0, f"Following task in mentioned tasks are unacceptable. \n {invalid_tasks}"
