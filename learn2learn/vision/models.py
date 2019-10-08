@@ -238,7 +238,7 @@ class MiniImagenetCNN(nn.Module):
 
     **Example**
     ~~~python
-    model = MiniImagenet(output_size=20, hidden_size=128, layers=3)
+    model = MiniImagenetCNN(output_size=20, hidden_size=128, layers=3)
     ~~~
     """
 
