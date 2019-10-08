@@ -14,7 +14,9 @@ If your contribution modifies code in the core library (not docs, tests, or exam
 - [ ] My modifications are tested.
 - [ ] My modifications are documented.
 
-Please copy-paste the output of running `make alltests` below.
+#### Optional
+
+If you make major changes to the core library, please copy-paste the output of running `make alltests` below.
 
 ~~~shell
 [PASTE HERE]
