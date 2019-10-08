@@ -57,9 +57,11 @@ def main(
     train_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='train')
     valid_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='validation')
     test_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='test')
-    train_dataset = l2l.data.MetaDataset(train_dataset)
-    valid_dataset = l2l.data.MetaDataset(valid_dataset)
-    test_dataset = l2l.data.MetaDataset(test_dataset)
+
+    train_dataset = l2l.data.MetaDataset(train_dataset, labels_to_indices=train_dataset.data['class_dict'])
+    valid_dataset = l2l.data.MetaDataset(valid_dataset, labels_to_indices=valid_dataset.data['class_dict'])
+    test_dataset = l2l.data.MetaDataset(test_dataset, labels_to_indices=test_dataset.data['class_dict'])
+
     train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways, tasks=20000)
     valid_generator = l2l.data.TaskGenerator(dataset=valid_dataset, ways=ways, tasks=1024)
     test_generator = l2l.data.TaskGenerator(dataset=test_dataset, ways=ways, tasks=1024)
