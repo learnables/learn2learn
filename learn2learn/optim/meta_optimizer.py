@@ -51,7 +51,7 @@ class MetaOptimizer(Optimizer):
 
                 grad = p.grad
                 if create_graph:
-                    raise NotImplementedError('Not implemented yet.')
+                    updt = update(grad)
                 else:
                     # Detach both param and grad from the existing graph.
                     grad = grad.detach()
@@ -59,8 +59,8 @@ class MetaOptimizer(Optimizer):
                     updt = update(grad)
                     p.detach_()
                     p.requires_grad = False
-                    p.grad = updt
-                    update_params.append(id(p))
+                p.grad = updt
+                update_params.append(id(p))
         self._apply_update(update_params)
 
     def _apply_update(self, update_params):
@@ -69,13 +69,17 @@ class MetaOptimizer(Optimizer):
         # Otherwise, the references in both point to the outdated param tensor.
         old_params = list(self.model.parameters())
         _symbolic_param_update(self.model, restrict=update_params)
+        self._update_references(old_params, update_params)
 
+    def _update_references(self, old_params, update_params):
         # Update the reference of param_states to the new params
         for op, p in zip(old_params, self.model.parameters()):
             if id(op) in update_params:
                 p.retain_grad()
                 self.state[p] = self.state[op]
                 del self.state[op]
+            else:
+                import pdb; pdb.set_trace()
 
         # Update the reference of param_groups to the new params
         old_params = [id(p) for p in old_params]
