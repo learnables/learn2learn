@@ -71,7 +71,26 @@ for iteration in range(num_iterations):
     opt.step()
 ~~~
 
+## Citation
+
+To cite the `learn2learn` repository in your academic publications, please use the following reference.
+
+> Sébastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `"learn2learn"`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
+
+You can also use the following Bibtex entry.
+
+~~~bib
+@misc{learn2learn2019,
+    author       = {Sébastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner},
+    title        = {learn2learn},
+    month        = sep,
+    year         = 2019,
+    url          = {https://github.com/learnables/learn2learn}
+    }
+~~~
+
 ### Acknowledgements & Friends
 
 1. The RL environments are adapted from Tristan Deleu's [implementations](https://github.com/tristandeleu/pytorch-maml-rl) and from the ProMP [repository](https://github.com/jonasrothfuss/ProMP/). Both shared with permission, under the MIT License.
 2. [TorchMeta](https://github.com/tristandeleu/pytorch-meta) is similar library, with a focus on supervised meta-learning. If learn2learn were missing a particular functionality, we would go check if TorchMeta has it. But we would also open an issue ;)
+3. [higher](https://github.com/facebookresearch/higher) is a PyTorch library that also enables differentiating through optimization inner-loops. Their approach is different from learn2learn in that they monkey-patch nn.Module to be stateless. For more information, refer to [their ArXiv paper](https://arxiv.org/abs/1910.01727).
