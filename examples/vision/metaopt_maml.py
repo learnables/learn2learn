@@ -28,6 +28,8 @@ class AdaptiveLR(nn.Module):
         return self.lr * grad
 
 
+
+
 def clone(meta_opt, model=None):
     # TODO: What if you only want to optimize a subset of the model's parameters ?
     if model is None:
@@ -50,6 +52,8 @@ def clone(meta_opt, model=None):
     return new_opt
 
 
+
+
 def accuracy(predictions, targets):
     predictions = predictions.argmax(dim=1).view(targets.shape)
     return (predictions == targets).sum().float() / targets.size(0)
@@ -62,6 +66,7 @@ def fast_adapt(adaptation_data, evaluation_data, learner, clone_opt, loss, adapt
         y = th.cat([th.tensor(d[1]).view(-1) for d in data], dim=0).to(device)
         train_error = loss(learner(X), y)
         train_error /= len(adaptation_data)
+
 
 
 
@@ -80,7 +85,8 @@ def fast_adapt(adaptation_data, evaluation_data, learner, clone_opt, loss, adapt
             p.grad = g
         print('step')
         clone_opt.step()
-#        learner.adapt(train_error)
+
+
 
 
 
@@ -139,7 +145,8 @@ def main(
                                         } for p in model.parameters()],
                                        model,
                                        create_graph=True)
-    opt = optim.Adam(meta_opt.parameters(), lr=3e-4)
+    all_params = list(meta_opt.parameters()) + list(maml.parameters())
+    opt = optim.Adam(all_params, lr=3e-4)
     loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
 
     for iteration in range(num_iterations):
@@ -156,11 +163,21 @@ def main(
             # TODO: Make sure that accumulating grads in p.grad does not affect meta-opt
             learner = maml.clone()
             learner.zero_grad()
+
+
+
+
             clone_opt = clone(meta_opt, learner)
+            clone_opt.zero_grad()
             # TODO: Fix the following ?
             for p in clone_opt.parameters():
                 if hasattr(p, 'grad') and p.grad is not None:
                     p.grad = th.zeros_like(p.data)
+
+
+
+
+
 #            adaptation_data = train_generator.sample(shots=shots)
 #            evaluation_data = train_generator.sample(shots=shots,
 #                                                     task=adaptation_data.sampled_task)
@@ -186,13 +203,7 @@ def main(
         # Average the accumulated gradients and optimize
         for p in maml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
-        import pdb; pdb.set_trace()
         opt.step()
-        import pdb; pdb.set_trace()
-
-
-if __name__ == '__main__':
-    main()
 
 
 if __name__ == '__main__':
