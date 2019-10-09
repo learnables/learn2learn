@@ -50,28 +50,6 @@ def clone(meta_opt, model=None):
     return new_opt
 
 
-
-
-
-
-#    new_opt = deepcopy(meta_opt)
-#    import pdb; pdb.set_trace()
-#    old_model = new_opt.model
-#    new_opt.model = model
-#
-#    # TODO: This is not gonna work for models that are not fully-optimized by a single opt.
-#    print('clone')
-#    new_opt._update_references(list(old_model.parameters()),
-#                               [id(p) for p in meta_opt.model.parameters()])
-#
-#    # TODO: The following is not doing what it should: it breaks the graph, whereas we want to use clone_module.
-#    for p in new_opt.parameters():
-#        p.detach_()
-#        p.retain_grad()
-#        p.requires_grad = True
-#    return new_opt
-
-
 def accuracy(predictions, targets):
     predictions = predictions.argmax(dim=1).view(targets.shape)
     return (predictions == targets).sum().float() / targets.size(0)
@@ -208,7 +186,9 @@ def main(
         # Average the accumulated gradients and optimize
         for p in maml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
+        import pdb; pdb.set_trace()
         opt.step()
+        import pdb; pdb.set_trace()
 
 
 if __name__ == '__main__':
