@@ -28,16 +28,48 @@ class AdaptiveLR(nn.Module):
         return self.lr * grad
 
 
-def clone(meta_opt, model):
-    new_opt = deepcopy(meta_opt)
-    new_opt.model = model
-    # TODO: This is not gonna work for models that are not fully-optimized by a single opt.
-    new_opt._update_references(meta_opt.model, [id(p) for p in meta_opt.model.parameters()])
-    for p in new_opt.parameters():
-        p.detach_()
+def clone(meta_opt, model=None):
+    # TODO: What if you only want to optimize a subset of the model's parameters ?
+    if model is None:
+        model = meta_opt.model
+    if len(meta_opt.param_groups) == 1:
+        updates = [l2l.clone_module(meta_opt.param_groups['update']) for _ in model.parameters()]
+    else:
+        updates = [l2l.clone_module(pg['update']) for pg in meta_opt.param_groups]
+
+    for p in model.parameters():
         p.retain_grad()
-        p.requires_grad = True
+
+    new_opt = l2l.optim.MetaOptimizer([{
+                                        'params': [p],
+                                        'update': u
+                                        } for p, u in zip(model.parameters(),
+                                                          updates)],
+                                       model,
+                                       create_graph=True)
     return new_opt
+
+
+
+
+
+
+#    new_opt = deepcopy(meta_opt)
+#    import pdb; pdb.set_trace()
+#    old_model = new_opt.model
+#    new_opt.model = model
+#
+#    # TODO: This is not gonna work for models that are not fully-optimized by a single opt.
+#    print('clone')
+#    new_opt._update_references(list(old_model.parameters()),
+#                               [id(p) for p in meta_opt.model.parameters()])
+#
+#    # TODO: The following is not doing what it should: it breaks the graph, whereas we want to use clone_module.
+#    for p in new_opt.parameters():
+#        p.detach_()
+#        p.retain_grad()
+#        p.requires_grad = True
+#    return new_opt
 
 
 def accuracy(predictions, targets):
@@ -68,6 +100,7 @@ def fast_adapt(adaptation_data, evaluation_data, learner, clone_opt, loss, adapt
         # Update learner via opt
         for p, g in zip(learner.parameters(), learner_grads):
             p.grad = g
+        print('step')
         clone_opt.step()
 #        learner.adapt(train_error)
 
@@ -102,21 +135,21 @@ def main(
         th.cuda.manual_seed(seed)
         device = th.device('cuda')
 
-    omniglot = torchvision.datasets.MNIST(root='./data',
-                                          transform=transforms.Compose([
-                                              l2l.vision.transforms.RandomDiscreteRotation(
-                                                  [0.0, 90.0, 180.0, 270.0]),
-                                              transforms.Resize(28, interpolation=LANCZOS),
-                                              transforms.ToTensor(),
-                                              lambda x: 1.0 - x,
-                                          ]),
-                                          download=True)
-    omniglot = l2l.data.MetaDataset(omniglot)
-    classes = list(range(10))
-    train_generator = l2l.data.TaskGenerator(dataset=omniglot,
-                                             ways=ways,
-                                             classes=classes[:6],
-                                             tasks=20000)
+#    omniglot = torchvision.datasets.MNIST(root='./data',
+#                                          transform=transforms.Compose([
+#                                              l2l.vision.transforms.RandomDiscreteRotation(
+#                                                  [0.0, 90.0, 180.0, 270.0]),
+#                                              transforms.Resize(28, interpolation=LANCZOS),
+#                                              transforms.ToTensor(),
+#                                              lambda x: 1.0 - x,
+#                                          ]),
+#                                          download=True)
+#    omniglot = l2l.data.MetaDataset(omniglot)
+#    classes = list(range(10))
+#    train_generator = l2l.data.TaskGenerator(dataset=omniglot,
+#                                             ways=ways,
+#                                             classes=classes[:6],
+#                                             tasks=20000)
 
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
@@ -146,12 +179,15 @@ def main(
             learner = maml.clone()
             learner.zero_grad()
             clone_opt = clone(meta_opt, learner)
+            # TODO: Fix the following ?
             for p in clone_opt.parameters():
                 if hasattr(p, 'grad') and p.grad is not None:
                     p.grad = th.zeros_like(p.data)
-            adaptation_data = train_generator.sample(shots=shots)
-            evaluation_data = train_generator.sample(shots=shots,
-                                                     task=adaptation_data.sampled_task)
+#            adaptation_data = train_generator.sample(shots=shots)
+#            evaluation_data = train_generator.sample(shots=shots,
+#                                                     task=adaptation_data.sampled_task)
+            adaptation_data = [(th.randn(1, 28, 28), 2) for _ in range(10)]
+            evaluation_data = adaptation_data
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
                                                                learner,
