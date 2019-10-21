@@ -39,6 +39,8 @@ class MetaOptimizer(Optimizer):
             'create_graph': create_graph
         }
         super(MetaOptimizer, self).__init__(params, defaults)
+        assert len(list(model.parameters())) == sum([len(pg['params']) for pg in self.param_groups], 0), \
+                'MetaOptimizers only work on the entire parameter set of the specified model.'
 
     def step(self, closure=None):
         update_params = []
@@ -112,6 +114,7 @@ class MetaOptimizer(Optimizer):
                     yield p
 
     def add_param_group(self, param_group):
+        # Copied from torch's Optimizer, but added support for create_graph.
         assert isinstance(param_group, dict), "param group must be a dict"
 
         params = param_group['params']

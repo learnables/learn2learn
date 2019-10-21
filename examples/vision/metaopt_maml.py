@@ -45,8 +45,7 @@ def clone(meta_opt, model=None):
     new_opt = l2l.optim.MetaOptimizer([{
                                         'params': [p],
                                         'update': u
-                                        } for p, u in zip(model.parameters(),
-                                                          updates)],
+                                        } for p, u in zip(model.parameters(), updates)],
                                        model,
                                        create_graph=True)
     return new_opt
