@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 import torch
+from torch import autograd
 from torch.optim import Optimizer
 from torch.optim.optimizer import required
+
+import learn2learn as l2l
 
 
 def _identity_update(grad):
@@ -32,6 +35,7 @@ class MetaOptimizer(Optimizer):
 
     def __init__(self, params, model, update=None, create_graph=False):
         self.model = model
+        self.create_graph = create_graph
         if update is None:
             update = _identity_update
         defaults = {
@@ -42,7 +46,60 @@ class MetaOptimizer(Optimizer):
         assert len(list(model.parameters())) == sum([len(pg['params']) for pg in self.param_groups], 0), \
                 'MetaOptimizers only work on the entire parameter set of the specified model.'
 
-    def step(self, closure=None):
+    def clone(self, model=None):
+        """
+        model is the new model the clone will optimize, typically a clone of the actual model.
+        """
+        # TODO: It only supports optimizing over the fully range of parameters of the model.
+        # NOTE: This implementation is ugly, but tricky to get right.
+        # The problem is that you need to clone the optimizer, while keeping the proper references to
+        # the parameters in state_dict and param_state.
+        # Since the API is tricky to get right, we'll roll with this for now.
+        if model is None:
+            model = self.model
+        if len(self.param_groups) == 1:
+            updates = [l2l.clone_module(self.param_groups['update']) for _ in model.parameters()]
+        else:
+            updates = [l2l.clone_module(pg['update']) for pg in self.param_groups]
+
+        for p in model.parameters():
+            p.retain_grad()
+
+        new_opt = MetaOptimizer([{
+                                  'params': [p],
+                                  'update': u
+                                  } for p, u in zip(model.parameters(), updates)],
+                                 model,
+                                 create_graph=True)
+        return new_opt
+
+    def adapt(self, loss, lr=1.0):
+        # Compute gradients w.r.t opt
+        opt_grads = autograd.grad(loss,
+                                  self.parameters(),
+                                  allow_unused=True,
+                                  create_graph=True)
+        # Update opt via GD
+        l2l.nn.utils.set_gradients(self.parameters(), opt_grads)
+        for group in self.param_groups:
+            update = group['update']
+            group['update'] = l2l.algorithms.maml_update(model=update, lr=lr)
+
+    def step(self, loss=None):
+        assert not callable(loss), \
+                'loss should not be callable for MetaOptimizers.'
+
+        if loss is not None and self.create_graph:
+            assert loss.requires_grad, \
+                    'loss does not require grad.'
+            # Compute gradients w.r.t. model
+            model_params = sum([pg['params'] for pg in self.param_groups], [])
+            model_grads = autograd.grad(loss,
+                                        model_params,
+                                        create_graph=True)
+            # Update learner via opt
+            l2l.nn.utils.set_gradients(model_params, model_grads)
+
         update_params = []
         for group in self.param_groups:
             update = group['update']
@@ -81,15 +138,15 @@ class MetaOptimizer(Optimizer):
         """
         ids = [id(p) for p in old_params]
         for up in update_params:
-            print(up in ids)
+            assert up in ids, \
+                    'Failure in MetaOptimizer: somehow, the references to old' \
+                    'parameters were not in the list of updated parameters.'
         # Update the reference of param_states to the new params
         for op, p in zip(old_params, self.model.parameters()):
             if id(op) in update_params:
                 p.retain_grad()
                 self.state[p] = self.state[op]
                 del self.state[op]
-#            else:
-#                import pdb; pdb.set_trace()
 
         # Update the reference of param_groups to the new params
         old_params = [id(p) for p in old_params]
@@ -97,14 +154,10 @@ class MetaOptimizer(Optimizer):
         for group in self.param_groups:
             new_group = []
             for p in group['params']:
-                try:
-                    idx = old_params.index(id(p))
-                except:
-                    import pdb; pdb.set_trace()
+                idx = old_params.index(id(p))
                 new_group.append(new_params[idx])
             del group['params']
             group['params'] = new_group
-
 
     def parameters(self):
         for group in self.param_groups:
@@ -149,3 +202,12 @@ class MetaOptimizer(Optimizer):
             raise ValueError("some parameters appear in more than one parameter group")
 
         self.param_groups.append(param_group)
+
+    def zero_grad(self):
+        """
+        Resets the gradients of both the model and the optimizer.
+        """
+        super(MetaOptimizer, self).zero_grad()
+        for p in self.parameters():
+            if hasattr(p, 'grad') and p.grad is not None:
+                p.grad = torch.zeros_like(p.data)
