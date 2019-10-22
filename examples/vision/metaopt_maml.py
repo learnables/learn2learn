@@ -16,6 +16,12 @@ from copy import deepcopy
 
 import learn2learn as l2l
 
+EPSILON = 0.0
+
+
+def close(a, b):
+    return (a - b).norm(p=2) <= EPSILON
+
 
 class AdaptiveLR(nn.Module):
 
@@ -26,31 +32,6 @@ class AdaptiveLR(nn.Module):
 
     def forward(self, grad):
         return self.lr * grad
-
-
-
-
-def clone(meta_opt, model=None):
-    # TODO: What if you only want to optimize a subset of the model's parameters ?
-    if model is None:
-        model = meta_opt.model
-    if len(meta_opt.param_groups) == 1:
-        updates = [l2l.clone_module(meta_opt.param_groups['update']) for _ in model.parameters()]
-    else:
-        updates = [l2l.clone_module(pg['update']) for pg in meta_opt.param_groups]
-
-    for p in model.parameters():
-        p.retain_grad()
-
-    new_opt = l2l.optim.MetaOptimizer([{
-                                        'params': [p],
-                                        'update': u
-                                        } for p, u in zip(model.parameters(), updates)],
-                                       model,
-                                       create_graph=True)
-    return new_opt
-
-
 
 
 def accuracy(predictions, targets):
@@ -66,28 +47,18 @@ def fast_adapt(adaptation_data, evaluation_data, learner, clone_opt, loss, adapt
         train_error = loss(learner(X), y)
         train_error /= len(adaptation_data)
 
-
-
-
-        # Compute gradients w.r.t opt
-        opt_grads = autograd.grad(train_error, clone_opt.parameters(), allow_unused=True, create_graph=True)
-        # Update opt via GD
-        for p, g in zip(clone_opt.parameters(), opt_grads):
-            p.grad = g
-        for group in clone_opt.param_groups:
-            update = group['update']
-            l2l.algorithms.maml_update(update, lr=0.1)
-        # Compute gradients w.r.t. model
-        learner_grads = autograd.grad(train_error, learner.parameters(), create_graph=True)
-        # Update learner via opt
-        for p, g in zip(learner.parameters(), learner_grads):
-            p.grad = g
-        print('step')
-        clone_opt.step()
-
-
-
-
+        # Check that both opt and model parameters are updated.
+        old_opt_params = [p.clone().detach() for p in clone_opt.parameters()]
+        clone_opt.adapt(train_error, lr=0.1)
+        if step > 0 and False:
+            for p, op in zip(clone_opt.parameters(), old_opt_params):
+                assert not close(p, op), \
+                        'lopt parameters were not updated ?'
+        old_model_params = [p.clone().detach() for p in learner.parameters()]
+        clone_opt.step(train_error)
+        for p, op in zip(learner.parameters(), old_model_params):
+            assert not close(p, op), \
+                    'learner parameters were not updated ?'
 
     data = [d for d in evaluation_data]
     X = th.cat([d[0] for d in data], dim=0).to(device)
@@ -107,7 +78,7 @@ def main(
         meta_batch_size=32,
         adaptation_steps=3,
         num_iterations=60000,
-        cuda=True,
+        cuda=False,
         seed=42,
 ):
     random.seed(seed)
@@ -117,22 +88,6 @@ def main(
     if cuda:
         th.cuda.manual_seed(seed)
         device = th.device('cuda')
-
-#    omniglot = torchvision.datasets.MNIST(root='./data',
-#                                          transform=transforms.Compose([
-#                                              l2l.vision.transforms.RandomDiscreteRotation(
-#                                                  [0.0, 90.0, 180.0, 270.0]),
-#                                              transforms.Resize(28, interpolation=LANCZOS),
-#                                              transforms.ToTensor(),
-#                                              lambda x: 1.0 - x,
-#                                          ]),
-#                                          download=True)
-#    omniglot = l2l.data.MetaDataset(omniglot)
-#    classes = list(range(10))
-#    train_generator = l2l.data.TaskGenerator(dataset=omniglot,
-#                                             ways=ways,
-#                                             classes=classes[:6],
-#                                             tasks=20000)
 
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
@@ -146,7 +101,7 @@ def main(
                                        create_graph=True)
     all_params = list(meta_opt.parameters()) + list(maml.parameters())
     opt = optim.Adam(all_params, lr=3e-4)
-    loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
+    loss = nn.CrossEntropyLoss(reduction='mean')
 
     for iteration in range(num_iterations):
         meta_opt.zero_grad()
@@ -159,28 +114,11 @@ def main(
         meta_test_accuracy = 0.0
         for task in range(meta_batch_size):
             # Compute meta-training loss
-            # TODO: Make sure that accumulating grads in p.grad does not affect meta-opt
             learner = maml.clone()
-            learner.zero_grad()
-
-
-
-
-            clone_opt = clone(meta_opt, learner)
+            clone_opt = meta_opt.clone(model=learner)
             clone_opt.zero_grad()
-            # TODO: Fix the following ?
-            for p in clone_opt.parameters():
-                if hasattr(p, 'grad') and p.grad is not None:
-                    p.grad = th.zeros_like(p.data)
 
-
-
-
-
-#            adaptation_data = train_generator.sample(shots=shots)
-#            evaluation_data = train_generator.sample(shots=shots,
-#                                                     task=adaptation_data.sampled_task)
-            adaptation_data = [(th.randn(1, 28, 28), 2) for _ in range(10)]
+            adaptation_data = [(th.randn(1, 28, 28), random.choice(list(range(ways)))) for _ in range(10)]
             evaluation_data = adaptation_data
             evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
                                                                evaluation_data,
@@ -202,7 +140,21 @@ def main(
         # Average the accumulated gradients and optimize
         for p in maml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
+        for p in meta_opt.parameters():
+            p.grad.data.mul_(1.0 / meta_batch_size)
+
+        # Check that model and optimizer parameters are updated
+        old_model_params = deepcopy(list(model.parameters()))
+        old_opt_params = deepcopy(list(meta_opt.parameters()))
         opt.step()
+        for p, op in zip(model.parameters(), old_model_params):
+            assert not close(p, op), \
+                    'model parameters were not updated ?'
+
+        # NOTE: For meta_opt the gradients can be very small, so we check that at least one param is updated.
+        meta_opt_checks = [close(p, op) for p, op in zip(meta_opt.parameters(), old_opt_params)]
+        assert not all(meta_opt_checks), \
+                'meta-opt parameters were not updated ?'
 
 
 if __name__ == '__main__':
