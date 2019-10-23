@@ -30,7 +30,42 @@ def _symbolic_param_update(module, restrict=None):
 class MetaOptimizer(Optimizer):
 
     """
-    Doc goes here.
+
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/meta_optimizer.py)
+
+    **Description**
+
+    General class to implement many meta-optimization algorithms.
+
+    This class can be used for supervised learning to implement Sutton, Schroedolph, etc...
+
+    It can also be used for few-shot meta-learning to implement MAML, MetaSGD, MetaCurvature, KFC, etc...
+
+    MetaOptimizer strives to behave like a standard optimizer: you can pass parameter groups, and associate an update function
+    to each group.
+
+    The current implementation requires that params == model.parameters(). (Might change in the future.)
+
+    **Arguments**
+
+    * **params** (iterable) - The parameters of the module to be optimized.
+    * **model** (nn.Module) - Which model uses those parameters.
+    * **update** (callable, *optional*, default=None) - The function called to compute updates.
+    * **create_graph** (bool, *optional*, default=False) - Whether to allow differentiation of the update steps.
+
+    **References**
+
+    1. Jacobs. 1988. "Improved Delta-Bar-Delta".
+    2. Sutton. 1992. "Incremental Delta-Bar-Delta".
+    3. Shroedolph. 1999. ""
+    4. Baydin et al. 2017. "Hypergradient"
+    5. Park & Oliva. 2019. "Meta-Curvature"
+    5. Arnold et al. 2019. ""
+
+    **Example**
+
+    ~~~python
+    ~~~
     """
 
     def __init__(self, params, model, update=None, create_graph=False):
@@ -86,6 +121,9 @@ class MetaOptimizer(Optimizer):
             group['update'] = l2l.algorithms.maml_update(model=update, lr=lr)
 
     def step(self, loss=None):
+        """
+        Compute the next parameter iterate using the provided update functions.
+        """
         assert not callable(loss), \
                 'loss should not be callable for MetaOptimizers.'
 
@@ -160,6 +198,9 @@ class MetaOptimizer(Optimizer):
             group['params'] = new_group
 
     def parameters(self):
+        """
+        Returns the parameters of the update function(s).
+        """
         for group in self.param_groups:
             update = group['update']
             if hasattr(update, 'parameters'):
