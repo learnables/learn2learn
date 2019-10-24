@@ -105,7 +105,7 @@ class MetaOptimizer(Optimizer):
                                   'update': u
                                   } for p, u in zip(model.parameters(), updates)],
                                  model,
-                                 create_graph=True)
+                                 create_graph=self.create_graph)
         return new_opt
 
     def adapt(self, loss, lr=1.0):
