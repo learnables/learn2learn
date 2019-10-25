@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 import torch
+from torch import nn
 from torch import autograd
 from torch.optim import Optimizer
 from torch.optim.optimizer import required
 
 import learn2learn as l2l
+
+from copy import deepcopy
 
 
 def _identity_update(grad):
@@ -13,18 +16,19 @@ def _identity_update(grad):
 
 
 def _symbolic_param_update(module, restrict=None):
-    if restrict is None:
-        restrict = list(module.parameters())
+    if isinstance(module, nn.Module):
+        if restrict is None:
+            restrict = list(module.parameters())
 
-    # Update the params
-    for param_key in module._parameters:
-        p = module._parameters[param_key]
-        if p is not None and id(p) in restrict and p.grad is not None:
-            module._parameters[param_key] = p - p.grad
+        # Update the params
+        for param_key in module._parameters:
+            p = module._parameters[param_key]
+            if p is not None and id(p) in restrict and p.grad is not None:
+                module._parameters[param_key] = p - p.grad
 
-    # Then, recurse for each submodule
-    for module_key in module._modules:
-        _symbolic_param_update(module._modules[module_key], restrict=restrict)
+        # Then, recurse for each submodule
+        for module_key in module._modules:
+            _symbolic_param_update(module._modules[module_key], restrict=restrict)
 
 
 class MetaOptimizer(Optimizer):
@@ -92,10 +96,13 @@ class MetaOptimizer(Optimizer):
         # Since the API is tricky to get right, we'll roll with this for now.
         if model is None:
             model = self.model
-        if len(self.param_groups) == 1:
-            updates = [l2l.clone_module(self.param_groups['update']) for _ in model.parameters()]
-        else:
-            updates = [l2l.clone_module(pg['update']) for pg in self.param_groups]
+        # if len(self.param_groups) == 1:
+        #     updates = [l2l.clone_module(self.param_groups['update']) for _ in model.parameters()]
+        # else:
+        #     updates = [l2l.clone_module(pg['update']) for pg in self.param_groups]
+        updates = [l2l.clone_module(pg['update']) \
+                    if isinstance(pg['update'], nn.Module) \
+                    else deepcopy(pg['update']) for pg in self.param_groups]
 
         for p in model.parameters():
             p.retain_grad()
@@ -252,3 +259,9 @@ class MetaOptimizer(Optimizer):
         for p in self.parameters():
             if hasattr(p, 'grad') and p.grad is not None:
                 p.grad = torch.zeros_like(p.data)
+
+    def to(self, *args, **kwargs):
+        for pg in self.param_groups:
+            update = pg['update']
+            if hasattr(update, 'to'):
+                update.to(*args, **kwargs)
