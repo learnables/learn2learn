@@ -75,13 +75,13 @@ for iteration in range(num_iterations):
 
 To cite the `learn2learn` repository in your academic publications, please use the following reference.
 
-> Sébastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `"learn2learn"`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
+> Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `"learn2learn"`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
 
 You can also use the following Bibtex entry.
 
 ~~~bib
 @misc{learn2learn2019,
-    author       = {Sébastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner},
+    author       = {Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner},
     title        = {learn2learn},
     month        = sep,
     year         = 2019,
