@@ -10,8 +10,6 @@ from torch import nn
 from torch import optim
 from torchvision import transforms
 
-from copy import deepcopy
-
 import learn2learn as l2l
 
 
@@ -114,7 +112,7 @@ def main(
             meta_train_accuracy += evaluation_accuracy.item()
 
             # Compute meta-validation loss
-            learner = deepcopy(maml)
+            learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
                                                      task=adaptation_data.sampled_task)
@@ -128,7 +126,7 @@ def main(
             meta_valid_accuracy += evaluation_accuracy.item()
 
             # Compute meta-testing loss
-            learner = deepcopy(maml)
+            learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
                                                     task=adaptation_data.sampled_task)

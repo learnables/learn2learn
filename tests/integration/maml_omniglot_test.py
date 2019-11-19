@@ -10,7 +10,6 @@ from torchvision import transforms
 
 import learn2learn as l2l
 
-from copy import deepcopy
 from PIL.Image import LANCZOS
 
 
@@ -112,7 +111,7 @@ def main(
             meta_train_accuracy += evaluation_accuracy.item()
 
             # Compute meta-validation loss
-            learner = deepcopy(maml)
+            learner = maml.clone()
             adaptation_data = valid_generator.sample(shots=shots)
             evaluation_data = valid_generator.sample(shots=shots,
                                                      task=adaptation_data.sampled_task)
@@ -126,7 +125,7 @@ def main(
             meta_valid_accuracy += evaluation_accuracy.item()
 
             # Compute meta-testing loss
-            learner = deepcopy(maml)
+            learner = maml.clone()
             adaptation_data = test_generator.sample(shots=shots)
             evaluation_data = test_generator.sample(shots=shots,
                                                     task=adaptation_data.sampled_task)
