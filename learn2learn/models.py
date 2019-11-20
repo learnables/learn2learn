@@ -14,9 +14,9 @@ def kronecker_addmm(mat1, mat2, mat3, bias=None, alpha=1.0, beta=1.0):
 
     Concretely, the method takes advantage of the following identity:
 
-    \[\\alpha (A^\\top \otimes B) \cdot \\text{vec}(C) + \\beta \cdot b = \\alpha \\text{vec}(BCA) + \\beta \cdot b, \]
+    $$ \\alpha (A^\\top \\otimes B) \\cdot \\text{vec}(C) + \\beta \\cdot b = \\alpha \\text{vec}(BCA) + \\beta \\cdot b, $$
 
-    where $A \in \mathbb{R}^{N \\times N}, B \in \mathbb{R}^{M \\times M}, C \in \mathbb{R}^{N \\times M}$ and $b$ is a bias term.
+    where $A \\in \\mathbb{R}^{N \\times N}, B \\in \\mathbb{R}^{M \\times M}, C \\in \\mathbb{R}^{N \\times M}$ and $b$ is a bias term.
 
     **References**
 
@@ -80,7 +80,6 @@ def cholesky_addmm(mat1, mat2, bias=None, alpha=1.0, beta=1.0):
 
 
 class KroneckerLinear(nn.Module):
-
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/models.py)
 
@@ -106,7 +105,6 @@ class KroneckerLinear(nn.Module):
     ~~~python
     ~~~
     """
-
     def __init__(self, n, m, bias=True, cholesky=False, device=None):
         super(KroneckerLinear, self).__init__()
         self.left = nn.Parameter(th.eye(n, device=device))
@@ -137,7 +135,6 @@ class KroneckerLinear(nn.Module):
 
 
 class CholeskyLinear(nn.Module):
-
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/models.py)
 
@@ -155,7 +152,6 @@ class CholeskyLinear(nn.Module):
     ~~~python
     ~~~
     """
-
     def __init__(self, n, m, rank=1, bias=False, device=None):
         super(CholeskyLinear, self).__init__()
         self.size = n * m
@@ -166,7 +162,9 @@ class CholeskyLinear(nn.Module):
         self.L = nn.Parameter(self.L)
         self.bias = None
         if bias:
-            self.bias = nn.Parameter(th.zeros(self.size, 1, requires_grad=True), device=device)
+            self.bias = nn.Parameter(th.zeros(self.size, 1,
+                                              requires_grad=True),
+                                     device=device)
 
     def forward(self, x):
         old_device = x.device
@@ -179,5 +177,3 @@ class CholeskyLinear(nn.Module):
             x = x.view(-1, self.size, 1)
         x = cholesky_addmm(self.L, x, self.bias)
         return x.view(old_shape).to(old_device)
-
-

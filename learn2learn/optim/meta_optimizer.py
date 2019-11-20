@@ -28,11 +28,11 @@ def _symbolic_param_update(module, restrict=None):
 
         # Then, recurse for each submodule
         for module_key in module._modules:
-            _symbolic_param_update(module._modules[module_key], restrict=restrict)
+            _symbolic_param_update(module._modules[module_key],
+                                   restrict=restrict)
 
 
 class MetaOptimizer(Optimizer):
-
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/meta_optimizer.py)
@@ -71,19 +71,15 @@ class MetaOptimizer(Optimizer):
     ~~~python
     ~~~
     """
-
     def __init__(self, params, model, update=None, create_graph=False):
         self.model = model
         self.create_graph = create_graph
         if update is None:
             update = _identity_update
-        defaults = {
-            'update': update,
-            'create_graph': create_graph
-        }
+        defaults = {'update': update, 'create_graph': create_graph}
         super(MetaOptimizer, self).__init__(params, defaults)
         assert len(list(model.parameters())) == sum([len(pg['params']) for pg in self.param_groups], 0), \
-                'MetaOptimizers only work on the entire parameter set of the specified model.'
+            'MetaOptimizers only work on the entire parameter set of the specified model.'
 
     def clone(self, model=None):
         """
@@ -100,19 +96,19 @@ class MetaOptimizer(Optimizer):
         #     updates = [l2l.clone_module(self.param_groups['update']) for _ in model.parameters()]
         # else:
         #     updates = [l2l.clone_module(pg['update']) for pg in self.param_groups]
-        updates = [l2l.clone_module(pg['update']) \
-                    if isinstance(pg['update'], nn.Module) \
-                    else deepcopy(pg['update']) for pg in self.param_groups]
+        updates = [l2l.clone_module(pg['update'])
+                   if isinstance(pg['update'], nn.Module)
+                   else deepcopy(pg['update']) for pg in self.param_groups]
 
         for p in model.parameters():
             p.retain_grad()
 
         new_opt = MetaOptimizer([{
-                                  'params': [p],
-                                  'update': u
-                                  } for p, u in zip(model.parameters(), updates)],
-                                 model,
-                                 create_graph=self.create_graph)
+            'params': [p],
+            'update': u
+        } for p, u in zip(model.parameters(), updates)],
+                                model,
+                                create_graph=self.create_graph)
         return new_opt
 
     def adapt(self, loss, lr=1.0):
@@ -132,7 +128,7 @@ class MetaOptimizer(Optimizer):
         Compute the next parameter iterate using the provided update functions.
         """
         assert not callable(loss), \
-                'loss should not be callable for MetaOptimizers.'
+            'loss should not be callable for MetaOptimizers.'
 
         if loss is not None and self.create_graph:
             # Assumes that for supervised, the gradients are pre-computed.
@@ -140,9 +136,7 @@ class MetaOptimizer(Optimizer):
                     'loss does not require grad.'
             # Compute gradients w.r.t. model
             model_params = sum([pg['params'] for pg in self.param_groups], [])
-            model_grads = autograd.grad(loss,
-                                        model_params,
-                                        create_graph=True)
+            model_grads = autograd.grad(loss, model_params, create_graph=True)
             # Update learner via opt
             l2l.nn.utils.set_gradients(model_params, model_grads)
 
@@ -224,8 +218,10 @@ class MetaOptimizer(Optimizer):
         if isinstance(params, torch.Tensor):
             param_group['params'] = [params]
         elif isinstance(params, set):
-            raise TypeError('optimizer parameters need to be organized in ordered collections, but '
-                            'the ordering of tensors in sets will change between runs. Please use a list instead.')
+            raise TypeError(
+                'optimizer parameters need to be organized in ordered collections, but '
+                'the ordering of tensors in sets will change between runs. Please use a list instead.'
+            )
         else:
             param_group['params'] = list(params)
 
@@ -233,14 +229,16 @@ class MetaOptimizer(Optimizer):
         for param in param_group['params']:
             if not isinstance(param, torch.Tensor):
                 raise TypeError("optimizer can only optimize Tensors, "
-                                "but one of the params is " + torch.typename(param))
+                                "but one of the params is " +
+                                torch.typename(param))
             if not create_graph and not param.is_leaf:
                 raise ValueError("can't optimize a non-leaf Tensor")
 
         for name, default in self.defaults.items():
             if default is required and name not in param_group:
-                raise ValueError("parameter group didn't specify a value of required optimization parameter " +
-                                 name)
+                raise ValueError(
+                    "parameter group didn't specify a value of required optimization parameter "
+                    + name)
             else:
                 param_group.setdefault(name, default)
 
@@ -249,7 +247,8 @@ class MetaOptimizer(Optimizer):
             param_set.update(set(group['params']))
 
         if not param_set.isdisjoint(set(param_group['params'])):
-            raise ValueError("some parameters appear in more than one parameter group")
+            raise ValueError(
+                "some parameters appear in more than one parameter group")
 
         self.param_groups.append(param_group)
 
