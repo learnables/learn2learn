@@ -3,6 +3,7 @@
 from . import algorithms
 from . import data
 from . import gym
+from . import models
 from . import nn
 from . import optim
 from . import text

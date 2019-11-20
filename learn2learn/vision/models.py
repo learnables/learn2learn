@@ -137,7 +137,7 @@ class OmniglotFC(nn.Sequential):
 
     **References**
 
-    1. Santoro et al. 2016. “Meta-Learning with Memory-Augmented Neural Networks.” ICML.
+    1. Santoro et al. 2016. "Meta-Learning with Memory-Augmented Neural Networks". ICML.
 
     **Arguments**
 
