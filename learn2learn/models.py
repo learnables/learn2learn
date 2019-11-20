@@ -40,7 +40,7 @@ def kronecker_addmm(mat1, mat2, mat3, bias=None, alpha=1.0, beta=1.0):
     product = kronecker_addmm(mat1, mat2, mat3, bias)
     ~~~
     """
-    res = th.chain_matmul(mat1, mat3, mat2)
+    res = mat1 @ mat3 @ mat2
     res.mul_(alpha)
     if bias is not None:
         res.add_(beta, bias)
@@ -72,7 +72,7 @@ def cholesky_addmm(mat1, mat2, bias=None, alpha=1.0, beta=1.0):
     ~~~python
     ~~~
     """
-    result = th.chain_matmul(mat1, mat1.t(), mat2)
+    result = mat1 @ (mat1.t() @ mat2)
     result.mul_(alpha)
     if bias is not None:
         result += beta * bias

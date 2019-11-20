@@ -135,6 +135,7 @@ class MetaOptimizer(Optimizer):
                 'loss should not be callable for MetaOptimizers.'
 
         if loss is not None and self.create_graph:
+            # Assumes that for supervised, the gradients are pre-computed.
             assert loss.requires_grad, \
                     'loss does not require grad.'
             # Compute gradients w.r.t. model
@@ -145,6 +146,7 @@ class MetaOptimizer(Optimizer):
             # Update learner via opt
             l2l.nn.utils.set_gradients(model_params, model_grads)
 
+        # Update parameters
         update_params = []
         for group in self.param_groups:
             update = group['update']
