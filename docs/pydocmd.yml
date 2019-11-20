@@ -30,9 +30,9 @@ generate:
       - learn2learn.gym.envs.particles
       - learn2learn.gym.envs.particles.Particles2DEnv
   - docs/learn2learn.models.md:
-      - learn2learn.models
+      - learn2learn.models++
   - docs/learn2learn.optim.md:
-      - learn2learn.optim
+      - learn2learn.optim++
   - docs/learn2learn.vision.md:
       - learn2learn.vision.models
       - learn2learn.vision.models.OmniglotFC

@@ -6,8 +6,6 @@ from torch import nn
 
 def kronecker_addmm(mat1, mat2, mat3, bias=None, alpha=1.0, beta=1.0):
     """
-    Returns alpha * (mat2.t() X mat1) @ vec(mat3) + beta * vec(bias)
-    (Assuming bias is not None.)
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/models.py)
 
     **Description**
@@ -16,7 +14,7 @@ def kronecker_addmm(mat1, mat2, mat3, bias=None, alpha=1.0, beta=1.0):
 
     Concretely, the method takes advantage of the following identity:
 
-    $$\\alpha (A^\\top \otimes B) \cdot \\text{vec}(C) + \\beta \cdot b = \\alpha \\text{vec}(BCA) + \\beta \cdot b$$
+    \[\\alpha (A^\\top \otimes B) \cdot \\text{vec}(C) + \\beta \cdot b = \\alpha \\text{vec}(BCA) + \\beta \cdot b, \]
 
     where $A \in \mathbb{R}^{N \\times N}, B \in \mathbb{R}^{M \\times M}, C \in \mathbb{R}^{N \\times M}$ and $b$ is a bias term.
 
