@@ -129,7 +129,7 @@ class ConvBase(nn.Sequential):
 class OmniglotFC(nn.Sequential):
     """
 
-    [[Source]]()
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
 
     **Description**
 
@@ -171,7 +171,7 @@ class OmniglotFC(nn.Sequential):
 class OmniglotCNN(nn.Module):
     """
 
-    [Source]()
+    [Source](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
 
     **Description**
 
@@ -218,7 +218,7 @@ class OmniglotCNN(nn.Module):
 class MiniImagenetCNN(nn.Module):
     """
 
-    [[Source]]()
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
 
     **Description**
 
