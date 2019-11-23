@@ -67,20 +67,19 @@ class MetaDataset(Dataset):
             'Requires iterable-style dataset.'
 
         labels_to_indices = defaultdict(list)
-        indices_to_labels = defaultdict(list)
+        indices_to_labels = defaultdict(int)
         for i in range(len(self.dataset)):
             try:
-                # if label is a Tensor, then take get the scala value
-                label = self.dataset[i][1].item()
-            except AttributeError:
-                # if label is a scalar then use as is
                 label = self.dataset[i][1]
+                # if label is a Tensor, then take get the scalar value
+                if hasattr(label, 'item'):
+                    label = self.dataset[i][1].item()
             except ValueError as e:
                 raise ValueError(
                     'Requires scalar labels. \n' + str(e))
 
             labels_to_indices[label].append(i)
-            indices_to_labels[i].append(label)
+            indices_to_labels[i] = label
 
         self.labels_to_indices = labels_to_indices
         self.indices_to_labels = indices_to_labels

@@ -24,6 +24,14 @@ def download_pkl(google_drive_id, data_root, mode):
         print("Data was already downloaded")
 
 
+def index_classes(items):
+    idx = {}
+    for i in items:
+        if (i not in idx):
+            idx[i] = len(idx)
+    return idx
+
+
 class MiniImagenet(data.Dataset):
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py)
@@ -68,6 +76,7 @@ class MiniImagenet(data.Dataset):
         self.transform = transform
         self.target_transform = target_transform
         self.mode = mode
+        self._bookkeeping_path = os.path.join(self.root, 'mini-imagenet-bookkeeping-' + mode + '.pkl')
         if self.mode == 'test':
             google_drive_file_id = '1wpmY-hmiJUUlRBkO9ZDCXAcIpHEFdOhD'
         elif self.mode == 'train':
@@ -86,7 +95,12 @@ class MiniImagenet(data.Dataset):
 
         self.x = torch.from_numpy(self.data["image_data"]).permute(0, 3, 1, 2).float()
         self.y = np.ones(len(self.x))
-        self._bookkeeping_path = os.path.join(self.root, 'mini-imagenet-bookkeeping-' + mode + '.pkl')
+
+        # TODO Remove index_classes from here
+        self.class_idx = index_classes(self.data['class_dict'].keys())
+        for class_name, idxs in self.data['class_dict'].items():
+            for idx in idxs:
+                self.y[idx] = self.class_idx[class_name]
 
     def __getitem__(self, idx):
         data = self.x[idx]

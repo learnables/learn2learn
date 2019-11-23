@@ -17,6 +17,8 @@ class TaskDataset(Dataset):
     def __init__(self, dataset, task_transforms=None, num_tasks=-1, task_collate=None):
         if not isinstance(dataset, l2l.data.MetaDataset):
             dataset = l2l.data.MetaDataset(dataset)
+        if task_transforms is None:
+            task_transforms = []
         if task_collate is None:
             task_collate = collate.default_collate
         if num_tasks < -1 or num_tasks == 0:

@@ -92,14 +92,24 @@ if __name__ == '__main__':
     print('train')
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='train')
-    print('train')
+    print('valid')
     valid_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='validation')
-    print('train')
+    print('test')
     test_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='test')
 
-    task_dataset = l2l.data.TaskDataset(train_dataset, num_tasks=-1)
+    train_dataset = l2l.data.MetaDataset(train_dataset)
+    train_transforms = [
+        l2l.data.transforms.NWays(train_dataset, 30),
+        l2l.data.transforms.KShots(train_dataset, 16),
+        l2l.data.transforms.LoadData(train_dataset),
+    ]
+
+    train_tasks = l2l.data.TaskDataset(train_dataset,
+                                       task_transforms=train_transforms,
+                                       num_tasks=20000)
+    train_loader = DataLoader(train_tasks, batch_size=16, num_workers=4, pin_memory=True)
 
     import pdb; pdb.set_trace()
 

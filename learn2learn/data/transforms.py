@@ -4,6 +4,9 @@
 Collection of general task transformations.
 """
 
+import random
+import collections
+
 
 class LoadData(object):
 
