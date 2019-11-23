@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 from __future__ import print_function
-import requests
-import torch.utils.data as data
-import numpy as np
+
 import os
-import torch
 import pickle
+
+import numpy as np
+import torch
+import torch.utils.data as data
 
 from learn2learn.data.utils import download_file_from_google_drive
 
@@ -32,7 +33,6 @@ def index_classes(items):
 
 
 class MiniImagenet(data.Dataset):
-
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py)
 
@@ -92,18 +92,20 @@ class MiniImagenet(data.Dataset):
         f = open(pickle_file, 'rb')
         self.data = pickle.load(f)
 
-        self.x = torch.FloatTensor([np.transpose(x, (2, 0, 1)) for x in self.data['image_data']])
-        self.y = [-1 for _ in range(len(self.x))]
+        self.x = torch.from_numpy(self.data["image_data"]).permute(0, 3, 1, 2).float()
+        self.y = np.ones(len(self.x))
+
+        # TODO Remove index_classes from here
         self.class_idx = index_classes(self.data['class_dict'].keys())
         for class_name, idxs in self.data['class_dict'].items():
             for idx in idxs:
                 self.y[idx] = self.class_idx[class_name]
 
     def __getitem__(self, idx):
-        x = self.x[idx]
+        data = self.x[idx]
         if self.transform:
-            x = self.transform(x)
-        return x, self.y[idx]
+            data = self.transform(data)
+        return data, self.y[idx]
 
     def __len__(self):
         return len(self.x)
