@@ -1,6 +1,9 @@
 
 .PHONY: *
 
+all:
+	python examples/vision/protonet_miniimagenet.py
+
 # Admin
 dev:
 	pip install --progress-bar off torch gym pycodestyle >> log_install.txt

@@ -76,7 +76,7 @@ if __name__ == '__main__':
     parser.add_argument('--test-query', type=int, default=30)
     parser.add_argument('--train-query', type=int, default=15)
     parser.add_argument('--train-way', type=int, default=30)
-    parser.add_argument('--gpu', default='0')
+    parser.add_argument('--gpu', default=0)
     args = parser.parse_args()
     print(args)
 
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     model = Convnet()
     model.to(device)
 
-    path_data = '/datadrive/few-shot/miniimagenetdata'
+    path_data = './data'
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='train')
     valid_dataset = l2l.vision.datasets.MiniImagenet(
@@ -97,23 +97,25 @@ if __name__ == '__main__':
     test_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='test')
 
-    train_sampler = l2l.data.NShotKWayTaskSampler(
-        train_dataset.y, 100, args.train_way, args.shot, args.train_query)
+    import pdb; pdb.set_trace()
 
-    train_loader = DataLoader(dataset=train_dataset, batch_sampler=train_sampler,
-                              num_workers=8, pin_memory=True)
-
-    val_sampler = l2l.data.NShotKWayTaskSampler(
-        valid_dataset.y, 400, args.test_way, args.shot, args.train_query)
-
-    val_loader = DataLoader(dataset=valid_dataset, batch_sampler=val_sampler,
-                            num_workers=8, pin_memory=True)
-
-    test_sampler = l2l.data.NShotKWayTaskSampler(
-        test_dataset.y, 2000, args.test_way, args.test_shot, args.test_query)
-
-    test_loader = DataLoader(test_dataset, batch_sampler=test_sampler,
-                             num_workers=8, pin_memory=True)
+#    train_sampler = l2l.data.NShotKWayTaskSampler(
+#        train_dataset.y, 100, args.train_way, args.shot, args.train_query)
+#
+#    train_loader = DataLoader(dataset=train_dataset, batch_sampler=train_sampler,
+#                              num_workers=8, pin_memory=True)
+#
+#    val_sampler = l2l.data.NShotKWayTaskSampler(
+#        valid_dataset.y, 400, args.test_way, args.shot, args.train_query)
+#
+#    val_loader = DataLoader(dataset=valid_dataset, batch_sampler=val_sampler,
+#                            num_workers=8, pin_memory=True)
+#
+#    test_sampler = l2l.data.NShotKWayTaskSampler(
+#        test_dataset.y, 2000, args.test_way, args.test_shot, args.test_query)
+#
+#    test_loader = DataLoader(test_dataset, batch_sampler=test_sampler,
+#                             num_workers=8, pin_memory=True)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(
