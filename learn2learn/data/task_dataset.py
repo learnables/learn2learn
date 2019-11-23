@@ -14,7 +14,7 @@ import learn2learn as l2l
 
 class TaskDataset(Dataset):
 
-    def __init__(self, dataset, task_transforms=None, num_tasks=10, task_collate=None):
+    def __init__(self, dataset, task_transforms=None, num_tasks=-1, task_collate=None):
         if not isinstance(dataset, l2l.data.MetaDataset):
             dataset = l2l.data.MetaDataset(dataset)
         if task_collate is None:

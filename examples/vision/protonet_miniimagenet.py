@@ -1,5 +1,4 @@
 import argparse
-import os.path as osp
 
 import torch
 import torch.nn as nn
@@ -90,12 +89,17 @@ if __name__ == '__main__':
     model.to(device)
 
     path_data = './data'
+    print('train')
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='train')
+    print('train')
     valid_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='validation')
+    print('train')
     test_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='test')
+
+    task_dataset = l2l.data.TaskDataset(train_dataset, num_tasks=-1)
 
     import pdb; pdb.set_trace()
 

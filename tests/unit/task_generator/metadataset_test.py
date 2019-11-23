@@ -55,7 +55,8 @@ class TestMetaDataset(TestCase):
             self.assertEqual(label, chr(97 + rand_index))
 
     def test_labels_to_indices(self):
-        dict_label_to_indices, _ = self.meta_alpha_dataset.get_dict_of_labels_to_indices()
+        self.meta_alpha_dataset.create_bookkeeping()
+        dict_label_to_indices = self.meta_alpha_dataset.labels_to_indices
         self.assertEqual(sorted(list(dict_label_to_indices.keys())), self.ds.alphabets)
         for key in dict_label_to_indices:
             self.assertEqual(dict_label_to_indices[key][0], ord(key) - 97)
