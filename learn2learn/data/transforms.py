@@ -6,6 +6,7 @@ Collection of general task transformations.
 
 import random
 import collections
+import functools
 
 
 class LoadData(object):
@@ -19,6 +20,28 @@ class LoadData(object):
         return task_description
 
 
+class RemapLabels(object):
+
+    def __init__(self, dataset, shuffle=True):
+        self.dataset = dataset
+        self.shuffle = shuffle
+
+    def remap(self, data, mapping):
+        data = [d for d in data]
+        data[1] = mapping(data[1])
+        return data
+
+    def __call__(self, task_description):
+        labels = list(set(self.dataset.indices_to_labels[d[0]] for d in task_description))
+        if self.shuffle:
+            random.shuffle(labels)
+        mapping = lambda x: labels.index(x)
+        for data in task_description:
+            remap = functools.partial(self.remap, mapping=mapping)
+            data[1].append(remap)
+        return task_description
+
+
 class NWays(object):
 
     def __init__(self, dataset, n=5):
@@ -26,7 +49,7 @@ class NWays(object):
         self.dataset = dataset
 
     def __call__(self, task_description):
-        classes = set([self.dataset.indices_to_labels[dt[0]] for dt in task_description])
+        classes = list(set([self.dataset.indices_to_labels[dt[0]] for dt in task_description]))
         classes = random.sample(classes, k=self.n)
         return [data for data in task_description if self.dataset.indices_to_labels[data[0]] in classes]
 

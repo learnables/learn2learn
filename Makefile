@@ -2,7 +2,7 @@
 .PHONY: *
 
 all:
-	python examples/vision/protonet_miniimagenet.py
+	python examples/vision/protonet_miniimagenet.py --gpu=1
 
 # Admin
 dev:
