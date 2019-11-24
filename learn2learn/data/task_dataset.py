@@ -4,6 +4,7 @@
 General wrapper to help create tasks.
 """
 
+import sys
 import copy
 
 from torch.utils.data import Dataset
@@ -49,12 +50,14 @@ class TaskDataset(Dataset):
 
     def __len__(self):
         if self.num_tasks == -1:
-            return float('inf')
+            # Ok to return 1, since __iter__ will run forever
+            # and __getitem__ will always resample.
+            return 1
         return self.num_tasks
 
     def __getitem__(self, i):
         if self.num_tasks == -1:
-            raise ValueError('can not index with unbounded number of tasks.')
+            return self.get_task(self.sample_task_description())
         if i not in self.sampled_descriptions:
             self.sampled_descriptions[i] = self.sample_task_description()
         task_description = self.sampled_descriptions[i]
@@ -68,7 +71,7 @@ class TaskDataset(Dataset):
         if self.num_tasks == -1:
             return self.get_task(self.sample_task_description())
 
-        if self._task_it < self.num_tasks:
+        if self._task_id < self.num_tasks:
             task = self[self._task_id]
             self._task_id += 1
             return task

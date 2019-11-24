@@ -33,6 +33,9 @@ def accuracy(predictions, targets):
 
 class Convnet(nn.Module):
 
+    # TODO: Is this architecture better than the one we have
+    # in l2l.vision.models.ConvBase ?
+
     def __init__(self, x_dim=3, hid_dim=64, z_dim=64):
         super().__init__()
         self.encoder = nn.Sequential(
@@ -58,9 +61,12 @@ def fast_adapt(model, batch, ways, shot, query_num, metric=None, device=None):
     labels = labels.to(device)
     n_items = shot * ways
 
+    # Sort data samples by labels
     sort = torch.sort(labels)
     data = data.squeeze(0)[sort.indices].squeeze(0)
     labels = labels.squeeze(0)[sort.indices].squeeze(0)
+
+    # Compute support and query embeddings
     embeddings = model(data)
     support_indices = torch.zeros(data.size(0)).byte()
     support_indices[torch.arange(n_items) * (query_num + shot)] = 1
@@ -98,50 +104,45 @@ if __name__ == '__main__':
     model.to(device)
 
     path_data = './data'
-    print('train')
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='train')
-    print('valid')
     valid_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='validation')
-    print('test')
     test_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='test')
 
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_transforms = [
-        l2l.data.transforms.NWays(train_dataset, 30),
-        l2l.data.transforms.KShots(train_dataset, 16),
+        l2l.data.transforms.NWays(train_dataset, args.train_way),
+        l2l.data.transforms.KShots(train_dataset, args.train_query + args.shot),
         l2l.data.transforms.LoadData(train_dataset),
         l2l.data.transforms.RemapLabels(train_dataset),
     ]
-    train_tasks = l2l.data.TaskDataset(train_dataset,
-                                       task_transforms=train_transforms,
-                                       num_tasks=20000)
-    train_loader = DataLoader(train_tasks, pin_memory=True)
+    train_tasks = l2l.data.TaskDataset(train_dataset, task_transforms=train_transforms)
+    train_loader = DataLoader(train_tasks, pin_memory=True, shuffle=True)
 
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     valid_transforms = [
-        l2l.data.transforms.NWays(valid_dataset, 5),
-        l2l.data.transforms.KShots(valid_dataset, 31),
+        l2l.data.transforms.NWays(valid_dataset, args.test_way),
+        l2l.data.transforms.KShots(valid_dataset, args.test_query + args.test_shot),
         l2l.data.transforms.LoadData(valid_dataset),
         l2l.data.transforms.RemapLabels(valid_dataset),
     ]
     valid_tasks = l2l.data.TaskDataset(valid_dataset,
                                        task_transforms=valid_transforms,
-                                       num_tasks=20000)
-    valid_loader = DataLoader(valid_tasks, pin_memory=True)
+                                       num_tasks=200)
+    valid_loader = DataLoader(valid_tasks, pin_memory=True, shuffle=True)
 
     test_transforms = [
-        l2l.data.transforms.NWays(test_dataset, 5),
-        l2l.data.transforms.KShots(test_dataset, 31),
+        l2l.data.transforms.NWays(test_dataset, args.test_way),
+        l2l.data.transforms.KShots(test_dataset, args.test_query + args.test_shot),
         l2l.data.transforms.LoadData(test_dataset),
         l2l.data.transforms.RemapLabels(test_dataset),
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
-                                      num_tasks=20000)
-    test_loader = DataLoader(test_tasks, pin_memory=True)
+                                      num_tasks=2000)
+    test_loader = DataLoader(test_tasks, pin_memory=True, shuffle=True)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(
@@ -156,13 +157,15 @@ if __name__ == '__main__':
         n_loss = 0
         n_acc = 0
 
-        for i, batch in zip(range(100), train_loader):
+#        for i, batch in enumerate(train_loader):
+        for i in range(100):
+            batch = next(iter(train_loader))
 
             loss, acc = fast_adapt(model,
                                    batch,
-                                   args.train_way, 
+                                   args.train_way,
                                    args.shot,
-                                   args.train_query, 
+                                   args.train_query,
                                    metric=pairwise_distances_logits,
                                    device=device)
 
@@ -173,6 +176,8 @@ if __name__ == '__main__':
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+#            if i >= 100:  # The train loader has infinite tasks
+#                break
 
         print('epoch {}, train, loss={:.4f} acc={:.4f}'.format(
             epoch, n_loss/loss_ctr, n_acc/loss_ctr))
@@ -182,7 +187,7 @@ if __name__ == '__main__':
         loss_ctr = 0
         n_loss = 0
         n_acc = 0
-        for i, batch in zip(range(200), valid_loader):
+        for i, batch in enumerate(valid_loader):
             loss, acc = fast_adapt(model,
                                    batch,
                                    args.test_way,
@@ -202,14 +207,13 @@ if __name__ == '__main__':
     n_acc = 0
 
     for i, batch in enumerate(test_loader, 1):
-        for i, batch in zip(range(2000), test_loader):
-            loss, acc = fast_adapt(model,
-                                   batch,
-                                   args.test_way,
-                                   args.test_shot,
-                                   args.test_query,
-                                   metric=pairwise_distances_logits,
-                                   device=device)
+        loss, acc = fast_adapt(model,
+                               batch,
+                               args.test_way,
+                               args.test_shot,
+                               args.test_query,
+                               metric=pairwise_distances_logits,
+                               device=device)
         loss_ctr += 1
         n_acc += acc
         print('batch {}: {:.2f}({:.2f})'.format(

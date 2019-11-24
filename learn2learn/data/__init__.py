@@ -2,5 +2,5 @@
 
 from . import transforms
 
-from .task_generator import MetaDataset
+from .meta_dataset import MetaDataset
 from .task_dataset import TaskDataset
