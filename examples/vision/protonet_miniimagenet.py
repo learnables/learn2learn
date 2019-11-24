@@ -69,9 +69,11 @@ def fast_adapt(model, batch, ways, shot, query_num, metric=None, device=None):
     # Compute support and query embeddings
     embeddings = model(data)
     support_indices = torch.zeros(data.size(0)).byte()
-    support_indices[torch.arange(n_items) * (query_num + shot)] = 1
+    asdf = torch.arange(ways) * (shot + query_num)
+    for i in range(shot):
+        support_indices[asdf + i] = 1
     support = embeddings[support_indices]
-    support = support.reshape(shot, ways, -1).mean(dim=0)
+    support = support.reshape(ways, shot, -1).mean(dim=1)
     query = embeddings[1 - support_indices]
     labels = labels[1 - support_indices].long()
 
@@ -85,8 +87,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--max-epoch', type=int, default=250)
     parser.add_argument('--shot', type=int, default=1)
-    parser.add_argument('--test-way', type=int, default=5)
-    parser.add_argument('--test-shot', type=int, default=1)
+    parser.add_argument('--test-way', type=int, default=1)
+    parser.add_argument('--test-shot', type=int, default=5)
     parser.add_argument('--test-query', type=int, default=30)
     parser.add_argument('--train-query', type=int, default=15)
     parser.add_argument('--train-way', type=int, default=30)
