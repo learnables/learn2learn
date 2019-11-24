@@ -98,7 +98,7 @@ if __name__ == '__main__':
     print(args)
 
     device = torch.device('cpu')
-    if args.gpu:
+    if args.gpu and torch.cuda.device_count():
         print("Using gpu")
         torch.cuda.manual_seed(43)
         device = torch.device('cuda')

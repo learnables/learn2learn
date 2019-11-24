@@ -65,8 +65,6 @@ def main(
 
     omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
                                                 transform=transforms.Compose([
-                                                    l2l.vision.transforms.RandomDiscreteRotation(
-                                                        [0.0, 90.0, 180.0, 270.0]),
                                                     transforms.Resize(28, interpolation=LANCZOS),
                                                     transforms.ToTensor(),
                                                     lambda x: 1.0 - x,
@@ -83,6 +81,7 @@ def main(
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
+        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
     ]
     train_tasks = l2l.data.TaskDataset(dataset,
                                        task_transforms=train_transforms,
@@ -95,6 +94,7 @@ def main(
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
+        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
     ]
     valid_tasks = l2l.data.TaskDataset(dataset,
                                        task_transforms=valid_transforms,
@@ -107,6 +107,7 @@ def main(
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
+        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
     ]
     test_tasks = l2l.data.TaskDataset(dataset,
                                       task_transforms=test_transforms,
@@ -117,7 +118,7 @@ def main(
     model.to(device)
     maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
-    loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
+    loss = nn.CrossEntropyLoss(reduction='mean')
 
     for iteration in range(num_iterations):
         opt.zero_grad()
