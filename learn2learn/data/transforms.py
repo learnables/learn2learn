@@ -20,6 +20,16 @@ class LoadData(object):
         return task_description
 
 
+class FilterLabels(object):
+
+    def __init__(self, dataset, labels):
+        self.dataset = dataset
+        self.labels = labels
+
+    def __call__(self, task_description):
+        return [d for d in task_description
+                if self.dataset.indices_to_labels[d[0]] in self.labels]
+
 class ConsecutiveLabels(object):
 
     def __init__(self, dataset):

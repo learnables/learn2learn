@@ -76,7 +76,9 @@ def main(
         l2l.data.transforms.RemapLabels(train_dataset),
         l2l.data.transforms.ConsecutiveLabels(train_dataset),
     ]
-    train_tasks = l2l.data.TaskDataset(train_dataset, task_transforms=train_transforms, num_tasks=20000)
+    train_tasks = l2l.data.TaskDataset(train_dataset,
+                                       task_transforms=train_transforms,
+                                       num_tasks=20000)
 
     valid_transforms = [
         l2l.data.transforms.NWays(valid_dataset, ways),
@@ -85,7 +87,9 @@ def main(
         l2l.data.transforms.ConsecutiveLabels(train_dataset),
         l2l.data.transforms.RemapLabels(valid_dataset),
     ]
-    valid_tasks = l2l.data.TaskDataset(valid_dataset, task_transforms=valid_transforms, num_tasks=600)
+    valid_tasks = l2l.data.TaskDataset(valid_dataset,
+                                       task_transforms=valid_transforms,
+                                       num_tasks=600)
 
     test_transforms = [
         l2l.data.transforms.NWays(test_dataset, ways),
@@ -94,7 +98,9 @@ def main(
         l2l.data.transforms.RemapLabels(test_dataset),
         l2l.data.transforms.ConsecutiveLabels(train_dataset),
     ]
-    test_tasks = l2l.data.TaskDataset(test_dataset, task_transforms=test_transforms, num_tasks=600)
+    test_tasks = l2l.data.TaskDataset(test_dataset,
+                                      task_transforms=test_transforms,
+                                      num_tasks=600)
 
     # Create model
     model = l2l.vision.models.MiniImagenetCNN(ways)

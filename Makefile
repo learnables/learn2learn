@@ -2,7 +2,7 @@
 .PHONY: *
 
 all:
-	python examples/vision/maml_miniimagenet.py
+	python examples/vision/maml_omniglot.py
 
 # Admin
 dev:
