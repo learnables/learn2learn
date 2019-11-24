@@ -20,6 +20,18 @@ class LoadData(object):
         return task_description
 
 
+class ConsecutiveLabels(object):
+
+    def __init__(self, dataset):
+        self.dataset = dataset
+
+    def __call__(self, task_description):
+        pairs = [(data, self.dataset.indices_to_labels[data[0]])
+                 for data in task_description]
+        pairs = sorted(pairs, key=lambda x: x[1])
+        return [p[0] for p in pairs]
+
+
 class RemapLabels(object):
 
     def __init__(self, dataset, shuffle=True):

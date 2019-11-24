@@ -4,7 +4,7 @@
 General wrapper to help create tasks.
 """
 
-import sys
+import random
 import copy
 
 from torch.utils.data import Dataset
@@ -47,6 +47,10 @@ class TaskDataset(Dataset):
                 data = transform(data)
             all_data.append(data)
         return self.task_collate(all_data)
+
+    def sample(self):
+        i = random.randint(0, len(self) - 1)
+        return self[i]
 
     def __len__(self):
         if self.num_tasks == -1:

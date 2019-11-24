@@ -62,6 +62,7 @@ def fast_adapt(model, batch, ways, shot, query_num, metric=None, device=None):
     n_items = shot * ways
 
     # Sort data samples by labels
+    # TODO: Can this be replaced by ConsecutiveLabels ?
     sort = torch.sort(labels)
     data = data.squeeze(0)[sort.indices].squeeze(0)
     labels = labels.squeeze(0)[sort.indices].squeeze(0)
