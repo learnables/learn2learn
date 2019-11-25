@@ -1,9 +1,15 @@
-import argparse
+#!/usr/bin/env python3
+
+import unittest
+import random
+import numpy as np
 
 import torch
-import torch.nn as nn
+from torch import nn, optim
+from torchvision import transforms
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+
 import learn2learn as l2l
 
 
@@ -84,22 +90,23 @@ def fast_adapt(model, batch, ways, shot, query_num, metric=None, device=None):
     return loss, acc
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--max-epoch', type=int, default=250)
-    parser.add_argument('--shot', type=int, default=1)
-    parser.add_argument('--test-way', type=int, default=5)
-    parser.add_argument('--test-shot', type=int, default=1)
-    parser.add_argument('--test-query', type=int, default=30)
-    parser.add_argument('--train-query', type=int, default=15)
-    parser.add_argument('--train-way', type=int, default=30)
-    parser.add_argument('--gpu', default=0)
-    args = parser.parse_args()
-    print(args)
+class Object:
+    pass
+
+
+def main(num_iterations=250):
+    args = Object()
+    setattr(args, 'max_epoch', num_iterations)
+    setattr(args, 'shot', 1)
+    setattr(args, 'test_way', 5)
+    setattr(args, 'test_shot', 1)
+    setattr(args, 'test_query', 30)
+    setattr(args, 'train_query', 15)
+    setattr(args, 'train_way', 30)
+    setattr(args, 'gpu', 0)
 
     device = torch.device('cpu')
     if args.gpu and torch.cuda.device_count():
-        print("Using gpu")
         torch.cuda.manual_seed(43)
         device = torch.device('cuda')
 
@@ -183,6 +190,7 @@ if __name__ == '__main__':
 
         print('epoch {}, train, loss={:.4f} acc={:.4f}'.format(
             epoch, n_loss/loss_ctr, n_acc/loss_ctr))
+        train_accuracy = n_acc / loss_ctr
 
         model.eval()
 
@@ -204,6 +212,7 @@ if __name__ == '__main__':
 
         print('epoch {}, val, loss={:.4f} acc={:.4f}'.format(
             epoch, n_loss/loss_ctr, n_acc/loss_ctr))
+        valid_accuracy = n_acc / loss_ctr
 
     loss_ctr = 0
     n_acc = 0
@@ -220,4 +229,24 @@ if __name__ == '__main__':
         n_acc += acc
         print('batch {}: {:.2f}({:.2f})'.format(
             i, n_acc/loss_ctr * 100, acc * 100))
-        
+    test_accuracy = n_acc / loss_ctr
+    return train_accuracy, valid_accuracy, test_accuracy
+
+
+class ProtoNetMiniImageNetIntegrationTests(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_final_accuracy(self):
+        train_acc, valid_acc, test_acc = main(num_iterations=2)
+        self.assertTrue(train_acc > 0.25)
+        self.assertTrue(valid_acc > 0.25)
+        self.assertTrue(test_acc > 0.25)
+
+
+if __name__ == '__main__':
+    unittest.main()
