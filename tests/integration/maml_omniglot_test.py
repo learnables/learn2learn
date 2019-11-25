@@ -170,14 +170,14 @@ def main(
             meta_test_accuracy += evaluation_accuracy.item()
 
         # Print some metrics
-        # print('\n')
-        # print('Iteration', iteration)
-        # print('Meta Train Error', meta_train_error / meta_batch_size)
-        # print('Meta Train Accuracy', meta_train_accuracy / meta_batch_size)
-        # print('Meta Valid Error', meta_valid_error / meta_batch_size)
-        # print('Meta Valid Accuracy', meta_valid_accuracy / meta_batch_size)
-        # print('Meta Test Error', meta_test_error / meta_batch_size)
-        # print('Meta Test Accuracy', meta_test_accuracy / meta_batch_size)
+        print('\n')
+        print('Iteration', iteration)
+        print('Meta Train Error', meta_train_error / meta_batch_size)
+        print('Meta Train Accuracy', meta_train_accuracy / meta_batch_size)
+        print('Meta Valid Error', meta_valid_error / meta_batch_size)
+        print('Meta Valid Accuracy', meta_valid_accuracy / meta_batch_size)
+        print('Meta Test Error', meta_test_error / meta_batch_size)
+        print('Meta Test Accuracy', meta_test_accuracy / meta_batch_size)
 
 
         # Average the accumulated gradients and optimize
