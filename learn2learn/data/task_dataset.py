@@ -15,6 +15,45 @@ import learn2learn as l2l
 
 class TaskDataset(Dataset):
 
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py)
+
+    **Description**
+
+    Creates a set of tasks from a given Dataset.
+
+    In addition to the Dataset, TaskDataset accepts a list of task transformations (`task_transforms`)
+    which define the kind of tasks sampled from the dataset.
+
+    The tasks are lazily sampled upon indexing (or calling the `.sample()` method), and their
+    descriptions cached for later use.
+    If `num_tasks` is -1, the TaskDataset will not cache task descriptions and instead continuously resample
+    new ones.
+    In this case, the length of the TaskDataset is set to 1.
+
+    For more information on tasks and task descriptions, please refer to the
+    documentation of task transforms.
+
+    **Arguments**
+
+    * **dataset** (Dataset) - Dataset of data to compute tasks.
+    * **task_transforms** (list, *optional*, default=None) - List of task transformations.
+    * **num_tasks** (int, *optional*, default=-1) - Number of tasks to generate.
+
+    **Example**
+    ~~~python
+    dataset = l2l.data.MetaDataset(MyDataset())
+    transforms = [
+        l2l.data.transforms.NWays(dataset, n=5),
+        l2l.data.transforms.KShots(dataset, k=1),
+        l2l.data.transforms.LoadData(dataset),
+    ]
+    taskset = TaskDataset(dataset, transforms, num_tasks=20000)
+    for task in taskset:
+        X, y = task
+    ~~~
+    """
+
     def __init__(self, dataset, task_transforms=None, num_tasks=-1, task_collate=None):
         if not isinstance(dataset, l2l.data.MetaDataset):
             dataset = l2l.data.MetaDataset(dataset)
@@ -49,6 +88,16 @@ class TaskDataset(Dataset):
         return self.task_collate(all_data)
 
     def sample(self):
+        """
+        **Description**
+
+        Randomly samples a task from the TaskDataset.
+
+        **Example**
+        ~~~python
+        X, y = taskset.sample()
+        ~~~
+        """
         i = random.randint(0, len(self) - 1)
         return self[i]
 

@@ -13,7 +13,7 @@ from torch.utils.data import Dataset
 class MetaDataset(Dataset):
     """
 
-    **Descritpion**
+    **Description**
 
     It wraps a torch dataset by creating a map of target to indices.
     This comes in handy when we want to sample elements randomly for a particular label.

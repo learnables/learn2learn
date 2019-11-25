@@ -18,7 +18,8 @@ class RandomClassRotation(object):
 
     **Description**
 
-    Samples rotations from a given list, uniformly at random.
+    Samples rotations from a given list uniformly at random, and applies it to
+    all images from a given class.
 
     **Arguments**
 

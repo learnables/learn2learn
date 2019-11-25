@@ -8,6 +8,7 @@ from learn2learn.utils import clone_module
 
 def maml_update(model, lr, grads=None):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py)
 
     **Description**
 
