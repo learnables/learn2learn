@@ -30,6 +30,7 @@ class FilterLabels(object):
         return [d for d in task_description
                 if self.dataset.indices_to_labels[d[0]] in self.labels]
 
+
 class ConsecutiveLabels(object):
 
     def __init__(self, dataset):
@@ -57,7 +58,10 @@ class RemapLabels(object):
         labels = list(set(self.dataset.indices_to_labels[d[0]] for d in task_description))
         if self.shuffle:
             random.shuffle(labels)
-        mapping = lambda x: labels.index(x)
+
+        def mapping(x):
+            return labels.index(x)
+
         for data in task_description:
             remap = functools.partial(self.remap, mapping=mapping)
             data[1].append(remap)

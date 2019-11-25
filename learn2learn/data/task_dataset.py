@@ -33,14 +33,14 @@ class TaskDataset(Dataset):
         self._task_id = 0
 
     def sample_task_description(self):
-        # Samples a new task description
+        #  Samples a new task description.
         description = copy.deepcopy(self.dataset_description)
         for transform in self.task_transforms:
             description = transform(description)
         return description
 
     def get_task(self, task_description):
-        # Given a task description, creates the corresponding batch of data
+        #  Given a task description, creates the corresponding batch of data.
         all_data = []
         for data, transforms in task_description:
             for transform in transforms:
