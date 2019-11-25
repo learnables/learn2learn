@@ -168,7 +168,6 @@ def main(num_iterations=250):
         n_loss = 0
         n_acc = 0
 
-#        for i, batch in enumerate(train_loader):
         for i in range(100):
             batch = next(iter(train_loader))
 
@@ -227,8 +226,8 @@ def main(num_iterations=250):
                                device=device)
         loss_ctr += 1
         n_acc += acc
-        print('batch {}: {:.2f}({:.2f})'.format(
-            i, n_acc/loss_ctr * 100, acc * 100))
+    print('batch {}: {:.2f}({:.2f})'.format(
+        i, n_acc/loss_ctr * 100, acc * 100))
     test_accuracy = n_acc / loss_ctr
     return train_accuracy, valid_accuracy, test_accuracy
 

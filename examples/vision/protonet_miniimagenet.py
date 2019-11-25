@@ -161,7 +161,6 @@ if __name__ == '__main__':
         n_loss = 0
         n_acc = 0
 
-#        for i, batch in enumerate(train_loader):
         for i in range(100):
             batch = next(iter(train_loader))
 
