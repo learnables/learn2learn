@@ -152,7 +152,7 @@ def main(num_iterations=250):
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
-                                      num_tasks=2000)
+                                      num_tasks=200)
     test_loader = DataLoader(test_tasks, pin_memory=True, shuffle=True)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
@@ -241,10 +241,10 @@ class ProtoNetMiniImageNetIntegrationTests(unittest.TestCase):
         pass
 
     def test_final_accuracy(self):
-        train_acc, valid_acc, test_acc = main(num_iterations=2)
-        self.assertTrue(train_acc > 0.25)
-        self.assertTrue(valid_acc > 0.25)
-        self.assertTrue(test_acc > 0.25)
+        train_acc, valid_acc, test_acc = main(num_iterations=1)
+        self.assertTrue(train_acc > 0.20)
+        self.assertTrue(valid_acc > 0.20)
+        self.assertTrue(test_acc > 0.20)
 
 
 if __name__ == '__main__':

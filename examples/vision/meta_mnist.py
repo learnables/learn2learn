@@ -10,7 +10,6 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import MNIST
-from tqdm import tqdm
 
 import learn2learn as l2l
 
@@ -41,62 +40,65 @@ def accuracy(predictions, targets):
     return acc.item()
 
 
-def compute_loss(task, device, learner, loss_func, batch=5):
-    loss = 0.0
-    acc = 0.0
-    dataloader = DataLoader(task, batch_size=batch, shuffle=False, num_workers=0)
-    for i, (x, y) in enumerate(dataloader):
-        x, y = x.squeeze(dim=1).to(device), y.view(-1).to(device)
-        output = learner(x)
-        curr_loss = loss_func(output, y)
-        acc += accuracy(output, y)
-        loss += curr_loss / x.size(0)
-    loss /= len(dataloader)
-    return loss, acc
-
-
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
-         download_location="/tmp/mnist"):
+         download_location='./data'):
     transformations = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,)),
-        lambda x: x.view(1, 1, 28, 28),
+        lambda x: x.view(1, 28, 28),
     ])
 
-    mnist_train = l2l.data.MetaDataset(MNIST(download_location, train=True, download=True, transform=transformations))
-    # mnist_test = MNIST(file_location, train=False, download=True, transform=transformations)
+    mnist_train = l2l.data.MetaDataset(MNIST(download_location,
+                                             train=True,
+                                             download=True,
+                                             transform=transformations))
 
-    train_gen = l2l.data.TaskGenerator(mnist_train, ways=ways, tasks=10000)
-    # test_gen = l2l.data.TaskGenerator(mnist_test, ways=ways)
+    train_tasks = l2l.data.TaskDataset(mnist_train,
+                                       task_transforms=[
+                                            l2l.data.transforms.NWays(mnist_train, ways),
+                                            l2l.data.transforms.KShots(mnist_train, 2*shots),
+                                            l2l.data.transforms.LoadData(mnist_train),
+                                            l2l.data.transforms.RemapLabels(mnist_train),
+                                            l2l.data.transforms.ConsecutiveLabels(mnist_train),
+                                       ],
+                                       num_tasks=1000)
 
     model = Net(ways)
     model.to(device)
     meta_model = l2l.algorithms.MAML(model, lr=maml_lr)
     opt = optim.Adam(meta_model.parameters(), lr=lr)
-    loss_func = nn.NLLLoss(reduction="sum")
+    loss_func = nn.NLLLoss(reduction='mean')
 
-    tqdm_bar = tqdm(range(iterations))
-    for iteration in tqdm_bar:
+    for iteration in range(iterations):
         iteration_error = 0.0
         iteration_acc = 0.0
         for _ in range(tps):
             learner = meta_model.clone()
-            train_task = train_gen.sample()
-            valid_task = train_gen.sample(task=train_task.sampled_task)
+            train_task = train_tasks.sample()
+            data, labels = train_task
+            data = data.to(device)
+            labels = labels.to(device)
+            adaptation_indices = torch.zeros(data.size(0)).byte()
+            adaptation_indices[torch.arange(shots*ways) * 2] = 1
+            adaptation_data, adaptation_labels = data[adaptation_indices], labels[adaptation_indices]
+            evaluation_data, evaluation_labels = data[1 - adaptation_indices], labels[1 - adaptation_indices]
 
             # Fast Adaptation
             for step in range(fas):
-                train_error, _ = compute_loss(train_task, device, learner, loss_func, batch=shots * ways)
+                train_error = loss_func(learner(adaptation_data), adaptation_labels)
                 learner.adapt(train_error)
 
             # Compute validation loss
-            valid_error, valid_acc = compute_loss(valid_task, device, learner, loss_func, batch=shots * ways)
+            predictions = learner(evaluation_data)
+            valid_error = loss_func(predictions, evaluation_labels)
+            valid_error /= len(evaluation_data)
+            valid_accuracy = accuracy(predictions, evaluation_labels)
             iteration_error += valid_error
-            iteration_acc += valid_acc
+            iteration_acc += valid_accuracy
 
         iteration_error /= tps
         iteration_acc /= tps
-        tqdm_bar.set_description("Loss : {:.3f} Acc : {:.3f}".format(iteration_error.item(), iteration_acc))
+        print('Loss : {:.3f} Acc : {:.3f}'.format(iteration_error.item(), iteration_acc))
 
         # Take the meta-learning step
         opt.zero_grad()
