@@ -136,6 +136,7 @@ if __name__ == '__main__':
                                        num_tasks=200)
     valid_loader = DataLoader(valid_tasks, pin_memory=True, shuffle=True)
 
+    test_dataset = l2l.data.MetaDataset(test_dataset)
     test_transforms = [
         l2l.data.transforms.NWays(test_dataset, args.test_way),
         l2l.data.transforms.KShots(test_dataset, args.test_query + args.test_shot),
