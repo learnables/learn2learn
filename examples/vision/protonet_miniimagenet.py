@@ -1,10 +1,14 @@
+#!/usr/bin/env python3
+
 import argparse
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+
 import learn2learn as l2l
+from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels
 
 
 def pairwise_distances_logits(a, b):
@@ -15,17 +19,6 @@ def pairwise_distances_logits(a, b):
     return logits
 
 
-def conv_block(in_channels, out_channels):
-    bn = nn.BatchNorm2d(out_channels)
-    nn.init.uniform_(bn.weight)
-    return nn.Sequential(
-        nn.Conv2d(in_channels, out_channels, 3, padding=1),
-        bn,
-        nn.ReLU(),
-        nn.MaxPool2d(2)
-    )
-
-
 def accuracy(predictions, targets):
     predictions = predictions.argmax(dim=1).view(targets.shape)
     return (predictions == targets).sum().float() / targets.size(0)
@@ -33,17 +26,11 @@ def accuracy(predictions, targets):
 
 class Convnet(nn.Module):
 
-    # TODO: Is this architecture better than the one we have
-    # in l2l.vision.models.ConvBase ?
-
     def __init__(self, x_dim=3, hid_dim=64, z_dim=64):
         super().__init__()
-        self.encoder = nn.Sequential(
-            conv_block(x_dim, hid_dim),
-            conv_block(hid_dim, hid_dim),
-            conv_block(hid_dim, hid_dim),
-            conv_block(hid_dim, z_dim),
-        )
+        self.encoder = l2l.vision.models.ConvBase(output_size=z_dim,
+                                                  hidden=hid_dim,
+                                                  channels=x_dim)
         self.out_channels = 1600
 
     def forward(self, x):
@@ -116,20 +103,20 @@ if __name__ == '__main__':
 
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_transforms = [
-        l2l.data.transforms.NWays(train_dataset, args.train_way),
-        l2l.data.transforms.KShots(train_dataset, args.train_query + args.shot),
-        l2l.data.transforms.LoadData(train_dataset),
-        l2l.data.transforms.RemapLabels(train_dataset),
+        NWays(train_dataset, args.train_way),
+        KShots(train_dataset, args.train_query + args.shot),
+        LoadData(train_dataset),
+        RemapLabels(train_dataset),
     ]
     train_tasks = l2l.data.TaskDataset(train_dataset, task_transforms=train_transforms)
     train_loader = DataLoader(train_tasks, pin_memory=True, shuffle=True)
 
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     valid_transforms = [
-        l2l.data.transforms.NWays(valid_dataset, args.test_way),
-        l2l.data.transforms.KShots(valid_dataset, args.test_query + args.test_shot),
-        l2l.data.transforms.LoadData(valid_dataset),
-        l2l.data.transforms.RemapLabels(valid_dataset),
+        NWays(valid_dataset, args.test_way),
+        KShots(valid_dataset, args.test_query + args.test_shot),
+        LoadData(valid_dataset),
+        RemapLabels(valid_dataset),
     ]
     valid_tasks = l2l.data.TaskDataset(valid_dataset,
                                        task_transforms=valid_transforms,
@@ -138,10 +125,10 @@ if __name__ == '__main__':
 
     test_dataset = l2l.data.MetaDataset(test_dataset)
     test_transforms = [
-        l2l.data.transforms.NWays(test_dataset, args.test_way),
-        l2l.data.transforms.KShots(test_dataset, args.test_query + args.test_shot),
-        l2l.data.transforms.LoadData(test_dataset),
-        l2l.data.transforms.RemapLabels(test_dataset),
+        NWays(test_dataset, args.test_way),
+        KShots(test_dataset, args.test_query + args.test_shot),
+        LoadData(test_dataset),
+        RemapLabels(test_dataset),
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,

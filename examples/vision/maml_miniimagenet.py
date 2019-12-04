@@ -107,7 +107,7 @@ def main(
     model.to(device)
     maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
-    loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
+    loss = nn.CrossEntropyLoss(reduction='mean')
 
     for iteration in range(num_iterations):
         opt.zero_grad()
