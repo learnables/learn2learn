@@ -133,7 +133,7 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="metadataset">MetaDataset</h1>
-<pre><code class="python">MetaDataset(dataset)
+<pre><code class="python">MetaDataset(dataset, labels_to_indices=None)
 </code></pre>
 
 <p><strong>Descritpion</strong></p>
@@ -147,6 +147,8 @@ This comes in handy when we want to sample elements randomly for a particular la
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>dataset</strong> (Dataset) -  A torch dataset.</li>
+<li><strong>labels_to_indices</strong> (Dict) -  A dictionary mapping label to their indices.
+                                 If not specified then we loop through all the datapoints to understand the mapping. (default: None)</li>
 </ul>
 <p><strong>Example</strong></p>
 <pre><code class="python">mnist = torchvision.datasets.MNIST(root=&quot;/tmp/mnist&quot;, train=True)
@@ -154,7 +156,7 @@ mnist = l2l.data.MetaDataset(mnist)
 </code></pre>
 
 <h1 id="taskgenerator">TaskGenerator</h1>
-<pre><code class="python">TaskGenerator(dataset, classes=None, ways=2, tasks=1, shots=1)
+<pre><code class="python">TaskGenerator(dataset, ways=2, shots=1, classes=None, tasks=None)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py">[Source]</a></p>
@@ -167,12 +169,13 @@ If specified as a list, then that list of tasks would be used to sample always.<
 <p>Each of the task should have w distinct elements all of which are required to be a subset of ways.</p>
 <p><strong>Arguments</strong></p>
 <ul>
+<li><strong>ways</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from.</li>
+<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data points per task to sample.</li>
 <li><strong>dataset</strong> (MetaDataset or Dataset) - The (meta-) dataset to wrap.</li>
 <li><strong>classes</strong> (list, <em>optional</em>, default=None) - List of classes to sample from,
     if none then sample from all available classes in dataset. (default: None)</li>
-<li><strong>ways</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from.</li>
-<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data points per task to sample.</li>
-<li><strong>tasks</strong> (int or list, <em>optional</em>, default=1) - Tasks to be generated.</li>
+<li><strong>tasks</strong> (int or list, <em>optional</em>, default=None) - Tasks to be generated.
+            If none, then all possible permutations are chosen from n classes and w ways.</li>
 </ul>
 <h2 id="sample">sample</h2>
 <pre><code class="python">TaskGenerator.sample(shots=None, task=None)

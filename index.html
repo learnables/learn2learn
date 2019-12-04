@@ -127,7 +127,7 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#installation">Installation</a></li>
         <li class="main "><a href="#api-demo">API Demo</a></li>
-            <li><a href="#acknowledgements">Acknowledgements</a></li>
+            <li><a href="#citation">Citation</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -194,9 +194,26 @@ for iteration in range(num_iterations):
     opt.step()
 </code></pre>
 
-<h3 id="acknowledgements">Acknowledgements</h3>
+<h2 id="citation">Citation</h2>
+<p>To cite the <code>learn2learn</code> repository in your academic publications, please use the following reference.</p>
+<blockquote>
+<p>Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. <code>"learn2learn"</code>. <a href="https://github.com/learnables/learn2learn">https://github.com/learnables/learn2learn</a>, 2019.</p>
+</blockquote>
+<p>You can also use the following Bibtex entry.</p>
+<pre><code class="bib">@misc{learn2learn2019,
+    author       = {Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner},
+    title        = {learn2learn},
+    month        = sep,
+    year         = 2019,
+    url          = {https://github.com/learnables/learn2learn}
+    }
+</code></pre>
+
+<h3 id="acknowledgements-friends">Acknowledgements &amp; Friends</h3>
 <ol>
 <li>The RL environments are adapted from Tristan Deleu's <a href="https://github.com/tristandeleu/pytorch-maml-rl">implementations</a> and from the ProMP <a href="https://github.com/jonasrothfuss/ProMP/">repository</a>. Both shared with permission, under the MIT License.</li>
+<li><a href="https://github.com/tristandeleu/pytorch-meta">TorchMeta</a> is similar library, with a focus on supervised meta-learning. If learn2learn were missing a particular functionality, we would go check if TorchMeta has it. But we would also open an issue ;)</li>
+<li><a href="https://github.com/facebookresearch/higher">higher</a> is a PyTorch library that also enables differentiating through optimization inner-loops. Their approach is different from learn2learn in that they monkey-patch nn.Module to be stateless. For more information, refer to <a href="https://arxiv.org/abs/1910.01727">their ArXiv paper</a>.</li>
 </ol></div>
         </div>
 
@@ -282,5 +299,5 @@ for iteration in range(num_iterations):
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-09-12 04:34:19
+Build Date UTC : 2019-12-04 20:12:29
 -->
