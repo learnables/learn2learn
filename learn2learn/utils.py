@@ -95,20 +95,23 @@ def clone_module(module):
     clone = copy.deepcopy(module)
 
     # First, re-write all parameters
-    for param_key in module._parameters:
-        if module._parameters[param_key] is not None:
-            cloned = module._parameters[param_key].clone()
-            clone._parameters[param_key] = cloned
+    if hasattr(clone, '_parameters'):
+        for param_key in module._parameters:
+            if module._parameters[param_key] is not None:
+                cloned = module._parameters[param_key].clone()
+                clone._parameters[param_key] = cloned
 
     # Second, handle the buffers if necessary
-    for buffer_key in module._buffers:
-        if clone._buffers[buffer_key] is not None and \
-                clone._buffers[buffer_key].requires_grad:
-            clone._buffers[buffer_key] = module._buffers[buffer_key].clone()
+    if hasattr(clone, '_buffers'):
+        for buffer_key in module._buffers:
+            if clone._buffers[buffer_key] is not None and \
+                    clone._buffers[buffer_key].requires_grad:
+                clone._buffers[buffer_key] = module._buffers[buffer_key].clone()
 
     # Then, recurse for each submodule
-    for module_key in clone._modules:
-        clone._modules[module_key] = clone_module(module._modules[module_key])
+    if hasattr(clone, '_modules'):
+        for module_key in clone._modules:
+            clone._modules[module_key] = clone_module(module._modules[module_key])
     return clone
 
 

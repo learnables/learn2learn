@@ -81,7 +81,10 @@ class MAML(BaseLearner):
 
     * **model** (Module) - Module to be wrapped.
     * **lr** (float) - Fast adaptation learning rate.
-    * **first_order** (bool, *optional*, default=False) - Whether to use the
+    * **first_order** (bool, *optional*, default=False) - Whether to use the first-order
+        approximation of MAML. (FOMAML)
+    * **allow_unused** (bool, *optional*, default=False) - Whether to allow differentiation
+        of unused parameters.
 
     **References**
 
@@ -99,16 +102,17 @@ class MAML(BaseLearner):
     ~~~
     """
 
-    def __init__(self, model, lr, first_order=False):
+    def __init__(self, model, lr, first_order=False, allow_unused=False):
         super(MAML, self).__init__()
         self.module = model
         self.lr = lr
         self.first_order = first_order
+        self.allow_unused = allow_unused
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
 
-    def adapt(self, loss, first_order=None):
+    def adapt(self, loss, first_order=None, allow_unused=None):
         """
         **Description**
 
@@ -119,18 +123,23 @@ class MAML(BaseLearner):
         * **loss** (Tensor) - Loss to minimize upon update.
         * **first_order** (bool, *optional*, default=None) - Whether to use first- or
             second-order updates. Defaults to self.first_order.
+        * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
+        of unused parameters. Defaults to self.allow_unused.
 
         """
         if first_order is None:
             first_order = self.first_order
+        if allow_unused is None:
+            allow_unused = self.allow_unused
         second_order = not first_order
         gradients = grad(loss,
                          self.module.parameters(),
                          retain_graph=second_order,
-                         create_graph=second_order)
+                         create_graph=second_order,
+                         allow_unused=allow_unused)
         self.module = maml_update(self.module, self.lr, gradients)
 
-    def clone(self, first_order=None):
+    def clone(self, first_order=None, allow_unused=None):
         """
         **Description**
 
@@ -145,10 +154,15 @@ class MAML(BaseLearner):
 
         * **first_order** (bool, *optional*, default=None) - Whether the clone uses first-
             or second-order updates. Defaults to self.first_order.
+        * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
+        of unused parameters. Defaults to self.allow_unused.
 
         """
         if first_order is None:
             first_order = self.first_order
+        if allow_unused is None:
+            allow_unused = self.allow_unused
         return MAML(clone_module(self.module),
                     lr=self.lr,
-                    first_order=first_order)
+                    first_order=first_order,
+                    allow_unused=allow_unused)
