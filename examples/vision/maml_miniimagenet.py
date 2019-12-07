@@ -11,6 +11,7 @@ from torchvision import transforms
 from torchvision.datasets import ImageFolder
 
 import learn2learn as l2l
+from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
 
 def accuracy(predictions, targets):
@@ -70,33 +71,33 @@ def main(
     test_dataset = l2l.data.MetaDataset(test_dataset)
 
     train_transforms = [
-        l2l.data.transforms.NWays(train_dataset, ways),
-        l2l.data.transforms.KShots(train_dataset, 2*shots),
-        l2l.data.transforms.LoadData(train_dataset),
-        l2l.data.transforms.RemapLabels(train_dataset),
-        l2l.data.transforms.ConsecutiveLabels(train_dataset),
+        NWays(train_dataset, ways),
+        KShots(train_dataset, 2*shots),
+        LoadData(train_dataset),
+        RemapLabels(train_dataset),
+        ConsecutiveLabels(train_dataset),
     ]
     train_tasks = l2l.data.TaskDataset(train_dataset,
                                        task_transforms=train_transforms,
                                        num_tasks=20000)
 
     valid_transforms = [
-        l2l.data.transforms.NWays(valid_dataset, ways),
-        l2l.data.transforms.KShots(valid_dataset, 2*shots),
-        l2l.data.transforms.LoadData(valid_dataset),
-        l2l.data.transforms.ConsecutiveLabels(train_dataset),
-        l2l.data.transforms.RemapLabels(valid_dataset),
+        NWays(valid_dataset, ways),
+        KShots(valid_dataset, 2*shots),
+        LoadData(valid_dataset),
+        ConsecutiveLabels(train_dataset),
+        RemapLabels(valid_dataset),
     ]
     valid_tasks = l2l.data.TaskDataset(valid_dataset,
                                        task_transforms=valid_transforms,
                                        num_tasks=600)
 
     test_transforms = [
-        l2l.data.transforms.NWays(test_dataset, ways),
-        l2l.data.transforms.KShots(test_dataset, 2*shots),
-        l2l.data.transforms.LoadData(test_dataset),
-        l2l.data.transforms.RemapLabels(test_dataset),
-        l2l.data.transforms.ConsecutiveLabels(train_dataset),
+        NWays(test_dataset, ways),
+        KShots(test_dataset, 2*shots),
+        LoadData(test_dataset),
+        RemapLabels(test_dataset),
+        ConsecutiveLabels(train_dataset),
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
