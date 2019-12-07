@@ -8,14 +8,12 @@ Collection of general task transformations.
 A task transformation is an object that implements the callable interface.
 (Either a function or an object that implements the `__call__` special method.)
 Each transformation is called on a task description, which consists of a list of
-tuples of the form: `[(sample1, transforms1), (sample2, transforms2) ...]`, where
-`sample` corresponds to a single data sample, and `transforms` is a list of transformations
+`DataDescription` with attributes `index` and `transforms`, where
+`index` corresponds to the index of single data sample inthe dataset, and `transforms` is a list of transformations
 that will be applied to the sample.
 Each transformation must return a new task description.
 
 At first, the task description contains all samples from the dataset.
-The `sample`s are represented as their integer index in the dataset, and their corresponding
-`transform`s is empty.
 A task transform takes this task description list and modifies it such that a particular task is
 created.
 For example, the `NWays` task transform filters data samples from the task description
@@ -54,8 +52,8 @@ class LoadData(object):
         self.dataset = dataset
 
     def __call__(self, task_description):
-        for _, transforms in task_description:
-            transforms.append(lambda x: self.dataset[x])
+        for data_description in task_description:
+            data_description.transforms.append(lambda x: self.dataset[x])
         return task_description
 
 
@@ -80,8 +78,8 @@ class FilterLabels(object):
         self.labels = labels
 
     def __call__(self, task_description):
-        return [d for d in task_description
-                if self.dataset.indices_to_labels[d[0]] in self.labels]
+        return [dd for dd in task_description
+                if self.dataset.indices_to_labels[dd.index] in self.labels]
 
 
 class ConsecutiveLabels(object):
@@ -107,8 +105,8 @@ class ConsecutiveLabels(object):
         self.dataset = dataset
 
     def __call__(self, task_description):
-        pairs = [(data, self.dataset.indices_to_labels[data[0]])
-                 for data in task_description]
+        pairs = [(dd, self.dataset.indices_to_labels[dd.index])
+                 for dd in task_description]
         pairs = sorted(pairs, key=lambda x: x[1])
         return [p[0] for p in pairs]
 
@@ -138,16 +136,16 @@ class RemapLabels(object):
         return data
 
     def __call__(self, task_description):
-        labels = list(set(self.dataset.indices_to_labels[d[0]] for d in task_description))
+        labels = list(set(self.dataset.indices_to_labels[dd.index] for dd in task_description))
         if self.shuffle:
             random.shuffle(labels)
 
         def mapping(x):
             return labels.index(x)
 
-        for data in task_description:
+        for dd in task_description:
             remap = functools.partial(self.remap, mapping=mapping)
-            data[1].append(remap)
+            dd.transforms.append(remap)
         return task_description
 
 
@@ -173,9 +171,9 @@ class NWays(object):
         self.dataset = dataset
 
     def __call__(self, task_description):
-        classes = list(set([self.dataset.indices_to_labels[dt[0]] for dt in task_description]))
+        classes = list(set([self.dataset.indices_to_labels[dd.index] for dd in task_description]))
         classes = random.sample(classes, k=self.n)
-        return [data for data in task_description if self.dataset.indices_to_labels[data[0]] in classes]
+        return [dd for dd in task_description if self.dataset.indices_to_labels[dd.index] in classes]
 
 
 class KShots(object):
@@ -203,11 +201,11 @@ class KShots(object):
     def __call__(self, task_description):
         # TODO: The order of the data samples is not preserved.
         class_to_data = collections.defaultdict(list)
-        for data in task_description:
-            cls = self.dataset.indices_to_labels[data[0]]
-            class_to_data[cls].append(data)
+        for dd in task_description:
+            cls = self.dataset.indices_to_labels[dd.index]
+            class_to_data[cls].append(dd)
         if self.replacement:
             sampler = random.choices
         else:
             sampler = random.sample
-        return sum([sampler(datas, k=self.k) for datas in class_to_data.values()], [])
+        return sum([sampler(dds, k=self.k) for dds in class_to_data.values()], [])

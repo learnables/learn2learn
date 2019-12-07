@@ -23,7 +23,7 @@ def magic_box(x):
 
     **References**
 
-    1. Foerster et al. 2018. “DiCE: The Infinitely Differentiable Monte-Carlo Estimator.” arXiv.
+    1. Foerster et al. 2018. "DiCE: The Infinitely Differentiable Monte-Carlo Estimator." arXiv.
 
     **Arguments**
 

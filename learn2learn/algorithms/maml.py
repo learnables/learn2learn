@@ -86,7 +86,7 @@ class MAML(BaseLearner):
 
     **References**
 
-    1. Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.”
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."
 
     **Example**
 

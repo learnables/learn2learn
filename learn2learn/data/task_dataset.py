@@ -13,6 +13,25 @@ from torch.utils.data._utils import collate
 import learn2learn as l2l
 
 
+class DataDescription(object):
+
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py)
+
+    **Description**
+
+    Simple class to describe the data and its transforms in a task description.
+
+    **Arguments**
+
+    * **index** (int) - The index of the sample in the dataset.
+    """
+
+    def __init__(self, index):
+        self.index = index
+        self.transforms = []
+
+
 class TaskDataset(Dataset):
 
     """
@@ -67,13 +86,15 @@ class TaskDataset(Dataset):
         self.num_tasks = num_tasks
         self.task_transforms = task_transforms
         self.sampled_descriptions = {}  # Maps indices to tasks' description dict
-        self.dataset_description = [(i, []) for i in range(len(dataset))]
+        self.dataset_description = [DataDescription(i) for i in range(len(dataset))]
         self.task_collate = task_collate
         self._task_id = 0
 
     def sample_task_description(self):
         #  Samples a new task description.
         description = copy.deepcopy(self.dataset_description)
+        if callable(self.task_transforms):
+            return self.task_transforms(description)
         for transform in self.task_transforms:
             description = transform(description)
         return description
@@ -81,8 +102,9 @@ class TaskDataset(Dataset):
     def get_task(self, task_description):
         #  Given a task description, creates the corresponding batch of data.
         all_data = []
-        for data, transforms in task_description:
-            for transform in transforms:
+        for data_description in task_description:
+            data = data_description.index
+            for transform in data_description.transforms:
                 data = transform(data)
             all_data.append(data)
         return self.task_collate(all_data)
