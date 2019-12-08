@@ -10,7 +10,6 @@ from torchvision import transforms
 
 import learn2learn as l2l
 
-from copy import deepcopy
 from PIL.Image import LANCZOS
 
 

@@ -10,8 +10,6 @@ from torch import nn
 from torch import optim
 from torchvision import transforms
 
-from copy import deepcopy
-
 import learn2learn as l2l
 
 

@@ -70,6 +70,25 @@ class TestMAMLAlgorithm(unittest.TestCase):
             self.assertTrue(hasattr(p, 'grad'))
             self.assertTrue(p.grad.norm(p=2).item() > 0.0)
 
+    def test_allow_unused(self):
+        maml = l2l.algorithms.MAML(self.model,
+                                   lr=INNER_LR,
+                                   first_order=False,
+                                   allow_unused=True)
+        clone = maml.clone()
+        loss = 0.0
+        for i, p in enumerate(clone.parameters()):
+            if i % 2 == 0:
+                loss += p.norm(p=2)
+        clone.adapt(loss)
+        loss = 0.0
+        for i, p in enumerate(clone.parameters()):
+            if i % 2 == 0:
+                loss += p.norm(p=2)
+        loss.backward()
+        for p in maml.parameters():
+            self.assertTrue(hasattr(p, 'grad'))
+
 
 if __name__ == '__main__':
     unittest.main()
