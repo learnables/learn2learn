@@ -133,7 +133,7 @@
         <li class="main "><a href="#fullomniglot">FullOmniglot</a></li>
         <li class="main "><a href="#miniimagenet">MiniImagenet</a></li>
         <li class="main "><a href="#learn2learnvisiontransforms">learn2learn.vision.transforms</a></li>
-        <li class="main "><a href="#randomdiscreterotation">RandomDiscreteRotation</a></li>
+        <li class="main "><a href="#randomclassrotation">RandomClassRotation</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -239,8 +239,6 @@ The background and evaluation splits are available in the <code>torchvision</cod
 <p><strong>Example</strong></p>
 <pre><code class="python">omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
                                             transform=transforms.Compose([
-                                                l2l.vision.transforms.RandomDiscreteRotation(
-                                                    [0.0, 90.0, 180.0, 270.0]),
                                                 transforms.Resize(28, interpolation=LANCZOS),
                                                 transforms.ToTensor(),
                                                 lambda x: 1.0 - x,
@@ -281,19 +279,20 @@ train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
 <h1 id="learn2learnvisiontransforms">learn2learn.vision.transforms</h1>
 <p><strong>Description</strong></p>
 <p>A set of transformations commonly used in meta-learning vision tasks.</p>
-<h1 id="randomdiscreterotation">RandomDiscreteRotation</h1>
-<pre><code class="python">RandomDiscreteRotation(degrees, *args, **kwargs)
+<h1 id="randomclassrotation">RandomClassRotation</h1>
+<pre><code class="python">RandomClassRotation(dataset, degrees)
 </code></pre>
 
 <p><a href="">[Source]</a></p>
 <p><strong>Description</strong></p>
-<p>Samples rotations from a given list, uniformly at random.</p>
+<p>Samples rotations from a given list uniformly at random, and applies it to
+all images from a given class.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>degrees</strong> (list) - The rotations to be sampled.</li>
 </ul>
 <p><strong>Example</strong></p>
-<pre><code class="python">transform = RandomDiscreteRotation([0, 90, 180, 270])
+<pre><code class="python">transform = RandomClassRotation([0, 90, 180, 270])
 </code></pre></div>
         </div>
 

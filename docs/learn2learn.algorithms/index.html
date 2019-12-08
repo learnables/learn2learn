@@ -159,7 +159,7 @@ upon initialization.</p>
 </ul>
 <p><strong>References</strong></p>
 <ol>
-<li>Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.”</li>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."</li>
 </ol>
 <p><strong>Example</strong></p>
 <pre><code class="python">linear = l2l.algorithms.MAML(nn.Linear(20, 10), lr=0.01)
@@ -205,6 +205,7 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <pre><code class="python">maml_update(model, lr, grads=None)
 </code></pre>
 
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Performs a MAML update on model using grads and lr.
 The function re-routes the Python object, thus avoiding in-place

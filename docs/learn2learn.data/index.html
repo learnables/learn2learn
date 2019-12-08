@@ -126,17 +126,24 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#metadataset">MetaDataset</a></li>
-        <li class="main "><a href="#taskgenerator">TaskGenerator</a></li>
+        <li class="main "><a href="#taskdataset">TaskDataset</a></li>
             <li><a href="#sample">sample</a></li>
+        <li class="main "><a href="#learn2learndatatransforms">learn2learn.data.transforms</a></li>
+        <li class="main "><a href="#loaddata">LoadData</a></li>
+        <li class="main "><a href="#nways">NWays</a></li>
+        <li class="main "><a href="#kshots">KShots</a></li>
+        <li class="main "><a href="#filterlabels">FilterLabels</a></li>
+        <li class="main "><a href="#remaplabels">RemapLabels</a></li>
+        <li class="main "><a href="#consecutivelabels">ConsecutiveLabels</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="metadataset">MetaDataset</h1>
-<pre><code class="python">MetaDataset(dataset, labels_to_indices=None)
+<pre><code class="python">MetaDataset(dataset)
 </code></pre>
 
-<p><strong>Descritpion</strong></p>
+<p><strong>Description</strong></p>
 <p>It wraps a torch dataset by creating a map of target to indices.
 This comes in handy when we want to sample elements randomly for a particular label.</p>
 <p>Notes:
@@ -155,42 +162,144 @@ This comes in handy when we want to sample elements randomly for a particular la
 mnist = l2l.data.MetaDataset(mnist)
 </code></pre>
 
-<h1 id="taskgenerator">TaskGenerator</h1>
-<pre><code class="python">TaskGenerator(dataset, ways=2, shots=1, classes=None, tasks=None)
+<h1 id="taskdataset">TaskDataset</h1>
+<pre><code class="python">TaskDataset(dataset, task_transforms=None, num_tasks=-1, task_collate=None)
 </code></pre>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_generator.py">[Source]</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
 <p><strong>Description</strong></p>
-<p>A wrapper to generate few-shot classification tasks.</p>
-<p><code>tasks</code> can both indicate predefined tasks, or just the number of tasks to sample.
-If specified as an int, a list of size <code>task</code> would be generated from which we'll sample.
-If specified as a list, then that list of tasks would be used to sample always.</p>
-<p>The acceptable shape of list would be <code>n * w</code>, with n the number of tasks to sample and w the number of ways.</p>
-<p>Each of the task should have w distinct elements all of which are required to be a subset of ways.</p>
+<p>Creates a set of tasks from a given Dataset.</p>
+<p>In addition to the Dataset, TaskDataset accepts a list of task transformations (<code>task_transforms</code>)
+which define the kind of tasks sampled from the dataset.</p>
+<p>The tasks are lazily sampled upon indexing (or calling the <code>.sample()</code> method), and their
+descriptions cached for later use.
+If <code>num_tasks</code> is -1, the TaskDataset will not cache task descriptions and instead continuously resample
+new ones.
+In this case, the length of the TaskDataset is set to 1.</p>
+<p>For more information on tasks and task descriptions, please refer to the
+documentation of task transforms.</p>
 <p><strong>Arguments</strong></p>
 <ul>
-<li><strong>ways</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from.</li>
-<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data points per task to sample.</li>
-<li><strong>dataset</strong> (MetaDataset or Dataset) - The (meta-) dataset to wrap.</li>
-<li><strong>classes</strong> (list, <em>optional</em>, default=None) - List of classes to sample from,
-    if none then sample from all available classes in dataset. (default: None)</li>
-<li><strong>tasks</strong> (int or list, <em>optional</em>, default=None) - Tasks to be generated.
-            If none, then all possible permutations are chosen from n classes and w ways.</li>
+<li><strong>dataset</strong> (Dataset) - Dataset of data to compute tasks.</li>
+<li><strong>task_transforms</strong> (list, <em>optional</em>, default=None) - List of task transformations.</li>
+<li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - Number of tasks to generate.</li>
 </ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">dataset = l2l.data.MetaDataset(MyDataset())
+transforms = [
+    l2l.data.transforms.NWays(dataset, n=5),
+    l2l.data.transforms.KShots(dataset, k=1),
+    l2l.data.transforms.LoadData(dataset),
+]
+taskset = TaskDataset(dataset, transforms, num_tasks=20000)
+for task in taskset:
+    X, y = task
+</code></pre>
+
 <h2 id="sample">sample</h2>
-<pre><code class="python">TaskGenerator.sample(shots=None, task=None)
+<pre><code class="python">TaskDataset.sample()
 </code></pre>
 
 <p><strong>Description</strong></p>
-<p>Returns a dataset and the labels that we have sampled.</p>
-<p>The dataset is of length <code>shots * ways</code>.
-The length of labels we have sampled is the same as <code>shots</code>.</p>
+<p>Randomly samples a task from the TaskDataset.</p>
+<p><strong>Example</strong></p>
+<pre><code class="python">X, y = taskset.sample()
+</code></pre>
+
+<h1 id="learn2learndatatransforms">learn2learn.data.transforms</h1>
+<p><strong>Description</strong></p>
+<p>Collection of general task transformations.</p>
+<p>A task transformation is an object that implements the callable interface.
+(Either a function or an object that implements the <code>__call__</code> special method.)
+Each transformation is called on a task description, which consists of a list of
+<code>DataDescription</code> with attributes <code>index</code> and <code>transforms</code>, where
+<code>index</code> corresponds to the index of single data sample inthe dataset, and <code>transforms</code> is a list of transformations
+that will be applied to the sample.
+Each transformation must return a new task description.</p>
+<p>At first, the task description contains all samples from the dataset.
+A task transform takes this task description list and modifies it such that a particular task is
+created.
+For example, the <code>NWays</code> task transform filters data samples from the task description
+such that remaining ones belong to a random subset of all classes available.
+(The size of the subset is controlled via the class's <code>n</code> argument.)
+On the other hand, the <code>LoadData</code> task transform simply appends a call to load the actual
+data from the dataset to the list of transformations of each sample.</p>
+<p>To create a task from a task description, the <code>TaskDataset</code> applies each sample's list of <code>transform</code>s
+in order.
+Then, all samples are collated via the <code>TaskDataset</code>'s collate function.</p>
+<h1 id="loaddata">LoadData</h1>
+<pre><code class="python">LoadData(dataset)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Loads a sample from the dataset given its index.</p>
 <p><strong>Arguments</strong></p>
-<p><strong>shots</strong> (int, <em>optional</em>, default=None) - Number of data points to return per class, if None gets self.shots.
-<strong>task</strong> (list, <em>optional</em>, default=None) - List of labels you want to sample from.</p>
-<p><strong>Returns</strong></p>
 <ul>
-<li>Dataset - Containing the sampled task.</li>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+</ul>
+<h1 id="nways">NWays</h1>
+<pre><code class="python">NWays(dataset, n=2)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Keeps samples from N random labels present in the task description.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>n</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from the task
+    description's labels.</li>
+</ul>
+<h1 id="kshots">KShots</h1>
+<pre><code class="python">KShots(dataset, k=1, replacement=False)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Keeps K samples for each present labels.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>k</strong> (int, <em>optional</em>, default=1) - The number of samples per label.</li>
+<li><strong>replacement</strong> (bool, <em>optional</em>, default) - Whether to sample with replacement.</li>
+</ul>
+<h1 id="filterlabels">FilterLabels</h1>
+<pre><code class="python">FilterLabels(dataset, labels)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Removes samples that do not belong to the given set of labels.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>labels</strong> (list) - The list of labels to include.</li>
+</ul>
+<h1 id="remaplabels">RemapLabels</h1>
+<pre><code class="python">RemapLabels(dataset, shuffle=True)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Given samples from K classes, maps the labels to 0, ..., K.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+</ul>
+<h1 id="consecutivelabels">ConsecutiveLabels</h1>
+<pre><code class="python">ConsecutiveLabels(dataset)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Re-orders the samples in the task description such that they are sorted in
+consecutive order.</p>
+<p>Note: when used before <code>RemapLabels</code>, the labels will be homogeneously clustered,
+but in no specific order.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul></div>
         </div>
 

@@ -166,32 +166,33 @@ For more algorithms and lower-level utilities, please refer to the <a href="http
 mnist = torchvision.datasets.MNIST(root=&quot;/tmp/mnist&quot;, train=True)
 
 mnist = l2l.data.MetaDataset(mnist)
-task_generator = l2l.data.TaskGenerator(mnist,
-                                        ways=3,
-                                        classes=[0, 1, 4, 6, 8, 9],
-                                        tasks=10)
+train_tasks = l2l.data.TaskDataset(mnist,
+                                   task_transforms=[
+                                        NWays(mnist, n=3),
+                                        KShots(mnist, k=1),
+                                        LoadData(mnist),
+                                   ],
+                                   num_tasks=10)
 model = Net()
 maml = l2l.algorithms.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):
     learner = maml.clone()  # Creates a clone of model
-    adaptation_task = task_generator.sample(shots=1)
+    for task in train_tasks:
+        # Split task in adaptation_task and evalutation_task
+        # Fast adapt
+        for step in range(adaptation_steps):
+            error = compute_loss(adaptation_task)
+            learner.adapt(error)
 
-    # Fast adapt
-    for step in range(adaptation_steps):
-        error = compute_loss(adaptation_task)
-        learner.adapt(error)
+        # Compute evaluation loss
+        evaluation_error = compute_loss(evaluation_task)
 
-    # Compute evaluation loss
-    evaluation_task = task_generator.sample(shots=1,
-                                            task=adaptation_task.sampled_task)
-    evaluation_error = compute_loss(evaluation_task)
-
-    # Meta-update the model parameters
-    opt.zero_grad()
-    evaluation_error.backward()
-    opt.step()
+        # Meta-update the model parameters
+        opt.zero_grad()
+        evaluation_error.backward()
+        opt.step()
 </code></pre>
 
 <h2 id="citation">Citation</h2>
@@ -299,5 +300,5 @@ for iteration in range(num_iterations):
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-12-04 20:12:29
+Build Date UTC : 2019-12-08 02:45:36
 -->
