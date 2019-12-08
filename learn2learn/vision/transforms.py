@@ -8,18 +8,18 @@ A set of transformations commonly used in meta-learning vision tasks.
 """
 
 import random
+from torchvision import transforms
 
-from torchvision.transforms import RandomRotation
 
-
-class RandomDiscreteRotation(RandomRotation):
+class RandomClassRotation(object):
     """
 
     [[Source]]()
 
     **Description**
 
-    Samples rotations from a given list, uniformly at random.
+    Samples rotations from a given list uniformly at random, and applies it to
+    all images from a given class.
 
     **Arguments**
 
@@ -27,16 +27,26 @@ class RandomDiscreteRotation(RandomRotation):
 
     **Example**
     ~~~python
-    transform = RandomDiscreteRotation([0, 90, 180, 270])
+    transform = RandomClassRotation([0, 90, 180, 270])
     ~~~
 
     """
 
-    def __init__(self, degrees, *args, **kwargs):
-        super(RandomDiscreteRotation, self).__init__(degrees[0], *args, **kwargs)
+    def __init__(self, dataset, degrees):
         self.degrees = degrees
+        self.dataset = dataset
 
-    @staticmethod
-    def get_params(degrees):
-        angle = random.choice(degrees)
-        return angle
+    def __call__(self, task_description):
+        rotations = {}
+        for data_description in task_description:
+            c = self.dataset.indices_to_labels[data_description.index]
+            if c not in rotations:
+                rot = random.choice(self.degrees)
+                rotations[c] = transforms.Compose([
+                    transforms.ToPILImage(),
+                    transforms.RandomRotation((rot, rot)),
+                    transforms.ToTensor(),
+                ])
+            rotation = rotations[c]
+            data_description.transforms.append(lambda x: (rotation(x[0]), x[1]))
+        return task_description

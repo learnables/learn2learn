@@ -11,7 +11,14 @@ generate:
       - learn2learn.magic_box
   - docs/learn2learn.data.md:
       - learn2learn.data.MetaDataset
-      - learn2learn.data.TaskGenerator++
+      - learn2learn.data.TaskDataset++
+      - learn2learn.data.transforms
+      - learn2learn.data.transforms.LoadData
+      - learn2learn.data.transforms.NWays
+      - learn2learn.data.transforms.KShots
+      - learn2learn.data.transforms.FilterLabels
+      - learn2learn.data.transforms.RemapLabels
+      - learn2learn.data.transforms.ConsecutiveLabels
   - docs/learn2learn.algorithms.md:
       - learn2learn.algorithms.MAML++
       - learn2learn.algorithms.maml_update
@@ -38,7 +45,7 @@ generate:
       - learn2learn.vision.datasets.FullOmniglot
       - learn2learn.vision.datasets.MiniImagenet
       - learn2learn.vision.transforms
-      - learn2learn.vision.transforms.RandomDiscreteRotation
+      - learn2learn.vision.transforms.RandomClassRotation
   - docs/learn2learn.text.md:
       - learn2learn.text.datasets.NewsClassification
 

@@ -18,21 +18,27 @@ def accuracy(predictions, targets):
     return (predictions == targets).sum().float() / targets.size(0)
 
 
-def fast_adapt(adaptation_data, evaluation_data, learner, loss, adaptation_steps, device):
+def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
+    data, labels = batch
+    data, labels = data.to(device), labels.to(device)
+
+    # Separate data into adaptation/evalutation sets
+    adaptation_indices = th.zeros(data.size(0)).byte()
+    adaptation_indices[th.arange(shots*ways) * 2] = 1
+    adaptation_data, adaptation_labels = data[adaptation_indices], labels[adaptation_indices]
+    evaluation_data, evaluation_labels = data[1 - adaptation_indices], labels[1 - adaptation_indices]
+
+    # Adapt the model
     for step in range(adaptation_steps):
-        data = [d for d in adaptation_data]
-        X = th.cat([d[0] for d in data], dim=0).to(device)
-        y = th.cat([th.tensor(d[1]).view(-1) for d in data], dim=0).to(device)
-        train_error = loss(learner(X), y)
+        train_error = loss(learner(adaptation_data), adaptation_labels)
         train_error /= len(adaptation_data)
         learner.adapt(train_error)
-    data = [d for d in evaluation_data]
-    X = th.cat([d[0] for d in data], dim=0).to(device)
-    y = th.cat([th.tensor(d[1]).view(-1) for d in data], dim=0).to(device)
-    predictions = learner(X)
-    valid_error = loss(predictions, y)
+
+    # Evaluate the adapted model
+    predictions = learner(evaluation_data)
+    valid_error = loss(predictions, evaluation_labels)
     valid_error /= len(evaluation_data)
-    valid_accuracy = accuracy(predictions, y)
+    valid_accuracy = accuracy(predictions, evaluation_labels)
     return valid_error, valid_accuracy
 
 
@@ -57,35 +63,60 @@ def main(
 
     omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
                                                 transform=transforms.Compose([
-                                                    l2l.vision.transforms.RandomDiscreteRotation(
-                                                        [0.0, 90.0, 180.0, 270.0]),
                                                     transforms.Resize(28, interpolation=LANCZOS),
                                                     transforms.ToTensor(),
                                                     lambda x: 1.0 - x,
                                                 ]),
                                                 download=True)
-    omniglot = l2l.data.MetaDataset(omniglot)
+    dataset = l2l.data.MetaDataset(omniglot)
     classes = list(range(1623))
     random.shuffle(classes)
-    train_generator = l2l.data.TaskGenerator(dataset=omniglot,
-                                             ways=ways,
-                                             classes=classes[:1100],
-                                             tasks=20000)
-    valid_generator = l2l.data.TaskGenerator(dataset=omniglot,
-                                             ways=ways,
-                                             classes=classes[1100:1200],
-                                             tasks=1024)
-    test_generator = l2l.data.TaskGenerator(dataset=omniglot,
-                                            ways=ways,
-                                            classes=classes[1200:],
-                                            tasks=1024)
+
+    train_transforms = [
+        l2l.data.transforms.FilterLabels(dataset, classes[:1100]),
+        l2l.data.transforms.NWays(dataset, ways),
+        l2l.data.transforms.KShots(dataset, 2*shots),
+        l2l.data.transforms.LoadData(dataset),
+        l2l.data.transforms.RemapLabels(dataset),
+        l2l.data.transforms.ConsecutiveLabels(dataset),
+        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
+    ]
+    train_tasks = l2l.data.TaskDataset(dataset,
+                                       task_transforms=train_transforms,
+                                       num_tasks=20000)
+
+    valid_transforms = [
+        l2l.data.transforms.FilterLabels(dataset, classes[1100:1200]),
+        l2l.data.transforms.NWays(dataset, ways),
+        l2l.data.transforms.KShots(dataset, 2*shots),
+        l2l.data.transforms.LoadData(dataset),
+        l2l.data.transforms.RemapLabels(dataset),
+        l2l.data.transforms.ConsecutiveLabels(dataset),
+        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
+    ]
+    valid_tasks = l2l.data.TaskDataset(dataset,
+                                       task_transforms=valid_transforms,
+                                       num_tasks=1024)
+
+    test_transforms = [
+        l2l.data.transforms.FilterLabels(dataset, classes[1200:]),
+        l2l.data.transforms.NWays(dataset, ways),
+        l2l.data.transforms.KShots(dataset, 2*shots),
+        l2l.data.transforms.LoadData(dataset),
+        l2l.data.transforms.RemapLabels(dataset),
+        l2l.data.transforms.ConsecutiveLabels(dataset),
+        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
+    ]
+    test_tasks = l2l.data.TaskDataset(dataset,
+                                      task_transforms=test_transforms,
+                                      num_tasks=1024)
 
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
     model.to(device)
     maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
-    loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
+    loss = nn.CrossEntropyLoss(reduction='mean')
 
     for iteration in range(num_iterations):
         opt.zero_grad()
@@ -98,14 +129,13 @@ def main(
         for task in range(meta_batch_size):
             # Compute meta-training loss
             learner = maml.clone()
-            adaptation_data = train_generator.sample(shots=shots)
-            evaluation_data = train_generator.sample(shots=shots,
-                                                     task=adaptation_data.sampled_task)
-            evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
-                                                               evaluation_data,
+            batch = train_tasks.sample()
+            evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
                                                                adaptation_steps,
+                                                               shots,
+                                                               ways,
                                                                device)
             evaluation_error.backward()
             meta_train_error += evaluation_error.item()
@@ -113,28 +143,26 @@ def main(
 
             # Compute meta-validation loss
             learner = maml.clone()
-            adaptation_data = valid_generator.sample(shots=shots)
-            evaluation_data = valid_generator.sample(shots=shots,
-                                                     task=adaptation_data.sampled_task)
-            evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
-                                                               evaluation_data,
+            batch = valid_tasks.sample()
+            evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
                                                                adaptation_steps,
+                                                               shots,
+                                                               ways,
                                                                device)
             meta_valid_error += evaluation_error.item()
             meta_valid_accuracy += evaluation_accuracy.item()
 
             # Compute meta-testing loss
             learner = maml.clone()
-            adaptation_data = test_generator.sample(shots=shots)
-            evaluation_data = test_generator.sample(shots=shots,
-                                                    task=adaptation_data.sampled_task)
-            evaluation_error, evaluation_accuracy = fast_adapt(adaptation_data,
-                                                               evaluation_data,
+            batch = test_tasks.sample()
+            evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
                                                                adaptation_steps,
+                                                               shots,
+                                                               ways,
                                                                device)
             meta_test_error += evaluation_error.item()
             meta_test_accuracy += evaluation_accuracy.item()

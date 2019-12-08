@@ -36,8 +36,6 @@ class FullOmniglot(Dataset):
     ~~~python
     omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
                                                 transform=transforms.Compose([
-                                                    l2l.vision.transforms.RandomDiscreteRotation(
-                                                        [0.0, 90.0, 180.0, 270.0]),
                                                     transforms.Resize(28, interpolation=LANCZOS),
                                                     transforms.ToTensor(),
                                                     lambda x: 1.0 - x,

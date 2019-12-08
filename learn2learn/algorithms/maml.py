@@ -8,6 +8,7 @@ from learn2learn.utils import clone_module
 
 def maml_update(model, lr, grads=None):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py)
 
     **Description**
 
@@ -88,7 +89,7 @@ class MAML(BaseLearner):
 
     **References**
 
-    1. Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.”
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."
 
     **Example**
 
