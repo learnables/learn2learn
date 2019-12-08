@@ -38,8 +38,8 @@ class RandomClassRotation(object):
 
     def __call__(self, task_description):
         rotations = {}
-        for d in task_description:
-            c = self.dataset.indices_to_labels[d[0]]
+        for data_description in task_description:
+            c = self.dataset.indices_to_labels[data_description.index]
             if c not in rotations:
                 rot = random.choice(self.degrees)
                 rotations[c] = transforms.Compose([
@@ -48,5 +48,5 @@ class RandomClassRotation(object):
                     transforms.ToTensor(),
                 ])
             rotation = rotations[c]
-            d[1].append(lambda x: (rotation(x[0]), x[1]))
+            data_description.transforms.append(lambda x: (rotation(x[0]), x[1]))
         return task_description
