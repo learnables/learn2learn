@@ -40,14 +40,16 @@ class TestTransforms(TestCase):
         data = th.randn(NUM_DATA, X_SHAPE)
         labels = th.randint(0, Y_SHAPE, (NUM_DATA, ))
         dataset = MetaDataset(TensorDataset(data, labels))
-        for shots in range(1, 10):
-            task_dataset = TaskDataset(dataset, 
-                                       task_transforms=[KShots(dataset, k=shots), LoadData(dataset)],
-                                       num_tasks=NUM_TASKS)
-            for task in task_dataset:
-                bins = task[1].bincount()
-                correct = (bins == shots).sum()
-                self.assertEqual(correct, Y_SHAPE)
+        for replacement in [False, True]:
+            for shots in range(1, 10):
+                task_dataset = TaskDataset(dataset, 
+                                           task_transforms=[KShots(dataset, k=shots, replacement=replacement),
+                                                            LoadData(dataset)],
+                                           num_tasks=NUM_TASKS)
+                for task in task_dataset:
+                    bins = task[1].bincount()
+                    correct = (bins == shots).sum()
+                    self.assertEqual(correct, Y_SHAPE)
 
     def test_load_data(self):
         data = th.randn(NUM_DATA, X_SHAPE)
