@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 from torch.utils.data import Dataset, ConcatDataset
 from torchvision.datasets.omniglot import Omniglot
 
@@ -60,6 +61,7 @@ class FullOmniglot(Dataset):
                                    target_transform=lambda x: x + len(omni_background._characters))
 
         self.dataset = ConcatDataset((omni_background, omni_evaluation))
+        self._bookkeeping_path = os.path.join(self.root, 'omniglot-bookkeeping.pkl')
 
     def __len__(self):
         return len(self.dataset)
