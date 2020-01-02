@@ -206,8 +206,9 @@ class KShots(object):
             cls = self.dataset.indices_to_labels[dd.index]
             class_to_data[cls].append(dd)
         if self.replacement:
-            sampler = lambda x, k: [copy.deepcopy(dd)
-                                    for dd in random.choices(x, k=k)]
+            def sampler(x, k):
+                return [copy.deepcopy(dd)
+                        for dd in random.choices(x, k=k)]
         else:
             sampler = random.sample
         return sum([sampler(dds, k=self.k) for dds in class_to_data.values()], [])
