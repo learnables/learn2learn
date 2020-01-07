@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 
-import os
+import unittest
 import random
 
 import numpy as np
 import torch as th
 from torch import nn
 from torch import optim
-from torchvision import transforms
-from torchvision.datasets import ImageFolder
 
 import learn2learn as l2l
-from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
 
 def accuracy(predictions, targets):
@@ -51,7 +48,7 @@ def main(
         meta_batch_size=32,
         adaptation_steps=1,
         num_iterations=60000,
-        cuda=True,
+        cuda=False,
         seed=42,
 ):
     random.seed(seed)
@@ -71,33 +68,33 @@ def main(
     test_dataset = l2l.data.MetaDataset(test_dataset)
 
     train_transforms = [
-        NWays(train_dataset, ways),
-        KShots(train_dataset, 2*shots),
-        LoadData(train_dataset),
-        RemapLabels(train_dataset),
-        ConsecutiveLabels(train_dataset),
+        l2l.data.transforms.NWays(train_dataset, ways),
+        l2l.data.transforms.KShots(train_dataset, 2*shots),
+        l2l.data.transforms.LoadData(train_dataset),
+        l2l.data.transforms.RemapLabels(train_dataset),
+        l2l.data.transforms.ConsecutiveLabels(train_dataset),
     ]
     train_tasks = l2l.data.TaskDataset(train_dataset,
                                        task_transforms=train_transforms,
                                        num_tasks=20000)
 
     valid_transforms = [
-        NWays(valid_dataset, ways),
-        KShots(valid_dataset, 2*shots),
-        LoadData(valid_dataset),
-        ConsecutiveLabels(train_dataset),
-        RemapLabels(valid_dataset),
+        l2l.data.transforms.NWays(valid_dataset, ways),
+        l2l.data.transforms.KShots(valid_dataset, 2*shots),
+        l2l.data.transforms.LoadData(valid_dataset),
+        l2l.data.transforms.ConsecutiveLabels(train_dataset),
+        l2l.data.transforms.RemapLabels(valid_dataset),
     ]
     valid_tasks = l2l.data.TaskDataset(valid_dataset,
                                        task_transforms=valid_transforms,
                                        num_tasks=600)
 
     test_transforms = [
-        NWays(test_dataset, ways),
-        KShots(test_dataset, 2*shots),
-        LoadData(test_dataset),
-        RemapLabels(test_dataset),
-        ConsecutiveLabels(train_dataset),
+        l2l.data.transforms.NWays(test_dataset, ways),
+        l2l.data.transforms.KShots(test_dataset, 2*shots),
+        l2l.data.transforms.LoadData(test_dataset),
+        l2l.data.transforms.RemapLabels(test_dataset),
+        l2l.data.transforms.ConsecutiveLabels(train_dataset),
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
@@ -108,7 +105,7 @@ def main(
     model.to(device)
     maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
-    loss = nn.CrossEntropyLoss(reduction='mean')
+    loss = nn.CrossEntropyLoss(size_average=True, reduction='mean')
 
     for iteration in range(num_iterations):
         opt.zero_grad()
@@ -173,7 +170,22 @@ def main(
         for p in maml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
         opt.step()
+    return meta_train_accuracy, meta_valid_accuracy, meta_test_accuracy
+
+class MAMLMiniImagenetIntegrationTests(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_final_accuracy(self):
+        train_acc, valid_acc, test_acc = main(num_iterations=1)
+        self.assertTrue(train_acc >= 0.2)
+        self.assertTrue(valid_acc >= 0.2)
+        self.assertTrue(test_acc >= 0.2)
 
 
 if __name__ == '__main__':
-    main()
+    unittest.main()

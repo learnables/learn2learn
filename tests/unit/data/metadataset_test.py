@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import unittest
 from unittest import TestCase
 
@@ -54,8 +56,9 @@ class TestMetaDataset(TestCase):
             assert_array_equal(data, [rand_index for _ in range(self.ds.features)])
             self.assertEqual(label, chr(97 + rand_index))
 
-    def test_get_dict_of_labels_to_indices(self):
-        dict_label_to_indices = self.meta_alpha_dataset.get_dict_of_labels_to_indices()
+    def test_labels_to_indices(self):
+        self.meta_alpha_dataset.create_bookkeeping()
+        dict_label_to_indices = self.meta_alpha_dataset.labels_to_indices
         self.assertEqual(sorted(list(dict_label_to_indices.keys())), self.ds.alphabets)
         for key in dict_label_to_indices:
             self.assertEqual(dict_label_to_indices[key][0], ord(key) - 97)

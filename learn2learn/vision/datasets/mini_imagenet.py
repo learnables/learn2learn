@@ -76,6 +76,7 @@ class MiniImagenet(data.Dataset):
         self.transform = transform
         self.target_transform = target_transform
         self.mode = mode
+        self._bookkeeping_path = os.path.join(self.root, 'mini-imagenet-bookkeeping-' + mode + '.pkl')
         if self.mode == 'test':
             google_drive_file_id = '1wpmY-hmiJUUlRBkO9ZDCXAcIpHEFdOhD'
         elif self.mode == 'train':
@@ -89,8 +90,8 @@ class MiniImagenet(data.Dataset):
             download_pkl(google_drive_file_id, root, mode)
 
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
-        f = open(pickle_file, 'rb')
-        self.data = pickle.load(f)
+        with open(pickle_file, 'rb') as f:
+            self.data = pickle.load(f)
 
         self.x = torch.from_numpy(self.data["image_data"]).permute(0, 3, 1, 2).float()
         self.y = np.ones(len(self.x))

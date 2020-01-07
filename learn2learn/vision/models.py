@@ -75,11 +75,11 @@ class ConvBlock(nn.Module):
             self.max_pool = lambda x: x
         self.normalize = nn.BatchNorm2d(out_channels,
                                         affine=True,
-                                        eps=1e-3,
-                                        momentum=0.999,
-                                        track_running_stats=False,
+                                        # eps=1e-3,
+                                        # momentum=0.999,
+                                        # track_running_stats=False,
                                         )
-        # TODO: Add BN bias.
+        nn.init.uniform_(self.normalize.weight)
         self.relu = nn.ReLU()
 
         self.conv = nn.Conv2d(in_channels,
@@ -238,7 +238,7 @@ class MiniImagenetCNN(nn.Module):
 
     **Example**
     ~~~python
-    model = MiniImagenet(output_size=20, hidden_size=128, layers=3)
+    model = MiniImagenetCNN(output_size=20, hidden_size=128, layers=3)
     ~~~
     """
 

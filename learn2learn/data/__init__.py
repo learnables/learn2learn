@@ -1,3 +1,6 @@
 #!/usr/bin/env python3
 
-from .task_generator import TaskGenerator, MetaDataset
+from . import transforms
+
+from .meta_dataset import MetaDataset
+from .task_dataset import TaskDataset

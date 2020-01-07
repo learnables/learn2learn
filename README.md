@@ -43,35 +43,55 @@ import learn2learn as l2l
 mnist = torchvision.datasets.MNIST(root="/tmp/mnist", train=True)
 
 mnist = l2l.data.MetaDataset(mnist)
-task_generator = l2l.data.TaskGenerator(mnist,
-                                        ways=3,
-                                        classes=[0, 1, 4, 6, 8, 9],
-                                        tasks=10)
+train_tasks = l2l.data.TaskDataset(mnist,
+                                   task_transforms=[
+                                        NWays(mnist, n=3),
+                                        KShots(mnist, k=1),
+                                        LoadData(mnist),
+                                   ],
+                                   num_tasks=10)
 model = Net()
 maml = l2l.algorithms.MAML(model, lr=1e-3, first_order=False)
 opt = optim.Adam(maml.parameters(), lr=4e-3)
 
 for iteration in range(num_iterations):
     learner = maml.clone()  # Creates a clone of model
-    adaptation_task = task_generator.sample(shots=1)
+    for task in train_tasks:
+        # Split task in adaptation_task and evalutation_task
+        # Fast adapt
+        for step in range(adaptation_steps):
+            error = compute_loss(adaptation_task)
+            learner.adapt(error)
 
-    # Fast adapt
-    for step in range(adaptation_steps):
-        error = compute_loss(adaptation_task)
-        learner.adapt(error)
+        # Compute evaluation loss
+        evaluation_error = compute_loss(evaluation_task)
 
-    # Compute evaluation loss
-    evaluation_task = task_generator.sample(shots=1,
-                                            task=adaptation_task.sampled_task)
-    evaluation_error = compute_loss(evaluation_task)
+        # Meta-update the model parameters
+        opt.zero_grad()
+        evaluation_error.backward()
+        opt.step()
+~~~
 
-    # Meta-update the model parameters
-    opt.zero_grad()
-    evaluation_error.backward()
-    opt.step()
+## Citation
+
+To cite the `learn2learn` repository in your academic publications, please use the following reference.
+
+> Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `"learn2learn"`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
+
+You can also use the following Bibtex entry.
+
+~~~bib
+@misc{learn2learn2019,
+    author       = {Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner},
+    title        = {learn2learn},
+    month        = sep,
+    year         = 2019,
+    url          = {https://github.com/learnables/learn2learn}
+    }
 ~~~
 
 ### Acknowledgements & Friends
 
 1. The RL environments are adapted from Tristan Deleu's [implementations](https://github.com/tristandeleu/pytorch-maml-rl) and from the ProMP [repository](https://github.com/jonasrothfuss/ProMP/). Both shared with permission, under the MIT License.
 2. [TorchMeta](https://github.com/tristandeleu/pytorch-meta) is similar library, with a focus on supervised meta-learning. If learn2learn were missing a particular functionality, we would go check if TorchMeta has it. But we would also open an issue ;)
+3. [higher](https://github.com/facebookresearch/higher) is a PyTorch library that also enables differentiating through optimization inner-loops. Their approach is different from learn2learn in that they monkey-patch nn.Module to be stateless. For more information, refer to [their ArXiv paper](https://arxiv.org/abs/1910.01727).

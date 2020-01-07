@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 from torch.utils.data import Dataset, ConcatDataset
 from torchvision.datasets.omniglot import Omniglot
 
@@ -36,8 +37,6 @@ class FullOmniglot(Dataset):
     ~~~python
     omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
                                                 transform=transforms.Compose([
-                                                    l2l.vision.transforms.RandomDiscreteRotation(
-                                                        [0.0, 90.0, 180.0, 270.0]),
                                                     transforms.Resize(28, interpolation=LANCZOS),
                                                     transforms.ToTensor(),
                                                     lambda x: 1.0 - x,
@@ -49,6 +48,7 @@ class FullOmniglot(Dataset):
     """
 
     def __init__(self, root, transform=None, target_transform=None, download=False):
+        self.root = root
         self.transform = transform
         self.target_transform = target_transform
 
@@ -62,6 +62,7 @@ class FullOmniglot(Dataset):
                                    target_transform=lambda x: x + len(omni_background._characters))
 
         self.dataset = ConcatDataset((omni_background, omni_evaluation))
+        self._bookkeeping_path = os.path.join(self.root, 'omniglot-bookkeeping.pkl')
 
     def __len__(self):
         return len(self.dataset)
