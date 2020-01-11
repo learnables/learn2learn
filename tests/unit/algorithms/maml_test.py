@@ -94,14 +94,11 @@ class TestMAMLAlgorithm(unittest.TestCase):
         maml = l2l.algorithms.MAML(self.model,
                                    lr=INNER_LR,
                                    first_order=False,
-                                   allow_unused=True,
+                                   allow_unused=False,
                                    allow_nograd=False)
         clone = maml.clone()
 
-        loss = 0.0
-        for i, p in enumerate(clone.parameters()):
-            if i % 2 == 0:
-                loss += p.norm(p=2)
+        loss = sum([p.norm(p=2) for p in clone.parameters()])
         try:
             # Check that without allow_nograd, adaptation fails
             clone.adapt(loss)
@@ -109,23 +106,19 @@ class TestMAMLAlgorithm(unittest.TestCase):
         except:
             # Check that with allow_nograd, adaptation succeeds
             clone.adapt(loss, allow_nograd=True)
-            loss = 0.0
-            for i, p in enumerate(clone.parameters()):
-                if i % 2 == 0:
-                    loss += p.norm(p=2)
+            loss = sum([p.norm(p=2) for p in clone.parameters()])
             loss.backward()
             self.assertTrue(self.model[2].weight.grad is None)
+            for p in self.model.parameters():
+                if p.requires_grad:
+                    self.assertTrue(p.grad is not None)
 
         maml = l2l.algorithms.MAML(self.model,
                                    lr=INNER_LR,
                                    first_order=False,
                                    allow_nograd=True)
         clone = maml.clone()
-
-        loss = 0.0
-        for i, p in enumerate(clone.parameters()):
-            if i % 2 == 0:
-                loss += p.norm(p=2)
+        loss = sum([p.norm(p=2) for p in clone.parameters()])
         # Check that without allow_nograd, adaptation succeeds thanks to init.
         orig_weight = self.model[2].weight.clone().detach()
         clone.adapt(loss)
