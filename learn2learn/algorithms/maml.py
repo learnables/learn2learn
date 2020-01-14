@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import traceback
 from torch.autograd import grad
 
 from learn2learn.algorithms.base_learner import BaseLearner
@@ -84,8 +85,10 @@ class MAML(BaseLearner):
     * **lr** (float) - Fast adaptation learning rate.
     * **first_order** (bool, *optional*, default=False) - Whether to use the first-order
         approximation of MAML. (FOMAML)
-    * **allow_unused** (bool, *optional*, default=False) - Whether to allow differentiation
-        of unused parameters.
+    * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
+        of unused parameters. Defaults to `allow_nograd`.
+    * **allow_nograd** (bool, *optional*, default=False) - Whether to allow adaptation with
+        parameters that have `requires_grad = False`.
 
     **References**
 
@@ -103,17 +106,29 @@ class MAML(BaseLearner):
     ~~~
     """
 
-    def __init__(self, model, lr, first_order=False, allow_unused=False):
+    def __init__(self,
+                 model,
+                 lr,
+                 first_order=False,
+                 allow_unused=None,
+                 allow_nograd=False):
         super(MAML, self).__init__()
         self.module = model
         self.lr = lr
         self.first_order = first_order
+        self.allow_nograd = allow_nograd
+        if allow_unused is None:
+            allow_unused = allow_nograd
         self.allow_unused = allow_unused
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
 
-    def adapt(self, loss, first_order=None, allow_unused=None):
+    def adapt(self,
+              loss,
+              first_order=None,
+              allow_unused=None,
+              allow_nograd=None):
         """
         **Description**
 
@@ -125,22 +140,53 @@ class MAML(BaseLearner):
         * **first_order** (bool, *optional*, default=None) - Whether to use first- or
             second-order updates. Defaults to self.first_order.
         * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
-        of unused parameters. Defaults to self.allow_unused.
+            of unused parameters. Defaults to self.allow_unused.
+        * **allow_nograd** (bool, *optional*, default=None) - Whether to allow adaptation with
+            parameters that have `requires_grad = False`. Defaults to self.allow_nograd.
 
         """
         if first_order is None:
             first_order = self.first_order
         if allow_unused is None:
             allow_unused = self.allow_unused
+        if allow_nograd is None:
+            allow_nograd = self.allow_nograd
         second_order = not first_order
-        gradients = grad(loss,
-                         self.module.parameters(),
-                         retain_graph=second_order,
-                         create_graph=second_order,
-                         allow_unused=allow_unused)
+
+        if allow_nograd:
+            # Compute relevant gradients
+            diff_params = [p for p in self.module.parameters() if p.requires_grad]
+            grad_params = grad(loss,
+                               diff_params,
+                               retain_graph=second_order,
+                               create_graph=second_order,
+                               allow_unused=allow_unused)
+            gradients = []
+            grad_counter = 0
+
+            # Handles gradients for non-differentiable parameters
+            for param in self.module.parameters():
+                if param.requires_grad:
+                    gradient = grad_params[grad_counter]
+                    grad_counter += 1
+                else:
+                    gradient = None
+                gradients.append(gradient)
+        else:
+            try:
+                gradients = grad(loss,
+                                 self.module.parameters(),
+                                 retain_graph=second_order,
+                                 create_graph=second_order,
+                                 allow_unused=allow_unused)
+            except RuntimeError:
+                traceback.print_exc()
+                print('learn2learn: Maybe try with allow_nograd=True and/or allow_unused=True ?')
+
+        # Update the module
         self.module = maml_update(self.module, self.lr, gradients)
 
-    def clone(self, first_order=None, allow_unused=None):
+    def clone(self, first_order=None, allow_unused=None, allow_nograd=None):
         """
         **Description**
 
@@ -157,13 +203,18 @@ class MAML(BaseLearner):
             or second-order updates. Defaults to self.first_order.
         * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
         of unused parameters. Defaults to self.allow_unused.
+        * **allow_nograd** (bool, *optional*, default=False) - Whether to allow adaptation with
+            parameters that have `requires_grad = False`. Defaults to self.allow_nograd.
 
         """
         if first_order is None:
             first_order = self.first_order
         if allow_unused is None:
             allow_unused = self.allow_unused
+        if allow_nograd is None:
+            allow_nograd = self.allow_nograd
         return MAML(clone_module(self.module),
                     lr=self.lr,
                     first_order=first_order,
-                    allow_unused=allow_unused)
+                    allow_unused=allow_unused,
+                    allow_nograd=allow_nograd)
