@@ -80,6 +80,7 @@ class MetaOptimizer(Optimizer):
         super(MetaOptimizer, self).__init__(params, defaults)
         assert len(list(model.parameters())) == sum([len(pg['params']) for pg in self.param_groups], 0), \
             'MetaOptimizers only work on the entire parameter set of the specified model.'
+        self.num_parameters = len(list(self.parameters()))
 
     def clone(self, model=None):
         """
@@ -112,16 +113,17 @@ class MetaOptimizer(Optimizer):
         return new_opt
 
     def adapt(self, loss, lr=1.0):
-        # Compute gradients w.r.t opt
-        opt_grads = autograd.grad(loss,
-                                  self.parameters(),
-                                  allow_unused=True,
-                                  create_graph=True)
-        # Update opt via GD
-        l2l.nn.utils.set_gradients(self.parameters(), opt_grads)
-        for group in self.param_groups:
-            update = group['update']
-            group['update'] = l2l.algorithms.maml_update(model=update, lr=lr)
+        if self.num_parameters:
+            # Compute gradients w.r.t opt
+            opt_grads = autograd.grad(loss,
+                                      self.parameters(),
+                                      allow_unused=True,
+                                      create_graph=True)
+            # Update opt via GD
+            l2l.nn.utils.set_gradients(self.parameters(), opt_grads)
+            for group in self.param_groups:
+                update = group['update']
+                group['update'] = l2l.algorithms.maml_update(model=update, lr=lr)
 
     def step(self, loss=None):
         """
