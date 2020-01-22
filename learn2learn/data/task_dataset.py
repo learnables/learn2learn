@@ -92,7 +92,7 @@ class TaskDataset(Dataset):
 
     def sample_task_description(self):
         #  Samples a new task description.
-        description = copy.deepcopy(self.dataset_description)
+        description = [DataDescription(i) for i in range(len(self.dataset))]
         if callable(self.task_transforms):
             return self.task_transforms(description)
         for transform in self.task_transforms:
@@ -107,7 +107,8 @@ class TaskDataset(Dataset):
             for transform in data_description.transforms:
                 data = transform(data)
             all_data.append(data)
-        return self.task_collate(all_data)
+        task = self.task_collate(all_data)
+        return task
 
     def sample(self):
         """

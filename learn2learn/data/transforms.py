@@ -109,7 +109,8 @@ class ConsecutiveLabels(object):
         pairs = [(dd, self.dataset.indices_to_labels[dd.index])
                  for dd in task_description]
         pairs = sorted(pairs, key=lambda x: x[1])
-        return [p[0] for p in pairs]
+        new_task = [p[0] for p in pairs]
+        return new_task
 
 
 class RemapLabels(object):
@@ -142,7 +143,8 @@ class RemapLabels(object):
             random.shuffle(labels)
 
         def mapping(x):
-            return labels.index(x)
+            idx = labels.index(x)
+            return idx
 
         for dd in task_description:
             remap = functools.partial(self.remap, mapping=mapping)
@@ -172,9 +174,12 @@ class NWays(object):
         self.dataset = dataset
 
     def __call__(self, task_description):
-        classes = list(set([self.dataset.indices_to_labels[dd.index] for dd in task_description]))
+        classes = list(set([self.dataset.indices_to_labels[dd.index]
+                            for dd in task_description]))
         classes = random.sample(classes, k=self.n)
-        return [dd for dd in task_description if self.dataset.indices_to_labels[dd.index] in classes]
+        new_task = [dd for dd in task_description
+                    if self.dataset.indices_to_labels[dd.index] in classes]
+        return new_task
 
 
 class KShots(object):
@@ -211,4 +216,6 @@ class KShots(object):
                         for dd in random.choices(x, k=k)]
         else:
             sampler = random.sample
-        return sum([sampler(dds, k=self.k) for dds in class_to_data.values()], [])
+        new_task = sum([sampler(dds, k=self.k)
+                        for dds in class_to_data.values()], [])
+        return new_task
