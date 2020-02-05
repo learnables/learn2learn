@@ -53,8 +53,12 @@ class LoadData(object):
         self.dataset = dataset
 
     def __call__(self, task_description):
+
+        def load(x):
+            data = self.dataset[x]
+            return data
         for data_description in task_description:
-            data_description.transforms.append(lambda x: self.dataset[x])
+            data_description.transforms.append(load)
         return task_description
 
 
