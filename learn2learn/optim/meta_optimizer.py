@@ -268,3 +268,4 @@ class MetaOptimizer(Optimizer):
             update = pg['update']
             if hasattr(update, 'to'):
                 update.to(*args, **kwargs)
+        return self
