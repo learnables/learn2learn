@@ -44,7 +44,7 @@ class RandomClassRotation(object):
                 rot = random.choice(self.degrees)
                 rotations[c] = transforms.Compose([
                     transforms.ToPILImage(),
-                    transforms.RandomRotation((rot, rot)),
+                    transforms.RandomRotation((rot, rot), fill=(0, )),
                     transforms.ToTensor(),
                 ])
             rotation = rotations[c]
