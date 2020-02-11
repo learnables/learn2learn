@@ -41,7 +41,7 @@ before_install: |
     # A manual check that the correct version of Python is running.
     python --version
   fi
-  pip install --progress-bar off torch==$(TORCH) torchvision==$(TV)
+  pip install --progress-bar off torch==${TORCH} torchvision==${TV}
 
 install:
   - pip install -U pip && pip install --progress-bar off -r requirements.txt && pip install pycodestyle
