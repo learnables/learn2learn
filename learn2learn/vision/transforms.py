@@ -48,7 +48,7 @@ class RandomClassRotation(object):
                         transforms.RandomRotation((rot, rot), fill=(0, )),
                         transforms.ToTensor(),
                     ])
-                except ValueError:
+                except Exception:
                     rotations[c] = transforms.Compose([
                         transforms.ToPILImage(),
                         transforms.RandomRotation((rot, rot)),
