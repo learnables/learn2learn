@@ -3,23 +3,22 @@ language: python
 os:
   - linux
 
-python:
-  - 3.6
-  # - 3.7
-  - "3.6-dev"
-  - "3.7-dev"
+# python:
+#   - 3.6
+#   # - 3.7
+#   - "3.6-dev"
+#   - "3.7-dev"
 
-# matrix:
-#     include:
-#         - os: osx
-#           language: generic
-#           env: PYTHON=3.5.0
-#         - os: osx
-#           language: generic
-#           env: PYTHON=3.6.0
-#         - os: osx
-#           language: generic
-#           env: PYTHON=3.7.0
+ matrix:
+     include:
+         - os: osx
+           language: generic
+           env: 'PYTHON=3.6.0 TV=0.3.0 TORCH=1.1.0'
+
+     include:
+         - os: linux
+           python: 3.6
+           env: 'TV=0.3.0 TORCH=1.1.0'
 
 before_install: |
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -43,6 +42,7 @@ before_install: |
     # A manual check that the correct version of Python is running.
     python --version
   fi
+  pip install --progress-bar off torch==$(TORCH) torchvision==$(TV)
 
 install:
   - pip install -U pip && pip install --progress-bar off -r requirements.txt && pip install pycodestyle
