@@ -9,7 +9,7 @@ os:
 #   - "3.6-dev"
 #   - "3.7-dev"
 
- matrix:
+ jobs:
      include:
          - os: osx
            language: generic
