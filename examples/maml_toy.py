@@ -42,7 +42,7 @@ def main():
             mu_i, sigma_i = task_params[:DIM], task_params[DIM:]
 
             # Adaptation: Instanciate a copy of model
-            learner = maml.new()
+            learner = maml.clone()
             proposal = learner()
 
             # Adaptation: Compute and adapt to task loss
