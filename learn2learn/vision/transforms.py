@@ -8,6 +8,7 @@ A set of transformations commonly used in meta-learning vision tasks.
 """
 
 import random
+import torchvision
 from torchvision import transforms
 
 
@@ -42,11 +43,18 @@ class RandomClassRotation(object):
             c = self.dataset.indices_to_labels[data_description.index]
             if c not in rotations:
                 rot = random.choice(self.degrees)
-                rotations[c] = transforms.Compose([
-                    transforms.ToPILImage(),
-                    transforms.RandomRotation((rot, rot), fill=(0, )),
-                    transforms.ToTensor(),
-                ])
+                try:
+                    rotations[c] = transforms.Compose([
+                        transforms.ToPILImage(),
+                        transforms.RandomRotation((rot, rot), fill=(0, )),
+                        transforms.ToTensor(),
+                    ])
+                except:
+                    rotations[c] = transforms.Compose([
+                        transforms.ToPILImage(),
+                        transforms.RandomRotation((rot, rot)),
+                        transforms.ToTensor(),
+                    ])
             rotation = rotations[c]
             data_description.transforms.append(lambda x: (rotation(x[0]), x[1]))
         return task_description
