@@ -9,14 +9,14 @@ os:
 #   - "3.6-dev"
 #   - "3.7-dev"
 
- jobs:
-     include:
-         - os: osx
-           language: generic
-           env: 'PYTHON=3.6.0 TV=0.3.0 TORCH=1.1.0'
-         - os: linux
-           python: 3.6
-           env: 'TV=0.3.0 TORCH=1.1.0'
+jobs:
+    include:
+        - os: osx
+          language: generic
+          env: 'PYTHON=3.6.0 TV=0.3.0 TORCH=1.1.0'
+        - os: linux
+          python: 3.6
+          env: 'TV=0.3.0 TORCH=1.1.0'
 
 
 before_install: |
