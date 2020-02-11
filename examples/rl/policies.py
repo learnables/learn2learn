@@ -3,7 +3,7 @@
 import math
 
 import cherry as ch
-import torch as th
+import torch
 from torch import nn
 from torch.distributions import Normal, Categorical
 
@@ -33,12 +33,12 @@ class DiagNormalPolicy(nn.Module):
             layers.append(activation())
         layers.append(linear_init(nn.Linear(hiddens[-1], output_size)))
         self.mean = nn.Sequential(*layers)
-        self.sigma = nn.Parameter(th.Tensor(output_size))
+        self.sigma = nn.Parameter(torch.Tensor(output_size))
         self.sigma.data.fill_(math.log(1))
 
     def density(self, state):
         loc = self.mean(state)
-        scale = th.exp(th.clamp(self.sigma, min=math.log(EPSILON)))
+        scale = torch.exp(torch.clamp(self.sigma, min=math.log(EPSILON)))
         return Normal(loc=loc, scale=scale)
 
     def log_prob(self, state, action):

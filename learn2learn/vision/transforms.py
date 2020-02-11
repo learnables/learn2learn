@@ -8,7 +8,6 @@ A set of transformations commonly used in meta-learning vision tasks.
 """
 
 import random
-import torchvision
 from torchvision import transforms
 
 

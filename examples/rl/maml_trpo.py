@@ -14,7 +14,7 @@ from copy import deepcopy
 import cherry as ch
 import gym
 import numpy as np
-import torch as th
+import torch
 from cherry.algorithms import a2c, trpo
 from cherry.models.robotics import LinearValue
 from torch import autograd
@@ -33,7 +33,7 @@ def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states
     values = baseline(states)
     next_values = baseline(next_states)
     bootstraps = values * (1.0 - dones) + next_values * dones
-    next_value = th.zeros(1, device=values.device)
+    next_value = torch.zeros(1, device=values.device)
     return ch.pg.generalized_advantage(tau=tau,
                                        gamma=gamma,
                                        rewards=rewards,
@@ -123,9 +123,9 @@ def main(
     cuda = bool(cuda)
     random.seed(seed)
     np.random.seed(seed)
-    th.manual_seed(seed)
+    torch.manual_seed(seed)
     if cuda:
-        th.cuda.manual_seed(seed)
+        torch.cuda.manual_seed(seed)
 
     def make_env():
         env = gym.make(env_name)
@@ -191,10 +191,10 @@ def main(
         grad = parameters_to_vector([g.detach() for g in grad])
         Fvp = trpo.hessian_vector_product(old_kl, policy.parameters())
         step = trpo.conjugate_gradient(Fvp, grad)
-        shs = 0.5 * th.dot(step, Fvp(step))
-        lagrange_multiplier = th.sqrt(shs / max_kl)
+        shs = 0.5 * torch.dot(step, Fvp(step))
+        lagrange_multiplier = torch.sqrt(shs / max_kl)
         step = step / lagrange_multiplier
-        step_ = [th.zeros_like(p.data) for p in policy.parameters()]
+        step_ = [torch.zeros_like(p.data) for p in policy.parameters()]
         vector_to_parameters(step, step_)
         step = step_
         del old_kl, Fvp, grad

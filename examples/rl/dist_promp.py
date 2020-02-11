@@ -18,7 +18,7 @@ from copy import deepcopy
 import cherry as ch
 import gym
 import numpy as np
-import torch as th
+import torch
 from cherry.algorithms import ppo, trpo
 from cherry.models.robotics import LinearValue
 from torch import optim, distributed as dist
@@ -38,7 +38,7 @@ def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states
     values = baseline(states)
     next_values = baseline(next_states)
     bootstraps = values * (1.0 - dones) + next_values * dones
-    next_value = th.zeros(1, device=values.device)
+    next_value = torch.zeros(1, device=values.device)
     return ch.pg.generalized_advantage(tau=tau,
                                        gamma=gamma,
                                        rewards=rewards,
@@ -105,11 +105,11 @@ def main(
     rank = dist.get_rank()
     meta_bsz /= WORLD_SIZE
     seed += rank
-    th.set_num_threads(1)
+    torch.set_num_threads(1)
 
     random.seed(seed)
     np.random.seed(seed)
-    th.manual_seed(seed)
+    torch.manual_seed(seed)
 
     def make_env():
         return gym.make(env_name)

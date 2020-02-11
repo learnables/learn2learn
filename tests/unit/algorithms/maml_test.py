@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import unittest
-
+import torch
 import learn2learn as l2l
-import torch as th
 
 NUM_INPUTS = 7
 INPUT_SIZE = 10
@@ -19,14 +18,14 @@ def close(x, y):
 class TestMAMLAlgorithm(unittest.TestCase):
 
     def setUp(self):
-        self.model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
-                                      th.nn.ReLU(),
-                                      th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                      th.nn.Sigmoid(),
-                                      th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                      th.nn.Softmax())
+        self.model = torch.nn.Sequential(torch.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
+                                          torch.nn.ReLU(),
+                                          torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                          torch.nn.Sigmoid(),
+                                          torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                          torch.nn.Softmax())
 
-        self.model.register_buffer('dummy_buf', th.zeros(1, 2, 3, 4))
+        self.model.register_buffer('dummy_buf', torch.zeros(1, 2, 3, 4))
 
     def tearDown(self):
         pass
@@ -36,7 +35,7 @@ class TestMAMLAlgorithm(unittest.TestCase):
             maml = l2l.algorithms.MAML(self.model,
                                        lr=INNER_LR,
                                        first_order=first_order)
-            X = th.randn(NUM_INPUTS, INPUT_SIZE)
+            X = torch.randn(NUM_INPUTS, INPUT_SIZE)
             ref = self.model(X)
             for clone in [maml.clone(), maml.clone()]:
                 out = clone(X)
@@ -46,7 +45,7 @@ class TestMAMLAlgorithm(unittest.TestCase):
         maml = l2l.algorithms.MAML(self.model,
                                    lr=INNER_LR,
                                    first_order=False)
-        X = th.randn(NUM_INPUTS, INPUT_SIZE)
+        X = torch.randn(NUM_INPUTS, INPUT_SIZE)
         ref = maml(X)
         clone = maml.clone()
         out = clone(X)
@@ -59,7 +58,7 @@ class TestMAMLAlgorithm(unittest.TestCase):
         maml = l2l.algorithms.MAML(self.model,
                                    lr=INNER_LR,
                                    first_order=False)
-        X = th.randn(NUM_INPUTS, INPUT_SIZE)
+        X = torch.randn(NUM_INPUTS, INPUT_SIZE)
         clone = maml.clone()
         loss = clone(X).norm(p=2)
         clone.adapt(loss)
