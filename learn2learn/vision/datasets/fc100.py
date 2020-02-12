@@ -13,17 +13,24 @@ from learn2learn.data.utils import download_file_from_google_drive
 
 class FC100(data.Dataset):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py)
 
     **Description**
 
-    The FC100 dataset was originally introduced by...
+    The FC100 dataset was originally introduced by Oreshkin et al., 2018.
 
+    It is based on CIFAR100, but unlike CIFAR-FS training, validation, and testing classes are
+    split so as to minimize the information overlap between splits.
+    The 100 classes are grouped into 20 superclasses of which 12 (60 classes) are used for training,
+    4 (20 classes) for validation, and 4 (20 classes) for testing.
+    Each class contains 600 images.
+    The specific splits are provided in the Supplementary Material of the paper.
+    Our data is downloaded from the link provided by [2].
 
     **References**
 
-    1.
-    2. https://github.com/kjunelee/MetaOptNet
+    1. Oreshkin et al. 2018. "TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning." NeurIPS.
+    2. Kwoonjoon Lee. 2019. "MetaOptNet." [https://github.com/kjunelee/MetaOptNet](https://github.com/kjunelee/MetaOptNet)
 
     **Arguments**
 

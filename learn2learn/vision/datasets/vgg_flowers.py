@@ -29,6 +29,41 @@ SPLITS = {
 
 class VGGFlower102(Dataset):
 
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/vgg_flowers.py)
+
+    **Description**
+
+    The VGG Flowers dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+
+    The dataset consists of 102 classes of flowers, with each class consisting of 40 to 258 images.
+    We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.
+
+    **References**
+
+    1. Nilsback, M. and A. Zisserman. 2006. "A Visual Vocabulary for Flower Classification." CVPR '06.
+    2. Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
+    3. [https://www.robots.ox.ac.uk/~vgg/data/flowers/](https://www.robots.ox.ac.uk/~vgg/data/flowers/)
+
+    **Arguments**
+
+    * **root** (str) - Path to download the data.
+    * **mode** (str, *optional*, default='train') - Which split to use.
+        Must be 'train', 'validation', or 'test'.
+    * **transform** (Transform, *optional*, default=None) - Input pre-processing.
+    * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
+    * **download** (bool, *optional*, default=False) - Whether to download the dataset.
+
+    **Example**
+
+    ~~~python
+    train_dataset = l2l.vision.datasets.VGGFlower102(root='./data', mode='train')
+    train_dataset = l2l.data.MetaDataset(train_dataset)
+    train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+    ~~~
+
+    """
+
     def __init__(self, root, mode='all', transform=None, target_transform=None, download=False):
         self.root = os.path.expanduser(root)
         self.transform = transform

@@ -63,6 +63,41 @@ SPLITS = {
 
 class FGVCAircraft(Dataset):
 
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_aircraft.py)
+
+    **Description**
+
+    The FGVC Aircraft dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+
+    The dataset consists of 10,200 images of aircraft (102 classes, each 100 images).
+    We provided the raw (un-processed) images and follow the train-validation-test splits of Triantafillou et al.
+
+    **References**
+
+    1. Maji et al. 2013. "Fine-Grained Visual Classification of Aircraft." arXiv [cs.CV].
+    2. Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
+    3. [http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/](http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/)
+
+    **Arguments**
+
+    * **root** (str) - Path to download the data.
+    * **mode** (str, *optional*, default='train') - Which split to use.
+        Must be 'train', 'validation', or 'test'.
+    * **transform** (Transform, *optional*, default=None) - Input pre-processing.
+    * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
+    * **download** (bool, *optional*, default=False) - Whether to download the dataset.
+
+    **Example**
+
+    ~~~python
+    train_dataset = l2l.vision.datasets.FGVCAircraft(root='./data', mode='train', download=True)
+    train_dataset = l2l.data.MetaDataset(train_dataset)
+    train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+    ~~~
+
+    """
+
     def __init__(self, root, mode='all', transform=None, target_transform=None, download=False):
         self.root = os.path.expanduser(root)
         self.transform = transform
@@ -90,7 +125,7 @@ class FGVCAircraft(Dataset):
             os.mkdir(data_path)
         tar_path = os.path.join(data_path, os.path.basename(DATASET_URL))
         if not os.path.exists(tar_path):
-            print('Downloading FGVC Aircraft dataset')
+            print('Downloading FGVC Aircraft dataset. (2.75Gb)')
             req = requests.get(DATASET_URL)
             with open(tar_path, 'wb') as archive:
                 for chunk in req.iter_content(chunk_size=512**2):

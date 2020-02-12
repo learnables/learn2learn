@@ -20,13 +20,18 @@ class TieredImagenet(data.Dataset):
 
     **Description**
 
-    The *tiered*-ImageNet dataset was originally introduced by ...
+    The *tiered*-ImageNet dataset was originally introduced by Ren et al, 2018 and we download the data directly from the link provided in their repository.
 
+    Like *mini*-ImageNet, *tiered*-ImageNet builds on top of ILSVRC-12, but consists of 608 classes (779,165 images) instead of 100.
+    The train-validation-test split is made such that classes from similar categories are in the same splits.
+    There are 34 categories each containing between 10 and 30 classes.
+    Of these categories, 20 (351 classes; 448,695 images) are used for training,
+    6 (97 classes; 124,261 images) for validation, and 8 (160 class; 206,209 images) for testing.
 
     **References**
 
-    1.
-    2. https://github.com/renmengye/few-shot-ssl-public
+    1. Ren et al, 2018. "Meta-Learning for Semi-Supervised Few-Shot Classification." ICLR '18.
+    2. Ren Mengye. 2018. "few-shot-ssl-public". [https://github.com/renmengye/few-shot-ssl-public](https://github.com/renmengye/few-shot-ssl-public)
 
     **Arguments**
 
@@ -35,11 +40,12 @@ class TieredImagenet(data.Dataset):
         Must be 'train', 'validation', or 'test'.
     * **transform** (Transform, *optional*, default=None) - Input pre-processing.
     * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
+    * **download** (bool, *optional*, default=False) - Whether to download the dataset.
 
     **Example**
 
     ~~~python
-    train_dataset = l2l.vision.datasets.TieredImagenet(root='./data', mode='train')
+    train_dataset = l2l.vision.datasets.TieredImagenet(root='./data', mode='train', download=True)
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
     ~~~
