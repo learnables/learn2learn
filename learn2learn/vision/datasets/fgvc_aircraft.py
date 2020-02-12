@@ -29,11 +29,11 @@ SPLITS = {
               'EMB-120', 'Tu-134', 'Embraer Legacy 600', 'Gulfstream IV',
               'Tu-154', 'MD-87', 'A300B4', 'A340-600', 'A340-500', 'MD-11',
               '707-320', 'Cessna 208', 'Global Express', 'A319', 'DH-82'
-              ], 
+              ],
     'test': ['737-400', '737-800', '757-200', '767-400', 'ATR-42', 'BAE-125',
              'Beechcraft 1900', 'Boeing 717', 'CRJ-200', 'CRJ-700', 'E-170',
              'L-1011', 'MD-90', 'Saab 2000', 'Spitfire'
-             ], 
+             ],
     'valid': ['737-900', '757-300', '767-200', 'A310', 'A320', 'BAE 146-300',
               'CRJ-900', 'DC-10', 'DC-8', 'DC-9-30', 'DHC-8-300', 'Gulfstream V',
               'SR-20', 'Tornado', 'Yak-42'
@@ -79,8 +79,8 @@ class FGVCAircraft(Dataset):
         images_path = os.path.join(data_path, IMAGES_DIR)
         labels_path = os.path.join(data_path, LABELS_PATH)
         return os.path.exists(data_path) and \
-               os.path.exists(images_path) and \
-               os.path.exists(labels_path)
+            os.path.exists(images_path) and \
+            os.path.exists(labels_path)
 
     def download(self, root):
         if not os.path.exists(root):
@@ -144,4 +144,3 @@ if __name__ == '__main__':
     assert len(SPLITS['all']) == len(SPLITS['train']) + len(SPLITS['valid']) + len(SPLITS['test'])
     aircraft = FGVCAircraft('~/data', download=True)
     print(len(aircraft))
-    import pdb; pdb.set_trace()

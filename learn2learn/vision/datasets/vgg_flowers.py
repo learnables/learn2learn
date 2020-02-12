@@ -33,7 +33,7 @@ class VGGFlower102(Dataset):
         self.root = os.path.expanduser(root)
         self.transform = transform
         self.target_transform = target_transform
-        self._bookkeeping_path = os.path.join(self.root, 'vgg-flower102-' + mode +'-bookkeeping.pkl')
+        self._bookkeeping_path = os.path.join(self.root, 'vgg-flower102-' + mode + '-bookkeeping.pkl')
 
         if not self._check_exists() and download:
             self.download(self.root)
@@ -100,4 +100,3 @@ if __name__ == '__main__':
     assert len(SPLITS['all']) == 102
     flowers = VGGFlower102('~/data', download=True)
     print(len(flowers))
-    import pdb; pdb.set_trace()

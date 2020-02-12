@@ -22,7 +22,7 @@ class FC100(data.Dataset):
 
     **References**
 
-    1. 
+    1.
     2. https://github.com/kjunelee/MetaOptNet
 
     **Arguments**

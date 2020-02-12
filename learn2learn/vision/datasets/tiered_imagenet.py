@@ -25,8 +25,8 @@ class TieredImagenet(data.Dataset):
 
     **References**
 
-    1. 
-    2. https://github.com/renmengye/few-shot-ssl-public 
+    1.
+    2. https://github.com/renmengye/few-shot-ssl-public
 
     **Arguments**
 
