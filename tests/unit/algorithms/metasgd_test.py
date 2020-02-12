@@ -2,7 +2,7 @@
 
 import unittest
 
-import torch as th
+import torch
 
 import learn2learn as l2l
 
@@ -20,13 +20,13 @@ def close(x, y):
 class TestMetaSGDAlgorithm(unittest.TestCase):
 
     def setUp(self):
-        self.model = th.nn.Sequential(th.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
-                                     th.nn.ReLU(),
-                                     th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                     th.nn.Sigmoid(),
-                                     th.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                     th.nn.Softmax())
-        self.model.register_buffer('dummy_buf', th.zeros(1, 2, 3, 4))
+        self.model = torch.nn.Sequential(torch.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
+                                         torch.nn.ReLU(),
+                                         torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                         torch.nn.Sigmoid(),
+                                         torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+                                         torch.nn.Softmax())
+        self.model.register_buffer('dummy_buf', torch.zeros(1, 2, 3, 4))
 
     def tearDown(self):
         pass
@@ -36,7 +36,7 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
             meta = l2l.algorithms.MetaSGD(self.model,
                                           lr=INNER_LR,
                                           first_order=first_order)
-            X = th.randn(NUM_INPUTS, INPUT_SIZE)
+            X = torch.randn(NUM_INPUTS, INPUT_SIZE)
             ref = self.model(X)
             for clone in [meta.clone(), meta.clone()]:
                 out = clone(X)
@@ -46,7 +46,7 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
         meta = l2l.algorithms.MetaSGD(self.model,
                                       lr=INNER_LR,
                                       first_order=False)
-        X = th.randn(NUM_INPUTS, INPUT_SIZE)
+        X = torch.randn(NUM_INPUTS, INPUT_SIZE)
         ref = meta(X)
         clone = meta.clone()
         out = clone(X)
@@ -69,7 +69,7 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
         meta = l2l.algorithms.MetaSGD(self.model,
                                       lr=INNER_LR,
                                       first_order=False)
-        X = th.randn(NUM_INPUTS, INPUT_SIZE)
+        X = torch.randn(NUM_INPUTS, INPUT_SIZE)
         clone = meta.clone()
         loss = clone(X).norm(p=2)
         clone.adapt(loss)

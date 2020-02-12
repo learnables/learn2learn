@@ -4,7 +4,7 @@ import unittest
 import random
 
 import numpy as np
-import torch as th
+import torch
 from torch import nn
 from torch import optim
 
@@ -21,8 +21,8 @@ def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
     data, labels = data.to(device), labels.to(device)
 
     # Separate data into adaptation/evalutation sets
-    adaptation_indices = th.zeros(data.size(0)).byte()
-    adaptation_indices[th.arange(shots*ways) * 2] = 1
+    adaptation_indices = torch.zeros(data.size(0)).byte()
+    adaptation_indices[torch.arange(shots*ways) * 2] = 1
     adaptation_data, adaptation_labels = data[adaptation_indices], labels[adaptation_indices]
     evaluation_data, evaluation_labels = data[1 - adaptation_indices], labels[1 - adaptation_indices]
 
@@ -53,11 +53,11 @@ def main(
 ):
     random.seed(seed)
     np.random.seed(seed)
-    th.manual_seed(seed)
-    device = th.device('cpu')
-    if cuda and th.cuda.device_count():
-        th.cuda.manual_seed(seed)
-        device = th.device('cuda')
+    torch.manual_seed(seed)
+    device = torch.device('cpu')
+    if cuda and torch.cuda.device_count():
+        torch.cuda.manual_seed(seed)
+        device = torch.device('cuda')
 
     # Create Datasets
     train_dataset = l2l.vision.datasets.MiniImagenet(root='./data', mode='train')

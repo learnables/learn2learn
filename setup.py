@@ -35,7 +35,7 @@ setup(
     install_requires=[
         'numpy>=1.15.4',
         'gym>=0.14.0',
-        'torch>=1.0.0',
+        'torch>=1.1.0',
         'torchvision>=0.3.0',
         'pandas',
         'requests',

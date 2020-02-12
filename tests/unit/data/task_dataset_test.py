@@ -5,7 +5,7 @@ import unittest
 from unittest import TestCase
 
 import numpy as np
-import torch as th
+import torch
 from torch.utils.data import TensorDataset, DataLoader
 
 from learn2learn.data import MetaDataset, TaskDataset
@@ -35,15 +35,15 @@ def random_subset(task_description):
 class TestTaskDataset(TestCase):
 
     def test_instanciation(self):
-        data = th.randn(NUM_DATA, X_SHAPE)
-        labels = th.randint(0, Y_SHAPE, (NUM_DATA, ))
+        data = torch.randn(NUM_DATA, X_SHAPE)
+        labels = torch.randint(0, Y_SHAPE, (NUM_DATA, ))
         dataset = TensorDataset(data, labels)
         task_dataset = TaskDataset(dataset, task_transforms=[LoadData(dataset)], num_tasks=NUM_TASKS)
         self.assertEqual(len(task_dataset), NUM_TASKS)
 
     def test_task_caching(self):
-        data = th.randn(NUM_DATA, X_SHAPE)
-        labels = th.randint(0, Y_SHAPE, (NUM_DATA, ))
+        data = torch.randn(NUM_DATA, X_SHAPE)
+        labels = torch.randint(0, Y_SHAPE, (NUM_DATA, ))
         dataset = TensorDataset(data, labels)
         task_dataset = TaskDataset(dataset, task_transforms=[LoadData(dataset)], num_tasks=NUM_TASKS)
         tasks = []
@@ -59,8 +59,8 @@ class TestTaskDataset(TestCase):
             self.assertTrue(task_equal(ref, task))
 
     def test_infinite_tasks(self):
-        data = th.randn(NUM_DATA, X_SHAPE)
-        labels = th.randint(0, Y_SHAPE, (NUM_DATA, ))
+        data = torch.randn(NUM_DATA, X_SHAPE)
+        labels = torch.randint(0, Y_SHAPE, (NUM_DATA, ))
         dataset = TensorDataset(data, labels)
         task_dataset = TaskDataset(dataset, task_transforms=[LoadData(dataset), random_subset])
         self.assertEqual(len(task_dataset), 1)
@@ -72,8 +72,8 @@ class TestTaskDataset(TestCase):
                 break
 
     def test_task_transforms(self):
-        data = th.randn(NUM_DATA, X_SHAPE)
-        labels = th.randint(0, Y_SHAPE, (NUM_DATA, ))
+        data = torch.randn(NUM_DATA, X_SHAPE)
+        labels = torch.randint(0, Y_SHAPE, (NUM_DATA, ))
         dataset = TensorDataset(data, labels)
         task_dataset = TaskDataset(dataset,
                                    task_transforms=[LoadData(dataset), random_subset],
@@ -89,8 +89,8 @@ class TestTaskDataset(TestCase):
             self.assertGreaterEqual(task[1].max(), 0)
 
     def test_dataloader(self):
-        data = th.randn(NUM_DATA, X_SHAPE)
-        labels = th.randint(0, Y_SHAPE, (NUM_DATA, ))
+        data = torch.randn(NUM_DATA, X_SHAPE)
+        labels = torch.randint(0, Y_SHAPE, (NUM_DATA, ))
         dataset = TensorDataset(data, labels)
         task_dataset = TaskDataset(dataset,
                                    task_transforms=[LoadData(dataset), random_subset],

@@ -13,7 +13,7 @@ import random
 import cherry as ch
 import gym
 import numpy as np
-import torch as th
+import torch
 from cherry.algorithms import a2c
 from cherry.models.robotics import LinearValue
 from torch import optim
@@ -30,7 +30,7 @@ def compute_advantages(baseline, tau, gamma, rewards, dones, states, next_states
     values = baseline(states)
     next_values = baseline(next_states)
     bootstraps = values * (1.0 - dones) + next_values * dones
-    next_value = th.zeros(1, device=values.device)
+    next_value = torch.zeros(1, device=values.device)
     return ch.pg.generalized_advantage(tau=tau,
                                        gamma=gamma,
                                        rewards=rewards,
@@ -69,7 +69,7 @@ def main(
 ):
     random.seed(seed)
     np.random.seed(seed)
-    th.manual_seed(seed)
+    torch.manual_seed(seed)
 
     def make_env():
         return gym.make(env_name)
@@ -78,7 +78,7 @@ def main(
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    meta_learner = l2l.algorithms.MetaSGD(policy, lr=meta_lr)
+    meta_learner = l2l.algoritorch.MetaSGD(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
     opt = optim.Adam(policy.parameters(), lr=meta_lr)
     all_rewards = []
