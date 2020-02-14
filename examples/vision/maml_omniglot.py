@@ -22,10 +22,12 @@ def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
     data, labels = data.to(device), labels.to(device)
 
     # Separate data into adaptation/evalutation sets
-    adaptation_indices = torch.zeros(data.size(0)).byte()
-    adaptation_indices[torch.arange(shots*ways) * 2] = 1
+    adaptation_indices = np.zeros(data.size(0), dtype=bool)
+    adaptation_indices[np.arange(shots*ways) * 2] = True
+    evaluation_indices = torch.from_numpy(~adaptation_indices)
+    adaptation_indices = torch.from_numpy(adaptation_indices)
     adaptation_data, adaptation_labels = data[adaptation_indices], labels[adaptation_indices]
-    evaluation_data, evaluation_labels = data[1 - adaptation_indices], labels[1 - adaptation_indices]
+    evaluation_data, evaluation_labels = data[evaluation_indices], labels[evaluation_indices]
 
     # Adapt the model
     for step in range(adaptation_steps):

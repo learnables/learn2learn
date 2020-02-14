@@ -41,7 +41,7 @@ def accuracy(predictions, targets):
 
 
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
-         download_location='./data'):
+         download_location='~/data'):
     transformations = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,)),
@@ -78,10 +78,14 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
             data, labels = train_task
             data = data.to(device)
             labels = labels.to(device)
-            adaptation_indices = torch.zeros(data.size(0)).byte()
-            adaptation_indices[torch.arange(shots*ways) * 2] = 1
+
+            # Separate data into adaptation/evalutation sets
+            adaptation_indices = np.zeros(data.size(0), dtype=bool)
+            adaptation_indices[np.arange(shots*ways) * 2] = True
+            evaluation_indices = torch.from_numpy(~adaptation_indices)
+            adaptation_indices = torch.from_numpy(adaptation_indices)
             adaptation_data, adaptation_labels = data[adaptation_indices], labels[adaptation_indices]
-            evaluation_data, evaluation_labels = data[1 - adaptation_indices], labels[1 - adaptation_indices]
+            evaluation_data, evaluation_labels = data[evaluation_indices], labels[evaluation_indices]
 
             # Fast Adaptation
             for step in range(fas):
