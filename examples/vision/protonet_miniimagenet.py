@@ -96,7 +96,7 @@ if __name__ == '__main__':
     model = Convnet()
     model.to(device)
 
-    path_data = './data'
+    path_data = '~/data'
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='train')
     valid_dataset = l2l.vision.datasets.MiniImagenet(

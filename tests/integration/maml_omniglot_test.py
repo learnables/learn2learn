@@ -63,7 +63,7 @@ def main(
         torch.cuda.manual_seed(seed)
         device = torch.device('cuda')
 
-    omniglot = l2l.vision.datasets.FullOmniglot(root='./data',
+    omniglot = l2l.vision.datasets.FullOmniglot(root='~/data',
                                                 transform=transforms.Compose([
                                                     transforms.Resize(28, interpolation=LANCZOS),
                                                     transforms.ToTensor(),
