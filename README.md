@@ -72,6 +72,14 @@ for iteration in range(num_iterations):
         opt.step()
 ~~~
 
+## Changelog
+
+A human-readable changelog is available in the [CHANGELOG.md](CHANGELOG.md) file.
+
+## Documentation
+
+Documentation and tutorials are available on learn2learn’s website: [http://learn2learn.net](http://learn2learn.net).
+
 ## Citation
 
 To cite the `learn2learn` repository in your academic publications, please use the following reference.
