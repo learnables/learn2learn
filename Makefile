@@ -24,10 +24,12 @@ tests:
 	python -W ignore -m unittest discover -s 'tests' -p '*_test.py' -v
 	make lint
 
-alltests: tests
+notravis-tests:
 	OMP_NUM_THREADS=1 \
 	MKL_NUM_THREADS=1 \
 	python -W ignore -m unittest discover -s 'tests' -p '*_test_notravis.py' -v
+
+alltests: tests notravis-tests
 
 docs:
 	cd docs && pydocmd build && pydocmd serve

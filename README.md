@@ -26,13 +26,13 @@ Some features of learn2learn include:
 * Provides standardized meta-learning tasks for vision (Omniglot, mini-ImageNet), reinforcement learning (Particles, Mujoco), and even text (news classification).
 * 100% compatible with PyTorch -- use your own modules, datasets, or libraries!
 
-# Installation
+## Installation
 
 ~~~bash
 pip install learn2learn
 ~~~
 
-# API Demo
+## API Demo
 
 The following is an example of using the high-level MAML implementation on MNIST.
 For more algorithms and lower-level utilities, please refer to the [documentation](http://learn2learn.net/docs/learn2learn/) or the [examples](https://github.com/learnables/learn2learn/tree/master/examples).
@@ -71,6 +71,14 @@ for iteration in range(num_iterations):
         evaluation_error.backward()
         opt.step()
 ~~~
+
+## Changelog
+
+A human-readable changelog is available in the [CHANGELOG.md](CHANGELOG.md) file.
+
+## Documentation
+
+Documentation and tutorials are available on learn2learn’s website: [http://learn2learn.net](http://learn2learn.net).
 
 ## Citation
 
