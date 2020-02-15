@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import numpy as np
 
 import torch
 import torch.nn as nn
@@ -56,14 +57,16 @@ def fast_adapt(model, batch, ways, shot, query_num, metric=None, device=None):
 
     # Compute support and query embeddings
     embeddings = model(data)
-    support_indices = torch.zeros(data.size(0)).byte()
-    selection = torch.arange(ways) * (shot + query_num)
+    support_indices = np.zeros(data.size(0), dtype=bool)
+    selection = np.arange(ways) * (shot + query_num)
     for offset in range(shot):
-        support_indices[selection + offset] = 1
+        support_indices[selection + offset] = True
+    query_indices = torch.from_numpy(~support_indices)
+    support_indices = torch.from_numpy(support_indices)
     support = embeddings[support_indices]
     support = support.reshape(ways, shot, -1).mean(dim=1)
-    query = embeddings[1 - support_indices]
-    labels = labels[1 - support_indices].long()
+    query = embeddings[query_indices]
+    labels = labels[query_indices].long()
 
     logits = pairwise_distances_logits(query, support)
     loss = F.cross_entropy(logits, labels)
@@ -93,7 +96,7 @@ if __name__ == '__main__':
     model = Convnet()
     model.to(device)
 
-    path_data = './data'
+    path_data = '~/data'
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=path_data, mode='train')
     valid_dataset = l2l.vision.datasets.MiniImagenet(
@@ -140,8 +143,6 @@ if __name__ == '__main__':
         optimizer, step_size=20, gamma=0.5)
 
     for epoch in range(1, args.max_epoch + 1):
-        lr_scheduler.step()
-
         model.train()
 
         loss_ctr = 0
@@ -166,6 +167,7 @@ if __name__ == '__main__':
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+        lr_scheduler.step()
 
         print('epoch {}, train, loss={:.4f} acc={:.4f}'.format(
             epoch, n_loss/loss_ctr, n_acc/loss_ctr))
