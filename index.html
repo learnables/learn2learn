@@ -127,7 +127,10 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#installation">Installation</a></li>
         <li class="main "><a href="#api-demo">API Demo</a></li>
-            <li><a href="#citation">Citation</a></li>
+        <li class="main "><a href="#changelog">Changelog</a></li>
+        <li class="main "><a href="#documentation">Documentation</a></li>
+        <li class="main "><a href="#citation">Citation</a></li>
+            <li><a href="#acknowledgements-friends">Acknowledgements &amp; Friends</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -154,11 +157,11 @@ The low-level utilities enable researchers to develop new and better meta-learni
 <li>Provides standardized meta-learning tasks for vision (Omniglot, mini-ImageNet), reinforcement learning (Particles, Mujoco), and even text (news classification).</li>
 <li>100% compatible with PyTorch -- use your own modules, datasets, or libraries!</li>
 </ul>
-<h1 id="installation">Installation</h1>
+<h2 id="installation">Installation</h2>
 <pre><code class="bash">pip install learn2learn
 </code></pre>
 
-<h1 id="api-demo">API Demo</h1>
+<h2 id="api-demo">API Demo</h2>
 <p>The following is an example of using the high-level MAML implementation on MNIST.
 For more algorithms and lower-level utilities, please refer to the <a href="http://learn2learn.net/docs/learn2learn/">documentation</a> or the <a href="https://github.com/learnables/learn2learn/tree/master/examples">examples</a>.</p>
 <pre><code class="python">import learn2learn as l2l
@@ -195,6 +198,10 @@ for iteration in range(num_iterations):
         opt.step()
 </code></pre>
 
+<h2 id="changelog">Changelog</h2>
+<p>A human-readable changelog is available in the <a href="CHANGELOG.md">CHANGELOG.md</a> file.</p>
+<h2 id="documentation">Documentation</h2>
+<p>Documentation and tutorials are available on learn2learn’s website: <a href="http://learn2learn.net">http://learn2learn.net</a>.</p>
 <h2 id="citation">Citation</h2>
 <p>To cite the <code>learn2learn</code> repository in your academic publications, please use the following reference.</p>
 <blockquote>
@@ -300,5 +307,5 @@ for iteration in range(num_iterations):
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-12-08 02:45:36
+Build Date UTC : 2020-02-16 00:49:19
 -->

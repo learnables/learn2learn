@@ -138,7 +138,7 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="maml">MAML</h1>
-<pre><code class="python">MAML(model, lr, first_order=False, allow_unused=False)
+<pre><code class="python">MAML(model, lr, first_order=False, allow_unused=None, allow_nograd=False)
 </code></pre>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py">[Source]</a></p>
@@ -154,8 +154,10 @@ upon initialization.</p>
 <li><strong>lr</strong> (float) - Fast adaptation learning rate.</li>
 <li><strong>first_order</strong> (bool, <em>optional</em>, default=False) - Whether to use the first-order
     approximation of MAML. (FOMAML)</li>
-<li><strong>allow_unused</strong> (bool, <em>optional</em>, default=False) - Whether to allow differentiation
-    of unused parameters.</li>
+<li><strong>allow_unused</strong> (bool, <em>optional</em>, default=None) - Whether to allow differentiation
+    of unused parameters. Defaults to <code>allow_nograd</code>.</li>
+<li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=False) - Whether to allow adaptation with
+    parameters that have <code>requires_grad = False</code>.</li>
 </ul>
 <p><strong>References</strong></p>
 <ol>
@@ -171,7 +173,7 @@ error.backward()
 </code></pre>
 
 <h2 id="adapt">adapt</h2>
-<pre><code class="python">MAML.adapt(loss, first_order=None, allow_unused=None)
+<pre><code class="python">MAML.adapt(loss, first_order=None, allow_unused=None, allow_nograd=None)
 </code></pre>
 
 <p><strong>Description</strong></p>
@@ -182,10 +184,12 @@ error.backward()
 <li><strong>first_order</strong> (bool, <em>optional</em>, default=None) - Whether to use first- or
     second-order updates. Defaults to self.first_order.</li>
 <li><strong>allow_unused</strong> (bool, <em>optional</em>, default=None) - Whether to allow differentiation
-of unused parameters. Defaults to self.allow_unused.</li>
+    of unused parameters. Defaults to self.allow_unused.</li>
+<li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=None) - Whether to allow adaptation with
+    parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
 <h2 id="clone">clone</h2>
-<pre><code class="python">MAML.clone(first_order=None, allow_unused=None)
+<pre><code class="python">MAML.clone(first_order=None, allow_unused=None, allow_nograd=None)
 </code></pre>
 
 <p><strong>Description</strong></p>
@@ -200,6 +204,8 @@ For more information, refer to learn2learn.clone_module().</p>
     or second-order updates. Defaults to self.first_order.</li>
 <li><strong>allow_unused</strong> (bool, <em>optional</em>, default=None) - Whether to allow differentiation
 of unused parameters. Defaults to self.allow_unused.</li>
+<li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=False) - Whether to allow adaptation with
+    parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
 <h1 id="maml_update">maml_update</h1>
 <pre><code class="python">maml_update(model, lr, grads=None)

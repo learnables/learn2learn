@@ -126,14 +126,19 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#learn2learnvisionmodels">learn2learn.vision.models</a></li>
-        <li class="main "><a href="#omniglotfc">OmniglotFC</a></li>
-        <li class="main "><a href="#omniglotcnn">OmniglotCNN</a></li>
-        <li class="main "><a href="#miniimagenetcnn">MiniImagenetCNN</a></li>
+            <li><a href="#omniglotfc">OmniglotFC</a></li>
+            <li><a href="#omniglotcnn">OmniglotCNN</a></li>
+            <li><a href="#miniimagenetcnn">MiniImagenetCNN</a></li>
         <li class="main "><a href="#learn2learnvisiondatasets">learn2learn.vision.datasets</a></li>
-        <li class="main "><a href="#fullomniglot">FullOmniglot</a></li>
-        <li class="main "><a href="#miniimagenet">MiniImagenet</a></li>
+            <li><a href="#fullomniglot">FullOmniglot</a></li>
+            <li><a href="#miniimagenet">MiniImagenet</a></li>
+            <li><a href="#tieredimagenet">TieredImagenet</a></li>
+            <li><a href="#fc100">FC100</a></li>
+            <li><a href="#cifarfs">CIFARFS</a></li>
+            <li><a href="#vggflower102">VGGFlower102</a></li>
+            <li><a href="#fgvcaircraft">FGVCAircraft</a></li>
         <li class="main "><a href="#learn2learnvisiontransforms">learn2learn.vision.transforms</a></li>
-        <li class="main "><a href="#randomclassrotation">RandomClassRotation</a></li>
+            <li><a href="#randomclassrotation">RandomClassRotation</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -141,7 +146,7 @@
 <h1 id="learn2learnvisionmodels">learn2learn.vision.models</h1>
 <p><strong>Description</strong></p>
 <p>A set of commonly used models for meta-learning vision tasks.</p>
-<h1 id="omniglotfc">OmniglotFC</h1>
+<h2 id="omniglotfc">OmniglotFC</h2>
 <pre><code class="python">OmniglotFC(input_size, output_size, sizes=None)
 </code></pre>
 
@@ -164,7 +169,7 @@
                  sizes=[64, 64, 64])
 </code></pre>
 
-<h1 id="omniglotcnn">OmniglotCNN</h1>
+<h2 id="omniglotcnn">OmniglotCNN</h2>
 <pre><code class="python">OmniglotCNN(output_size=5, hidden_size=64, layers=4)
 </code></pre>
 
@@ -186,7 +191,7 @@
 <pre><code class="python">model = OmniglotCNN(output_size=20, hidden_size=128, layers=3)
 </code></pre>
 
-<h1 id="miniimagenetcnn">MiniImagenetCNN</h1>
+<h2 id="miniimagenetcnn">MiniImagenetCNN</h2>
 <pre><code class="python">MiniImagenetCNN(output_size, hidden_size=32, layers=4)
 </code></pre>
 
@@ -211,7 +216,7 @@
 <h1 id="learn2learnvisiondatasets">learn2learn.vision.datasets</h1>
 <p><strong>Description</strong></p>
 <p>Some datasets commonly used in meta-learning vision tasks.</p>
-<h1 id="fullomniglot">FullOmniglot</h1>
+<h2 id="fullomniglot">FullOmniglot</h2>
 <pre><code class="python">FullOmniglot(root, transform=None, target_transform=None, download=False)
 </code></pre>
 
@@ -247,7 +252,7 @@ The background and evaluation splits are available in the <code>torchvision</cod
 omniglot = l2l.data.MetaDataset(omniglot)
 </code></pre>
 
-<h1 id="miniimagenet">MiniImagenet</h1>
+<h2 id="miniimagenet">MiniImagenet</h2>
 <pre><code class="python">MiniImagenet(root, mode='train', transform=None, target_transform=None)
 </code></pre>
 
@@ -276,10 +281,175 @@ train_dataset = l2l.data.MetaDataset(train_dataset)
 train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
 </code></pre>
 
+<h2 id="tieredimagenet">TieredImagenet</h2>
+<pre><code class="python">TieredImagenet(root,
+               mode='train',
+               transform=None,
+               target_transform=None,
+               download=False)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/tiered_imagenet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The <em>tiered</em>-ImageNet dataset was originally introduced by Ren et al, 2018 and we download the data directly from the link provided in their repository.</p>
+<p>Like <em>mini</em>-ImageNet, <em>tiered</em>-ImageNet builds on top of ILSVRC-12, but consists of 608 classes (779,165 images) instead of 100.
+The train-validation-test split is made such that classes from similar categories are in the same splits.
+There are 34 categories each containing between 10 and 30 classes.
+Of these categories, 20 (351 classes; 448,695 images) are used for training,
+6 (97 classes; 124,261 images) for validation, and 8 (160 class; 206,209 images) for testing.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Ren et al, 2018. "Meta-Learning for Semi-Supervised Few-Shot Classification." ICLR '18.</li>
+<li>Ren Mengye. 2018. "few-shot-ssl-public". <a href="https://github.com/renmengye/few-shot-ssl-public">https://github.com/renmengye/few-shot-ssl-public</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">train_dataset = l2l.vision.datasets.TieredImagenet(root='./data', mode='train', download=True)
+train_dataset = l2l.data.MetaDataset(train_dataset)
+train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+</code></pre>
+
+<h2 id="fc100">FC100</h2>
+<pre><code class="python">FC100(root, mode='train', transform=None, target_transform=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The FC100 dataset was originally introduced by Oreshkin et al., 2018.</p>
+<p>It is based on CIFAR100, but unlike CIFAR-FS training, validation, and testing classes are
+split so as to minimize the information overlap between splits.
+The 100 classes are grouped into 20 superclasses of which 12 (60 classes) are used for training,
+4 (20 classes) for validation, and 4 (20 classes) for testing.
+Each class contains 600 images.
+The specific splits are provided in the Supplementary Material of the paper.
+Our data is downloaded from the link provided by [2].</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Oreshkin et al. 2018. "TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning." NeurIPS.</li>
+<li>Kwoonjoon Lee. 2019. "MetaOptNet." <a href="https://github.com/kjunelee/MetaOptNet">https://github.com/kjunelee/MetaOptNet</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">train_dataset = l2l.vision.datasets.FC100(root='./data', mode='train')
+train_dataset = l2l.data.MetaDataset(train_dataset)
+train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+</code></pre>
+
+<h2 id="cifarfs">CIFARFS</h2>
+<pre><code class="python">CIFARFS(root, mode='train', transform=None, target_transform=None)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cifarfs.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The CIFAR Few-Shot dataset as originally introduced by Bertinetto et al., 2019.</p>
+<p>It consists of 60'000 colour images of sizes 32x32 pixels.
+The dataset is divided in 3 splits of 64 training, 16 validation, and 20 testing classes each containing 600 examples.
+The classes are sampled from the CIFAR-100 dataset, and we use the splits from Bertinetto et al., 2019.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Bertinetto et al. 2019. "Meta-learning with differentiable closed-form solvers". ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">train_dataset = l2l.vision.datasets.CIFARFS(root='./data', mode='train')
+train_dataset = l2l.data.MetaDataset(train_dataset)
+train_generator = l2l.data.TaskGenerator(dataset=train_dataset, ways=ways)
+</code></pre>
+
+<h2 id="vggflower102">VGGFlower102</h2>
+<pre><code class="python">VGGFlower102(root,
+             mode='all',
+             transform=None,
+             target_transform=None,
+             download=False)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/vgg_flowers.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The VGG Flowers dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 102 classes of flowers, with each class consisting of 40 to 258 images.
+We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Nilsback, M. and A. Zisserman. 2006. "A Visual Vocabulary for Flower Classification." CVPR '06.</li>
+<li>Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/data/flowers/">https://www.robots.ox.ac.uk/~vgg/data/flowers/</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">train_dataset = l2l.vision.datasets.VGGFlower102(root='./data', mode='train')
+train_dataset = l2l.data.MetaDataset(train_dataset)
+train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+</code></pre>
+
+<h2 id="fgvcaircraft">FGVCAircraft</h2>
+<pre><code class="python">FGVCAircraft(root,
+             mode='all',
+             transform=None,
+             target_transform=None,
+             download=False)
+</code></pre>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_aircraft.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The FGVC Aircraft dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 10,200 images of aircraft (102 classes, each 100 images).
+We provided the raw (un-processed) images and follow the train-validation-test splits of Triantafillou et al.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Maji et al. 2013. "Fine-Grained Visual Classification of Aircraft." arXiv [cs.CV].</li>
+<li>Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/">http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="python">train_dataset = l2l.vision.datasets.FGVCAircraft(root='./data', mode='train', download=True)
+train_dataset = l2l.data.MetaDataset(train_dataset)
+train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+</code></pre>
+
 <h1 id="learn2learnvisiontransforms">learn2learn.vision.transforms</h1>
 <p><strong>Description</strong></p>
 <p>A set of transformations commonly used in meta-learning vision tasks.</p>
-<h1 id="randomclassrotation">RandomClassRotation</h1>
+<h2 id="randomclassrotation">RandomClassRotation</h2>
 <pre><code class="python">RandomClassRotation(dataset, degrees)
 </code></pre>
 
