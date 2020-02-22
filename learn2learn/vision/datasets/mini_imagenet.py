@@ -70,6 +70,7 @@ class MiniImagenet(data.Dataset):
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
         super(MiniImagenet, self).__init__()
+        root = os.path.expanduser(root)
         self.root = root
         if not os.path.exists(root):
             os.mkdir(root)
