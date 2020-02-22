@@ -52,6 +52,7 @@ class FC100(data.Dataset):
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
         super(FC100, self).__init__()
+        root = os.path.expanduser(root)
         self.root = root
         if not os.path.exists(root):
             os.mkdir(root)
