@@ -83,7 +83,7 @@ def main(
         test_queries=5,
         lr=0.001,
         meta_bsz=32,
-        iters=250,
+        iters=2500,
         cuda=1,
         seed=42,
 ):
