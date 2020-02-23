@@ -66,25 +66,15 @@ def fast_adapt(batch,
 
 
 def main(
-        name='dev',
-        dataset='cifarfs',
-        model='cnn4',
         ways=5,
         shots=5,
-        tasks=-1,  # num. meta-train tasks
-        classes=-1,  # num. classes to create tasks
-        samples=-1,  # num. samples per class
-        clusters=1,
-        hidden=64,
         meta_lr=0.001,
         fast_lr=0.5,
         adapt_steps=1,
         meta_bsz=32,
         iters=10000,
-        ondevice=1,
         cuda=1,
         seed=42,
-        save='',
 ):
 
     cuda = bool(cuda)
