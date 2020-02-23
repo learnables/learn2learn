@@ -54,6 +54,7 @@ class TieredImagenet(data.Dataset):
 
     def __init__(self, root, mode='train', transform=None, target_transform=None, download=False):
         super(TieredImagenet, self).__init__()
+        root = os.path.expanduser(root)
         self.root = root
         if not os.path.exists(root):
             os.mkdir(root)

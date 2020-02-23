@@ -47,6 +47,7 @@ class CIFARFS(ImageFolder):
     """
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
+        root = os.path.expanduser(root)
         self.root = root
         if not os.path.exists(root):
             os.mkdir(root)
