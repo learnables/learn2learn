@@ -35,13 +35,6 @@ extensions = [
               sources=['learn2learn/data/transforms.pyx']), 
 ]
 
-#setup(
-#    name='learn2learn',
-#    ext_modules=cythonize(extensions, compiler_directives=compiler_directives),
-#    include_dirs=include_dirs,
-#    cmdclass={'build_ext': build_ext},
-#)
-
 # Installs the package
 install(
     name='learn2learn',
