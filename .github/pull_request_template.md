@@ -16,7 +16,7 @@ If your contribution modifies code in the core library (not docs, tests, or exam
 
 #### Optional
 
-If you make major changes to the core library, please copy-paste the output of running `make alltests` below.
+If you make major changes to the core library, please run `make alltests` and copy-paste the content of `alltests.txt` below.
 
 ~~~shell
 [PASTE HERE]

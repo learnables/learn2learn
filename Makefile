@@ -34,7 +34,10 @@ notravis-tests:
 	MKL_NUM_THREADS=1 \
 	python -W ignore -m unittest discover -s 'tests' -p '*_test_notravis.py' -v
 
-alltests: tests notravis-tests
+alltests: 
+	rm -f alltests.txt
+	make tests >>alltests.txt 2>&1
+	make notravis-tests >>alltests.txt 2>&1
 
 docs:
 	cd docs && pydocmd build && pydocmd serve

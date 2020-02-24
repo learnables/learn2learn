@@ -109,3 +109,4 @@ data/*
 docs/mkdocs.yml
 learn2learn/data/*.c
 learn2learn/data/*.so
+alltests.txt
