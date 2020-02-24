@@ -31,7 +31,7 @@ extensions = [
 ]
 setup(
       name='learn2learn',
-      ext_modules=cythonize(extensions),
+      ext_modules=cythonize(extensions, compiler_directives=compiler_directives),
       include_dirs=include_dirs,
 )
 
