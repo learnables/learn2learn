@@ -1,7 +1,7 @@
-# cython: embedsignature=True
-# cython: binding=True
 # cython: language_version=3
 #!/usr/bin/env python3
+
+cimport cython
 
 import os
 import pickle

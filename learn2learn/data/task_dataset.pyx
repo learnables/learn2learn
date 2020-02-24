@@ -1,5 +1,3 @@
-# cython: embedsignature=True
-# cython: binding=True
 # cython: language_version=3
 #!/usr/bin/env python3
 
@@ -38,6 +36,9 @@ cdef class DataDescription:
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
+@cython.initializedcheck(False)
+@cython.nonecheck(False)
+@cython.infer_types(False)
 cdef list fast_allocate(long n):
     cdef list result = [None] * n
     cdef long i

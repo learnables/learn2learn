@@ -25,7 +25,10 @@ else:
 # https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html
 # https://github.com/FedericoStra/cython-package-example/blob/master/setup.py
 include_dirs = []
-compiler_directives = {'language_level': 3, 'embedsignature': True, 'binding': True}
+compiler_directives = {'language_level': 3,
+                       'embedsignature': True,
+#                       'binding': True,
+}
 extensions = [
     Extension(name='learn2learn.data.meta_dataset',
               sources=['learn2learn/data/meta_dataset.pyx']), 

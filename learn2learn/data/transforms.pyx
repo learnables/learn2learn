@@ -1,5 +1,3 @@
-# cython: embedsignature=True
-# cython: binding=True
 # cython: language_version=3
 #!/usr/bin/env python3
 
@@ -99,9 +97,6 @@ cdef class FilterLabels(object):
         self.filtered_indices = array.array('i', [0] * len_dataset)
         for i in range(len_dataset):
             self.filtered_indices[i] = int(indices_to_labels[i] in self.labels)
-#        self.filtered_indices = array.array('i',
-#                                            [bool(dataset.indices_to_labels[i] in self.labels)
-#                                             for i in range(len(dataset))])
 
     def __call__(self, list task_description):
         cdef DataDescription dd
