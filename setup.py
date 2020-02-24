@@ -6,6 +6,7 @@ from distutils.core import setup
 from setuptools import (
     setup as install,
     find_packages,
+    Extension
 )
 from Cython.Build import cythonize
 
@@ -20,12 +21,17 @@ else:
     raise RuntimeError('Unable to find version string in %s.' % (VERSIONFILE,))
 
 # Compile with Cython
-include_dirs = ['learn2learn/.']
+# https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html
+# https://github.com/FedericoStra/cython-package-example/blob/master/setup.py
+include_dirs = []
+compiler_directives = {"language_level": 3, "embedsignature": True}
+extensions = [
+    Extension(name='learn2learn.data',
+              sources=['learn2learn/data/*.pyx']), 
+]
 setup(
       name='learn2learn',
-      ext_modules=cythonize([
-          'learn2learn/data/*.pyx', 
-          ]),
+      ext_modules=cythonize(extensions),
       include_dirs=include_dirs,
 )
 
@@ -51,6 +57,6 @@ install(
         'torchvision>=0.3.0',
         'pandas',
         'requests',
-        'Cython',
+        'Cython>=0.28.5',
     ],
 )
