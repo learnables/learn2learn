@@ -26,8 +26,12 @@ else:
 include_dirs = []
 compiler_directives = {'language_level': 3, 'embedsignature': True, 'binding': True}
 extensions = [
-    Extension(name='learn2learn.data',
-              sources=['learn2learn/data/*.pyx']), 
+    Extension(name='learn2learn.data.task_dataset',
+              sources=['learn2learn/data/task_dataset.pyx']), 
+    Extension(name='learn2learn.data.meta_dataset',
+              sources=['learn2learn/data/meta_dataset.pyx']), 
+    Extension(name='learn2learn.data.transforms',
+              sources=['learn2learn/data/transforms.pyx']), 
 ]
 setup(
       name='learn2learn',
@@ -38,7 +42,7 @@ setup(
 # Installs the package
 install(
     name='learn2learn',
-    packages=find_packages(),
+    packages='learn2learn',
     version=VERSION,
     description='PyTorch Meta-Learning Framework for Researchers',
     long_description=open('README.md').read(),
@@ -50,6 +54,7 @@ install(
     license='MIT',
     classifiers=[],
     scripts=[],
+    setup_requires=["cython>=0.28.5"],
     install_requires=[
         'numpy>=1.15.4',
         'gym>=0.14.0',
@@ -57,6 +62,5 @@ install(
         'torchvision>=0.3.0',
         'pandas',
         'requests',
-        'Cython>=0.28.5',
     ],
 )
