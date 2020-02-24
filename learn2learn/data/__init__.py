@@ -3,4 +3,4 @@
 from . import transforms
 
 from .meta_dataset import MetaDataset
-from .task_dataset import TaskDataset
+from .task_dataset import TaskDataset, DataDescription

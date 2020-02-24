@@ -2,7 +2,6 @@
 
 from . import algorithms
 from . import data
-from . import fast_data
 from . import gym
 from . import text
 from . import vision

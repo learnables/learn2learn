@@ -24,7 +24,7 @@ include_dirs = ['learn2learn/.']
 setup(
       name='learn2learn',
       ext_modules=cythonize([
-          'learn2learn/fast_data/*.pyx', 
+          'learn2learn/data/*.pyx', 
           ]),
       include_dirs=include_dirs,
 )
