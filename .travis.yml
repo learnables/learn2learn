@@ -44,6 +44,7 @@ before_install: |
 install:
   - pip install -U pip && pip install Cython
   - pip install -U pip && pip install --progress-bar off -r requirements.txt && pip install pycodestyle cython
+  - python setup.py develop
   # - python -c 'import torch, torchvision; print(torch.__version__, torchvision.__version__)'
 
 script:
