@@ -1,8 +1,14 @@
 
 .PHONY: *
 
-all:
-	python examples/vision/maml_omniglot.py
+compile:
+	python setup.py build_ext --inplace
+
+clean:
+	rm -rf dist/ build/
+	rm -f learn2learn/**/*.c
+	rm -f learn2learn/**/*.so
+	rm -f learn2learn/**/*.html
 
 # Admin
 dev:
@@ -29,7 +35,10 @@ notravis-tests:
 	MKL_NUM_THREADS=1 \
 	python -W ignore -m unittest discover -s 'tests' -p '*_test_notravis.py' -v
 
-alltests: tests notravis-tests
+alltests: 
+	rm -f alltests.txt
+	make tests >>alltests.txt 2>&1
+	make notravis-tests >>alltests.txt 2>&1
 
 docs:
 	cd docs && pydocmd build && pydocmd serve
