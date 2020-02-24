@@ -42,8 +42,8 @@ before_install: |
   pip install -U pip && pip install --progress-bar off torch==${TORCH} torchvision==${TV} pillow==6.2.2
 
 install:
-  - pip install -U pip && pip install Cython
-  - pip install -U pip && pip install --progress-bar off -r requirements.txt && pip install pycodestyle cython
+  - pip install -U pip && pip install --install-option="--no-cython-compile" cython
+  - pip install --progress-bar off -r requirements.txt && pip install pycodestyle
   - python setup.py develop
   # - python -c 'import torch, torchvision; print(torch.__version__, torchvision.__version__)'
 
