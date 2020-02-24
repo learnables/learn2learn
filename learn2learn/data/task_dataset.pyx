@@ -1,7 +1,6 @@
 # cython: embedsignature=True
-# cython: profile=True
 # cython: language_version=3
-
+#!/usr/bin/env python3
 
 """
 General wrapper to help create tasks.

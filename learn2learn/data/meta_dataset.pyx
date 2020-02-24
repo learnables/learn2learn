@@ -1,3 +1,5 @@
+# cython: embedsignature=True
+# cython: language_version=3
 #!/usr/bin/env python3
 
 import os
