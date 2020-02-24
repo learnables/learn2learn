@@ -2,10 +2,12 @@
 
 import re
 
+from distutils.core import setup
 from setuptools import (
-    setup,
+    setup as install,
     find_packages,
 )
+from Cython.Build import cythonize
 
 # Parses version number: https://stackoverflow.com/a/7071358
 VERSIONFILE = 'learn2learn/_version.py'
@@ -17,8 +19,18 @@ if mo:
 else:
     raise RuntimeError('Unable to find version string in %s.' % (VERSIONFILE,))
 
-# Installs the package
+# Compile with Cython
+include_dirs = ['learn2learn/.']
 setup(
+      name='learn2learn',
+      ext_modules=cythonize([
+          'learn2learn/fast_data/*.pyx', 
+          ]),
+      include_dirs=include_dirs,
+)
+
+# Installs the package
+install(
     name='learn2learn',
     packages=find_packages(),
     version=VERSION,
@@ -39,5 +51,6 @@ setup(
         'torchvision>=0.3.0',
         'pandas',
         'requests',
+        'Cython',
     ],
 )

@@ -1,8 +1,17 @@
 
 .PHONY: *
 
-all:
-	python examples/vision/maml_omniglot.py
+compile:
+	python setup.py build_ext --inplace
+
+clean:
+	rm -f learn2learn/**/*.c
+	rm -f learn2learn/**/*.so
+	rm -f learn2learn/**/*.html
+
+bench: compile
+	clear
+	python benchmark.py
 
 # Admin
 dev:
