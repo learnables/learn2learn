@@ -47,6 +47,7 @@ install(
     name='learn2learn',
     packages=find_packages(),
     ext_modules=cythonize(extensions, compiler_directives=compiler_directives),
+    cmdclass={'build_ext': build_ext},
     version=VERSION,
     description='PyTorch Meta-Learning Framework for Researchers',
     long_description=open('README.md').read(),
