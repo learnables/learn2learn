@@ -42,7 +42,7 @@ before_install: |
   pip install -U pip && pip install --progress-bar off torch==${TORCH} torchvision==${TV} pillow==6.2.2
 
 install:
-  - pip install -U pip && pip install --progress-bar off -r requirements.txt && pip install pycodestyle
+  - pip install -U pip && pip install --progress-bar off -r requirements.txt && pip install pycodestyle Cython
   # - python -c 'import torch, torchvision; print(torch.__version__, torchvision.__version__)'
 
 script:
