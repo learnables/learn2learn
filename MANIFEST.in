@@ -1,2 +1,3 @@
 global-include *.pyx
 global-include *.pxd
+include learn2learn/**/*
