@@ -64,4 +64,7 @@ install(
         'pandas',
         'requests',
     ],
+    extras_require={
+        'wandb': ['wandb>=0.8.28'],
+    }
 )
