@@ -48,7 +48,7 @@ class FullOmniglot(Dataset):
     """
 
     def __init__(self, root, transform=None, target_transform=None, download=False):
-        self.root = root
+        self.root = os.path.expanduser(root)
         self.transform = transform
         self.target_transform = target_transform
 
