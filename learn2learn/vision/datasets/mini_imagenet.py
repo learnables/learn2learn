@@ -87,7 +87,7 @@ class MiniImagenet(data.Dataset):
             raise ('ValueError', 'Needs to be train, test or validation')
 
         if not self._check_exists():
-            download_pkl(google_drive_file_id, root, mode)
+            download_pkl(google_drive_file_id, self.root, mode)
 
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
         with open(pickle_file, 'rb') as f:
