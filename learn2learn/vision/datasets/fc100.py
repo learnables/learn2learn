@@ -52,9 +52,9 @@ class FC100(data.Dataset):
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
         super(FC100, self).__init__()
-        self.root = root
-        if not os.path.exists(root):
-            os.mkdir(root)
+        self.root = os.path.expanduser(root)
+        if not os.path.exists(self.root):
+            os.mkdir(self.root)
         self.transform = transform
         self.target_transform = target_transform
         if mode not in ['train', 'validation', 'test']:
@@ -64,7 +64,7 @@ class FC100(data.Dataset):
         google_drive_file_id = '1_ZsLyqI487NRDQhwvI7rg86FK3YAZvz1'
 
         if not self._check_exists():
-            self.download(google_drive_file_id, self.root)
+            self.download(google_drive_file_id)
 
         short_mode = 'val' if mode == 'validation' else mode
         fc100_path = os.path.join(self.root, 'FC100_' + short_mode + '.pickle')
@@ -75,12 +75,12 @@ class FC100(data.Dataset):
         self.images = archive['data']
         self.labels = archive['labels']
 
-    def download(self, file_id, destination):
-        archive_path = os.path.join(destination, 'fc100.zip')
+    def download(self, file_id):
+        archive_path = os.path.join(self.root, 'fc100.zip')
         print('Downloading FC100. (160Mb) Please be patient.')
         download_file_from_google_drive(file_id, archive_path)
         archive_file = zipfile.ZipFile(archive_path)
-        archive_file.extractall(destination)
+        archive_file.extractall(self.root)
         os.remove(archive_path)
 
     def __getitem__(self, idx):
@@ -102,9 +102,9 @@ class FC100(data.Dataset):
 
 
 if __name__ == '__main__':
-    dataset = FC100(root=os.path.expanduser('~/data'))
+    dataset = FC100(root='~/data')
     img, tgt = dataset[43]
-    dataset = FC100(root=os.path.expanduser('~/data'), mode='validation')
+    dataset = FC100(root='~/data', mode='validation')
     img, tgt = dataset[43]
-    dataset = FC100(root=os.path.expanduser('~/data'), mode='test')
+    dataset = FC100(root='~/data', mode='test')
     img, tgt = dataset[43]

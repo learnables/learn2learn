@@ -71,7 +71,7 @@ class VGGFlower102(Dataset):
         self._bookkeeping_path = os.path.join(self.root, 'vgg-flower102-' + mode + '-bookkeeping.pkl')
 
         if not self._check_exists() and download:
-            self.download(self.root)
+            self.download()
 
         self.load_data(mode)
 
@@ -79,10 +79,10 @@ class VGGFlower102(Dataset):
         data_path = os.path.join(self.root, DATA_DIR)
         return os.path.exists(data_path)
 
-    def download(self, root):
-        if not os.path.exists(root):
-            os.mkdir(root)
-        data_path = os.path.join(root, DATA_DIR)
+    def download(self):
+        if not os.path.exists(self.root):
+            os.mkdir(self.root)
+        data_path = os.path.join(self.root, DATA_DIR)
         if not os.path.exists(data_path):
             os.mkdir(data_path)
         tar_path = os.path.join(data_path, os.path.basename(IMAGES_URL))

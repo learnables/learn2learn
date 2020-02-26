@@ -48,15 +48,15 @@ class FullOmniglot(Dataset):
     """
 
     def __init__(self, root, transform=None, target_transform=None, download=False):
-        self.root = root
+        self.root = os.path.expanduser(root)
         self.transform = transform
         self.target_transform = target_transform
 
         # Set up both the background and eval dataset
-        omni_background = Omniglot(root, background=True, download=download)
+        omni_background = Omniglot(self.root, background=True, download=download)
         # Eval labels also start from 0.
         # It's important to add 964 to label values in eval so they don't overwrite background dataset.
-        omni_evaluation = Omniglot(root,
+        omni_evaluation = Omniglot(self.root,
                                    background=False,
                                    download=download,
                                    target_transform=lambda x: x + len(omni_background._characters))
