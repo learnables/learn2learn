@@ -1,3 +1,4 @@
+# cython: language_version=3
 #!/usr/bin/env python3
 
 """
@@ -28,10 +29,18 @@ Then, all samples are collated via the `TaskDataset`'s collate function.
 
 """
 
+cimport cython
+from cpython cimport array
+
+import cython
 import copy
 import random
 import collections
 import functools
+import array
+
+from .task_dataset cimport DataDescription
+from .task_dataset import DataDescription
 
 
 class LoadData(object):
@@ -58,7 +67,7 @@ class LoadData(object):
         return task_description
 
 
-class FilterLabels(object):
+cdef class FilterLabels(object):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py)
@@ -74,13 +83,28 @@ class FilterLabels(object):
 
     """
 
-    def __init__(self, dataset, labels):
-        self.dataset = dataset
-        self.labels = labels
+    cdef public:
+        list labels
+        int[:] filtered_indices
 
-    def __call__(self, task_description):
-        return [dd for dd in task_description
-                if self.dataset.indices_to_labels[dd.index] in self.labels]
+    @cython.boundscheck(False)
+    @cython.wraparound(False)
+    def __init__(self, dataset, list labels):
+        cdef dict indices_to_labels = <dict>dataset.indices_to_labels
+        cdef long len_dataset = len(dataset)
+        cdef long i
+        self.labels = labels
+        self.filtered_indices = array.array('i', [0] * len_dataset)
+        for i in range(len_dataset):
+            self.filtered_indices[i] = int(indices_to_labels[i] in self.labels)
+
+    def __call__(self, list task_description):
+        cdef DataDescription dd
+        cdef list result = []
+        for dd in task_description:
+            if self.filtered_indices[dd.index]:
+                result.append(dd)
+        return result
 
 
 class ConsecutiveLabels(object):
@@ -150,7 +174,7 @@ class RemapLabels(object):
         return task_description
 
 
-class NWays(object):
+cdef class NWays(object):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py)
@@ -167,14 +191,28 @@ class NWays(object):
 
     """
 
+    cdef public:
+        int n
+        dict indices_to_labels
+
     def __init__(self, dataset, n=2):
         self.n = n
-        self.dataset = dataset
+        self.indices_to_labels = <dict>dataset.indices_to_labels
 
-    def __call__(self, task_description):
-        classes = list(set([self.dataset.indices_to_labels[dd.index] for dd in task_description]))
+    def __call__(self, list task_description):
+        cdef list classes = []
+        cdef list result = []
+        cdef set set_classes = set()
+        cdef DataDescription dd
+        for dd in task_description:
+            set_classes.add(self.indices_to_labels[dd.index])
+        classes = <list>set_classes
         classes = random.sample(classes, k=self.n)
-        return [dd for dd in task_description if self.dataset.indices_to_labels[dd.index] in classes]
+        for dd in task_description:
+            if self.indices_to_labels[dd.index] in classes:
+                result.append(dd)
+        return result
+#        return [dd for dd in task_description if self.indices_to_labels[dd.index] in classes]
 
 
 class KShots(object):

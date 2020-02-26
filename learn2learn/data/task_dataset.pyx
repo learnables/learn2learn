@@ -1,9 +1,11 @@
+# cython: language_version=3
 #!/usr/bin/env python3
 
 """
 General wrapper to help create tasks.
 """
 
+cimport cython
 import random
 import copy
 
@@ -13,7 +15,7 @@ from torch.utils.data._utils import collate
 import learn2learn as l2l
 
 
-class DataDescription(object):
+cdef class DataDescription:
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py)
@@ -27,12 +29,25 @@ class DataDescription(object):
     * **index** (int) - The index of the sample in the dataset.
     """
 
-    def __init__(self, index):
+    def __init__(self, long index):
         self.index = index
         self.transforms = []
 
 
-class TaskDataset(Dataset):
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.initializedcheck(False)
+@cython.nonecheck(False)
+@cython.infer_types(False)
+cdef list fast_allocate(long n):
+    cdef list result = [None] * n
+    cdef long i
+    for i in range(n):
+        result[i] = DataDescription(i)
+    return result
+
+
+cdef class TaskDataset(object):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py)
@@ -73,7 +88,15 @@ class TaskDataset(Dataset):
     ~~~
     """
 
-    def __init__(self, dataset, task_transforms=None, num_tasks=-1, task_collate=None):
+    cdef public:
+        object dataset
+        object task_transforms
+        object task_collate
+        dict sampled_descriptions
+        int num_tasks
+        int _task_id
+
+    def __init__(self, dataset, task_transforms=None, int num_tasks=-1, task_collate=None):
         if not isinstance(dataset, l2l.data.MetaDataset):
             dataset = l2l.data.MetaDataset(dataset)
         if task_transforms is None:
@@ -86,13 +109,13 @@ class TaskDataset(Dataset):
         self.num_tasks = num_tasks
         self.task_transforms = task_transforms
         self.sampled_descriptions = {}  # Maps indices to tasks' description dict
-        self.dataset_description = [DataDescription(i) for i in range(len(dataset))]
         self.task_collate = task_collate
         self._task_id = 0
 
-    def sample_task_description(self):
+    cpdef sample_task_description(self):
         #  Samples a new task description.
-        description = copy.deepcopy(self.dataset_description)
+        # cdef list description = [DataDescription(i) for i in range(len(self.dataset))]
+        cdef list description = fast_allocate(len(self.dataset))
         if callable(self.task_transforms):
             return self.task_transforms(description)
         for transform in self.task_transforms:

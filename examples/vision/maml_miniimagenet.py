@@ -115,8 +115,6 @@ def main(
         meta_train_accuracy = 0.0
         meta_valid_error = 0.0
         meta_valid_accuracy = 0.0
-        meta_test_error = 0.0
-        meta_test_accuracy = 0.0
         for task in range(meta_batch_size):
             # Compute meta-training loss
             learner = maml.clone()
@@ -145,19 +143,6 @@ def main(
             meta_valid_error += evaluation_error.item()
             meta_valid_accuracy += evaluation_accuracy.item()
 
-            # Compute meta-testing loss
-            learner = maml.clone()
-            batch = test_tasks.sample()
-            evaluation_error, evaluation_accuracy = fast_adapt(batch,
-                                                               learner,
-                                                               loss,
-                                                               adaptation_steps,
-                                                               shots,
-                                                               ways,
-                                                               device)
-            meta_test_error += evaluation_error.item()
-            meta_test_accuracy += evaluation_accuracy.item()
-
         # Print some metrics
         print('\n')
         print('Iteration', iteration)
@@ -165,13 +150,29 @@ def main(
         print('Meta Train Accuracy', meta_train_accuracy / meta_batch_size)
         print('Meta Valid Error', meta_valid_error / meta_batch_size)
         print('Meta Valid Accuracy', meta_valid_accuracy / meta_batch_size)
-        print('Meta Test Error', meta_test_error / meta_batch_size)
-        print('Meta Test Accuracy', meta_test_accuracy / meta_batch_size)
 
         # Average the accumulated gradients and optimize
         for p in maml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
         opt.step()
+
+    meta_test_error = 0.0
+    meta_test_accuracy = 0.0
+    for task in range(meta_batch_size):
+        # Compute meta-testing loss
+        learner = maml.clone()
+        batch = test_tasks.sample()
+        evaluation_error, evaluation_accuracy = fast_adapt(batch,
+                                                           learner,
+                                                           loss,
+                                                           adaptation_steps,
+                                                           shots,
+                                                           ways,
+                                                           device)
+        meta_test_error += evaluation_error.item()
+        meta_test_accuracy += evaluation_accuracy.item()
+    print('Meta Test Error', meta_test_error / meta_batch_size)
+    print('Meta Test Accuracy', meta_test_accuracy / meta_batch_size)
 
 
 if __name__ == '__main__':
