@@ -15,13 +15,6 @@ import datetime
 
 now = datetime.datetime.now()
 
-try:
-    import wandb as _wandb
-    _wandb.init(project="l2l")
-except ImportError:
-    _has_wandb = False
-else:
-    _has_wandb = True
 
 config = dict(
     ways=5,
@@ -155,9 +148,6 @@ def main(
     opt = optim.Adam(maml.parameters(), meta_lr)
     loss = nn.CrossEntropyLoss(reduction='mean')
 
-    if _has_wandb:
-        _wandb.watch(model)
-
     for iteration in range(num_iterations):
         opt.zero_grad()
         meta_train_error = 0.0
@@ -204,9 +194,6 @@ def main(
         logger['train']['acc_history'].append(meta_train_accuracy)
         logger['valid']['acc_history'].append(meta_valid_accuracy)
 
-        if _has_wandb:
-            _wandb.log({'train_acc': meta_train_accuracy, 'valid_acc': meta_valid_accuracy})
-
         print('\n')
         print('Iteration', iteration)
         print('Meta Train Accuracy', logger['train']['acc_t'])
@@ -243,9 +230,7 @@ def main(
     with open(model_path + '/logger.json', 'w') as fp:
         json.dump(logger, fp)
 
-    model.save(model_path + "/model.h5")
-    if _has_wandb:
-        model.save(os.path.join(_wandb.run.dir, "model.h5"))
+    torch.save(model.state_dict(), model_path + '/model.pt')
 
 
 if __name__ == '__main__':
