@@ -9,6 +9,7 @@ clean:
 	rm -f learn2learn/**/*.c
 	rm -f learn2learn/**/*.so
 	rm -f learn2learn/**/*.html
+	rm -f learn2learn.egg-info/**/*.html
 
 # Admin
 dev:

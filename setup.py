@@ -44,6 +44,7 @@ install(
     packages=find_packages(),
     ext_modules=cythonize(extensions, compiler_directives=compiler_directives),
     cmdclass={'build_ext': build_ext},
+    zip_safe=False,  # as per Cython docs
     version=VERSION,
     description='PyTorch Meta-Learning Framework for Researchers',
     long_description=open('README.md').read(),
