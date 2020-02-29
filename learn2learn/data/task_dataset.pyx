@@ -15,6 +15,19 @@ from torch.utils.data._utils import collate
 import learn2learn as l2l
 
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.initializedcheck(False)
+@cython.nonecheck(False)
+@cython.infer_types(False)
+cdef list fast_allocate(long n):
+    cdef list result = [None] * n
+    cdef long i
+    for i in range(n):
+        result[i] = DataDescription(i)
+    return result
+
+
 cdef class DataDescription:
 
     """
@@ -32,19 +45,6 @@ cdef class DataDescription:
     def __init__(self, long index):
         self.index = index
         self.transforms = []
-
-
-@cython.boundscheck(False)
-@cython.wraparound(False)
-@cython.initializedcheck(False)
-@cython.nonecheck(False)
-@cython.infer_types(False)
-cdef list fast_allocate(long n):
-    cdef list result = [None] * n
-    cdef long i
-    for i in range(n):
-        result[i] = DataDescription(i)
-    return result
 
 
 cdef class TaskDataset(object):
@@ -114,8 +114,8 @@ cdef class TaskDataset(object):
 
     cpdef sample_task_description(self):
         #  Samples a new task description.
-        # cdef list description = [DataDescription(i) for i in range(len(self.dataset))]
-        cdef list description = fast_allocate(len(self.dataset))
+        # cdef list description = fast_allocate(len(self.dataset))
+        description = None
         if callable(self.task_transforms):
             return self.task_transforms(description)
         for transform in self.task_transforms:
