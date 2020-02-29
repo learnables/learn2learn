@@ -17,8 +17,9 @@ For the most update-to-date version clone the [repository](https://github.com/le
 
 ```pip install -e .```
 
-!!! note
+!!! info
     While learn2learn is actively used in current research projects, it is still in development.
+    Breaking changes might occur.
 
 ## Development
 
@@ -32,6 +33,6 @@ To simplify the development process, the following commands can be executed from
 * `make alltests` - Runs an extensive testing suite. (much longer)
 * `make docs` - Builds the documentation and serves the website locally.
 
-**Important:** As learn2learn is still in the developmental stage, breaking changes are likely to occur. If you
-encounter a problem, feel free to an open an [issue](https://github.com/learnables/learn2learn/issues) and we'll
-look into it.
+!!! tip
+    If you encounter a problem, feel free to an open an [issue](https://github.com/learnables/learn2learn/issues) 
+    and we'll look into it.
