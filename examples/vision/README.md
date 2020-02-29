@@ -2,7 +2,7 @@
 
 This directory contains meta-learning examples and reproductions for common computer vision benchmarks.
 
-## maml_omniglot.py
+## MAML on Omniglot
 
 This file reproduces MAML on the Omniglot dataset.
 The CNN results can be obtained by swapping `OmniglotFC` with `OmniglotCNN`.
@@ -26,7 +26,7 @@ python examples/vision/maml_omniglot.py
 
 **Colab** Follow [this link](https://colab.research.google.com/drive/1N1vtHAPJBaJO1wD30b_fnwPOWDorm_gP) to see this example live on Google Colab.
 
-## maml_miniimagenet.py
+## MAML on mini-ImageNet
 
 This file reproduces MAML on the *mini*-ImageNet dataset.
 The FOMAML results can be obtained by setting `first_order=True` in the `MAML` wrapper.
@@ -50,7 +50,7 @@ python examples/vision/maml_miniimagenet.py
 **Colab** Follow [this link](https://colab.research.google.com/drive/1NIWbMYM3CercnoNMmlhre7hsJ8wMtAry) to see this example live on Google Colab.
 
 
-## protonet_miniimagenet.py
+## ProtoNets on mini-ImageNet
 
 This file reproduces protonet on the *mini*-ImageNet dataset.
 

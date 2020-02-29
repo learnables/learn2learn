@@ -1,7 +1,7 @@
 
 .PHONY: *
 
-compile:
+build:
 	python setup.py build_ext --inplace
 
 clean:
