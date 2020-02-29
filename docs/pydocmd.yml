@@ -72,7 +72,9 @@ pages:
       - learn2learn.data: docs/learn2learn.data.md
       - learn2learn.gym: docs/learn2learn.gym.md
       - learn2learn.vision: docs/learn2learn.vision.md
-  - Examples: https://github.com/learnables/learn2learn/tree/master/examples
+  - Examples:
+      - Computer Vision: examples.vision.md << ../examples/vision/README.md
+      - Reinforcement Learning: examples.rl.md << ../examples/rl/README.md
   - Changelog: changelog.md << ../CHANGELOG.md
   - GitHub: https://github.com/learnables/learn2learn/
 
