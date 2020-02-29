@@ -15,8 +15,8 @@ generate:
       - learn2learn.data.transforms
       - learn2learn.data.transforms.LoadData
       #- learn2learn.data.transforms.NWays
-      - learn2learn.data.transforms.KShots
-      #- learn2learn.data.transforms.FilterLabels
+      #- learn2learn.data.transforms.KShots
+      - learn2learn.data.transforms.FilterLabels
       - learn2learn.data.transforms.RemapLabels
       - learn2learn.data.transforms.ConsecutiveLabels
   - docs/learn2learn.algorithms.md:
@@ -69,6 +69,7 @@ pages:
       - learn2learn.gym: docs/learn2learn.gym.md
       - learn2learn.vision: docs/learn2learn.vision.md
   - Examples: https://github.com/learnables/learn2learn/tree/master/examples
+  - Changelog: changelog.md << ../CHANGELOG.md
   - GitHub: https://github.com/learnables/learn2learn/
 
 # These options all show off their default values. You don't have to add
@@ -80,9 +81,24 @@ site_url: http://learn2learn.net
 site_author: Seb Arnold
 google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
 theme:
-  name: mkdocs
-  custom_dir: 'l2l_theme/'
+  #name: mkdocs
+  #custom_dir: 'l2l_theme/'
   highlightjs: true
+  name: 'material'
+  palette:
+    primary: 'blue'
+    accent: 'orange'
+repo_name: 'learnables/learn2learn'
+repo_url: 'https://github.com/learnables/learn2learn'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+
 loader: pydocmd.loader.PythonLoader
 preprocessor: pydocmd.preprocessor.Preprocessor
 # Whether to output headers as markdown or HTML.  Used to workaround
