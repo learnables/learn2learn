@@ -27,6 +27,7 @@ else:
 include_dirs = []
 compiler_directives = {'language_level': 3,
                        'embedsignature': True,
+#                       'profile': True,
 #                       'binding': True,
 }
 extensions = [
