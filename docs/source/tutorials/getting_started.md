@@ -17,6 +17,8 @@ For the most update-to-date version clone the [repository](https://github.com/le
 
 ```pip install -e .```
 
+## Development
+
 To simplify the development process, the following commands can be executed from the cloned sources:
 
 * `make build` - Builds learn2learn in place.
