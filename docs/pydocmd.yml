@@ -6,36 +6,40 @@ site_name: "learn2learn"
 # documented. Higher indentation leads to smaller header size.
 generate:
   - docs/learn2learn.md:
-      - learn2learn.clone_module
-      - learn2learn.detach_module
-      - learn2learn.magic_box
+      - learn2learn.utils:
+          - learn2learn.clone_module
+          - learn2learn.detach_module
+          - learn2learn.magic_box
   - docs/learn2learn.data.md:
-      - learn2learn.data.MetaDataset
-      #- learn2learn.data.TaskDataset
-      - learn2learn.data.transforms
-      - learn2learn.data.transforms.LoadData
-      #- learn2learn.data.transforms.NWays
-      #- learn2learn.data.transforms.KShots
-      - learn2learn.data.transforms.FilterLabels
-      - learn2learn.data.transforms.RemapLabels
-      - learn2learn.data.transforms.ConsecutiveLabels
+      - learn2learn.data:
+          - learn2learn.data.MetaDataset
+          - learn2learn.data.TaskDataset
+          - learn2learn.data.transforms:
+              - learn2learn.data.transforms.LoadData
+              - learn2learn.data.transforms.NWays
+              - learn2learn.data.transforms.KShots
+              - learn2learn.data.transforms.FilterLabels
+              - learn2learn.data.transforms.FusedNWaysKShots
+              - learn2learn.data.transforms.RemapLabels
+              - learn2learn.data.transforms.ConsecutiveLabels
   - docs/learn2learn.algorithms.md:
-      - learn2learn.algorithms.MAML++
-      - learn2learn.algorithms.maml_update
-      - learn2learn.algorithms.MetaSGD++
-      - learn2learn.algorithms.meta_sgd_update
+      - learn2learn.algorithms:
+          - learn2learn.algorithms.MAML++
+          - learn2learn.algorithms.maml_update
+          - learn2learn.algorithms.MetaSGD++
+          - learn2learn.algorithms.meta_sgd_update
   - docs/learn2learn.gym.md:
-      - learn2learn.gym++
-      - learn2learn.gym.MetaEnv
-      - learn2learn.gym.AsyncVectorEnv
-      - learn2learn.gym.envs.mujoco
-      - learn2learn.gym.envs.mujoco.HalfCheetahForwardBackwardEnv
-      - learn2learn.gym.envs.mujoco.AntForwardBackwardEnv
-      - learn2learn.gym.envs.mujoco.AntDirectionEnv
-      - learn2learn.gym.envs.mujoco.HumanoidForwardBackwardEnv
-      - learn2learn.gym.envs.mujoco.HumanoidDirectionEnv
-      - learn2learn.gym.envs.particles
-      - learn2learn.gym.envs.particles.Particles2DEnv
+      - learn2learn.gym++:
+          - learn2learn.gym.MetaEnv
+          - learn2learn.gym.AsyncVectorEnv
+          - learn2learn.gym.envs.mujoco:
+              - learn2learn.gym.envs.mujoco.HalfCheetahForwardBackwardEnv
+              - learn2learn.gym.envs.mujoco.AntForwardBackwardEnv
+              - learn2learn.gym.envs.mujoco.AntDirectionEnv
+              - learn2learn.gym.envs.mujoco.HumanoidForwardBackwardEnv
+              - learn2learn.gym.envs.mujoco.HumanoidDirectionEnv
+          - learn2learn.gym.envs.particles:
+              - learn2learn.gym.envs.particles.Particles2DEnv
   - docs/learn2learn.vision.md:
       - learn2learn.vision.models:
           - learn2learn.vision.models.OmniglotFC
@@ -83,7 +87,7 @@ google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
 theme:
   #name: mkdocs
   #custom_dir: 'l2l_theme/'
-  highlightjs: true
+  #highlightjs: true
   name: 'material'
   palette:
     primary: 'blue'
@@ -95,7 +99,7 @@ repo_url: 'https://github.com/learnables/learn2learn'
 markdown_extensions:
   - admonition
   - codehilite:
-      guess_lang: false
+      guess_lang: true
   - toc:
       permalink: true
 

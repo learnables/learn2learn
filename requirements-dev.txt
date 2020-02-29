@@ -1,3 +1,4 @@
+cython>=0.28.5
 twine
 mkdocs==1.0.4
 mkdocs-bootswatch==1.0
