@@ -92,7 +92,7 @@ class LoadData(TaskTransform):
         return task_description
 
 
-cdef class FilterLabels(TaskTransform):
+class FilterLabels(CythonFilterLabels):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py)
@@ -108,6 +108,12 @@ cdef class FilterLabels(TaskTransform):
 
     """
 
+    def __init__(self, dataset, labels):
+        super(FilterLabels, self).__init__(dataset, labels)
+
+
+cdef class CythonFilterLabels(TaskTransform):
+
     cdef public:
         list labels
         int[:] filtered_indices
@@ -115,7 +121,7 @@ cdef class FilterLabels(TaskTransform):
     @cython.boundscheck(False)
     @cython.wraparound(False)
     def __init__(self, dataset, list labels):
-        super(FilterLabels, self).__init__(dataset)
+        super(CythonFilterLabels, self).__init__(dataset)
         cdef dict indices_to_labels = <dict>dataset.indices_to_labels
         cdef long len_dataset = len(dataset)
         cdef long i
@@ -207,8 +213,7 @@ class RemapLabels(TaskTransform):
             dd.transforms.append(remap)
         return task_description
 
-
-cdef class NWays(TaskTransform):
+class NWays(CythonNWays):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py)
@@ -225,12 +230,18 @@ cdef class NWays(TaskTransform):
 
     """
 
+    def __init__(self, dataset, n=2):
+        super(NWays, self).__init__(dataset=dataset, n=n)
+
+
+cdef class CythonNWays(TaskTransform):
+
     cdef public:
         int n
         dict indices_to_labels
 
-    def __init__(self, dataset, n=2):
-        super(NWays, self).__init__(dataset)
+    def __init__(self, dataset, int n=2):
+        super(CythonNWays, self).__init__(dataset)
         self.n = n
         self.indices_to_labels = <dict>dataset.indices_to_labels
 
@@ -263,7 +274,7 @@ cdef class NWays(TaskTransform):
         return result
 
 
-cdef class KShots(TaskTransform):
+class KShots(CythonKShots):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py)
@@ -280,12 +291,18 @@ cdef class KShots(TaskTransform):
 
     """
 
+    def __init__(self, dataset, k=1, replacement=False):
+        super(KShots, self).__init__(dataset=dataset, k=k, replacement=replacement)
+
+
+cdef class CythonKShots(TaskTransform):
+
     cdef public:
         long k
         bool replacement
 
     def __init__(self, dataset, k=1, replacement=False):
-        super(KShots, self).__init__(dataset)
+        super(CythonKShots, self).__init__(dataset)
         self.dataset = dataset
         self.k = k
         self.replacement = replacement
@@ -307,7 +324,7 @@ cdef class KShots(TaskTransform):
         return sum([sampler(dds, k=self.k) for dds in class_to_data.values()], [])
 
 
-cdef class FusedNWaysKShots(TaskTransform):
+class FusedNWaysKShots(CythonFusedNWaysKShots):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py)
@@ -327,6 +344,17 @@ cdef class FusedNWaysKShots(TaskTransform):
         all labels in the dataset.
     """
 
+    def __init__(self, dataset, n=2, k=1, replacement=False, filter_labels=None):
+        super(FusedNWaysKShots, self).__init__(
+            dataset,
+            n=n,
+            k=k,
+            replacement=replacement,
+            filter_labels=filter_labels,
+        )
+
+cdef class CythonFusedNWaysKShots(TaskTransform):
+
     cdef public:
         int n
         int k
@@ -337,7 +365,7 @@ cdef class FusedNWaysKShots(TaskTransform):
         object kshots
 
     def __init__(self, dataset, int n=2, int k=1, bool replacement=False, list filter_labels=None):
-        super(FusedNWaysKShots, self).__init__(dataset)
+        super(CythonFusedNWaysKShots, self).__init__(dataset)
         self.n = n
         self.k = k
         self.replacement = replacement
