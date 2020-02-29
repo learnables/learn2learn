@@ -1,147 +1,687 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Seb Arnold">
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
         <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.data/">
-        <link rel="shortcut icon" href="../../img/favicon.ico">
+      
+      
+        <meta name="author" content="Séb Arnold">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
         <title>learn2learn.data - learn2learn</title>
-        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-        <script src="../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-68693545-3', 'seba-1511.github.com');
-            ga('send', 'pageview');
-        </script> 
-    </head>
-
-    <body>
-
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../..">learn2learn</a>
-                </div>
-
-                <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li >
-                                <a href="../..">Home</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../tutorials/getting_started/">Getting Started</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../learn2learn/">learn2learn</a>
-</li>
-                                    
-<li >
-    <a href="../learn2learn.algorithms/">learn2learn.algorithms</a>
-</li>
-                                    
-<li class="active">
-    <a href="./">learn2learn.data</a>
-</li>
-                                    
-<li >
-    <a href="../learn2learn.gym/">learn2learn.gym</a>
-</li>
-                                    
-<li >
-    <a href="../learn2learn.vision/">learn2learn.vision</a>
-</li>
-                                </ul>
-                            </li>
-                            <li >
-                                <a href="https://github.com/learnables/learn2learn/tree/master/examples">Examples</a>
-                            </li>
-                            <li >
-                                <a href="https://github.com/learnables/learn2learn/">GitHub</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li >
-                                <a rel="next" href="../learn2learn.algorithms/">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="../learn2learn.gym/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700%7CUbuntu+Mono&display=fallback">
+        <style>body,input{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/l2l_material.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-68693545-3", "seba-1511.github.com")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#learn2learndata" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              learn2learn
+            </span>
+            <span class="md-header-nav__topic">
+              
+                learn2learn.data
+              
+            </span>
+          
         </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
 
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#metadataset">MetaDataset</a></li>
-        <li class="main "><a href="#taskdataset">TaskDataset</a></li>
-            <li><a href="#sample">sample</a></li>
-        <li class="main "><a href="#learn2learndatatransforms">learn2learn.data.transforms</a></li>
-        <li class="main "><a href="#loaddata">LoadData</a></li>
-        <li class="main "><a href="#nways">NWays</a></li>
-        <li class="main "><a href="#kshots">KShots</a></li>
-        <li class="main "><a href="#filterlabels">FilterLabels</a></li>
-        <li class="main "><a href="#remaplabels">RemapLabels</a></li>
-        <li class="main "><a href="#consecutivelabels">ConsecutiveLabels</a></li>
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
+      
+    </a>
+    learn2learn
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn/" title="learn2learn" class="md-nav__link">
+      learn2learn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
+      learn2learn.algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        learn2learn.data
+      </label>
+    
+    <a href="./" title="learn2learn.data" class="md-nav__link md-nav__link--active">
+      learn2learn.data
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadataset" class="md-nav__link">
+    MetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taskdataset" class="md-nav__link">
+    TaskDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learndatatransforms" class="md-nav__link">
+    learn2learn.data.transforms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loaddata" class="md-nav__link">
+    LoadData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nways" class="md-nav__link">
+    NWays
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kshots" class="md-nav__link">
+    KShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filterlabels" class="md-nav__link">
+    FilterLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusednwayskshots" class="md-nav__link">
+    FusedNWaysKShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remaplabels" class="md-nav__link">
+    RemapLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consecutivelabels" class="md-nav__link">
+    ConsecutiveLabels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
     </ul>
-</div></div>
-                <div class="col-md-9" role="main">
+  
+</nav>
+    
+  </li>
 
-<h1 id="metadataset">MetaDataset</h1>
-<pre><code class="python">MetaDataset(dataset)
-</code></pre>
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
+      learn2learn.gym
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.vision/" title="learn2learn.vision" class="md-nav__link">
+      learn2learn.vision
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+      Computer Vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+      Reinforcement Learning
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/learnables/learn2learn/" title="GitHub" class="md-nav__link">
+      GitHub
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadataset" class="md-nav__link">
+    MetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taskdataset" class="md-nav__link">
+    TaskDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learndatatransforms" class="md-nav__link">
+    learn2learn.data.transforms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loaddata" class="md-nav__link">
+    LoadData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nways" class="md-nav__link">
+    NWays
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kshots" class="md-nav__link">
+    KShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filterlabels" class="md-nav__link">
+    FilterLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusednwayskshots" class="md-nav__link">
+    FusedNWaysKShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remaplabels" class="md-nav__link">
+    RemapLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consecutivelabels" class="md-nav__link">
+    ConsecutiveLabels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/learnables/learn2learn/edit/master/docs/docs/learn2learn.data.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="learn2learndata">learn2learn.data<a class="headerlink" href="#learn2learndata" title="Permanent link">&para;</a></h1>
+<h2 id="metadataset">MetaDataset<a class="headerlink" href="#metadataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><strong>Description</strong></p>
 <p>It wraps a torch dataset by creating a map of target to indices.
@@ -158,13 +698,16 @@ This comes in handy when we want to sample elements randomly for a particular la
                                  If not specified then we loop through all the datapoints to understand the mapping. (default: None)</li>
 </ul>
 <p><strong>Example</strong></p>
-<pre><code class="python">mnist = torchvision.datasets.MNIST(root=&quot;/tmp/mnist&quot;, train=True)
-mnist = l2l.data.MetaDataset(mnist)
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
-<h1 id="taskdataset">TaskDataset</h1>
-<pre><code class="python">TaskDataset(dataset, task_transforms=None, num_tasks=-1, task_collate=None)
-</code></pre>
+<h2 id="taskdataset">TaskDataset<a class="headerlink" href="#taskdataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -185,28 +728,27 @@ documentation of task transforms.</p>
 <li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - Number of tasks to generate.</li>
 </ul>
 <p><strong>Example</strong></p>
-<pre><code class="python">dataset = l2l.data.MetaDataset(MyDataset())
-transforms = [
-    l2l.data.transforms.NWays(dataset, n=5),
-    l2l.data.transforms.KShots(dataset, k=1),
-    l2l.data.transforms.LoadData(dataset),
-]
-taskset = TaskDataset(dataset, transforms, num_tasks=20000)
-for task in taskset:
-    X, y = task
-</code></pre>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>
+<span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">taskset</span> <span class="o">=</span> <span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">taskset</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">task</span>
+</code></pre></div>
+</td></tr></table>
 
-<h2 id="sample">sample</h2>
-<pre><code class="python">TaskDataset.sample()
-</code></pre>
-
-<p><strong>Description</strong></p>
-<p>Randomly samples a task from the TaskDataset.</p>
-<p><strong>Example</strong></p>
-<pre><code class="python">X, y = taskset.sample()
-</code></pre>
-
-<h1 id="learn2learndatatransforms">learn2learn.data.transforms</h1>
+<h2 id="learn2learndatatransforms">learn2learn.data.transforms<a class="headerlink" href="#learn2learndatatransforms" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
 <p>Collection of general task transformations.</p>
 <p>A task transformation is an object that implements the callable interface.
@@ -227,9 +769,10 @@ data from the dataset to the list of transformations of each sample.</p>
 <p>To create a task from a task description, the <code>TaskDataset</code> applies each sample's list of <code>transform</code>s
 in order.
 Then, all samples are collated via the <code>TaskDataset</code>'s collate function.</p>
-<h1 id="loaddata">LoadData</h1>
-<pre><code class="python">LoadData(dataset)
-</code></pre>
+<h3 id="loaddata">LoadData<a class="headerlink" href="#loaddata" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -238,9 +781,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
-<h1 id="nways">NWays</h1>
-<pre><code class="python">NWays(dataset, n=2)
-</code></pre>
+<h3 id="nways">NWays<a class="headerlink" href="#nways" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -251,9 +795,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>n</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from the task
     description's labels.</li>
 </ul>
-<h1 id="kshots">KShots</h1>
-<pre><code class="python">KShots(dataset, k=1, replacement=False)
-</code></pre>
+<h3 id="kshots">KShots<a class="headerlink" href="#kshots" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -262,11 +807,12 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 <li><strong>k</strong> (int, <em>optional</em>, default=1) - The number of samples per label.</li>
-<li><strong>replacement</strong> (bool, <em>optional</em>, default) - Whether to sample with replacement.</li>
+<li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample with replacement.</li>
 </ul>
-<h1 id="filterlabels">FilterLabels</h1>
-<pre><code class="python">FilterLabels(dataset, labels)
-</code></pre>
+<h3 id="filterlabels">FilterLabels<a class="headerlink" href="#filterlabels" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -276,9 +822,28 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 <li><strong>labels</strong> (list) - The list of labels to include.</li>
 </ul>
-<h1 id="remaplabels">RemapLabels</h1>
-<pre><code class="python">RemapLabels(dataset, shuffle=True)
-</code></pre>
+<h3 id="fusednwayskshots">FusedNWaysKShots<a class="headerlink" href="#fusednwayskshots" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Efficient implementation of FilterLabels, NWays, and KShots.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>n</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from the task
+    description's labels.</li>
+<li><strong>k</strong> (int, <em>optional</em>, default=1) - The number of samples per label.</li>
+<li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample shots with replacement.</li>
+<li><strong>filter_labels</strong> (list, <em>optional</em>, default=None) - The list of labels to include. Defaults to
+    all labels in the dataset.</li>
+</ul>
+<h3 id="remaplabels">RemapLabels<a class="headerlink" href="#remaplabels" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -287,9 +852,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
-<h1 id="consecutivelabels">ConsecutiveLabels</h1>
-<pre><code class="python">ConsecutiveLabels(dataset)
-</code></pre>
+<h3 id="consecutivelabels">ConsecutiveLabels<a class="headerlink" href="#consecutivelabels" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
@@ -300,85 +866,85 @@ but in no specific order.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
-</ul></div>
-        </div>
+</ul>
+                
+                  
+                
+                
+              
+              
+                
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "../..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../../js/base.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js" defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js" defer></script>
-        <script src="../../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
+              
+            </article>
+          </div>
         </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                learn2learn.algorithms
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                learn2learn.gym
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
     </div>
-</div>
-
-    </body>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js"></script>
+      
+    
+  </body>
 </html>
