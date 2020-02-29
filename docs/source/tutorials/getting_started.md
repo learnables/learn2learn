@@ -17,6 +17,9 @@ For the most update-to-date version clone the [repository](https://github.com/le
 
 ```pip install -e .```
 
+!!! note
+    While learn2learn is actively used in current research projects, it is still in development.
+
 ## Development
 
 To simplify the development process, the following commands can be executed from the cloned sources:

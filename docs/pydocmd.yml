@@ -78,32 +78,34 @@ pages:
   - Changelog: changelog.md << ../CHANGELOG.md
   - GitHub: https://github.com/learnables/learn2learn/
 
+
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
 docs_dir: source
 gens_dir: _build/pydocmd     # This will end up as the MkDocs 'docs_dir'
 site_dir: _build/site
 site_url: http://learn2learn.net
-site_author: Seb Arnold
+site_author: Séb Arnold
+site_favicon: 'assets/img/favicons/favicon.ico'
 google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
-theme:
-  #name: mkdocs
-  #custom_dir: 'l2l_theme/'
-  #highlightjs: true
-  name: 'material'
-  palette:
-    primary: 'blue'
-    accent: 'orange'
 repo_name: 'learnables/learn2learn'
 repo_url: 'https://github.com/learnables/learn2learn'
 
-# Extensions
-markdown_extensions:
-  - admonition
-  - codehilite:
-      guess_lang: true
-  - toc:
-      permalink: true
+theme:
+  name: 'material'
+  logo: 'assets/img/learn2learn_white.png'
+  favicon: 'assets/img/favicons/favicon.ico'
+  palette:
+      primary: 'blue'
+      accent: 'orange'
+  font:
+    text: 'Source Sans Pro'
+    code: 'Ubuntu Mono'
+  social:
+    - type: 'github'
+      link: 'https://github.com/learnables'
+    - type: 'twitter'
+      link: 'https://twitter.com/seba-1511'
 
 loader: pydocmd.loader.PythonLoader
 preprocessor: pydocmd.preprocessor.Preprocessor
@@ -128,6 +130,14 @@ extra_javascript:
 
 extra_css:
   - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
+  - 'assets/css/l2l_material.css'
 
+# Extensions
 markdown_extensions:
   - mdx_math
+  - admonition
+  - codehilite:
+      guess_lang: true
+      linenums: true
+  - toc:
+      permalink: true
