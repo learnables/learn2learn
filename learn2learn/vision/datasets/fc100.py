@@ -12,7 +12,7 @@ from learn2learn.data.utils import download_file_from_google_drive, download_fil
 
 
 GOOGLE_DRIVE_FILE_ID = '1_ZsLyqI487NRDQhwvI7rg86FK3YAZvz1'
-DROPBOX_LINK = ''
+DROPBOX_LINK = 'https://www.dropbox.com/s/ftsjuwsu6lfp0fz/FC100.zip?dl=1'
 
 
 class FC100(data.Dataset):
@@ -111,9 +111,9 @@ class FC100(data.Dataset):
 
 
 if __name__ == '__main__':
-    dataset = FC100(root='./data')
+    dataset = FC100(root='~/data')
     img, tgt = dataset[43]
-    dataset = FC100(root='./data', mode='validation')
+    dataset = FC100(root='~/data', mode='validation')
     img, tgt = dataset[43]
-    dataset = FC100(root='./data', mode='test')
+    dataset = FC100(root='~/data', mode='test')
     img, tgt = dataset[43]
