@@ -99,6 +99,8 @@ The file [reptile_miniimagenet.py](https://github.com/learnables/learn2learn/blo
 
 **Results**
 
+The *mini*-ImageNet file can easily be adapted to obtain results on Omniglot and CIFAR-FS as well.
+
 | Dataset       | Architecture | Ways | Shots | Original | learn2learn |
 |---------------|--------------|------|-------|----------|-------------|
 | Omniglot      | CNN          | 5    | 5     | 99.5%    | 99.5%       |
