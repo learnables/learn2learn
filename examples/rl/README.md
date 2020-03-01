@@ -8,9 +8,14 @@
 
 ## MAML
 
-The following results are obtained by running [maml_trpo.py](https://github.com/learnables/learn2learn/blob/master/examples/rl/maml_trpo.py) on `HalfCheetahForwardBackwardEnv` and `AntForwardBackwardEnv` for 300 updates.
+<p align="center">
+<img src="/assets/img/examples/cheetah_fwdbwd_rewards.png" height="350px" />
+<img src="/assets/img/examples/ant_fwdbwd_rewards.png" height="350px" />
+</p>
+
+The above results are obtained by running [maml_trpo.py](https://github.com/learnables/learn2learn/blob/master/examples/rl/maml_trpo.py) on `HalfCheetahForwardBackwardEnv` and `AntForwardBackwardEnv` for 300 updates.
 The figures show the expected sum of rewards over all tasks.
 The line and shadow are the mean and standard deviation computed over 3 random seeds.
 
-![](assets/img/examples/cheetah_fwdbwd_rewards.png) &
-![](assets/img/examples/ant_fwdbwd_rewards.png)
+!!! info
+    Those results were obtained in August 2019, and might be outdated.
