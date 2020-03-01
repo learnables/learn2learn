@@ -47,6 +47,14 @@ docs:
 docs-deploy:
 	cd docs && pydocmd gh-deploy
 
+# https://dev.to/neshaz/a-tutorial-for-tagging-releases-in-git-147e
+release:
+	echo 'Do not forget to bump the CHANGELOG.md'
+	echo 'Tagging v'$(shell python -c 'print(open("learn2learn/_version.py").read()[15:-2])')
+	sleep 3
+	git tag -a v$(shell python -c 'print(open("learn2learn/_version.py").read()[15:-2])')
+	git push origin --tags
+
 publish:
 	python setup.py sdist
 	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
