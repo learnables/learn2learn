@@ -4,7 +4,7 @@ This directory contains meta-learning examples and reproductions for common comp
 
 ## MAML
 
-The following files reproduce MAML on the Omniglot and *mini*-ImageNet datasets.
+The following files reproduce [MAML](https://arxiv.org/pdf/1703.03400.pdf) on the Omniglot and *mini*-ImageNet datasets.
 The FOMAML results can be obtained by setting `first_order=True` in the `MAML` wrapper.
 On Omniglot, the CNN results can be obtained by swapping `OmniglotFC` with `OmniglotCNN`.
 
@@ -13,6 +13,8 @@ On Omniglot, the CNN results can be obtained by swapping `OmniglotFC` with `Omni
 
 Note that the original MAML paper trains with 5 fast adaptation step, but tests with 10 steps.
 This implementation only provides the training code.
+
+**Results**
 
 When adapting the code to different datasets, we obtained the following results.
 Only the fast-adaptation learning rate needs a bit of tuning, and good values usually lie in a 0.5-2x range of the original value.
@@ -42,10 +44,11 @@ python examples/vision/maml_miniimagenet.py
 
 ## Prototypical Networks
 
-The file [protonet_miniimagenet.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/protonet_miniimagenet.py) reproduces protonet on the *mini*-ImageNet dataset.
+The file [protonet_miniimagenet.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/protonet_miniimagenet.py) reproduces [Prototypical Networks](https://arxiv.org/pdf/1703.05175.pdf) on the *mini*-ImageNet dataset.
 
 This implementation provides training and testing code.
 
+**Results**
 
 | Dataset       | Architecture | Ways | Shots | Original | learn2learn |
 |---------------|--------------|------|-------|----------|-------------|
@@ -69,10 +72,11 @@ python examples/vision/protonet_miniimagenet.py --shot 5 --train-way 20
 
 ## ANIL
 
-The file [anil_fc100.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/anil_fc100.py) implements ANIL on the FC100 dataset.
+The file [anil_fc100.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/anil_fc100.py) implements [ANIL](https://arxiv.org/pdf/1909.09157.pdf) on the FC100 dataset.
+
+**Results**
 
 While ANIL only used *mini*-ImageNet as a benchmark, we provide results for CIFAR-FS and FC100 as well.
-
 
 | Dataset       | Architecture | Ways | Shots | Original | learn2learn |
 |---------------|--------------|------|-------|----------|-------------|
@@ -86,8 +90,24 @@ While ANIL only used *mini*-ImageNet as a benchmark, we provide results for CIFA
 Manually edit the above file and run:
 
 ~~~shell
-python examples/vision/protonet_miniimagenet.py
+python examples/vision/anil_fc100.py
 ~~~
 
-## SimpleShot
+## Reptile
 
+The file [reptile_miniimagenet.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/reptile_miniimagenet.py) reproduces [Reptile](https://arxiv.org/pdf/1803.02999.pdf) on the *mini*-ImageNet dataset.
+
+**Results**
+
+| Dataset       | Architecture | Ways | Shots | Original | learn2learn |
+|---------------|--------------|------|-------|----------|-------------|
+| mini-ImageNet | CNN          | 5    | 5     | 66.0%    | ??.?%       |
+
+
+**Usage**
+
+Manually edit the above file and run:
+
+~~~shell
+python examples/vision/reptile_miniimagenet.py
+~~~

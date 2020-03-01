@@ -51,9 +51,13 @@ def fast_adapt(batch,
     evaluation_data, evaluation_labels = data[evaluation_indices], labels[evaluation_indices]
 
     # Adaptation steps
+    adaptation_data = [d for d in adaptation_data]
     for step in range(adapt_steps):
+        data = random.sample(adaptation_data, batch_size)
+        adapt_X = torch.cat([d[0].unsqueeze(0) for d in data], dim=0).to(device)
+        adapt_y = torch.cat([torch.tensor(d[1]).view(-1) for d in data], dim=0).to(device)
         opt.zero_grad()
-        error = loss(learner(adaptation_data), adaptation_labels)
+        error = loss(learner(adapt_X), adapt_y)
         error.backward()
         opt.step()
 
