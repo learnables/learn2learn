@@ -106,7 +106,7 @@ class FGVCAircraft(Dataset):
         self._bookkeeping_path = os.path.join(self.root, 'fgvc-aircraft-' + mode + '-bookkeeping.pkl')
 
         if not self._check_exists() and download:
-            self.download(self.root)
+            self.download()
 
         self.load_data(mode)
 
@@ -118,10 +118,10 @@ class FGVCAircraft(Dataset):
             os.path.exists(images_path) and \
             os.path.exists(labels_path)
 
-    def download(self, root):
-        if not os.path.exists(root):
-            os.mkdir(root)
-        data_path = os.path.join(root, DATASET_DIR)
+    def download(self):
+        if not os.path.exists(self.root):
+            os.mkdir(self.root)
+        data_path = os.path.join(self.root, DATASET_DIR)
         if not os.path.exists(data_path):
             os.mkdir(data_path)
         tar_path = os.path.join(data_path, os.path.basename(DATASET_URL))

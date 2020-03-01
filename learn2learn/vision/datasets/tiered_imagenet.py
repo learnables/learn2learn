@@ -54,10 +54,9 @@ class TieredImagenet(data.Dataset):
 
     def __init__(self, root, mode='train', transform=None, target_transform=None, download=False):
         super(TieredImagenet, self).__init__()
-        root = os.path.expanduser(root)
-        self.root = root
-        if not os.path.exists(root):
-            os.mkdir(root)
+        self.root = os.path.expanduser(root)
+        if not os.path.exists(self.root):
+            os.mkdir(self.root)
         self.transform = transform
         self.target_transform = target_transform
         if mode not in ['train', 'validation', 'test']:
@@ -106,9 +105,9 @@ class TieredImagenet(data.Dataset):
 
 
 if __name__ == '__main__':
-    dataset = TieredImagenet(root=os.path.expanduser('~/data'))
+    dataset = TieredImagenet(root='~/data')
     img, tgt = dataset[43]
-    dataset = TieredImagenet(root=os.path.expanduser('~/data'), mode='validation')
+    dataset = TieredImagenet(root='~/data', mode='validation')
     img, tgt = dataset[43]
-    dataset = TieredImagenet(root=os.path.expanduser('~/data'), mode='test')
+    dataset = TieredImagenet(root='~/data', mode='test')
     img, tgt = dataset[43]

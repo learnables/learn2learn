@@ -6,36 +6,40 @@ site_name: "learn2learn"
 # documented. Higher indentation leads to smaller header size.
 generate:
   - docs/learn2learn.md:
-      - learn2learn.clone_module
-      - learn2learn.detach_module
-      - learn2learn.magic_box
+      - learn2learn.utils:
+          - learn2learn.clone_module
+          - learn2learn.detach_module
+          - learn2learn.magic_box
   - docs/learn2learn.data.md:
-      - learn2learn.data.MetaDataset
-      #- learn2learn.data.TaskDataset
-      - learn2learn.data.transforms
-      - learn2learn.data.transforms.LoadData
-      #- learn2learn.data.transforms.NWays
-      - learn2learn.data.transforms.KShots
-      #- learn2learn.data.transforms.FilterLabels
-      - learn2learn.data.transforms.RemapLabels
-      - learn2learn.data.transforms.ConsecutiveLabels
+      - learn2learn.data:
+          - learn2learn.data.MetaDataset
+          - learn2learn.data.TaskDataset
+          - learn2learn.data.transforms:
+              - learn2learn.data.transforms.LoadData
+              - learn2learn.data.transforms.NWays
+              - learn2learn.data.transforms.KShots
+              - learn2learn.data.transforms.FilterLabels
+              - learn2learn.data.transforms.FusedNWaysKShots
+              - learn2learn.data.transforms.RemapLabels
+              - learn2learn.data.transforms.ConsecutiveLabels
   - docs/learn2learn.algorithms.md:
-      - learn2learn.algorithms.MAML++
-      - learn2learn.algorithms.maml_update
-      - learn2learn.algorithms.MetaSGD++
-      - learn2learn.algorithms.meta_sgd_update
+      - learn2learn.algorithms:
+          - learn2learn.algorithms.MAML++
+          - learn2learn.algorithms.maml_update
+          - learn2learn.algorithms.MetaSGD++
+          - learn2learn.algorithms.meta_sgd_update
   - docs/learn2learn.gym.md:
-      - learn2learn.gym++
-      - learn2learn.gym.MetaEnv
-      - learn2learn.gym.AsyncVectorEnv
-      - learn2learn.gym.envs.mujoco
-      - learn2learn.gym.envs.mujoco.HalfCheetahForwardBackwardEnv
-      - learn2learn.gym.envs.mujoco.AntForwardBackwardEnv
-      - learn2learn.gym.envs.mujoco.AntDirectionEnv
-      - learn2learn.gym.envs.mujoco.HumanoidForwardBackwardEnv
-      - learn2learn.gym.envs.mujoco.HumanoidDirectionEnv
-      - learn2learn.gym.envs.particles
-      - learn2learn.gym.envs.particles.Particles2DEnv
+      - learn2learn.gym++:
+          - learn2learn.gym.MetaEnv
+          - learn2learn.gym.AsyncVectorEnv
+          - learn2learn.gym.envs.mujoco:
+              - learn2learn.gym.envs.mujoco.HalfCheetahForwardBackwardEnv
+              - learn2learn.gym.envs.mujoco.AntForwardBackwardEnv
+              - learn2learn.gym.envs.mujoco.AntDirectionEnv
+              - learn2learn.gym.envs.mujoco.HumanoidForwardBackwardEnv
+              - learn2learn.gym.envs.mujoco.HumanoidDirectionEnv
+          - learn2learn.gym.envs.particles:
+              - learn2learn.gym.envs.particles.Particles2DEnv
   - docs/learn2learn.vision.md:
       - learn2learn.vision.models:
           - learn2learn.vision.models.OmniglotFC
@@ -68,8 +72,12 @@ pages:
       - learn2learn.data: docs/learn2learn.data.md
       - learn2learn.gym: docs/learn2learn.gym.md
       - learn2learn.vision: docs/learn2learn.vision.md
-  - Examples: https://github.com/learnables/learn2learn/tree/master/examples
+  - Examples:
+      - Computer Vision: examples.vision.md << ../examples/vision/README.md
+      - Reinforcement Learning: examples.rl.md << ../examples/rl/README.md
+  - Changelog: changelog.md << ../CHANGELOG.md
   - GitHub: https://github.com/learnables/learn2learn/
+
 
 # These options all show off their default values. You don't have to add
 # them to your configuration if you're fine with the default.
@@ -77,12 +85,28 @@ docs_dir: source
 gens_dir: _build/pydocmd     # This will end up as the MkDocs 'docs_dir'
 site_dir: _build/site
 site_url: http://learn2learn.net
-site_author: Seb Arnold
+site_author: Séb Arnold
+site_favicon: 'assets/img/favicons/favicon.ico'
 google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
+repo_name: 'learnables/learn2learn'
+repo_url: 'https://github.com/learnables/learn2learn'
+
 theme:
-  name: mkdocs
-  custom_dir: 'l2l_theme/'
-  highlightjs: true
+  name: 'material'
+  logo: 'assets/img/learn2learn_white.png'
+  favicon: 'assets/img/favicons/favicon.ico'
+  palette:
+      primary: 'blue'
+      accent: 'orange'
+  font:
+    text: 'Source Sans Pro'
+    code: 'Ubuntu Mono'
+  social:
+    - type: 'github'
+      link: 'https://github.com/learnables'
+    - type: 'twitter'
+      link: 'https://twitter.com/seba-1511'
+
 loader: pydocmd.loader.PythonLoader
 preprocessor: pydocmd.preprocessor.Preprocessor
 # Whether to output headers as markdown or HTML.  Used to workaround
@@ -106,6 +130,14 @@ extra_javascript:
 
 extra_css:
   - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
+  - 'assets/css/l2l_material.css'
 
+# Extensions
 markdown_extensions:
   - mdx_math
+  - admonition
+  - codehilite:
+      guess_lang: true
+      linenums: true
+  - toc:
+      permalink: true

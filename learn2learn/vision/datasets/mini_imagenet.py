@@ -70,10 +70,9 @@ class MiniImagenet(data.Dataset):
 
     def __init__(self, root, mode='train', transform=None, target_transform=None):
         super(MiniImagenet, self).__init__()
-        root = os.path.expanduser(root)
-        self.root = root
-        if not os.path.exists(root):
-            os.mkdir(root)
+        self.root = os.path.expanduser(root)
+        if not os.path.exists(self.root):
+            os.mkdir(self.root)
         self.transform = transform
         self.target_transform = target_transform
         self.mode = mode
@@ -88,7 +87,7 @@ class MiniImagenet(data.Dataset):
             raise ('ValueError', 'Needs to be train, test or validation')
 
         if not self._check_exists():
-            download_pkl(google_drive_file_id, root, mode)
+            download_pkl(google_drive_file_id, self.root, mode)
 
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
         with open(pickle_file, 'rb') as f:
