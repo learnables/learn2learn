@@ -25,3 +25,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for `RandomClassRotation` with newer versions of torchvision.
 * Various minor fixes in the examples.
+* Add Dropbox download if GDrive fails for FC100.
