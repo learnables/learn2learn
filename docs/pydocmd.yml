@@ -86,7 +86,6 @@ gens_dir: _build/pydocmd     # This will end up as the MkDocs 'docs_dir'
 site_dir: _build/site
 site_url: http://learn2learn.net
 site_author: Séb Arnold
-site_favicon: 'assets/img/favicons/favicon.ico'
 google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
 repo_name: 'learnables/learn2learn'
 repo_url: 'https://github.com/learnables/learn2learn'
