@@ -453,13 +453,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#promp" class="md-nav__link">
-    ProMP
-  </a>
-  
-</li>
-      
       
       
       
@@ -527,13 +520,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#promp" class="md-nav__link">
-    ProMP
-  </a>
-  
-</li>
-      
       
       
       
@@ -554,8 +540,25 @@
                 
                 
                 <h1 id="meta-reinforcement-learning">Meta-Reinforcement Learning<a class="headerlink" href="#meta-reinforcement-learning" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Meta-RL results are particularly finicky to compare.
+Different papers use different environment implementations, which in turn produce different convergence and rewards.
+The plots below only serve to indicate what kind of performance you can expect with learn2learn.</p>
+</div>
 <h2 id="maml">MAML<a class="headerlink" href="#maml" title="Permanent link">&para;</a></h2>
-<h2 id="promp">ProMP<a class="headerlink" href="#promp" title="Permanent link">&para;</a></h2>
+<p align="center">
+<img src="/assets/img/examples/cheetah_fwdbwd_rewards.png" height="350px" />
+<img src="/assets/img/examples/ant_fwdbwd_rewards.png" height="350px" />
+</p>
+
+<p>The above results are obtained by running <a href="https://github.com/learnables/learn2learn/blob/master/examples/rl/maml_trpo.py">maml_trpo.py</a> on <code>HalfCheetahForwardBackwardEnv</code> and <code>AntForwardBackwardEnv</code> for 300 updates.
+The figures show the expected sum of rewards over all tasks.
+The line and shadow are the mean and standard deviation computed over 3 random seeds.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Those results were obtained in August 2019, and might be outdated.</p>
+</div>
                 
                   
                 
@@ -620,17 +623,6 @@
           Material for MkDocs</a>
       </div>
       
-  <div class="md-footer-social">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
-    
-      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
-    
-      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
-    
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
-    
-  </div>
-
     </div>
   </div>
 </footer>

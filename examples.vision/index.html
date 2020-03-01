@@ -435,22 +435,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#maml-on-omniglot" class="md-nav__link">
-    MAML on Omniglot
+  <a href="#maml" class="md-nav__link">
+    MAML
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#maml-on-mini-imagenet" class="md-nav__link">
-    MAML on mini-ImageNet
+  <a href="#prototypical-networks" class="md-nav__link">
+    Prototypical Networks
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#protonets-on-mini-imagenet" class="md-nav__link">
-    ProtoNets on mini-ImageNet
+  <a href="#anil" class="md-nav__link">
+    ANIL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reptile" class="md-nav__link">
+    Reptile
   </a>
   
 </li>
@@ -528,22 +535,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#maml-on-omniglot" class="md-nav__link">
-    MAML on Omniglot
+  <a href="#maml" class="md-nav__link">
+    MAML
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#maml-on-mini-imagenet" class="md-nav__link">
-    MAML on mini-ImageNet
+  <a href="#prototypical-networks" class="md-nav__link">
+    Prototypical Networks
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#protonets-on-mini-imagenet" class="md-nav__link">
-    ProtoNets on mini-ImageNet
+  <a href="#anil" class="md-nav__link">
+    ANIL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reptile" class="md-nav__link">
+    Reptile
   </a>
   
 </li>
@@ -569,106 +583,230 @@
                 
                 <h1 id="meta-learning-computer-vision">Meta-Learning &amp; Computer Vision<a class="headerlink" href="#meta-learning-computer-vision" title="Permanent link">&para;</a></h1>
 <p>This directory contains meta-learning examples and reproductions for common computer vision benchmarks.</p>
-<h2 id="maml-on-omniglot">MAML on Omniglot<a class="headerlink" href="#maml-on-omniglot" title="Permanent link">&para;</a></h2>
-<p>This file reproduces MAML on the Omniglot dataset.
-The CNN results can be obtained by swapping <code>OmniglotFC</code> with <code>OmniglotCNN</code>.
-As far as we know, the hyper-parameters should also replicate the 5-ways 5-shots setting.</p>
-<p>Note that the original MAML paper trains with 1 fast adaptation step, but tests with 3 steps.
+<h2 id="maml">MAML<a class="headerlink" href="#maml" title="Permanent link">&para;</a></h2>
+<p>The following files reproduce <a href="https://arxiv.org/pdf/1703.03400.pdf">MAML</a> on the Omniglot and <em>mini</em>-ImageNet datasets.
+The FOMAML results can be obtained by setting <code>first_order=True</code> in the <code>MAML</code> wrapper.
+On Omniglot, the CNN results can be obtained by swapping <code>OmniglotFC</code> with <code>OmniglotCNN</code>.</p>
+<ul>
+<li><a href="https://github.com/learnables/learn2learn/blob/master/examples/vision/maml_omniglot.py">maml_omniglot.py</a> - MAML on the Omniglot dataset with a fully-connected network.</li>
+<li><a href="https://github.com/learnables/learn2learn/blob/master/examples/vision/maml_miniimagenet.py">maml_miniimagenet.py</a> - MAML on the <em>mini</em>-ImageNet dataset with the standard convolutional network.</li>
+</ul>
+<p>Note that the original MAML paper trains with 5 fast adaptation step, but tests with 10 steps.
 This implementation only provides the training code.</p>
 <p><strong>Results</strong></p>
+<p>When adapting the code to different datasets, we obtained the following results.
+Only the fast-adaptation learning rate needs a bit of tuning, and good values usually lie in a 0.5-2x range of the original value.</p>
 <table>
 <thead>
 <tr>
-<th>Setup</th>
+<th>Dataset</th>
+<th>Architecture</th>
+<th>Ways</th>
+<th>Shots</th>
 <th>Original</th>
 <th>learn2learn</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>FC, 1 shot, 5 ways, 1 step</td>
+<td>Omniglot</td>
+<td>FC</td>
+<td>5</td>
+<td>1</td>
 <td>89.7%</td>
 <td>88.9%</td>
 </tr>
 <tr>
-<td>CNN, 1 shot, 5 ways, 1 step</td>
+<td>Omniglot</td>
+<td>CNN</td>
+<td>5</td>
+<td>1</td>
 <td>98.7%</td>
 <td>99.1%</td>
 </tr>
-</tbody>
-</table>
-<p><strong>Usage</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/maml_omniglot.py
-</code></pre></div>
-</td></tr></table>
-
-<p><strong>Colab</strong> Follow <a href="https://colab.research.google.com/drive/1N1vtHAPJBaJO1wD30b_fnwPOWDorm_gP">this link</a> to see this example live on Google Colab.</p>
-<h2 id="maml-on-mini-imagenet">MAML on mini-ImageNet<a class="headerlink" href="#maml-on-mini-imagenet" title="Permanent link">&para;</a></h2>
-<p>This file reproduces MAML on the <em>mini</em>-ImageNet dataset.
-The FOMAML results can be obtained by setting <code>first_order=True</code> in the <code>MAML</code> wrapper.</p>
-<p>Note that the original MAML paper trains with 5 fast adaptation step, but tests with 10 steps.
-This implementation only provides the training code.</p>
-<p><strong>Results</strong></p>
-<table>
-<thead>
 <tr>
-<th>Setup</th>
-<th>Original</th>
-<th>learn2learn</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CNN, 1 shot, 5 ways, 5 step</td>
+<td>mini-ImageNet</td>
+<td>CNN</td>
+<td>5</td>
+<td>1</td>
 <td>48.7%</td>
 <td>48.3%</td>
 </tr>
 <tr>
-<td>CNN, 5 shot, 5 ways, 5 step</td>
+<td>mini-ImageNet</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
 <td>63.1%</td>
-<td>64.8%</td>
+<td>65.4%</td>
+</tr>
+<tr>
+<td>CIFAR-FS</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>71.5%</td>
+<td>73.6%</td>
+</tr>
+<tr>
+<td>FC100</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>n/a</td>
+<td>49.0%</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Usage</strong></p>
+<p>Manually edit the respective files and run:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/maml_omniglot.py
+</code></pre></div>
+</td></tr></table>
+
+<p>or</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/maml_miniimagenet.py
 </code></pre></div>
 </td></tr></table>
 
-<p><strong>Colab</strong> Follow <a href="https://colab.research.google.com/drive/1NIWbMYM3CercnoNMmlhre7hsJ8wMtAry">this link</a> to see this example live on Google Colab.</p>
-<h2 id="protonets-on-mini-imagenet">ProtoNets on mini-ImageNet<a class="headerlink" href="#protonets-on-mini-imagenet" title="Permanent link">&para;</a></h2>
-<p>This file reproduces protonet on the <em>mini</em>-ImageNet dataset.</p>
+<h2 id="prototypical-networks">Prototypical Networks<a class="headerlink" href="#prototypical-networks" title="Permanent link">&para;</a></h2>
+<p>The file <a href="https://github.com/learnables/learn2learn/blob/master/examples/vision/protonet_miniimagenet.py">protonet_miniimagenet.py</a> reproduces <a href="https://arxiv.org/pdf/1703.05175.pdf">Prototypical Networks</a> on the <em>mini</em>-ImageNet dataset.</p>
 <p>This implementation provides training and testing code.</p>
 <p><strong>Results</strong></p>
 <table>
 <thead>
 <tr>
-<th>Setup</th>
+<th>Dataset</th>
+<th>Architecture</th>
+<th>Ways</th>
+<th>Shots</th>
 <th>Original</th>
 <th>learn2learn</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>CNN, 1 shot, 5 ways</td>
+<td>mini-ImageNet</td>
+<td>CNN</td>
+<td>5</td>
+<td>1</td>
 <td>49.4%</td>
 <td>49.1%</td>
 </tr>
 <tr>
-<td>CNN, 5 shot, 5 ways</td>
+<td>mini-ImageNet</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
 <td>68.2%</td>
 <td>66.5%</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Usage</strong></p>
-<p>For 1 shot 5 ways</p>
+<p>For 1 shot 5 ways:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/protonet_miniimagenet.py
 </code></pre></div>
 </td></tr></table>
 
-<p>For 5 shot 5 ways</p>
+<p>For 5 shot 5 ways:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/protonet_miniimagenet.py --shot <span class="m">5</span> --train-way <span class="m">20</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="anil">ANIL<a class="headerlink" href="#anil" title="Permanent link">&para;</a></h2>
+<p>The file <a href="https://github.com/learnables/learn2learn/blob/master/examples/vision/anil_fc100.py">anil_fc100.py</a> implements <a href="https://arxiv.org/pdf/1909.09157.pdf">ANIL</a> on the FC100 dataset.</p>
+<p><strong>Results</strong></p>
+<p>While ANIL only used <em>mini</em>-ImageNet as a benchmark, we provide results for CIFAR-FS and FC100 as well.</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Architecture</th>
+<th>Ways</th>
+<th>Shots</th>
+<th>Original</th>
+<th>learn2learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini-ImageNet</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>61.5%</td>
+<td>63.2%</td>
+</tr>
+<tr>
+<td>CIFAR-FS</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>n/a</td>
+<td>68.3%</td>
+</tr>
+<tr>
+<td>FC100</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>n/a</td>
+<td>47.6%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong></p>
+<p>Manually edit the above file and run:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/anil_fc100.py
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="reptile">Reptile<a class="headerlink" href="#reptile" title="Permanent link">&para;</a></h2>
+<p>The file <a href="https://github.com/learnables/learn2learn/blob/master/examples/vision/reptile_miniimagenet.py">reptile_miniimagenet.py</a> reproduces <a href="https://arxiv.org/pdf/1803.02999.pdf">Reptile</a> on the <em>mini</em>-ImageNet dataset.</p>
+<p><strong>Results</strong></p>
+<p>The <em>mini</em>-ImageNet file can easily be adapted to obtain results on Omniglot and CIFAR-FS as well.</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Architecture</th>
+<th>Ways</th>
+<th>Shots</th>
+<th>Original</th>
+<th>learn2learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Omniglot</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>99.5%</td>
+<td>99.5%</td>
+</tr>
+<tr>
+<td>mini-ImageNet</td>
+<td>CNN</td>
+<td>5</td>
+<td>5</td>
+<td>66.0%</td>
+<td>65.5%</td>
+</tr>
+<tr>
+<td>CIFAR-FS</td>
+<td>CNN</td>
+<td>10</td>
+<td>3</td>
+<td>n/a</td>
+<td>46.3%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Usage</strong></p>
+<p>Manually edit the above file and run:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>python examples/vision/reptile_miniimagenet.py
 </code></pre></div>
 </td></tr></table>
                 
@@ -735,17 +873,6 @@ This implementation only provides the training code.</p>
           Material for MkDocs</a>
       </div>
       
-  <div class="md-footer-social">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
-    
-      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
-    
-      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
-    
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
-    
-  </div>
-
     </div>
   </div>
 </footer>
