@@ -22,12 +22,12 @@ class AircraftTests(unittest.TestCase):
 
         aircraft = l2l.vision.datasets.FGVCAircraft(root=root, mode='validation')
         image, label = aircraft[12]
-        path = os.path.join(root, 'FC100_val.pickle')
+        path = os.path.join(root, 'fgvc_aircraft')
         self.assertTrue(os.path.exists(path))
 
         aircraft = l2l.vision.datasets.FGVCAircraft(root=root, mode='test')
         image, label = aircraft[12]
-        path = os.path.join(root, 'FC100_test.pickle')
+        path = os.path.join(root, 'fgvc_aircraft')
         self.assertTrue(os.path.exists(path))
 
 
