@@ -28,7 +28,7 @@ Only the fast-adaptation learning rate needs a bit of tuning, and good values us
 
 **Usage**
 
-Manually edit the respective files, and then run
+Manually edit the respective files and run:
 
 ~~~shell
 python examples/vision/maml_omniglot.py
@@ -42,7 +42,7 @@ python examples/vision/maml_miniimagenet.py
 
 ## Prototypical Networks
 
-This file [protonet_miniimagenet.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/protonet_miniimagenet.py) reproduces protonet on the *mini*-ImageNet dataset.
+The file [protonet_miniimagenet.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/protonet_miniimagenet.py) reproduces protonet on the *mini*-ImageNet dataset.
 
 This implementation provides training and testing code.
 
@@ -56,16 +56,38 @@ This implementation provides training and testing code.
 **Usage**
 
 For 1 shot 5 ways:
+
 ~~~shell
 python examples/vision/protonet_miniimagenet.py
 ~~~
 
 For 5 shot 5 ways:
+
 ~~~shell
 python examples/vision/protonet_miniimagenet.py --shot 5 --train-way 20
 ~~~
 
 ## ANIL
+
+The file [anil_fc100.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/anil_fc100.py) implements ANIL on the FC100 dataset.
+
+While ANIL only used *mini*-ImageNet as a benchmark, we provide results for CIFAR-FS and FC100 as well.
+
+
+| Dataset       | Architecture | Ways | Shots | Original | learn2learn |
+|---------------|--------------|------|-------|----------|-------------|
+| mini-ImageNet | CNN          | 5    | 5     | 61.5%    | 63.2%       |
+| CIFAR-FS      | CNN          | 5    | 5     | n/a      | 68.3%       |
+| FC100         | CNN          | 5    | 5     | n/a      | 47.6%       |
+
+
+**Usage**
+
+Manually edit the above file and run:
+
+~~~shell
+python examples/vision/protonet_miniimagenet.py
+~~~
 
 ## SimpleShot
 
