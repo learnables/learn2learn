@@ -101,7 +101,9 @@ The file [reptile_miniimagenet.py](https://github.com/learnables/learn2learn/blo
 
 | Dataset       | Architecture | Ways | Shots | Original | learn2learn |
 |---------------|--------------|------|-------|----------|-------------|
-| mini-ImageNet | CNN          | 5    | 5     | 66.0%    | ??.?%       |
+| Omniglot      | CNN          | 5    | 5     | 99.5%    | 99.5%       |
+| mini-ImageNet | CNN          | 5    | 5     | 66.0%    | 65.5%       |
+| CIFAR-FS      | CNN          | 10   | 3     | n/a      | 46.3%       |
 
 
 **Usage**
