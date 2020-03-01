@@ -108,6 +108,8 @@ class FGVCAircraft(Dataset):
         if not self._check_exists() and download:
             self.download()
 
+        assert mode in ['train', 'validation', 'test'], \
+            'mode should be one of train, validation, test.'
         self.load_data(mode)
 
     def _check_exists(self):
@@ -155,6 +157,7 @@ class FGVCAircraft(Dataset):
             image_labels = pickle.load(labels_file)
 
         data = []
+        mode = 'valid' if mode == 'validation' else mode
         split = SPLITS[mode]
         for image, label in image_labels:
             if label in split:
