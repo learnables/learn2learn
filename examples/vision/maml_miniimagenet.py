@@ -96,7 +96,7 @@ def main(
         KShots(test_dataset, 2*shots),
         LoadData(test_dataset),
         RemapLabels(test_dataset),
-        ConsecutiveLabels(train_dataset),
+        ConsecutiveLabels(test_dataset),
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
