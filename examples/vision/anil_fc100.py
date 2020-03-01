@@ -12,7 +12,7 @@ from torch import nn
 import torchvision as tv
 
 import learn2learn as l2l
-from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
+from learn2learn.data.transforms import FusedNWaysKShots, LoadData, RemapLabels, ConsecutiveLabels
 
 from statistics import mean
 from copy import deepcopy
@@ -69,16 +69,15 @@ def main(
         ways=5,
         shots=5,
         meta_lr=0.001,
-        fast_lr=0.5,
-        adapt_steps=1,
+        fast_lr=0.1,
+        adapt_steps=5,
         meta_bsz=32,
-        iters=10000,
+        iters=1000,
         cuda=1,
         seed=42,
 ):
 
     cuda = bool(cuda)
-    ondevice = bool(ondevice)
 
     random.seed(seed)
     np.random.seed(seed)
@@ -103,8 +102,7 @@ def main(
     test_dataset = l2l.data.MetaDataset(test_dataset)
 
     train_transforms = [
-        NWays(train_dataset, ways),
-        KShots(train_dataset, 2*shots),
+        FusedNWaysKShots(train_dataset, n=ways, k=2*shots),
         LoadData(train_dataset),
         RemapLabels(train_dataset),
         ConsecutiveLabels(train_dataset),
@@ -114,8 +112,7 @@ def main(
                                        num_tasks=20000)
 
     valid_transforms = [
-        NWays(valid_dataset, ways),
-        KShots(valid_dataset, 2*shots),
+        FusedNWaysKShots(valid_dataset, n=ways, k=2*shots),
         LoadData(valid_dataset),
         ConsecutiveLabels(train_dataset),
         RemapLabels(valid_dataset),
@@ -125,8 +122,7 @@ def main(
                                        num_tasks=600)
 
     test_transforms = [
-        NWays(test_dataset, ways),
-        KShots(test_dataset, 2*shots),
+        FusedNWaysKShots(test_dataset, n=ways, k=2*shots),
         LoadData(test_dataset),
         RemapLabels(test_dataset),
         ConsecutiveLabels(train_dataset),
@@ -137,7 +133,7 @@ def main(
 
 
     # Create model
-    features = l2l.vision.models.ConvBase(output_size=32, channels=3, max_pool=True)
+    features = l2l.vision.models.ConvBase(output_size=64, channels=3, max_pool=True)
     features = torch.nn.Sequential(features, Lambda(lambda x: x.view(-1, 256)))
     features.to(device)
     head = torch.nn.Linear(256, ways)
