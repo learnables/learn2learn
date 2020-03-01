@@ -108,6 +108,8 @@ class FGVCAircraft(Dataset):
         if not self._check_exists() and download:
             self.download()
 
+        assert mode in ['train', 'validation', 'test'], \
+            'mode should be one of train, validation, test.'
         self.load_data(mode)
 
     def _check_exists(self):
@@ -129,7 +131,7 @@ class FGVCAircraft(Dataset):
             print('Downloading FGVC Aircraft dataset. (2.75Gb)')
             req = requests.get(DATASET_URL)
             with open(tar_path, 'wb') as archive:
-                for chunk in req.iter_content(chunk_size=512**2):
+                for chunk in req.iter_content(chunk_size=32768):
                     if chunk:
                         archive.write(chunk)
         with tarfile.open(tar_path) as tar_file:
@@ -155,6 +157,7 @@ class FGVCAircraft(Dataset):
             image_labels = pickle.load(labels_file)
 
         data = []
+        mode = 'valid' if mode == 'validation' else mode
         split = SPLITS[mode]
         for image, label in image_labels:
             if label in split:

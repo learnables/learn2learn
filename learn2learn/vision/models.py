@@ -256,6 +256,5 @@ class MiniImagenetCNN(nn.Module):
 
     def forward(self, x):
         x = self.base(x)
-        import pdb; pdb.set_trace()
         x = self.linear(x.view(-1, 25 * self.hidden_size))
         return x

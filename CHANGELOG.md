@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * A CHANGELOG.md file.
 * New vision datasets: FC100, tiered-Imagenet, FGVCAircraft, VGGFlowers102.
+* New vision examples: Reptile & ANIL.
+* Extensive benchmarks of all vision examples.
 
 ### Changed
 
@@ -23,3 +25,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Support for `RandomClassRotation` with newer versions of torchvision.
 * Various minor fixes in the examples.
+* Add Dropbox download if GDrive fails for FC100.

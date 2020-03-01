@@ -100,11 +100,15 @@ theme:
   font:
     text: 'Source Sans Pro'
     code: 'Ubuntu Mono'
+
+extra:
   social:
     - type: 'github'
       link: 'https://github.com/learnables'
     - type: 'twitter'
-      link: 'https://twitter.com/seba-1511'
+      link: 'https://twitter.com/seba1511'
+    - type: 'bug'
+      link: 'http://seba1511.net'
 
 loader: pydocmd.loader.PythonLoader
 preprocessor: pydocmd.preprocessor.Preprocessor
