@@ -128,7 +128,7 @@ class FGVCAircraft(Dataset):
             print('Downloading FGVC Aircraft dataset. (2.75Gb)')
             req = requests.get(DATASET_URL)
             with open(tar_path, 'wb') as archive:
-                for chunk in req.iter_content(chunk_size=512**2):
+                for chunk in req.iter_content(chunk_size=32768):
                     if chunk:
                         archive.write(chunk)
         with tarfile.open(tar_path) as tar_file:
