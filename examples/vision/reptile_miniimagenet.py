@@ -121,7 +121,7 @@ def main(
         NWays(valid_dataset, ways),
         KShots(valid_dataset, 2*test_shots),
         LoadData(valid_dataset),
-        ConsecutiveLabels(train_dataset),
+        ConsecutiveLabels(valid_dataset),
         RemapLabels(valid_dataset),
     ]
     valid_tasks = l2l.data.TaskDataset(valid_dataset,
@@ -133,7 +133,7 @@ def main(
         KShots(test_dataset, 2*test_shots),
         LoadData(test_dataset),
         RemapLabels(test_dataset),
-        ConsecutiveLabels(train_dataset),
+        ConsecutiveLabels(test_dataset),
     ]
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
