@@ -17,6 +17,8 @@ For the most update-to-date version clone the [repository](https://github.com/le
 
 ```pip install -e .```
 
+When installing from sources, make sure that Cython is installed: `pip install cython`.
+
 !!! info
     While learn2learn is actively used in current research projects, it is still in development.
     Breaking changes might occur.
