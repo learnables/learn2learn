@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import re
 
 from distutils.core import setup
@@ -8,8 +9,6 @@ from setuptools import (
     find_packages,
     Extension
 )
-from Cython.Build import cythonize
-from Cython.Distutils import build_ext
 
 # Parses version number: https://stackoverflow.com/a/7071358
 VERSIONFILE = 'learn2learn/_version.py'
@@ -24,27 +23,38 @@ else:
 # Compile with Cython
 # https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html
 # https://github.com/FedericoStra/cython-package-example/blob/master/setup.py
-include_dirs = []
-compiler_directives = {'language_level': 3,
-                       'embedsignature': True,
-#                       'profile': True,
-#                       'binding': True,
-}
+extension_type = '.c'
+cmd_class = {}
+use_cython = 'develop' in sys.argv
+if use_cython:
+    from Cython.Build import cythonize
+    from Cython.Distutils import build_ext
+    extension_type = '.pyx'
+    cmd_class = {'build_ext': build_ext}
+
 extensions = [
     Extension(name='learn2learn.data.meta_dataset',
-              sources=['learn2learn/data/meta_dataset.pyx']), 
+              sources=['learn2learn/data/meta_dataset' + extension_type]), 
     Extension(name='learn2learn.data.task_dataset',
-              sources=['learn2learn/data/task_dataset.pyx']), 
+              sources=['learn2learn/data/task_dataset' + extension_type]), 
     Extension(name='learn2learn.data.transforms',
-              sources=['learn2learn/data/transforms.pyx']), 
+              sources=['learn2learn/data/transforms' + extension_type]), 
 ]
+
+if use_cython:
+    compiler_directives = {'language_level': 3,
+                           'embedsignature': True,
+    #                       'profile': True,
+    #                       'binding': True,
+    }
+    extensions = cythonize(extensions, compiler_directives=compiler_directives)
 
 # Installs the package
 install(
-    name='learn2learn',
+    name='learn2learn-dev',
     packages=find_packages(),
-    ext_modules=cythonize(extensions, compiler_directives=compiler_directives),
-    cmdclass={'build_ext': build_ext},
+    ext_modules=extensions,
+    cmdclass=cmd_class,
     zip_safe=False,  # as per Cython docs
     version=VERSION,
     description='PyTorch Meta-Learning Framework for Researchers',
