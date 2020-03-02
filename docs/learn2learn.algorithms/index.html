@@ -11,10 +11,6 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.algorithms/">
-      
-      
-        <meta name="author" content="Séb Arnold">
       
       
         <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -67,36 +63,7 @@
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
-      <link rel="stylesheet" href="../../assets/css/l2l_material.css">
-    
-    
-      
-        
-<script>
-  window.ga = window.ga || function() {
-    (ga.q = ga.q || []).push(arguments)
-  }
-  ga.l = +new Date
-  /* Setup integration and send page view */
-  ga("create", "UA-68693545-3", "seba-1511.github.com")
-  ga("set", "anonymizeIp", true)
-  ga("send", "pageview")
-  /* Register handler to log search on blur */
-  document.addEventListener("DOMContentLoaded", () => {
-    if (document.forms.search) {
-      var query = document.forms.search.query
-      query.addEventListener("blur", function() {
-        if (this.value) {
-          var path = document.location.pathname;
-          ga("send", "pageview", path + "?q=" + this.value)
-        }
-      })
-    }
-  })
-</script>
-<script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
     
@@ -127,7 +94,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="../.." title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -195,7 +162,7 @@
     </div>
   
   <div class="md-source__repository">
-    learnables/learn2learn
+    GitHub
   </div>
 </a>
           </div>
@@ -219,7 +186,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="../.." title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -242,7 +209,7 @@
     </div>
   
   <div class="md-source__repository">
-    learnables/learn2learn
+    GitHub
   </div>
 </a>
     </div>
@@ -663,7 +630,7 @@
                 
                 <h1 id="learn2learnalgorithms">learn2learn.algorithms<a class="headerlink" href="#learn2learnalgorithms" title="Permanent link">&para;</a></h1>
 <h2 id="maml">MAML<a class="headerlink" href="#maml" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -705,7 +672,7 @@ upon initialization.</p>
 </td></tr></table>
 
 <h3 id="adapt">adapt<a class="headerlink" href="#adapt" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -722,7 +689,7 @@ upon initialization.</p>
     parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
 <h3 id="clone">clone<a class="headerlink" href="#clone" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -772,7 +739,7 @@ operations.</p>
 </td></tr></table>
 
 <h2 id="metasgd">MetaSGD<a class="headerlink" href="#metasgd" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lrs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lrs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -811,7 +778,7 @@ are learned for fast-adaptation.</p>
 </td></tr></table>
 
 <h3 id="clone_1">clone<a class="headerlink" href="#clone_1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -819,7 +786,7 @@ are learned for fast-adaptation.</p>
 <p>Akin to <code>MAML.clone()</code> but for MetaSGD: it includes a set of learnable fast-adaptation
 learning rates.</p>
 <h3 id="adapt_1">adapt<a class="headerlink" href="#adapt_1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -920,17 +887,6 @@ operations.</p>
           Material for MkDocs</a>
       </div>
       
-  <div class="md-footer-social">
-    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
-    
-      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
-    
-      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
-    
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
-    
-  </div>
-
     </div>
   </div>
 </footer>
@@ -940,10 +896,6 @@ operations.</p>
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js"></script>
       
     
   </body>
