@@ -74,9 +74,10 @@ def main(
     random.shuffle(classes)
 
     train_transforms = [
-        l2l.data.transforms.FilterLabels(dataset, classes[:1100]),
-        l2l.data.transforms.NWays(dataset, ways),
-        l2l.data.transforms.KShots(dataset, 2*shots),
+        l2l.data.transforms.FusedNWaysKShots(dataset,
+                                             n=ways,
+                                             k=2*shots,
+                                             filter_labels=classes[:1100]),
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
@@ -87,9 +88,10 @@ def main(
                                        num_tasks=20000)
 
     valid_transforms = [
-        l2l.data.transforms.FilterLabels(dataset, classes[1100:1200]),
-        l2l.data.transforms.NWays(dataset, ways),
-        l2l.data.transforms.KShots(dataset, 2*shots),
+        l2l.data.transforms.FusedNWaysKShots(dataset,
+                                             n=ways,
+                                             k=2*shots,
+                                             filter_labels=classes[1100:1200]),
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
@@ -100,9 +102,10 @@ def main(
                                        num_tasks=1024)
 
     test_transforms = [
-        l2l.data.transforms.FilterLabels(dataset, classes[1200:]),
-        l2l.data.transforms.NWays(dataset, ways),
-        l2l.data.transforms.KShots(dataset, 2*shots),
+        l2l.data.transforms.FusedNWaysKShots(dataset,
+                                             n=ways,
+                                             k=2*shots,
+                                             filter_labels=classes[1200:]),
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),

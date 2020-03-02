@@ -1,7 +1,7 @@
 
 .PHONY: *
 
-compile:
+build:
 	python setup.py build_ext --inplace
 
 clean:
@@ -47,6 +47,17 @@ docs:
 docs-deploy:
 	cd docs && pydocmd gh-deploy
 
+# https://dev.to/neshaz/a-tutorial-for-tagging-releases-in-git-147e
+release:
+	echo 'Do not forget to bump the CHANGELOG.md'
+	echo 'Tagging v'$(shell python -c 'print(open("learn2learn/_version.py").read()[15:-2])')
+	sleep 3
+	git tag -a v$(shell python -c 'print(open("learn2learn/_version.py").read()[15:-2])')
+	git push origin --tags
+
 publish:
-	python setup.py sdist
-	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+	pip install -e .  # Full build
+	rm -f learn2learn/*.so  # Remove .so files but leave .c files
+	rm -f learn2learn/**/*.so
+	python setup.py sdist  # Create package
+	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*  # Push to PyPI

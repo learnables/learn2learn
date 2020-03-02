@@ -19,7 +19,6 @@ def download_pkl(google_drive_id, data_root, mode):
     if not os.path.exists(file_path + '.pkl'):
         print('Downloading:', file_path + '.pkl')
         download_file_from_google_drive(google_drive_id, file_path + '.pkl')
-        print("Download finished")
     else:
         print("Data was already downloaded")
 

@@ -1,5 +1,3 @@
-# cython: embedsignature=True
-# cython: profile=True
 # cython: language_version=3
 
 

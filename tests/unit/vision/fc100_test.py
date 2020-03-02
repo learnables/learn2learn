@@ -14,7 +14,7 @@ class FC100Tests(unittest.TestCase):
         pass
 
     def test_download(self):
-        root = os.path.expanduser('~/data')
+        root = os.path.expanduser('./data')
         fc100 = l2l.vision.datasets.FC100(root=root, mode='train')
         image, label = fc100[12]
         path = os.path.join(root, 'FC100_train.pickle')
