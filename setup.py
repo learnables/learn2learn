@@ -51,7 +51,7 @@ if use_cython:
 
 # Installs the package
 install(
-    name='learn2learn-dev',
+    name='learn2learn',
     packages=find_packages(),
     ext_modules=extensions,
     cmdclass=cmd_class,

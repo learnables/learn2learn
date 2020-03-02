@@ -56,5 +56,8 @@ release:
 	git push origin --tags
 
 publish:
+	pip install -e .
+	rm -f learn2learn/*.so
+	rm -f learn2learn/**/*.so
 	python setup.py sdist
 	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
