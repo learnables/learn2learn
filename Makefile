@@ -56,8 +56,8 @@ release:
 	git push origin --tags
 
 publish:
-	pip install -e .
-	rm -f learn2learn/*.so
+	pip install -e .  # Full build
+	rm -f learn2learn/*.so  # Remove .so files but leave .c files
 	rm -f learn2learn/**/*.so
-	python setup.py sdist
-	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+	python setup.py sdist  # Create package
+	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*  # Push to PyPI
