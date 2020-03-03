@@ -41,20 +41,21 @@ generate:
           - learn2learn.gym.envs.particles:
               - learn2learn.gym.envs.particles.Particles2DEnv
   - docs/learn2learn.vision.md:
-      - learn2learn.vision.models:
-          - learn2learn.vision.models.OmniglotFC
-          - learn2learn.vision.models.OmniglotCNN
-          - learn2learn.vision.models.MiniImagenetCNN
-      - learn2learn.vision.datasets:
-          - learn2learn.vision.datasets.FullOmniglot
-          - learn2learn.vision.datasets.MiniImagenet
-          - learn2learn.vision.datasets.TieredImagenet
-          - learn2learn.vision.datasets.FC100
-          - learn2learn.vision.datasets.CIFARFS
-          - learn2learn.vision.datasets.VGGFlower102
-          - learn2learn.vision.datasets.FGVCAircraft
-      - learn2learn.vision.transforms:
-          - learn2learn.vision.transforms.RandomClassRotation
+      - learn2learn.vision++:
+          - learn2learn.vision.models:
+              - learn2learn.vision.models.OmniglotFC
+              - learn2learn.vision.models.OmniglotCNN
+              - learn2learn.vision.models.MiniImagenetCNN
+          - learn2learn.vision.datasets:
+              - learn2learn.vision.datasets.FullOmniglot
+              - learn2learn.vision.datasets.MiniImagenet
+              - learn2learn.vision.datasets.TieredImagenet
+              - learn2learn.vision.datasets.FC100
+              - learn2learn.vision.datasets.CIFARFS
+              - learn2learn.vision.datasets.VGGFlower102
+              - learn2learn.vision.datasets.FGVCAircraft
+          - learn2learn.vision.transforms:
+              - learn2learn.vision.transforms.RandomClassRotation
   - docs/learn2learn.text.md:
       - learn2learn.text.datasets.NewsClassification
 
