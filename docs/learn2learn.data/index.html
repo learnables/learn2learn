@@ -11,6 +11,10 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.data/">
+      
+      
+        <meta name="author" content="Séb Arnold">
       
       
         <meta name="lang:clipboard.copy" content="Copy to clipboard">
@@ -63,7 +67,36 @@
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
+      <link rel="stylesheet" href="../../assets/css/l2l_material.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-68693545-3", "seba-1511.github.com")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
     
@@ -94,7 +127,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="../.." title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -162,7 +195,7 @@
     </div>
   
   <div class="md-source__repository">
-    GitHub
+    learnables/learn2learn
   </div>
 </a>
           </div>
@@ -186,7 +219,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="../.." title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -209,7 +242,7 @@
     </div>
   
   <div class="md-source__repository">
-    GitHub
+    learnables/learn2learn
   </div>
 </a>
     </div>
@@ -646,7 +679,7 @@
                 
                 <h1 id="learn2learndata">learn2learn.data<a class="headerlink" href="#learn2learndata" title="Permanent link">&para;</a></h1>
 <h2 id="metadataset">MetaDataset<a class="headerlink" href="#metadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -657,7 +690,7 @@ This comes in handy when we want to sample elements randomly for a particular la
     For l2l to work its important that the dataset returns a (data, target) tuple.
     If your dataset doesn't return that, it should be trivial to wrap your dataset
     with another class to do that.
-    <code>TODO</code> : Add example for wrapping a non standard l2l dataset</p>
+    <a href="#TODO"><code>TODO</code></a> : Add example for wrapping a non standard l2l dataset</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>dataset</strong> (Dataset) -  A torch dataset.</li>
@@ -672,7 +705,7 @@ This comes in handy when we want to sample elements randomly for a particular la
 </td></tr></table>
 
 <h2 id="taskdataset">TaskDataset<a class="headerlink" href="#taskdataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -737,7 +770,7 @@ data from the dataset to the list of transformations of each sample.</p>
 in order.
 Then, all samples are collated via the <code>TaskDataset</code>'s collate function.</p>
 <h3 id="loaddata">LoadData<a class="headerlink" href="#loaddata" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -749,7 +782,7 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
 <h3 id="nways">NWays<a class="headerlink" href="#nways" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -763,7 +796,7 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
     description's labels.</li>
 </ul>
 <h3 id="kshots">KShots<a class="headerlink" href="#kshots" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -777,7 +810,7 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample with replacement.</li>
 </ul>
 <h3 id="filterlabels">FilterLabels<a class="headerlink" href="#filterlabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -790,7 +823,7 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>labels</strong> (list) - The list of labels to include.</li>
 </ul>
 <h3 id="fusednwayskshots">FusedNWaysKShots<a class="headerlink" href="#fusednwayskshots" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -808,7 +841,7 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
     all labels in the dataset.</li>
 </ul>
 <h3 id="remaplabels">RemapLabels<a class="headerlink" href="#remaplabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -820,7 +853,7 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
 <h3 id="consecutivelabels">ConsecutiveLabels<a class="headerlink" href="#consecutivelabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -898,6 +931,17 @@ but in no specific order.</p>
           Material for MkDocs</a>
       </div>
       
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+    
+  </div>
+
     </div>
   </div>
 </footer>
@@ -907,6 +951,10 @@ but in no specific order.</p>
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js"></script>
       
     
   </body>
