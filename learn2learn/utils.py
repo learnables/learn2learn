@@ -92,16 +92,23 @@ def clone_module(module):
     #       clone = recursive_shallow_copy(model)
     #       clone._apply(lambda t: t.clone())
 
-    clone = copy.deepcopy(module)
+    # First, create a copy of the module.
+    # Adapted from:
+    # https://github.com/pytorch/pytorch/blob/65bad41cbec096aa767b3752843eddebf845726f/torch/nn/modules/module.py#L1171
+    clone = module.__new__(type(module))
+    clone.__dict__ = module.__dict__.copy()
+    clone._parameters = clone._parameters.copy()
+    clone._buffers = clone._buffers.copy()
+    clone._modules = clone._modules.copy()
 
-    # First, re-write all parameters
+    # Second, re-write all parameters
     if hasattr(clone, '_parameters'):
         for param_key in module._parameters:
             if module._parameters[param_key] is not None:
                 cloned = module._parameters[param_key].clone()
                 clone._parameters[param_key] = cloned
 
-    # Second, handle the buffers if necessary
+    # Third, handle the buffers if necessary
     if hasattr(clone, '_buffers'):
         for buffer_key in module._buffers:
             if clone._buffers[buffer_key] is not None and \

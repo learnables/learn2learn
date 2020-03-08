@@ -108,7 +108,7 @@ def main(num_iterations=250):
     setattr(args, 'gpu', 0)
 
     device = torch.device('cpu')
-    if args.gpu and torch.cuda.device_count():
+    if torch.cuda.device_count():
         torch.cuda.manual_seed(43)
         device = torch.device('cuda')
 
@@ -131,7 +131,7 @@ def main(num_iterations=250):
         l2l.data.transforms.RemapLabels(train_dataset),
     ]
     train_tasks = l2l.data.TaskDataset(train_dataset, task_transforms=train_transforms)
-    train_loader = DataLoader(train_tasks, pin_memory=True, shuffle=True)
+#    train_loader = DataLoader(train_tasks, pin_memory=True, shuffle=True)
 
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     valid_transforms = [
@@ -143,7 +143,7 @@ def main(num_iterations=250):
     valid_tasks = l2l.data.TaskDataset(valid_dataset,
                                        task_transforms=valid_transforms,
                                        num_tasks=200)
-    valid_loader = DataLoader(valid_tasks, pin_memory=True, shuffle=True)
+#    valid_loader = DataLoader(valid_tasks, pin_memory=True, shuffle=True)
 
     test_dataset = l2l.data.MetaDataset(test_dataset)
     test_transforms = [
@@ -155,7 +155,7 @@ def main(num_iterations=250):
     test_tasks = l2l.data.TaskDataset(test_dataset,
                                       task_transforms=test_transforms,
                                       num_tasks=200)
-    test_loader = DataLoader(test_tasks, pin_memory=True, shuffle=True)
+#    test_loader = DataLoader(test_tasks, pin_memory=True, shuffle=True)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     lr_scheduler = torch.optim.lr_scheduler.StepLR(
@@ -169,7 +169,8 @@ def main(num_iterations=250):
         n_acc = 0
 
         for i in range(100):
-            batch = next(iter(train_loader))
+#            batch = next(iter(train_loader))
+            batch = train_tasks.sample()
 
             loss, acc = fast_adapt(model,
                                    batch,
@@ -197,7 +198,7 @@ def main(num_iterations=250):
         loss_ctr = 0
         n_loss = 0
         n_acc = 0
-        for i, batch in enumerate(valid_loader):
+        for i, batch in enumerate(valid_tasks):
             loss, acc = fast_adapt(model,
                                    batch,
                                    args.test_way,
@@ -217,7 +218,7 @@ def main(num_iterations=250):
     loss_ctr = 0
     n_acc = 0
 
-    for i, batch in enumerate(test_loader, 1):
+    for i, batch in enumerate(test_tasks, 1):
         loss, acc = fast_adapt(model,
                                batch,
                                args.test_way,
