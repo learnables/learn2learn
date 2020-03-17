@@ -122,13 +122,16 @@ cdef class CythonFilterLabels(TaskTransform):
     @cython.wraparound(False)
     def __init__(self, dataset, list labels):
         super(CythonFilterLabels, self).__init__(dataset)
-        cdef dict indices_to_labels = <dict>dataset.indices_to_labels
+        cdef dict indices_to_labels = dict(dataset.indices_to_labels)
         cdef long len_dataset = len(dataset)
         cdef long i
         self.labels = labels
         self.filtered_indices = array.array('i', [0] * len_dataset)
         for i in range(len_dataset):
             self.filtered_indices[i] = int(indices_to_labels[i] in self.labels)
+
+    def __reduce__(self):
+        return CythonFilterLabels, (self.dataset, self.labels)
 
     def __call__(self, list task_description):
         if task_description is None:
@@ -243,14 +246,17 @@ cdef class CythonNWays(TaskTransform):
     def __init__(self, dataset, int n=2):
         super(CythonNWays, self).__init__(dataset)
         self.n = n
-        self.indices_to_labels = <dict>dataset.indices_to_labels
+        self.indices_to_labels = dict(dataset.indices_to_labels)
+
+    def __reduce__(self):
+        return CythonNWays, (self.dataset, self.n)
 
     @cython.boundscheck(False)
     @cython.wraparound(False)
     cpdef new_task(self):  # Efficient initializer
         cdef list labels = self.dataset.labels
         cdef list task_description = []
-        cdef dict labels_to_indices = <dict>self.dataset.labels_to_indices
+        cdef dict labels_to_indices = dict(self.dataset.labels_to_indices)
         classes = random.sample(labels, k=self.n)
         for cl in classes:
             for idx in labels_to_indices[cl]:
@@ -306,6 +312,9 @@ cdef class CythonKShots(TaskTransform):
         self.dataset = dataset
         self.k = k
         self.replacement = replacement
+
+    def __reduce__(self):
+        return CythonKShots, (self.dataset, self.k, self.replacement)
 
     def __call__(self, task_description):
         if task_description is None:
@@ -375,6 +384,13 @@ cdef class CythonFusedNWaysKShots(TaskTransform):
         self.filtre = FilterLabels(self.dataset, self.filter_labels)
         self.nways = NWays(self.dataset, self.n)
         self.kshots = KShots(self.dataset, k=self.k, replacement=self.replacement)
+
+    def __reduce__(self):
+        return CythonFusedNWaysKShots, (self.dataset,
+                                        self.n,
+                                        self.k,
+                                        self.replacement,
+                                        self.filter_labels)
 
     @cython.boundscheck(False)
     @cython.wraparound(False)

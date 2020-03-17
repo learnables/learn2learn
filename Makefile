@@ -2,6 +2,8 @@
 .PHONY: *
 
 build:
+	rm -f learn2learn/**/*.so
+	rm -f learn2learn/**/*.c
 	python setup.py build_ext --inplace
 
 clean:
