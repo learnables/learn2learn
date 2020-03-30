@@ -67,6 +67,7 @@ pages:
   - Home: index.md << ../README.md
   - Tutorials:
       - Getting Started: tutorials/getting_started.md
+      - Feature Reuse with ANIL: tutorials/anil_tutorial/ANIL_tutorial.md
   - Documentation:
       - learn2learn: docs/learn2learn.md
       - learn2learn.algorithms: docs/learn2learn.algorithms.md

@@ -37,7 +37,6 @@ def fast_adapt(batch,
                learner,
                features,
                loss,
-               fast_lr,
                adaptation_steps,
                shots,
                ways,
@@ -47,7 +46,7 @@ def fast_adapt(batch,
     data, labels = data.to(device), labels.to(device)
     data = features(data)
 
-    # Separate data into adaptation/evalutation sets
+    # Separate data into adaptation/evaluation sets
     adaptation_indices = np.zeros(data.size(0), dtype=bool)
     adaptation_indices[np.arange(shots*ways) * 2] = True
     evaluation_indices = torch.from_numpy(~adaptation_indices)
@@ -145,13 +144,6 @@ def main(
     optimizer = torch.optim.Adam(all_parameters, lr=meta_lr)
     loss = nn.CrossEntropyLoss(reduction='mean')
 
-    meta_train_errors = []
-    meta_train_accuracies = []
-    meta_valid_errors = []
-    meta_valid_accuracies = []
-    meta_test_errors = []
-    meta_test_accuracies = []
-
     for iteration in range(iters):
         optimizer.zero_grad()
         meta_train_error = 0.0
@@ -168,7 +160,6 @@ def main(
                                                                learner,
                                                                features,
                                                                loss,
-                                                               fast_lr,
                                                                adapt_steps,
                                                                shots,
                                                                ways,
@@ -184,11 +175,10 @@ def main(
                                                                learner,
                                                                features,
                                                                loss,
-                                                               fast_lr,
                                                                adapt_steps,
                                                                shots,
                                                                ways,
-                                                               device=device)
+                                                               device)
             meta_valid_error += evaluation_error.item()
             meta_valid_accuracy += evaluation_accuracy.item()
 
@@ -199,11 +189,10 @@ def main(
                                                                learner,
                                                                features,
                                                                loss,
-                                                               fast_lr,
                                                                adapt_steps,
                                                                shots,
                                                                ways,
-                                                               device=device)
+                                                               device)
             meta_test_error += evaluation_error.item()
             meta_test_accuracy += evaluation_accuracy.item()
 

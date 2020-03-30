@@ -73,7 +73,7 @@ class MAML(BaseLearner):
 
     High-level implementation of *Model-Agnostic Meta-Learning*.
 
-    This class wraps an arbitrary nn.Module and augments it with `clone()` and `adapt`
+    This class wraps an arbitrary nn.Module and augments it with `clone()` and `adapt()`
     methods.
 
     For the first-order version of MAML (i.e. FOMAML), set the `first_order` flag to `True`
@@ -132,7 +132,7 @@ class MAML(BaseLearner):
         """
         **Description**
 
-        Updates the clone parameters in place using the MAML update.
+        Takes a gradient step on the loss and updates the cloned parameters in place.
 
         **Arguments**
 
