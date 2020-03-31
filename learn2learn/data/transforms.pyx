@@ -38,6 +38,7 @@ import random
 import collections
 import functools
 import array
+import itertools
 
 from .task_dataset cimport DataDescription
 from .task_dataset import DataDescription
@@ -330,7 +331,8 @@ cdef class CythonKShots(TaskTransform):
                         for dd in random.choices(x, k=k)]
         else:
             sampler = random.sample
-        return sum([sampler(dds, k=self.k) for dds in class_to_data.values()], [])
+
+        return list(itertools.chain(*[sampler(dds, k=self.k) for dds in class_to_data.values()]))
 
 
 class FusedNWaysKShots(CythonFusedNWaysKShots):
