@@ -381,7 +381,7 @@ cdef class CythonFusedNWaysKShots(TaskTransform):
         if filter_labels is None:
             filter_labels = self.dataset.labels
         self.filter_labels = filter_labels
-        self.filtre = FilterLabels(self.dataset, self.filter_labels)
+        self.filter = FilterLabels(self.dataset, self.filter_labels)
         self.nways = NWays(self.dataset, self.n)
         self.kshots = KShots(self.dataset, k=self.k, replacement=self.replacement)
 
@@ -412,4 +412,4 @@ cdef class CythonFusedNWaysKShots(TaskTransform):
         if task_description is None:
             return self.new_task()
         # Not fused
-        return self.kshots(self.nways(self.filtre(task_description)))
+        return self.kshots(self.nways(self.filter(task_description)))
