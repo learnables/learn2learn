@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+* Mujoco imports optional for docs: the import error is postponed to first method call.
+
 ### Fixed
 
 
