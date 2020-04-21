@@ -371,7 +371,7 @@ cdef class CythonFusedNWaysKShots(TaskTransform):
         int k
         bool replacement
         list filter_labels
-        object filtre
+        object filter
         object nways
         object kshots
 
