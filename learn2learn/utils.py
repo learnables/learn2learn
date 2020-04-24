@@ -85,7 +85,7 @@ def clone_module(module):
     # TODO: This function might require that module.forward()
     #       was called in order to work properly, if forward() instanciates
     #       new variables.
-    # TODO: deepcopy is expensive. We can probably get away with a shallowcopy.
+    # TODO: We can probably get away with a shallowcopy.
     #       However, since shallow copy does not recurse, we need to write a
     #       recursive version of shallow copy.
     # NOTE: This can probably be implemented more cleanly with
@@ -119,6 +119,11 @@ def clone_module(module):
     if hasattr(clone, '_modules'):
         for module_key in clone._modules:
             clone._modules[module_key] = clone_module(module._modules[module_key])
+
+    # Finally, rebuild the flattened parameters for RNNs
+    # See this issue for more details:
+    # https://github.com/learnables/learn2learn/issues/139
+    clone = clone._apply(lambda x: x)
     return clone
 
 

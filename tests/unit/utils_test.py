@@ -7,6 +7,13 @@ import learn2learn as l2l
 
 
 def ref_clone_module(module):
+    """
+    Note: This implementation does not work for RNNs.
+    It requires calling learner.rnn._apply(lambda x: x) before
+    each forward call.
+    See this issue for more details:
+    https://github.com/learnables/learn2learn/issues/139
+    """
     # First, create a copy of the module.
     clone = copy.deepcopy(module)
 
@@ -119,6 +126,51 @@ class UtilTests(unittest.TestCase):
         for ref_model, l2l_model in zip(ref_models, l2l_models):
             for ref_p, l2l_p in zip(ref_model.parameters(), l2l_model.parameters()):
                 self.assertTrue(torch.equal(ref_p, l2l_p))
+
+    def test_rnn_clone(self):
+        # Tests: https://github.com/learnables/learn2learn/issues/139
+        # The test is mainly about whether we can clone and adapt RNNs.
+        # See issue for details.
+        N_STEPS = 3
+        for rnn_class in [
+            torch.nn.RNN,
+            torch.nn.LSTM,
+            torch.nn.GRU,
+        ]:
+            torch.manual_seed(1234)
+            model = rnn_class(2, 1)
+            maml = l2l.algorithms.MAML(model, lr=1e-3, allow_unused=False)
+            optim = torch.optim.SGD(maml.parameters(), lr=0.001)
+            data = torch.randn(30, 500, 2)
+            
+            # Adapt and measure loss
+            learner = maml.clone()
+            for step in range(N_STEPS):
+                pred, hidden = learner(data)
+                loss = pred.norm(p=2)
+                learner.adapt(loss)
+            pred, _ = learner(data)
+            first_loss = pred.norm(p=2)
+
+            # Take an optimization step
+            optim.zero_grad()
+            first_loss.backward()
+            optim.step()
+            first_loss = first_loss.item()
+
+            # Adapt a second time
+            learner = maml.clone()
+            for step in range(N_STEPS):
+                pred, hidden = learner(data)
+                loss = pred.norm(p=2)
+                learner.adapt(loss)
+            pred, _ = learner(data)
+            second_loss = pred.norm(p=2)
+            second_loss = second_loss.item()
+
+            # Ensure we did better
+            self.assertTrue(first_loss > second_loss)
+
 
     def test_module_detach(self):
         original_output = self.model(self.input)
