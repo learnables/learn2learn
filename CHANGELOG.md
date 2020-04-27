@@ -15,6 +15,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## v0.1.1
+
+### Added
+
+* New tutorial: 'Feature Reuse with ANIL'. (@ewinapun)
+
+### Changed
+
+* Mujoco imports optional for docs: the import error is postponed to first method call.
+
+### Fixed
+
+* `MAML()` and `clone_module` support for RNN modules.
+
+
 ## v0.1.0.1
 
 ### Fixed

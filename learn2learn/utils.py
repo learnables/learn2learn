@@ -85,23 +85,30 @@ def clone_module(module):
     # TODO: This function might require that module.forward()
     #       was called in order to work properly, if forward() instanciates
     #       new variables.
-    # TODO: deepcopy is expensive. We can probably get away with a shallowcopy.
+    # TODO: We can probably get away with a shallowcopy.
     #       However, since shallow copy does not recurse, we need to write a
     #       recursive version of shallow copy.
     # NOTE: This can probably be implemented more cleanly with
     #       clone = recursive_shallow_copy(model)
     #       clone._apply(lambda t: t.clone())
 
-    clone = copy.deepcopy(module)
+    # First, create a copy of the module.
+    # Adapted from:
+    # https://github.com/pytorch/pytorch/blob/65bad41cbec096aa767b3752843eddebf845726f/torch/nn/modules/module.py#L1171
+    clone = module.__new__(type(module))
+    clone.__dict__ = module.__dict__.copy()
+    clone._parameters = clone._parameters.copy()
+    clone._buffers = clone._buffers.copy()
+    clone._modules = clone._modules.copy()
 
-    # First, re-write all parameters
+    # Second, re-write all parameters
     if hasattr(clone, '_parameters'):
         for param_key in module._parameters:
             if module._parameters[param_key] is not None:
                 cloned = module._parameters[param_key].clone()
                 clone._parameters[param_key] = cloned
 
-    # Second, handle the buffers if necessary
+    # Third, handle the buffers if necessary
     if hasattr(clone, '_buffers'):
         for buffer_key in module._buffers:
             if clone._buffers[buffer_key] is not None and \
@@ -112,6 +119,11 @@ def clone_module(module):
     if hasattr(clone, '_modules'):
         for module_key in clone._modules:
             clone._modules[module_key] = clone_module(module._modules[module_key])
+
+    # Finally, rebuild the flattened parameters for RNNs
+    # See this issue for more details:
+    # https://github.com/learnables/learn2learn/issues/139
+    clone = clone._apply(lambda x: x)
     return clone
 
 

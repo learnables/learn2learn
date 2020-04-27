@@ -2,7 +2,12 @@
 
 import gym
 import numpy as np
-from gym.envs.mujoco.mujoco_env import MujocoEnv
+
+from gym.error import DependencyNotInstalled
+try:
+    from gym.envs.mujoco.mujoco_env import MujocoEnv
+except DependencyNotInstalled:
+    from learn2learn.gym.envs.mujoco.dummy_mujoco_env import MujocoEnv
 
 from learn2learn.gym.envs.meta_env import MetaEnv
 
