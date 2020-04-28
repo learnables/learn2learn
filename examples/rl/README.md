@@ -17,5 +17,9 @@ The above results are obtained by running [maml_trpo.py](https://github.com/lear
 The figures show the expected sum of rewards over all tasks.
 The line and shadow are the mean and standard deviation computed over 3 random seeds.
 
+### [Meta-World](https://github.com/rlworkgroup/metaworld)
+
+The file [maml_trpo_metaworld.py](https://github.com/learnables/learn2learn/blob/master/examples/rl/maml_trpo_metaworld.py) runs MAML-TRPO on the meta-learning benchmarks ML1, ML10 and ML45. Training on ML1 is relatively fast and stable, the ML10 and ML45 benchmarks however are much more difficult and might be sensitive to hyper-parameter changes.
+
 !!! info
     Those results were obtained in August 2019, and might be outdated.
