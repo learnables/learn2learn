@@ -130,6 +130,24 @@ def make_env(benchmark, seed, test=False):
     return env
 
 
+def collect_episodes(model, task, n_episodes, n_steps=None):
+    # If user doesn't provide predefined horizon length,
+    # use the maximum horizon set by meta-world environment
+    if n_steps is None:
+        n_steps = task.active_env.max_path_length
+
+    # Collect multiple episodes per task
+    episodes = ch.ExperienceReplay()
+    for episode in range(n_episodes):
+        episode = task.run(model, steps=n_steps)
+        episodes.__iadd__(episode)
+        # Due to the current meta-world build, when an episode reaches the end of the horizon it doesn't
+        # automatically reset the environment so we have to manually reset it
+        # (see https://github.com/rlworkgroup/metaworld/issues/60)
+        task.env.reset()
+    return episodes
+
+
 def main(
         benchmark='ML1',  # Choose between ML1, ML10, ML45
         adapt_lr=0.1,
@@ -137,6 +155,7 @@ def main(
         adapt_steps=3,
         num_iterations=10000,
         meta_bsz=10,
+        adapt_bsz=10,
         tau=1.00,
         gamma=0.99,
         seed=42,
@@ -170,19 +189,15 @@ def main(
 
             # Fast Adapt
             for step in range(adapt_steps):
-                # We manually define the horizon for 150 steps following the metaworld paper
-                train_episodes = task.run(clone, steps=150)
+                train_episodes = collect_episodes(clone, task, adapt_bsz)
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
-
-                # Currently the ch.Runner does not automatically reset the environment
-                # when it reaches the end of the horizon, so we need to manually reset it (otherwise EOF error)
-                task.env.reset()
                 task_replay.append(train_episodes)
 
             # Compute Validation Loss
-            valid_episodes = task.run(clone, steps=150)
+            valid_episodes = collect_episodes(clone, task, adapt_bsz)
             task_replay.append(valid_episodes)
-            iteration_reward += valid_episodes.reward().sum().item()
+
+            iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
             iteration_replays.append(task_replay)
             iteration_policies.append(clone)
 
