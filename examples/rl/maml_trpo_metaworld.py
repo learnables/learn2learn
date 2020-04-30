@@ -111,30 +111,35 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
     return mean_loss, mean_kl
 
 
-def make_env(benchmark, seed, test=False):
+def make_env(benchmark, seed, num_workers, test=False):
     # Set a specific task or left empty to train on all available tasks
     task = 'pick-place-v1' if benchmark == "ML1" else ""
 
     # Fetch one of the ML benchmarks from metaworld
     benchmark_env = getattr(mtwrld, benchmark)
 
-    if test:
-        env = benchmark_env.get_test_tasks(task)
-    else:
-        env = benchmark_env.get_train_tasks(task)
+    def init_env():
+        if test:
+            env = benchmark_env.get_test_tasks(task)
+        else:
+            env = benchmark_env.get_train_tasks(task)
 
-    env = ch.envs.ActionSpaceScaler(env)
+        env = ch.envs.ActionSpaceScaler(env)
+        return env
+
+    env = l2l.gym.AsyncVectorEnv([init_env for _ in range(num_workers)])
+
     env.seed(seed)
     env.set_task(env.sample_tasks(1)[0])
     env = ch.envs.Torch(env)
     return env
 
-
+n_w = 2
 def collect_episodes(model, task, n_episodes, n_steps=None):
     # If user doesn't provide predefined horizon length,
     # use the maximum horizon set by meta-world environment
     if n_steps is None:
-        n_steps = task.active_env.max_path_length
+        n_steps = task._env.active_env.max_path_length
 
     # Collect multiple episodes per task
     episodes = ch.ExperienceReplay()
@@ -145,6 +150,8 @@ def collect_episodes(model, task, n_episodes, n_steps=None):
         # automatically reset the environment so we have to manually reset it
         # (see https://github.com/rlworkgroup/metaworld/issues/60)
         task.env.reset()
+
+    episodes = ch.envs.runner_wrapper.flatten_episodes(episodes, n_episodes, n_w)
     return episodes
 
 
@@ -159,9 +166,10 @@ def main(
         tau=1.00,
         gamma=0.99,
         seed=42,
+        num_workers=n_w,
         cuda=0):
 
-    env = make_env(benchmark, seed)
+    env = make_env(benchmark, seed, num_workers)
 
     cuda = bool(cuda)
     random.seed(seed)
