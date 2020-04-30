@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* New example: [Meta-World](https://github.com/rlworkgroup/metaworld) example with MAML-TRPO. (@[Kostis-S-Z](https://github.com/Kostis-S-Z))
+
 ### Changed
 
 ### Fixed
