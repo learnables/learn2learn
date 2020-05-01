@@ -90,6 +90,26 @@ class UtilTests(unittest.TestCase):
         for a, b in zip(self.model.parameters(), cloned_model.parameters()):
             self.assertTrue(torch.equal(a, b))
 
+    def test_clone_module_nomodule(self):
+        # Tests that we can clone non-module objects
+        class TrickyModule(torch.nn.Module):
+
+            def __init__(self):
+                super(TrickyModule, self).__init__()
+                self.tricky_modules = torch.nn.ModuleList([
+                    torch.nn.Linear(2, 1),
+                    None,
+                    torch.nn.Linear(1, 1),
+                ])
+
+        model = TrickyModule()
+        clone = l2l.clone_module(model)
+        for i, submodule in enumerate(clone.tricky_modules):
+            if i % 2 == 0:
+                self.assertTrue(submodule is not None)
+            else:
+                self.assertTrue(submodule is None)
+
     def test_clone_module_models(self):
         ref_models = [l2l.vision.models.OmniglotCNN(10),
                   l2l.vision.models.MiniImagenetCNN(10)]
