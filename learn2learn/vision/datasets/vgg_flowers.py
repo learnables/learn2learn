@@ -91,8 +91,9 @@ class VGGFlower102(Dataset):
         req = requests.get(IMAGES_URL)
         with open(tar_path, 'wb') as archive:
             archive.write(req.content)
-        tar_file = tarfile.TarFile(tar_path)
+        tar_file = tarfile.open(tar_path)
         tar_file.extractall(data_path)
+        tar_file.close()
         os.remove(tar_path)
 
         label_path = os.path.join(data_path, os.path.basename(LABELS_URL))
@@ -134,5 +135,5 @@ if __name__ == '__main__':
     assert len(SPLITS['validation']) == 15
     assert len(SPLITS['test']) == 16
     assert len(SPLITS['all']) == 102
-    flowers = VGGFlower102('~/data', download=True)
+    flowers = VGGFlower102('~/vgg_data', download=True)
     print(len(flowers))
