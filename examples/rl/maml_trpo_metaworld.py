@@ -144,8 +144,7 @@ def collect_episodes(model, task, n_episodes, n_steps=None):
     # Collect multiple episodes per task
     episodes = ch.ExperienceReplay()
     for episode in range(n_episodes):
-        episode = task.run(model, steps=n_steps)
-        episodes.__iadd__(episode)
+        episodes += task.run(model, steps=n_steps)
         # Due to the current meta-world build, when an episode reaches the end of the horizon it doesn't
         # automatically reset the environment so we have to manually reset it
         # (see https://github.com/rlworkgroup/metaworld/issues/60)
