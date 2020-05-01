@@ -4,6 +4,13 @@ import numpy as np
 from gym import spaces
 from gym.utils import seeding
 
+from gym.error import DependencyNotInstalled
+try:
+    from metaworld.envs.mujoco.mujoco_env import MujocoEnv
+except DependencyNotInstalled:
+    from learn2learn.gym.envs.mujoco.dummy_mujoco_env import MujocoEnv
+
+
 from learn2learn.gym.envs.meta_env import MetaEnv
 
 
@@ -20,7 +27,7 @@ class MetaWorld(MetaEnv):
 
     """
 
-    def __init__(self, task=None):
+    def __init__(self, benchmark, task=None):
         self.seed()
         super(MetaWorld, self).__init__(task)
         self.observation_space = spaces.Box()
