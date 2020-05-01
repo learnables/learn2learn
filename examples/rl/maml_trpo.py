@@ -157,8 +157,6 @@ def main(
             for step in range(adapt_steps):
                 train_episodes = task.run(clone, episodes=adapt_bsz)
 
-                train_episodes = ch.envs.runner_wrapper.flatten_episodes(train_episodes, adapt_bsz, num_workers)
-
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
                                        baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
