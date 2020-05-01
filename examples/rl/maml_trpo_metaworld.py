@@ -134,7 +134,7 @@ def make_env(benchmark, seed, num_workers, test=False):
     env = ch.envs.Torch(env)
     return env
 
-n_w = 2
+n_w = 4
 def collect_episodes(model, task, n_episodes, n_steps=None):
     # If user doesn't provide predefined horizon length,
     # use the maximum horizon set by meta-world environment
@@ -143,14 +143,19 @@ def collect_episodes(model, task, n_episodes, n_steps=None):
 
     # Collect multiple episodes per task
     episodes = ch.ExperienceReplay()
-    for episode in range(n_episodes):
-        episodes += task.run(model, steps=n_steps)
+    n_episodes_per_worker = n_episodes // n_w
+    for episode in range(n_episodes_per_worker):
+        episode = task.run(model, steps=n_steps)
+        # Manually make done True at the last step
+        episode[-1].done = torch.ones_like(episode[-1].done)
+        episodes += episode
         # Due to the current meta-world build, when an episode reaches the end of the horizon it doesn't
         # automatically reset the environment so we have to manually reset it
         # (see https://github.com/rlworkgroup/metaworld/issues/60)
         task.env.reset()
 
-    episodes = ch.envs.runner_wrapper.flatten_episodes(episodes, n_episodes, n_w)
+    if n_w > 1:
+        episodes = ch.envs.runner_wrapper.flatten_episodes(episodes, n_episodes, n_w)
     return episodes
 
 
