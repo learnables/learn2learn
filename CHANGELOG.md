@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* clone_module supports non-Module objects.
+
 
 ## v0.1.1
 
