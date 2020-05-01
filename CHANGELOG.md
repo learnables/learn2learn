@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* clone_module supports non-Module objects.
+* VGG flowers now relies on tarfile.open() instead of tarfile.TarFile().
+
 
 ## v0.1.1
 
