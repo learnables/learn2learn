@@ -111,39 +111,50 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
     return mean_loss, mean_kl
 
 
-def make_env(benchmark, seed, test=False):
+def make_env(benchmark, seed, num_workers, test=False):
     # Set a specific task or left empty to train on all available tasks
     task = 'pick-place-v1' if benchmark == "ML1" else ""
 
     # Fetch one of the ML benchmarks from metaworld
     benchmark_env = getattr(mtwrld, benchmark)
 
-    if test:
-        env = benchmark_env.get_test_tasks(task)
-    else:
-        env = benchmark_env.get_train_tasks(task)
+    def init_env():
+        if test:
+            env = benchmark_env.get_test_tasks(task)
+        else:
+            env = benchmark_env.get_train_tasks(task)
 
-    env = ch.envs.ActionSpaceScaler(env)
+        env = ch.envs.ActionSpaceScaler(env)
+        return env
+
+    env = l2l.gym.AsyncVectorEnv([init_env for _ in range(num_workers)])
+
     env.seed(seed)
     env.set_task(env.sample_tasks(1)[0])
     env = ch.envs.Torch(env)
     return env
 
 
-def collect_episodes(model, task, n_episodes, n_steps=None):
+def collect_episodes(model, task, n_episodes, n_workers, n_steps=None):
     # If user doesn't provide predefined horizon length,
     # use the maximum horizon set by meta-world environment
     if n_steps is None:
-        n_steps = task.active_env.max_path_length
+        n_steps = task._env.active_env.max_path_length
 
     # Collect multiple episodes per task
     episodes = ch.ExperienceReplay()
     for episode in range(n_episodes):
-        episodes += task.run(model, steps=n_steps)
+        episode = task.run(model, steps=n_steps)
+        # Manually make done True at the last step
+        episode[-1].done = torch.ones_like(episode[-1].done)
+        episodes += episode
         # Due to the current meta-world build, when an episode reaches the end of the horizon it doesn't
         # automatically reset the environment so we have to manually reset it
         # (see https://github.com/rlworkgroup/metaworld/issues/60)
         task.env.reset()
+
+    if n_workers > 1:
+        episodes = ch.envs.runner_wrapper.flatten_episodes(episodes, n_episodes, n_workers)
     return episodes
 
 
@@ -154,13 +165,14 @@ def main(
         adapt_steps=3,
         num_iterations=10000,
         meta_bsz=10,
-        adapt_bsz=10,
+        adapt_bsz=10,  # Number of episodes to sample PER WORKER!
         tau=1.00,
         gamma=0.99,
         seed=42,
+        num_workers=1,
         cuda=0):
 
-    env = make_env(benchmark, seed)
+    env = make_env(benchmark, seed, num_workers)
 
     cuda = bool(cuda)
     random.seed(seed)
@@ -188,12 +200,12 @@ def main(
 
             # Fast Adapt
             for step in range(adapt_steps):
-                train_episodes = collect_episodes(clone, task, adapt_bsz)
+                train_episodes = collect_episodes(clone, task, adapt_bsz, num_workers)
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
 
             # Compute Validation Loss
-            valid_episodes = collect_episodes(clone, task, adapt_bsz)
+            valid_episodes = collect_episodes(clone, task, adapt_bsz, num_workers)
             task_replay.append(valid_episodes)
 
             iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
@@ -247,19 +259,18 @@ def main(
                 break
 
     # Evaluate on a set of unseen tasks
-    n_eval_tasks = 20
-    eval_reward = evaluate(benchmark, n_eval_tasks, policy, baseline, adapt_lr, gamma, tau, seed)
-
-    print(f"Average reward over {n_eval_tasks} test tasks: {eval_reward}")
+    evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, num_workers, seed)
 
 
-def evaluate(benchmark, n_eval_tasks, policy, baseline, adapt_lr, gamma, tau, seed):
+def evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, n_workers, seed):
     # Parameters
     adapt_steps = 3
+    adapt_bsz = 4  # PER WORKER
+    n_eval_tasks = 20
 
     tasks_reward = 0
 
-    env = make_env(benchmark, seed, test=True)
+    env = make_env(benchmark, seed, n_workers, test=True)
     eval_task_list = env.sample_tasks(n_eval_tasks)
 
     for i, task in enumerate(eval_task_list):
@@ -270,17 +281,20 @@ def evaluate(benchmark, n_eval_tasks, policy, baseline, adapt_lr, gamma, tau, se
 
         # Adapt
         for step in range(adapt_steps):
-            adapt_episodes = task.run(clone, steps=150)
+            adapt_episodes = collect_episodes(clone, task, adapt_bsz, n_workers)
             clone = fast_adapt_a2c(clone, adapt_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
             task.env.reset()
 
-        eval_episodes = task.run(clone, steps=150)
+        eval_episodes = collect_episodes(clone, task, adapt_bsz, n_workers)
 
-        task_reward = eval_episodes.reward().sum().item()
+        task_reward = eval_episodes.reward().sum().item() / adapt_bsz
         print(f"Reward for task {i} : {task_reward}")
         tasks_reward += task_reward
 
     final_eval_reward = tasks_reward / n_eval_tasks
+
+    print(f"Average reward over {n_eval_tasks} test tasks: {final_eval_reward}")
+
     return final_eval_reward
 
 
