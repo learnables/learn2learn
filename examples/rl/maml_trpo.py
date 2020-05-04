@@ -156,6 +156,7 @@ def main(
             # Fast Adapt
             for step in range(adapt_steps):
                 train_episodes = task.run(clone, episodes=adapt_bsz)
+
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
                                        baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
