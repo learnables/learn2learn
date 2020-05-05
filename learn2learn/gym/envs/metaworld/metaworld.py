@@ -1,59 +1,54 @@
 #!/usr/bin/env python3
 
-import numpy as np
-from gym import spaces
-from gym.utils import seeding
-
 from gym.error import DependencyNotInstalled
 try:
-    from metaworld.envs.mujoco.mujoco_env import MujocoEnv
+    from metaworld.envs.mujoco.multitask_env import MultiClassMultiTaskEnv
+    from metaworld.benchmarks import ML1, ML10, ML45
 except DependencyNotInstalled:
-    from learn2learn.gym.envs.mujoco.dummy_mujoco_env import MujocoEnv
+    from learn2learn.gym.envs.mujoco.dummy_mujoco_env import MujocoEnv as MultiClassMultiTaskEnv
 
 
-from learn2learn.gym.envs.meta_env import MetaEnv
-
-
-class MetaWorld(MetaEnv):
+class MetaWorldMod(MultiClassMultiTaskEnv):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py)
-
-    **Description**
-
-
-    **Credit**
-
-
-
+    Modification to return Done signal when reaching the end of the horizon
     """
-
-    def __init__(self, benchmark, task=None):
-        self.seed()
-        super(MetaWorld, self).__init__(task)
-        self.observation_space = spaces.Box()
-        self.action_space = spaces.Box()
-        self.reset()
-
-    # -------- MetaEnv Methods --------
-    def sample_tasks(self, num_tasks):
-        """
-        """
-        raise NotImplementedError
-
-    def set_task(self, task):
-        self._task = task
-        self._goal = task['goal']
-
-    # -------- Gym Methods --------
-    def seed(self, seed=None):
-        self.np_random, seed = seeding.np_random(seed)
-        return [seed]
-
-    def reset(self, env=True):
-        raise NotImplementedError
+    def __init__(self, task_env_cls_dict, task_args_kwargs, sample_all=True, sample_goals=False, obs_type='plain'):
+        super(MetaWorldMod, self).__init__(task_env_cls_dict=task_env_cls_dict,
+                                           task_args_kwargs=task_args_kwargs,
+                                           sample_goals=sample_goals,
+                                           obs_type=obs_type,
+                                           sample_all=sample_all)
+        self.collected_steps = 0
 
     def step(self, action):
-        raise NotImplementedError
+        obs, reward, done, info = super().step(action)
+        self.collected_steps += 1
 
-    def render(self, mode=None):
-        raise NotImplementedError
+        # Manually set done at the end of the horizon
+        if self.collected_steps >= self.active_env.max_path_length:
+            done = True
+
+        return obs, reward, done, info
+
+    def reset(self, **kwargs):
+        self.collected_steps = 0
+        obs = super().reset(**kwargs)
+        return obs
+
+
+class MetaWorldML1(ML1, MetaWorldMod):
+
+    def __init__(self, task_name, env_type='train', n_goals=50, sample_all=False):
+        super(MetaWorldML1, self).__init__(task_name, env_type, n_goals, sample_all)
+
+
+class MetaWorldML10(ML10, MetaWorldMod):
+
+    def __init__(self, env_type='train', sample_all=False, task_name=None):
+        super(MetaWorldML10, self).__init__(env_type, sample_all, task_name)
+
+
+class MetaWorldML45(ML45, MetaWorldMod):
+
+    def __init__(self, env_type='train', sample_all=False, task_name=None):
+        super(MetaWorldML45, self).__init__(env_type, sample_all, task_name)

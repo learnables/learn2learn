@@ -25,6 +25,10 @@ from torch.nn.utils import parameters_to_vector, vector_to_parameters
 from tqdm import tqdm
 
 import learn2learn as l2l
+
+from learn2learn.gym.envs.metaworld import MetaWorldML1 as ML1
+from learn2learn.gym.envs.metaworld import MetaWorldML10 as ML10
+from learn2learn.gym.envs.metaworld import MetaWorldML45 as ML45
 from policies import DiagNormalPolicy
 
 
@@ -113,16 +117,13 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 def make_env(benchmark, seed, num_workers, test=False):
     # Set a specific task or left empty to train on all available tasks
-    task = 'pick-place-v1' if benchmark == "ML1" else ""
-
-    # Fetch one of the ML benchmarks from metaworld
-    benchmark_env = getattr(mtwrld, benchmark)
+    task = 'pick-place-v1' if benchmark == ML1 else False  # In this case, False corresponds to the sample_all argument
 
     def init_env():
         if test:
-            env = benchmark_env.get_test_tasks(task)
+            env = benchmark.get_test_tasks(task)
         else:
-            env = benchmark_env.get_train_tasks(task)
+            env = benchmark.get_train_tasks(task)
 
         env = ch.envs.ActionSpaceScaler(env)
         return env
@@ -135,32 +136,8 @@ def make_env(benchmark, seed, num_workers, test=False):
     return env
 
 
-def collect_episodes(model, task, n_episodes, n_workers, n_steps=None):
-
-    # If user doesn't provide predefined horizon length,
-    # use the maximum horizon set by meta-world environment
-    if n_steps is None:
-        n_steps = task._env.active_env.max_path_length
-
-    # Collect multiple episodes per task
-    episodes = ch.ExperienceReplay()
-    for episode in range(n_episodes):
-        episode = task.run(model, steps=n_steps)
-        # Manually make done True at the last step
-        episode[-1].done = torch.ones_like(episode[-1].done)
-        episodes += episode
-        # Due to the current meta-world build, when an episode reaches the end of the horizon it doesn't
-        # automatically reset the environment so we have to manually reset it
-        # (see https://github.com/rlworkgroup/metaworld/issues/60)
-        task.env.reset()
-
-    if n_workers > 1:
-        episodes = ch.envs.runner_wrapper.flatten_episodes(episodes, n_episodes, n_workers)
-    return episodes
-
-
 def main(
-        benchmark='ML1',  # Choose between ML1, ML10, ML45
+        benchmark=ML10,  # Choose between ML1, ML10, ML45
         adapt_lr=0.1,
         meta_lr=0.05,
         adapt_steps=3,
@@ -201,12 +178,12 @@ def main(
 
             # Fast Adapt
             for step in range(adapt_steps):
-                train_episodes = collect_episodes(clone, task, adapt_bsz, num_workers)
+                train_episodes = task.run(clone, episodes=adapt_bsz)
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
 
             # Compute Validation Loss
-            valid_episodes = collect_episodes(clone, task, adapt_bsz, num_workers)
+            valid_episodes = task.run(clone, episodes=adapt_bsz)
             task_replay.append(valid_episodes)
 
             iteration_reward += valid_episodes.reward().sum().item() / adapt_bsz
@@ -282,11 +259,11 @@ def evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, n_workers, seed)
 
         # Adapt
         for step in range(adapt_steps):
-            adapt_episodes = collect_episodes(clone, task, adapt_bsz, n_workers)
+            adapt_episodes = task.run(clone, episodes=adapt_bsz)
             clone = fast_adapt_a2c(clone, adapt_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
             task.env.reset()
 
-        eval_episodes = collect_episodes(clone, task, adapt_bsz, n_workers)
+        eval_episodes = task.run(clone, episodes=adapt_bsz)
 
         task_reward = eval_episodes.reward().sum().item() / adapt_bsz
         print(f"Reward for task {i} : {task_reward}")
