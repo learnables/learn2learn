@@ -136,7 +136,7 @@ def make_env(benchmark, seed, num_workers, test=False):
 def main(
         benchmark=ML10,  # Choose between ML1, ML10, ML45
         adapt_lr=0.1,
-        meta_lr=0.05,
+        meta_lr=0.1,
         adapt_steps=1,
         num_iterations=1000,
         meta_bsz=20,
@@ -156,7 +156,7 @@ def main(
     if cuda:
         torch.cuda.manual_seed(seed)
 
-    policy = DiagNormalPolicy(env.state_size, env.action_size)
+    policy = DiagNormalPolicy(env.state_size, env.action_size, activation='tanh')
     if cuda:
         policy.to('cuda')
     baseline = LinearValue(env.state_size, env.action_size)
