@@ -54,7 +54,12 @@ class FC100(data.Dataset):
 
     """
 
-    def __init__(self, root, mode='train', transform=None, target_transform=None):
+    def __init__(self,
+                 root,
+                 mode='train',
+                 transform=None,
+                 target_transform=None,
+                 download=False):
         super(FC100, self).__init__()
         self.root = os.path.expanduser(root)
         os.makedirs(self.root, exist_ok=True)
@@ -65,7 +70,7 @@ class FC100(data.Dataset):
         self.mode = mode
         self._bookkeeping_path = os.path.join(self.root, 'fc100-bookkeeping-' + mode + '.pkl')
 
-        if not self._check_exists():
+        if not self._check_exists() and download:
             self.download()
 
         short_mode = 'val' if mode == 'validation' else mode

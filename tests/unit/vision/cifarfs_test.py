@@ -14,7 +14,7 @@ class CIFARFSTests(unittest.TestCase):
         pass
 
     def test_download(self):
-        cifarfs = l2l.vision.datasets.CIFARFS(root='./data')
+        cifarfs = l2l.vision.datasets.CIFARFS(root='./data', download=True)
         path = os.path.join('./data', 'cifarfs', 'processed')
         self.assertTrue(os.path.exists(path))
 
