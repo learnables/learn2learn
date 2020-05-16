@@ -25,6 +25,7 @@ class UtilTests(unittest.TestCase):
             self.assertTrue(hasattr(tasksets, 'test'))
             batch = tasksets.test.sample()
             self.assertTrue(batch is not None)
+            del tasksets, batch
 
 
 if __name__ == '__main__':

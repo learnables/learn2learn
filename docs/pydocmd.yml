@@ -96,13 +96,13 @@ repo_name: 'learnables/learn2learn'
 repo_url: 'https://github.com/learnables/learn2learn'
 
 theme:
-  name: 'material'
-  logo: 'assets/img/learn2learn_white.png'
-  favicon: 'assets/img/favicons/favicon.ico'
-  palette:
-      primary: 'blue'
-      accent: 'orange'
-  font:
+    name: 'material'
+    logo: 'assets/img/learn2learn_white.png'
+    favicon: 'assets/img/favicons/favicon.ico'
+    palette:
+        primary: 'blue'
+        accent: 'orange'
+    font:
     text: 'Source Sans Pro'
     code: 'Ubuntu Mono'
 
@@ -130,22 +130,22 @@ headers: markdown
 # subdirectory of your project (eg. docs/), you may want to add the parent
 # directory here.
 additional_search_paths:
-  - ..
+    - ..
 
 extra_javascript:
-  - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js
-  - https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js
+    - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js
+    - https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js
 
 extra_css:
-  - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
-  - 'assets/css/l2l_material.css'
+    - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
+    - 'assets/css/l2l_material.css'
 
 # Extensions
 markdown_extensions:
-  - mdx_math
-  - admonition
-  - codehilite:
-      guess_lang: true
-      linenums: true
-  - toc:
-      permalink: true
+    - mdx_math
+    - admonition
+    - codehilite:
+        guess_lang: true
+        linenums: true
+    - toc:
+        permalink: true

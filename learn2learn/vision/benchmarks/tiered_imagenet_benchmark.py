@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import torchvision as tv
 import learn2learn as l2l
 
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
@@ -14,12 +15,16 @@ def tiered_imagenet_tasksets(
     **kwargs,
 ):
     """Tasksets for tiered-ImageNet benchmarks."""
-    train_dataset = l2l.vision.datasets.MiniImagenet(root=root,
-                                                     mode='train')
-    valid_dataset = l2l.vision.datasets.MiniImagenet(root=root,
-                                                     mode='validation')
-    test_dataset = l2l.vision.datasets.MiniImagenet(root=root,
-                                                    mode='test')
+    data_transform = tv.transforms.ToTensor()
+    train_dataset = l2l.vision.datasets.TieredImagenet(root=root,
+                                                       transform=data_transform,
+                                                       mode='train')
+    valid_dataset = l2l.vision.datasets.TieredImagenet(root=root,
+                                                       transform=data_transform,
+                                                       mode='validation')
+    test_dataset = l2l.vision.datasets.TieredImagenet(root=root,
+                                                      transform=data_transform,
+                                                      mode='test')
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)

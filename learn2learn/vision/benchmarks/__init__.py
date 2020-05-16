@@ -88,7 +88,7 @@ def get_tasksets(
     train_tasks, validation_tasks, test_tasks = l2l.vision.benchmarks.get_tasksets('omniglot')
     batch = train_tasks.sample()
 
-    # or:
+    or:
 
     tasksets = l2l.vision.benchmarks.get_tasksets('omniglot')
     batch = tasksets.train.sample()
