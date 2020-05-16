@@ -13,9 +13,15 @@ def mini_imagenet_tasksets(
     **kwargs,
 ):
     """Tasksets for mini-ImageNet benchmarks."""
-    train_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='train')
-    valid_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='validation')
-    test_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='test')
+    train_dataset = l2l.vision.datasets.MiniImagenet(root=root,
+                                                     mode='train',
+                                                     download=True)
+    valid_dataset = l2l.vision.datasets.MiniImagenet(root=root,
+                                                     mode='validation',
+                                                     download=True)
+    test_dataset = l2l.vision.datasets.MiniImagenet(root=root,
+                                                    mode='test',
+                                                    download=True)
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)

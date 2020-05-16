@@ -18,13 +18,16 @@ def fc100_tasksets(
     data_transform = tv.transforms.ToTensor()
     train_dataset = l2l.vision.datasets.FC100(root=root,
                                               transform=data_transform,
-                                              mode='train')
+                                              mode='train',
+                                              download=True)
     valid_dataset = l2l.vision.datasets.FC100(root=root,
                                               transform=data_transform,
-                                              mode='validation')
+                                              mode='validation',
+                                              download=True)
     test_dataset = l2l.vision.datasets.FC100(root=root,
                                              transform=data_transform,
-                                             mode='test')
+                                             mode='test',
+                                             download=True)
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)
