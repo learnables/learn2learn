@@ -78,8 +78,8 @@ def get_tasksets(
     * **name** (str) - The name of the benchmark. Full list in `list_tasksets()`.
     * **train_ways** (int, *optional*, default=5) - The number of classes per train tasks.
     * **train_samples** (int, *optional*, default=10) - The number of samples per train tasks.
-    * **test_ways** (int, *optional*, default=5) - The number of classes per test tasks.
-    * **test_samples** (int, *optional*, default=10) - The number of samples per test tasks.
+    * **test_ways** (int, *optional*, default=5) - The number of classes per test tasks. Also used for validation tasks.
+    * **test_samples** (int, *optional*, default=10) - The number of samples per test tasks. Also used for validation tasks.
     * **num_tasks** (int, *optional*, default=-1) - The number of tasks in each TaskDataset.
     * **root** (str, *optional*, default='~/data') - Where the data is stored.
 
@@ -87,7 +87,9 @@ def get_tasksets(
     ~~~python
     train_tasks, validation_tasks, test_tasks = l2l.vision.benchmarks.get_tasksets('omniglot')
     batch = train_tasks.sample()
+
     # or:
+
     tasksets = l2l.vision.benchmarks.get_tasksets('omniglot')
     batch = tasksets.train.sample()
     ~~~
