@@ -15,10 +15,16 @@ class UtilTests(unittest.TestCase):
     def test_tasksets(self):
         names = l2l.vision.benchmarks.list_tasksets()
         for name in names:
-            tasks = l2l.vision.benchmarks.get_tasksets(name)
-            self.assertTrue(hasattr(tasks, 'train'))
-            self.assertTrue(hasattr(tasks, 'validation'))
-            self.assertTrue(hasattr(tasks, 'test'))
+            tasksets = l2l.vision.benchmarks.get_tasksets(name)
+            self.assertTrue(hasattr(tasksets, 'train'))
+            batch = tasksets.train.sample()
+            self.assertTrue(batch is not None)
+            self.assertTrue(hasattr(tasksets, 'validation'))
+            batch = tasksets.validation.sample()
+            self.assertTrue(batch is not None)
+            self.assertTrue(hasattr(tasksets, 'test'))
+            batch = tasksets.test.sample()
+            self.assertTrue(batch is not None)
 
 
 if __name__ == '__main__':

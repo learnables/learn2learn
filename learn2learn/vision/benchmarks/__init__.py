@@ -9,12 +9,18 @@ import learn2learn as l2l
 
 from collections import namedtuple
 from .omniglot_benchmark import omniglot_tasksets
+from .mini_imagenet_benchmark import mini_imagenet_tasksets
+
+
+__all__ = ['list_tasksets', 'get_tasksets']
+
 
 BenchmarkTasksets = namedtuple('BenchmarkTasksets', ('train', 'validation', 'test'))
 
 _TASKSETS = {
-        'omniglot': omniglot_tasksets
-        }
+    'omniglot': omniglot_tasksets,
+    'mini-imagenet': mini_imagenet_tasksets,
+}
 
 
 def list_tasksets():
