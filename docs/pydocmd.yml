@@ -56,7 +56,7 @@ generate:
               - learn2learn.vision.datasets.FGVCAircraft
           - learn2learn.vision.transforms:
               - learn2learn.vision.transforms.RandomClassRotation
-          - learn2learn.vision.benchmarks++:
+          - learn2learn.vision.benchmarks:
               - learn2learn.vision.benchmarks.list_tasksets
               - learn2learn.vision.benchmarks.get_tasksets
   - docs/learn2learn.text.md:

@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 """
-l2l.vision.benchmarks documentation.
+The benchmark modules provides a convenient interface to standardized benchmarks in the literature.
+It provides train/validation/test TaskDatasets and TaskTransforms for pre-defined datasets.
+
+This utility is useful for researchers to compare new algorithms against existing benchmarks.
+For a more fine-grained control over tasks and data, we recommend directly using `l2l.data.TaskDataset` and `l2l.data.TaskTransforms`.
 """
 
 import os
@@ -35,15 +39,13 @@ def list_tasksets():
 
     **Description**
 
-    **Arguments**
-
-    * **model** (Module) - The model to update.
-    * **lr** (float) - The learning rate used to update the model.
-    * **grads** (list, *optional*, default=None) - A list of gradients for each parameter
-        of the model. If None, will use the gradients in .grad attributes.
+    Returns a list of all available benchmarks.
 
     **Example**
     ~~~python
+    for name in l2l.vision.benchmarks.list_tasksets():
+        print(name)
+        tasksets = l2l.vision.benchmarks.get_tasksets(name)
     ~~~
     """
     return _TASKSETS.keys()
@@ -65,15 +67,29 @@ def get_tasksets(
 
     **Description**
 
+    Returns the tasksets for a particular benchmark, using literature standard data and task transformations.
+
+    The returned object is a namedtuple with attributes `train`, `validation`, `test` which
+    correspond to their respective TaskDatasets.
+    See `examples/vision/maml_miniimagenet.py` for an example.
+
     **Arguments**
 
-    * **model** (Module) - The model to update.
-    * **lr** (float) - The learning rate used to update the model.
-    * **grads** (list, *optional*, default=None) - A list of gradients for each parameter
-        of the model. If None, will use the gradients in .grad attributes.
+    * **name** (str) - The name of the benchmark. Full list in `list_tasksets()`.
+    * **train_ways** (int, *optional*, default=5) - The number of classes per train tasks.
+    * **train_samples** (int, *optional*, default=10) - The number of samples per train tasks.
+    * **test_ways** (int, *optional*, default=5) - The number of classes per test tasks.
+    * **test_samples** (int, *optional*, default=10) - The number of samples per test tasks.
+    * **num_tasks** (int, *optional*, default=-1) - The number of tasks in each TaskDataset.
+    * **root** (str, *optional*, default='~/data') - Where the data is stored.
 
     **Example**
     ~~~python
+    train_tasks, validation_tasks, test_tasks = l2l.vision.benchmarks.get_tasksets('omniglot')
+    batch = train_tasks.sample()
+    # or:
+    tasksets = l2l.vision.benchmarks.get_tasksets('omniglot')
+    batch = tasksets.train.sample()
     ~~~
     """
     root = os.path.expanduser(root)
