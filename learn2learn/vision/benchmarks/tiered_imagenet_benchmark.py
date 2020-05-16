@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import learn2learn as l2l
+
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
-def mini_imagenet_tasksets(
+
+def tiered_imagenet_tasksets(
     train_ways=5,
     train_samples=10,
     test_ways=5,
@@ -11,10 +13,13 @@ def mini_imagenet_tasksets(
     root='~/data',
     **kwargs,
     ):
-    """Tasksets for mini-ImageNet benchmarks."""
-    train_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='train')
-    valid_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='validation')
-    test_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='test')
+    """Tasksets for tiered-ImageNet benchmarks."""
+    train_dataset = l2l.vision.datasets.MiniImagenet(root=root,
+                                                     mode='train')
+    valid_dataset = l2l.vision.datasets.MiniImagenet(root=root,
+                                                     mode='validation')
+    test_dataset = l2l.vision.datasets.MiniImagenet(root=root,
+                                                    mode='test')
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)

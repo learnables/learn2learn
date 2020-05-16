@@ -10,6 +10,9 @@ import learn2learn as l2l
 from collections import namedtuple
 from .omniglot_benchmark import omniglot_tasksets
 from .mini_imagenet_benchmark import mini_imagenet_tasksets
+from .tiered_imagenet_benchmark import tiered_imagenet_tasksets
+from .fc100_benchmark import fc100_tasksets
+from .cifarfs_benchmark import cifarfs_tasksets
 
 
 __all__ = ['list_tasksets', 'get_tasksets']
@@ -20,6 +23,9 @@ BenchmarkTasksets = namedtuple('BenchmarkTasksets', ('train', 'validation', 'tes
 _TASKSETS = {
     'omniglot': omniglot_tasksets,
     'mini-imagenet': mini_imagenet_tasksets,
+    'tiered-imagenet': tiered_imagenet_tasksets,
+    'fc100': fc100_tasksets,
+    'cifarfs': cifarfs_tasksets,
 }
 
 

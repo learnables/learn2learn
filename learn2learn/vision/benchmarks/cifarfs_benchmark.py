@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+import torchvision as tv
 import learn2learn as l2l
+
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
-def mini_imagenet_tasksets(
+def cifarfs_tasksets(
     train_ways=5,
     train_samples=10,
     test_ways=5,
@@ -11,10 +13,17 @@ def mini_imagenet_tasksets(
     root='~/data',
     **kwargs,
     ):
-    """Tasksets for mini-ImageNet benchmarks."""
-    train_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='train')
-    valid_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='validation')
-    test_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='test')
+    """Tasksets for CIFAR-FS benchmarks."""
+    data_transform = tv.transforms.ToTensor()
+    train_dataset = l2l.vision.datasets.CIFARFS(root=root,
+                                                transform=data_transform,
+                                                mode='train')
+    valid_dataset = l2l.vision.datasets.CIFARFS(root=root,
+                                                transform=data_transform,
+                                                mode='validation')
+    test_dataset = l2l.vision.datasets.CIFARFS(root=root,
+                                               transform=data_transform,
+                                               mode='test')
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)
