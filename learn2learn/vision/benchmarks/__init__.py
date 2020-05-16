@@ -31,7 +31,20 @@ _TASKSETS = {
 
 def list_tasksets():
     """
-    Output: 
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/)
+
+    **Description**
+
+    **Arguments**
+
+    * **model** (Module) - The model to update.
+    * **lr** (float) - The learning rate used to update the model.
+    * **grads** (list, *optional*, default=None) - A list of gradients for each parameter
+        of the model. If None, will use the gradients in .grad attributes.
+
+    **Example**
+    ~~~python
+    ~~~
     """
     return _TASKSETS.keys()
 
@@ -46,9 +59,22 @@ def get_tasksets(
     root='~/data',
     device=None,
     **kwargs,
-    ):
+):
     """
-    Pass
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/)
+
+    **Description**
+
+    **Arguments**
+
+    * **model** (Module) - The model to update.
+    * **lr** (float) - The learning rate used to update the model.
+    * **grads** (list, *optional*, default=None) - A list of gradients for each parameter
+        of the model. If None, will use the gradients in .grad attributes.
+
+    **Example**
+    ~~~python
+    ~~~
     """
     root = os.path.expanduser(root)
 
@@ -57,12 +83,11 @@ def get_tasksets(
 
     # Load task-specific data and transforms
     datasets, transforms = _TASKSETS[name](train_ways=train_ways,
-        train_samples=train_samples,
-        test_ways=test_ways,
-        test_samples=test_samples,
-        root=root,
-        **kwargs,
-    )
+                                           train_samples=train_samples,
+                                           test_ways=test_ways,
+                                           test_samples=test_samples,
+                                           root=root,
+                                           **kwargs)
     train_dataset, validation_dataset, test_dataset = datasets
     train_transforms, validation_transforms, test_transforms = transforms
 

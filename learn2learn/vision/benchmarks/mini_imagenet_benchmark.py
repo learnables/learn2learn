@@ -3,6 +3,7 @@
 import learn2learn as l2l
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
+
 def mini_imagenet_tasksets(
     train_ways=5,
     train_samples=10,
@@ -10,7 +11,7 @@ def mini_imagenet_tasksets(
     test_samples=10,
     root='~/data',
     **kwargs,
-    ):
+):
     """Tasksets for mini-ImageNet benchmarks."""
     train_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='train')
     valid_dataset = l2l.vision.datasets.MiniImagenet(root=root, mode='validation')
@@ -44,4 +45,3 @@ def mini_imagenet_tasksets(
     _datasets = (train_dataset, valid_dataset, test_dataset)
     _transforms = (train_transforms, valid_transforms, test_transforms)
     return _datasets, _transforms
-    

@@ -12,7 +12,7 @@ def tiered_imagenet_tasksets(
     test_samples=10,
     root='~/data',
     **kwargs,
-    ):
+):
     """Tasksets for tiered-ImageNet benchmarks."""
     train_dataset = l2l.vision.datasets.MiniImagenet(root=root,
                                                      mode='train')
@@ -49,4 +49,3 @@ def tiered_imagenet_tasksets(
     _datasets = (train_dataset, valid_dataset, test_dataset)
     _transforms = (train_transforms, valid_transforms, test_transforms)
     return _datasets, _transforms
-    

@@ -5,6 +5,7 @@ import learn2learn as l2l
 
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
+
 def cifarfs_tasksets(
     train_ways=5,
     train_samples=10,
@@ -12,7 +13,7 @@ def cifarfs_tasksets(
     test_samples=10,
     root='~/data',
     **kwargs,
-    ):
+):
     """Tasksets for CIFAR-FS benchmarks."""
     data_transform = tv.transforms.ToTensor()
     train_dataset = l2l.vision.datasets.CIFARFS(root=root,
@@ -53,4 +54,3 @@ def cifarfs_tasksets(
     _datasets = (train_dataset, valid_dataset, test_dataset)
     _transforms = (train_transforms, valid_transforms, test_transforms)
     return _datasets, _transforms
-    

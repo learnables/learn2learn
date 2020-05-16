@@ -14,7 +14,7 @@ def omniglot_tasksets(
     test_samples,
     root,
     **kwargs
-    ):
+):
     """
     Benchmark definition for Omniglot.
     """
