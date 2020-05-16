@@ -103,8 +103,8 @@ theme:
         primary: 'blue'
         accent: 'orange'
     font:
-    text: 'Source Sans Pro'
-    code: 'Ubuntu Mono'
+        text: 'Source Sans Pro'
+        code: 'Ubuntu Mono'
 
 extra:
   social:
