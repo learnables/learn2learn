@@ -97,13 +97,13 @@ class MiniImagenet(data.Dataset):
         try:
             if not self._check_exists() and download:
                 print('Downloading mini-ImageNet --', mode)
-                download_file(dropbox_file_link, pickle_file)
+                download_pkl(google_drive_file_id, self.root, mode)
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
         except pickle.UnpicklingError:
             if not self._check_exists() and download:
                 print('Download failed. Re-trying mini-ImageNet --', mode)
-                download_pkl(google_drive_file_id, self.root, mode)
+                download_file(dropbox_file_link, pickle_file)
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
 
