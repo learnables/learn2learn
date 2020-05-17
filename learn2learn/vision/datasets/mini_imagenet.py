@@ -96,12 +96,14 @@ class MiniImagenet(data.Dataset):
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
         try:
             if not self._check_exists() and download:
-                download_pkl(google_drive_file_id, self.root, mode)
+                print('Downloading mini-ImageNet --', mode)
+                download_file(dropbox_file_link, pickle_file)
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
-        except:
+        except pickle.UnpicklingError:
             if not self._check_exists() and download:
-                download_file(dropbox_file_link, pickle_file)
+                print('Download failed. Re-trying mini-ImageNet --', mode)
+                download_pkl(google_drive_file_id, self.root, mode)
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
 
@@ -126,3 +128,8 @@ class MiniImagenet(data.Dataset):
 
     def _check_exists(self):
         return os.path.exists(os.path.join(self.root, 'mini-imagenet-cache-' + self.mode + '.pkl'))
+
+
+if __name__ == '__main__':
+    mi = MiniImagenet(root='./data', download=True)
+    __import__('pdb').set_trace()
