@@ -15,7 +15,7 @@ class UtilTests(unittest.TestCase):
     def test_tasksets(self):
         names = l2l.vision.benchmarks.list_tasksets()
         for name in names:
-            tasksets = l2l.vision.benchmarks.get_tasksets(name)
+            tasksets = l2l.vision.benchmarks.get_tasksets(name, root='./data')
             self.assertTrue(hasattr(tasksets, 'train'))
             batch = tasksets.train.sample()
             self.assertTrue(batch is not None)
