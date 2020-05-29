@@ -107,7 +107,6 @@ class MiniImagenet(data.Dataset):
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
 
-
         self.x = torch.from_numpy(self.data["image_data"]).permute(0, 3, 1, 2).float()
         self.y = np.ones(len(self.x))
 
