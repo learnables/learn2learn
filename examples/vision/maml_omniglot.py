@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 
-import random
+"""
+Demonstrates how to:
+    * use the MAML wrapper for fast-adaptation,
+    * use the benchmark interface to load Omniglot, and
+    * sample tasks and split them in adaptation and evaluation sets.
+"""
 
+import random
 import numpy as np
 import torch
-from PIL.Image import LANCZOS
+import learn2learn as l2l
 
 from torch import nn, optim
-from torchvision import transforms
 
-import learn2learn as l2l
 
 
 def accuracy(predictions, targets):
@@ -62,58 +66,15 @@ def main(
         torch.cuda.manual_seed(seed)
         device = torch.device('cuda')
 
-    omniglot = l2l.vision.datasets.FullOmniglot(root='~/data',
-                                                transform=transforms.Compose([
-                                                    transforms.Resize(28, interpolation=LANCZOS),
-                                                    transforms.ToTensor(),
-                                                    lambda x: 1.0 - x,
-                                                ]),
-                                                download=True)
-    dataset = l2l.data.MetaDataset(omniglot)
-    classes = list(range(1623))
-    random.shuffle(classes)
-
-    train_transforms = [
-        l2l.data.transforms.FusedNWaysKShots(dataset,
-                                             n=ways,
-                                             k=2*shots,
-                                             filter_labels=classes[:1100]),
-        l2l.data.transforms.LoadData(dataset),
-        l2l.data.transforms.RemapLabels(dataset),
-        l2l.data.transforms.ConsecutiveLabels(dataset),
-        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
-    ]
-    train_tasks = l2l.data.TaskDataset(dataset,
-                                       task_transforms=train_transforms,
-                                       num_tasks=20000)
-
-    valid_transforms = [
-        l2l.data.transforms.FusedNWaysKShots(dataset,
-                                             n=ways,
-                                             k=2*shots,
-                                             filter_labels=classes[1100:1200]),
-        l2l.data.transforms.LoadData(dataset),
-        l2l.data.transforms.RemapLabels(dataset),
-        l2l.data.transforms.ConsecutiveLabels(dataset),
-        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
-    ]
-    valid_tasks = l2l.data.TaskDataset(dataset,
-                                       task_transforms=valid_transforms,
-                                       num_tasks=1024)
-
-    test_transforms = [
-        l2l.data.transforms.FusedNWaysKShots(dataset,
-                                             n=ways,
-                                             k=2*shots,
-                                             filter_labels=classes[1200:]),
-        l2l.data.transforms.LoadData(dataset),
-        l2l.data.transforms.RemapLabels(dataset),
-        l2l.data.transforms.ConsecutiveLabels(dataset),
-        l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
-    ]
-    test_tasks = l2l.data.TaskDataset(dataset,
-                                      task_transforms=test_transforms,
-                                      num_tasks=1024)
+    # Load train/validation/test tasksets using the benchmark interface
+    tasksets = l2l.vision.benchmarks.get_tasksets('omniglot',
+                                                  train_ways=ways,
+                                                  train_samples=2*shots,
+                                                  test_ways=ways,
+                                                  test_samples=2*shots,
+                                                  num_tasks=20000,
+                                                  root='~/data',
+    )
 
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
@@ -131,7 +92,7 @@ def main(
         for task in range(meta_batch_size):
             # Compute meta-training loss
             learner = maml.clone()
-            batch = train_tasks.sample()
+            batch = tasksets.train.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
@@ -145,7 +106,7 @@ def main(
 
             # Compute meta-validation loss
             learner = maml.clone()
-            batch = valid_tasks.sample()
+            batch = tasksets.validation.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
@@ -174,7 +135,7 @@ def main(
     for task in range(meta_batch_size):
         # Compute meta-testing loss
         learner = maml.clone()
-        batch = test_tasks.sample()
+        batch = tasksets.test.sample()
         evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                            learner,
                                                            loss,

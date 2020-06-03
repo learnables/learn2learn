@@ -117,7 +117,7 @@ class ConvBase(nn.Sequential):
                           max_pool=max_pool,
                           max_pool_factor=max_pool_factor),
                 ]
-        for l in range(layers - 1):
+        for _ in range(layers - 1):
             core.append(ConvBlock(hidden,
                                   hidden,
                                   kernel_size=(3, 3),

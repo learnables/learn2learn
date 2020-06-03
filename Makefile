@@ -44,9 +44,11 @@ alltests:
 	make notravis-tests >>alltests.txt 2>&1
 
 docs:
+	rm -f docs/mkdocs.yml
 	cd docs && pydocmd build && pydocmd serve
 
 docs-deploy:
+	rm -f docs/mkdocs.yml
 	cd docs && pydocmd gh-deploy
 
 # https://dev.to/neshaz/a-tutorial-for-tagging-releases-in-git-147e
