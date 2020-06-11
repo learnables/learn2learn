@@ -115,7 +115,7 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 def make_env(benchmark, seed, num_workers, test=False):
     # Set a specific task or left empty to train on all available tasks
-    task = 'pick-place-v1' if benchmark == ML1 else False  # In this case, False corresponds to the sample_all argument
+    task = 'push-v1' if benchmark == ML1 else False  # In this case, False corresponds to the sample_all argument
 
     def init_env():
         if test:
@@ -146,7 +146,6 @@ def main(
         seed=42,
         num_workers=10,  # Currently tasks are distributed evenly so adapt_bsz should be divisible by num_workers
         cuda=0):
-
     env = make_env(benchmark, seed, num_workers)
 
     cuda = bool(cuda)
