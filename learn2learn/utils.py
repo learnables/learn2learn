@@ -95,6 +95,8 @@ def clone_module(module):
     # First, create a copy of the module.
     # Adapted from:
     # https://github.com/pytorch/pytorch/blob/65bad41cbec096aa767b3752843eddebf845726f/torch/nn/modules/module.py#L1171
+    if not isinstance(module, torch.nn.Module):
+        return module
     clone = module.__new__(type(module))
     clone.__dict__ = module.__dict__.copy()
     clone._parameters = clone._parameters.copy()
@@ -152,6 +154,8 @@ def detach_module(module):
     error.backward()  # Gradients are back-propagate on clone, not net.
     ~~~
     """
+    if not isinstance(module, torch.nn.Module):
+        return
     # First, re-write all parameters
     for param_key in module._parameters:
         if module._parameters[param_key] is not None:

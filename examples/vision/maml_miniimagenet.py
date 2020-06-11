@@ -1,14 +1,26 @@
 #!/usr/bin/env python3
 
-import random
+"""
+Demonstrates how to:
+    * use the MAML wrapper for fast-adaptation,
+    * use the benchmark interface to load mini-ImageNet, and
+    * sample tasks and split them in adaptation and evaluation sets.
 
+To contrast the use of the benchmark interface with directly instantiating mini-ImageNet datasets and tasks, compare with `protonet_miniimagenet.py`.
+"""
+
+import random
 import numpy as np
+
 import torch
-from torch import nn
-from torch import optim
+from torch import nn, optim
 
 import learn2learn as l2l
-from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
+from learn2learn.data.transforms import (NWays,
+                                         KShots,
+                                         LoadData,
+                                         RemapLabels,
+                                         ConsecutiveLabels)
 
 
 def accuracy(predictions, targets):
@@ -61,46 +73,14 @@ def main(
         torch.cuda.manual_seed(seed)
         device = torch.device('cuda')
 
-    # Create Datasets
-    train_dataset = l2l.vision.datasets.MiniImagenet(root='~/data', mode='train')
-    valid_dataset = l2l.vision.datasets.MiniImagenet(root='~/data', mode='validation')
-    test_dataset = l2l.vision.datasets.MiniImagenet(root='~/data', mode='test')
-    train_dataset = l2l.data.MetaDataset(train_dataset)
-    valid_dataset = l2l.data.MetaDataset(valid_dataset)
-    test_dataset = l2l.data.MetaDataset(test_dataset)
-
-    train_transforms = [
-        NWays(train_dataset, ways),
-        KShots(train_dataset, 2*shots),
-        LoadData(train_dataset),
-        RemapLabels(train_dataset),
-        ConsecutiveLabels(train_dataset),
-    ]
-    train_tasks = l2l.data.TaskDataset(train_dataset,
-                                       task_transforms=train_transforms,
-                                       num_tasks=20000)
-
-    valid_transforms = [
-        NWays(valid_dataset, ways),
-        KShots(valid_dataset, 2*shots),
-        LoadData(valid_dataset),
-        ConsecutiveLabels(valid_dataset),
-        RemapLabels(valid_dataset),
-    ]
-    valid_tasks = l2l.data.TaskDataset(valid_dataset,
-                                       task_transforms=valid_transforms,
-                                       num_tasks=600)
-
-    test_transforms = [
-        NWays(test_dataset, ways),
-        KShots(test_dataset, 2*shots),
-        LoadData(test_dataset),
-        RemapLabels(test_dataset),
-        ConsecutiveLabels(test_dataset),
-    ]
-    test_tasks = l2l.data.TaskDataset(test_dataset,
-                                      task_transforms=test_transforms,
-                                      num_tasks=600)
+    # Create Tasksets using the benchmark interface
+    tasksets = l2l.vision.benchmarks.get_tasksets('mini-imagenet',
+                                                  train_samples=2*shots,
+                                                  train_ways=ways,
+                                                  test_samples=2*shots,
+                                                  test_ways=ways,
+                                                  root='~/data',
+    )
 
     # Create model
     model = l2l.vision.models.MiniImagenetCNN(ways)
@@ -118,7 +98,7 @@ def main(
         for task in range(meta_batch_size):
             # Compute meta-training loss
             learner = maml.clone()
-            batch = train_tasks.sample()
+            batch = tasksets.train.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
@@ -132,7 +112,7 @@ def main(
 
             # Compute meta-validation loss
             learner = maml.clone()
-            batch = valid_tasks.sample()
+            batch = tasksets.validation.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
                                                                loss,
@@ -161,7 +141,7 @@ def main(
     for task in range(meta_batch_size):
         # Compute meta-testing loss
         learner = maml.clone()
-        batch = test_tasks.sample()
+        batch = tasksets.test.sample()
         evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                            learner,
                                                            loss,

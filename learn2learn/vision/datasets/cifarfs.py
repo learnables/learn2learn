@@ -46,7 +46,12 @@ class CIFARFS(ImageFolder):
 
     """
 
-    def __init__(self, root, mode='train', transform=None, target_transform=None):
+    def __init__(self,
+                 root,
+                 mode='train',
+                 transform=None,
+                 target_transform=None,
+                 download=False):
         self.root = os.path.expanduser(root)
         if not os.path.exists(self.root):
             os.mkdir(self.root)
@@ -56,7 +61,7 @@ class CIFARFS(ImageFolder):
         self.processed_root = os.path.join(self.root, 'cifarfs', 'processed')
         self.raw_path = os.path.join(self.root, 'cifarfs')
 
-        if not self._check_exists():
+        if not self._check_exists() and download:
             self._download()
         if not self._check_processed():
             self._process_zip()

@@ -11,11 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * New example: [Meta-World](https://github.com/rlworkgroup/metaworld) example with MAML-TRPO with it's own env wrapper. (@[Kostis-S-Z](https://github.com/Kostis-S-Z))
-
+* Add l2l.vision.benchmarks interface.
 
 ### Changed
 
 ### Fixed
+
+* clone_module supports non-Module objects.
+* VGG flowers now relies on tarfile.open() instead of tarfile.TarFile().
 
 
 ## v0.1.1
