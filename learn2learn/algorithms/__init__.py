@@ -2,3 +2,4 @@
 
 from .maml import MAML, maml_update
 from .meta_sgd import MetaSGD, meta_sgd_update
+from .gbml import GBML

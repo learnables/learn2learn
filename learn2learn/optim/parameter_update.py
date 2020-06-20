@@ -5,7 +5,7 @@ import torch
 
 class ParameterUpdate(torch.nn.Module):
     """
-    Computes updates for for each parameter in `parameters` independently.
+    Computes updates for each parameter in `parameters` independently.
 
     As we wish to support some transforms being None, we need to keep track of
     the index at which the transfors are instantiated.

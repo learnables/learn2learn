@@ -227,7 +227,7 @@ def meta_update(module, updates=None):
     # Then, recurse for each submodule
     for module_key in module._modules:
         module._modules[module_key] = meta_update(module._modules[module_key],
-                                                 updates=None)
+                                                  updates=None)
 
     # Finally, rebuild the flattened parameters for RNNs
     # See this issue for more details:

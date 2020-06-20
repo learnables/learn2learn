@@ -41,16 +41,16 @@ class LearnableOptimizer(torch.nn.Module):
             warnings.simplefilter("ignore")
             for param, transform in zip(model.parameters(),
                                         self.transforms):
-                    if hasattr(param, 'grad') and param.grad is not None:
-                        # 1. compute update
-                        grad = param.grad.detach()
-                        grad.requires_grad = False
-                        update = - self.lr * transform(grad)
+                if hasattr(param, 'grad') and param.grad is not None:
+                    # 1. compute update
+                    grad = param.grad.detach()
+                    grad.requires_grad = False
+                    update = - self.lr * transform(grad)
 
-                        # 2. detach parameters
-                        param.detach_()
-                        param.requires_grad = False
-                        param.update = update
+                    # 2. detach parameters
+                    param.detach_()
+                    param.requires_grad = False
+                    param.update = update
 
             # 3. apply update so that it's differentiable
             l2l.meta_update(model, updates=None)
