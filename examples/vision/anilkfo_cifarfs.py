@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 
 """
-File: metacurvature_fc100.py
+File: anilkfo_cifarfs.py
 Author: Seb Arnold - seba1511.net
 Email: smr.arnold@gmail.com
 Github: seba-1511
 Description:
-Demonstrates how to use the GBML wrapper to implement MetaCurvature.
+Demonstrates how to use the low-level differentiable optimization utilities
+to implement ANIL+KFC on CIFAR-FS.
 
-A demonstration of the low-level API is available in:
-    examples/vision/anilkfo_cifarfs.py
+A demonstration of the high-level API is available in:
+    examples/vision/metacurvature_fc100.py
 """
 
 import random
 import numpy as np
 import torch
 import learn2learn as l2l
-from learn2learn.optim.transforms import MetaCurvatureTransform
 
 
 class Lambda(torch.nn.Module):
@@ -64,9 +64,20 @@ def accuracy(predictions, targets):
     return (predictions == targets).sum().float() / targets.size(0)
 
 
-def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
+def fast_adapt(
+        batch,
+        features,
+        classifier,
+        update,
+        diff_sgd,
+        loss,
+        adaptation_steps,
+        shots,
+        ways,
+        device):
     data, labels = batch
     data, labels = data.to(device), labels.to(device)
+    data = features(data)
 
     # Separate data into adaptation/evalutation sets
     adaptation_indices = np.zeros(data.size(0), dtype=bool)
@@ -76,21 +87,31 @@ def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
     adaptation_data, adaptation_labels = data[adaptation_indices], labels[adaptation_indices]
     evaluation_data, evaluation_labels = data[evaluation_indices], labels[evaluation_indices]
 
-    # Adapt the model
+    # Adapt the model & learned update
     for step in range(adaptation_steps):
-        adaptation_error = loss(learner(adaptation_data), adaptation_labels)
-        learner.adapt(adaptation_error)
+        adaptation_error = loss(classifier(adaptation_data), adaptation_labels)
+        if step > 0:  # Update the learnable update function
+            update_grad = torch.autograd.grad(adaptation_error,
+                                              update.parameters(),
+                                              create_graph=True,
+                                              retain_graph=True)
+            diff_sgd(update, update_grad)
+        classifier_updates = update(adaptation_error,
+                                    classifier.parameters(),
+                                    create_graph=True,
+                                    retain_graph=True)
+        diff_sgd(classifier, classifier_updates)
 
     # Evaluate the adapted model
-    predictions = learner(evaluation_data)
-    evaluation_error = loss(predictions, evaluation_labels)
-    evaluation_accuracy = accuracy(predictions, evaluation_labels)
-    return evaluation_error, evaluation_accuracy
+    predictions = classifier(evaluation_data)
+    eval_error = loss(predictions, evaluation_labels)
+    eval_accuracy = accuracy(predictions, evaluation_labels)
+    return eval_error, eval_accuracy
 
 
 def main(
     fast_lr=0.1,
-    meta_lr=0.01,
+    meta_lr=0.003,
     num_iterations=10000,
     meta_batch_size=16,
     adaptation_steps=5,
@@ -109,7 +130,7 @@ def main(
 
     # Create Tasksets using the benchmark interface
     tasksets = l2l.vision.benchmarks.get_tasksets(
-        name='fc100',
+        name='cifarfs',
         train_samples=2*shots,
         train_ways=ways,
         test_samples=2*shots,
@@ -117,17 +138,21 @@ def main(
         root='~/data',
     )
 
-    # Create model
+    # Create model and learnable update
     model = CifarCNN(output_size=ways)
     model.to(device)
-    gbml = l2l.algorithms.GBML(
-        model,
-        transform=MetaCurvatureTransform,
-        lr=fast_lr,
-        adapt_transform=False,
+    features = model.features
+    classifier = model.linear
+    kfo_transform = l2l.optim.transforms.KroneckerTransform(l2l.nn.KroneckerLinear)
+    fast_update = l2l.optim.ParameterUpdate(
+        parameters=classifier.parameters(),
+        transform=kfo_transform,
     )
-    gbml.to(device)
-    opt = torch.optim.Adam(gbml.parameters(), meta_lr)
+    fast_update.to(device)
+    diff_sgd = l2l.optim.DifferentiableSGD(lr=fast_lr)
+
+    all_parameters = list(model.parameters()) + list(fast_update.parameters())
+    opt = torch.optim.Adam(all_parameters, meta_lr)
     loss = torch.nn.CrossEntropyLoss(reduction='mean')
 
     for iteration in range(num_iterations):
@@ -138,10 +163,15 @@ def main(
         meta_valid_accuracy = 0.0
         for task in range(meta_batch_size):
             # Compute meta-training loss
-            learner = gbml.clone()
+            task_features = l2l.clone_module(features)
+            task_classifier = l2l.clone_module(classifier)
+            task_update = l2l.clone_module(fast_update)
             batch = tasksets.train.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
-                                                               learner,
+                                                               task_features,
+                                                               task_classifier,
+                                                               task_update,
+                                                               diff_sgd,
                                                                loss,
                                                                adaptation_steps,
                                                                shots,
@@ -152,10 +182,15 @@ def main(
             meta_train_accuracy += evaluation_accuracy.item()
 
             # Compute meta-validation loss
-            learner = gbml.clone()
+            task_features = l2l.clone_module(features)
+            task_classifier = l2l.clone_module(classifier)
+            task_update = l2l.clone_module(fast_update)
             batch = tasksets.validation.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
-                                                               learner,
+                                                               task_features,
+                                                               task_classifier,
+                                                               task_update,
+                                                               diff_sgd,
                                                                loss,
                                                                adaptation_steps,
                                                                shots,
@@ -173,7 +208,9 @@ def main(
         print('Meta Valid Accuracy', meta_valid_accuracy / meta_batch_size)
 
         # Average the accumulated gradients and optimize
-        for p in gbml.parameters():
+        for p in model.parameters():
+            p.grad.data.mul_(1.0 / meta_batch_size)
+        for p in fast_update.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
         opt.step()
 
@@ -181,10 +218,15 @@ def main(
     meta_test_accuracy = 0.0
     for task in range(meta_batch_size):
         # Compute meta-testing loss
-        learner = gbml.clone()
+        task_features = l2l.clone_module(features)
+        task_classifier = l2l.clone_module(classifier)
+        task_update = l2l.clone_module(fast_update)
         batch = tasksets.test.sample()
         evaluation_error, evaluation_accuracy = fast_adapt(batch,
-                                                           learner,
+                                                           task_features,
+                                                           task_classifier,
+                                                           task_update,
+                                                           diff_sgd,
                                                            loss,
                                                            adaptation_steps,
                                                            shots,
