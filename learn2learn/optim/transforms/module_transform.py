@@ -31,5 +31,7 @@ class ModuleTransform(object):
         numel = parameter.numel()
         flat_shape = (1, numel)
         transform = self.module_cls(numel, numel)
-        return ReshapedTransform(transform=transform,
-                                 shape=flat_shape)
+        return ReshapedTransform(
+            transform=transform,
+            shape=flat_shape,
+        )

@@ -10,7 +10,7 @@ class MetaCurvatureTransform(torch.nn.Module):
         super(MetaCurvatureTransform, self).__init__()
         self.lr = lr
         shape = param.shape
-        if len(shape) == 1:
+        if len(shape) == 1:  # bias
             self.dim = 1
             self.mc = torch.nn.Parameter(torch.ones_like(param))
         elif len(shape) == 2:  # FC

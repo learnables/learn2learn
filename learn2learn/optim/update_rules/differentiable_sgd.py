@@ -15,5 +15,6 @@ class DifferentiableSGD(torch.nn.Module):
         """docstring for forward"""
         if gradients is None:
             gradients = [p.grad for p in module.parameters()]
-        updates = [g.mul(-self.lr) for g in gradients]
+        updates = [None if g is None else g.mul(-self.lr)
+                   for g in gradients]
         meta_update(module, updates)
