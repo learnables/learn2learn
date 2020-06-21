@@ -21,7 +21,7 @@ class UtilTests(unittest.TestCase):
         for name in names:
             if name in TOO_BIG_TO_TEST:
                 continue
-            tasksets = l2l.vision.benchmarks.get_tasksets(name, root='./data')
+            tasksets = l2l.vision.benchmarks.get_tasksets(name, root='~/data')
             self.assertTrue(hasattr(tasksets, 'train'))
             batch = tasksets.train.sample()
             self.assertTrue(batch is not None)

@@ -4,7 +4,7 @@ import traceback
 from torch.autograd import grad
 
 from learn2learn.algorithms.base_learner import BaseLearner
-from learn2learn.utils import clone_module
+from learn2learn.utils import clone_module, meta_update
 
 
 def maml_update(model, lr, grads=None):
@@ -42,31 +42,9 @@ def maml_update(model, lr, grads=None):
             msg += str(len(params)) + ' vs ' + str(len(grads)) + ')'
             print(msg)
         for p, g in zip(params, grads):
-            p.grad = g
-
-    # Update the params
-    for param_key in model._parameters:
-        p = model._parameters[param_key]
-        if p is not None and p.grad is not None:
-            model._parameters[param_key] = p - lr * p.grad
-
-    # Second, handle the buffers if necessary
-    for buffer_key in model._buffers:
-        buff = model._buffers[buffer_key]
-        if buff is not None and buff.grad is not None:
-            model._buffers[buffer_key] = buff - lr * buff.grad
-
-    # Then, recurse for each submodule
-    for module_key in model._modules:
-        model._modules[module_key] = maml_update(model._modules[module_key],
-                                                 lr=lr,
-                                                 grads=None)
-
-    # Finally, rebuild the flattened parameters for RNNs
-    # See this issue for more details:
-    # https://github.com/learnables/learn2learn/issues/139
-    model._apply(lambda x: x)
-    return model
+            if g is not None:
+                p.update = - lr * g
+    return meta_update(model)
 
 
 class MAML(BaseLearner):
