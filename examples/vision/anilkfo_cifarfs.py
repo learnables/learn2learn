@@ -19,16 +19,6 @@ import torch
 import learn2learn as l2l
 
 
-class Lambda(torch.nn.Module):
-
-    def __init__(self, lmd):
-        super(Lambda, self).__init__()
-        self.lmd = lmd
-
-    def forward(self, x):
-        return self.lmd(x)
-
-
 class CifarCNN(torch.nn.Module):
     """
     Example of a 4-layer CNN network for FC100/CIFAR-FS.
@@ -47,8 +37,8 @@ class CifarCNN(torch.nn.Module):
         )
         self.features = torch.nn.Sequential(
             features,
-            Lambda(lambda x: x.mean(dim=[2, 3])),
-            Lambda(lambda x: x.view(x.size(0), -1)),
+            l2l.nn.Lambda(lambda x: x.mean(dim=[2, 3])),
+            l2l.nn.Flatten(),
         )
         self.linear = torch.nn.Linear(self.hidden_size, output_size, bias=True)
         l2l.vision.models.maml_init_(self.linear)
