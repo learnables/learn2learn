@@ -6,6 +6,35 @@ import numpy as np
 
 class MetaCurvatureTransform(torch.nn.Module):
 
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py)
+
+    **Description**
+
+    Implements the Meta-Curvature transform of Park and Oliva, 2019.
+
+    Unlike `ModuleTranform` and `KroneckerTransform`, this class does not wrap other Modules but is directly
+    called on a weight to instantiate the transform.
+
+    **Arguments**
+
+    * **param** (Tensor) - The weight whose gradients will be transformed.
+    * **lr** (float, *optional*, default=1.0) - Scaling factor of the udpate. (non-learnable)
+
+    **References**
+
+    1. Park & Oliva. 2019. Meta-curvature.
+
+    **Example**
+    ~~~python
+    classifier = torch.nn.Linear(784, 10, bias=False)
+    metacurvature_update = MetaCurvatureTransform(classifier.weight)
+    loss(classifier(X), y).backward()
+    update = metacurvature_update(classifier.weight.grad)
+    classifier.weight.data.add_(-lr, update)  # Not a differentiable update. See l2l.optim.DifferentiableSGD.
+    ~~~
+    """
+
     def __init__(self, param, lr=1.0):
         super(MetaCurvatureTransform, self).__init__()
         self.lr = lr

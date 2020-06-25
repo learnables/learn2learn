@@ -42,7 +42,7 @@ class KroneckerTransform(object):
 
     **References**
 
-    1. Arnold et al. 2019. "When MAML can adapt fast and how to help when it cannot".
+    1. Arnold et al. 2019. "When MAML can adapt fast and how to assist when it cannot".
 
     **Example**
     ~~~python
