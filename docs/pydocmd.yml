@@ -40,9 +40,19 @@ generate:
               - learn2learn.gym.envs.mujoco.HumanoidDirectionEnv
           - learn2learn.gym.envs.particles:
               - learn2learn.gym.envs.particles.Particles2DEnv
+          - learn2learn.gym.envs.metaworld:
+              - learn2learn.gym.envs.metaworld.MetaWorldML1++
+              - learn2learn.gym.envs.metaworld.MetaWorldML10++
+              - learn2learn.gym.envs.metaworld.MetaWorldML45++
   - docs/learn2learn.optim.md:
       - learn2learn.optim++:
-          - learn2learn.optim.LearnableOptimizer
+          - learn2learn.optim.LearnableOptimizer++
+          - learn2learn.optim.ParameterUpdate++
+          - learn2learn.optim.DifferentiableSGD++
+          - learn2learn.optim.transforms:
+            - learn2learn.optim.transforms.ModuleTransform++
+            - learn2learn.optim.transforms.KroneckerTransform++
+            - learn2learn.optim.transforms.MetaCurvatureTransform++
   - docs/learn2learn.vision.md:
       - learn2learn.vision++:
           - learn2learn.vision.models:

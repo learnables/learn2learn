@@ -12,8 +12,8 @@ The implementation departs from the algorithm presented in the paper in two ways
 
 **Usage**
 
-!! warning
-The parameters for this script were not carefully tuned.
+!!! warning
+    The parameters for this script were not carefully tuned.
 
 Manually edit the script and run:
 
