@@ -2,7 +2,7 @@
 
 """
 This module provides a set of utilities to write differentiable optimization
-algorithms
+algorithms.
 """
 
 from .parameter_update import ParameterUpdate

@@ -20,6 +20,7 @@ class KroneckerLinear(nn.Module):
 
     """
     Learns a Kronecker factorization of A@x + b, assuming that:
+
     * x is in R^{n, m},
     * A is in R^{nm, nm}
     * b is in R^{nm, 1}

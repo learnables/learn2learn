@@ -5,18 +5,20 @@ from learn2learn.utils import meta_update
 
 
 class DifferentiableSGD(torch.nn.Module):
-    """
+    r"""
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/update_rules/differentiable_sgd.py)
 
     **Description**
 
     A callable object that applies a list of updates to the parameters of a torch.nn.Module in a differentiable manner.
 
-    For each parameter $p$ and corresponding gradient $g$, calling an instance of this class results in updating parameters:
+    For each parameter \(p\) and corresponding gradient \(g\), calling an instance of this class results in updating parameters:
 
-    $$p \\get p - \\alpha g,$$
+    \[
+    p \gets p - \alpha g,
+    \]
 
-    where $\\alpha$ is the learning rate.
+    where \(\alpha\) is the learning rate.
 
     Note: The module is updated in-place.
 

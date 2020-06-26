@@ -5,7 +5,23 @@ import torch
 
 class Lambda(torch.nn.Module):
     """
-    docs
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    Utility class to create a wrapper based on a lambda function.
+
+    **Arguments**
+
+    * **lmb** (callable) - The function to call in the forward pass.
+
+    **Example**
+    ~~~python
+    mean23 = Lambda(lambda x: x.mean(dim=[2, 3]))  # mean23 is a Module
+    x = features(img)
+    x = mean23(x)
+    x = x.flatten()
+    ~~~
     """
 
     def __init__(self, lmb):
@@ -18,7 +34,19 @@ class Lambda(torch.nn.Module):
 
 class Flatten(torch.nn.Module):
     """
-    docs
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    Utility Module to flatten inputs to `(batch_size, -1)` shape.
+
+    **Example**
+    ~~~python
+    flatten = Flatten()
+    x = torch.randn(5, 3, 32, 32)
+    x = flatten(x)
+    print(x.shape)  # (5, 3072)
+    ~~~
     """
 
     def forward(self, x):
@@ -27,15 +55,32 @@ class Flatten(torch.nn.Module):
 
 class Scale(torch.nn.Module):
     """
-    docs
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    A per-parameter scaling factor with learnable parameter.
+
+    **Arguments**
+
+    * **shape** (int or tuple) - The shape of the scaling matrix.
+    * **alpha** (float, *optional*, default=1.0) - Initial value for the
+        scaling factor.
+
+    **Example**
+    ~~~python
+    x = torch.ones(3)
+    scale = Scale(x.shape, alpha=0.5)
+    print(scale(x))  # [.5, .5, .5]
+    ~~~
     """
 
-    def __init__(self, input_size, output_size, lr=1.0):
+    def __init__(self, shape, alpha=1.0):
         super(Scale, self).__init__()
-        assert input_size == output_size, \
-            'input_size and output_size must match.'
-        lr = torch.ones(input_size)
-        self.lr = torch.nn.Parameter(lr)
+        if isinstance(shape, int):
+            shape = (shape, )
+        alpha = torch.ones(**shape)
+        self.alpha = torch.nn.Parameter(alpha)
 
     def forward(self, x):
-        return x * self.lr
+        return x * self.alpha

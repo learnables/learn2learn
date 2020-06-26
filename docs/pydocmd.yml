@@ -53,6 +53,14 @@ generate:
             - learn2learn.optim.transforms.ModuleTransform++
             - learn2learn.optim.transforms.KroneckerTransform++
             - learn2learn.optim.transforms.MetaCurvatureTransform++
+  - docs/learn2learn.nn.md:
+      - learn2learn.nn++:
+          - learn2learn.nn.Lambda
+          - learn2learn.nn.Flatten
+          - learn2learn.nn.Scale
+          - learn2learn.nn.KroneckerLinear
+          - learn2learn.nn.KroneckerRNN
+          - learn2learn.nn.KroneckerLSTM
   - docs/learn2learn.vision.md:
       - learn2learn.vision++:
           - learn2learn.vision.models:
@@ -86,11 +94,12 @@ pages:
       - Feature Reuse with ANIL: tutorials/anil_tutorial/ANIL_tutorial.md
   - Documentation:
       - learn2learn: docs/learn2learn.md
-      - learn2learn.algorithms: docs/learn2learn.algorithms.md
       - learn2learn.data: docs/learn2learn.data.md
-      - learn2learn.gym: docs/learn2learn.gym.md
       - learn2learn.optim: docs/learn2learn.optim.md
+      - learn2learn.algorithms: docs/learn2learn.algorithms.md
+      - learn2learn.nn: docs/learn2learn.nn.md
       - learn2learn.vision: docs/learn2learn.vision.md
+      - learn2learn.gym: docs/learn2learn.gym.md
   - Examples:
       - Computer Vision: examples.vision.md << ../examples/vision/README.md
       - Reinforcement Learning: examples.rl.md << ../examples/rl/README.md
