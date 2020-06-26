@@ -18,15 +18,45 @@ def kronecker_addmm(mat1, mat2, mat3, bias=None, alpha=1.0, beta=1.0):
 
 class KroneckerLinear(nn.Module):
 
-    """
-    Learns a Kronecker factorization of A@x + b, assuming that:
+    r"""
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py)
 
-    * x is in R^{n, m},
-    * A is in R^{nm, nm}
-    * b is in R^{nm, 1}
+    **Description**
 
-    A = self.right.() X self.left is initialized as the identity,
-    b = self.bias as a vector of 0's.
+    A linear transformation whose parameters are expressed as a Kronecker product.
+
+    This Module maps an input vector \(x \in \mathbb{R}^{nm} \) to \(y = Ax + b\) such that:
+
+    \[
+    A = R^\top \otimes L,
+    \]
+
+    where \(L \in \mathbb{R}^{n \times n}\) and \(R \in \mathbb{R}^{m \times m}\) are the learnable Kronecker factors.
+    This implementation can reduce the memory requirement for large linear mapping from \(\mathcal{O}(n^2 \cdot m^2)\) to \(\mathcal{O}(n^2 + m^2)\), but forces \(y \in \mathbb{R}^{nm}\).
+
+    The matrix \(A\) is initialized as the identity, and the bias as a zero vector.
+
+    **Arguments**
+
+    * **n** (int) - Dimensionality of the left Kronecker factor.
+    * **m** (int) - Dimensionality of the right Kronecker factor.
+    * **bias** (bool, *optional*, default=True) - Whether to include the bias term.
+    * **psd** (bool, *optional*, default=False) - Forces the matrix \(A\) to be positive semi-definite if True.
+    * **device** (device, *optional*, default=None) - The device on which to instantiate the Module.
+
+    **References**
+
+    1. Jose et al. 2018. "Kronecker recurrent units".
+    2. Arnold et al. 2019. "When MAML can adapt fast and how to assist when it cannot".
+
+    **Example**
+    ~~~python
+    m, n = 2, 3
+    x = torch.randn(6)
+    kronecker = KroneckerLinear(n, m)
+    y = kronecker(x)
+    y.shape  # (6, )
+    ~~~
     """
 
     def __init__(self, n, m, bias=True, psd=False, device=None):
@@ -61,13 +91,33 @@ class KroneckerLinear(nn.Module):
 class KroneckerRNN(nn.Module):
 
     """
-    Computes
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py)
 
-    h = sigma(W_h@x + b_x + U_h@h + b_h)
-    y = W_y@h + b_y
+    **Description**
 
-    assuming a similar decomposition as for the KroneckerLinear.
-    sigma is a nn.Tanh() by default.
+    Implements a recurrent neural network whose matrices are parameterized via their Kronecker factors.
+    (See `KroneckerLinear` for details.)
+
+    **Arguments**
+
+    * **n** (int) - Dimensionality of the left Kronecker factor.
+    * **m** (int) - Dimensionality of the right Kronecker factor.
+    * **bias** (bool, *optional*, default=True) - Whether to include the bias term.
+    * **sigma** (callable, *optional*, default=None) - The activation function.
+
+    **References**
+
+    1. Jose et al. 2018. "Kronecker recurrent units".
+
+    **Example**
+    ~~~python
+    m, n = 2, 3
+    x = torch.randn(6)
+    h = torch.randn(6)
+    kronecker = KroneckerRNN(n, m)
+    y, new_h = kronecker(x, h)
+    y.shape  # (6, )
+    ~~~
     """
 
     def __init__(self, n, m, bias=True, sigma=None):
@@ -90,8 +140,33 @@ class KroneckerRNN(nn.Module):
 class KroneckerLSTM(nn.Module):
 
     """
-    Implements an LSTM using a decomposition similar to the one of
-    KroneckerLinear.
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py)
+
+    **Description**
+
+    Implements an LSTM using a factorization similar to the one of
+    `KroneckerLinear`.
+
+    **Arguments**
+
+    * **n** (int) - Dimensionality of the left Kronecker factor.
+    * **m** (int) - Dimensionality of the right Kronecker factor.
+    * **bias** (bool, *optional*, default=True) - Whether to include the bias term.
+    * **sigma** (callable, *optional*, default=None) - The activation function.
+
+    **References**
+
+    1. Jose et al. 2018. "Kronecker recurrent units".
+
+    **Example**
+    ~~~python
+    m, n = 2, 3
+    x = torch.randn(6)
+    h = torch.randn(6)
+    kronecker = KroneckerLSTM(n, m)
+    y, new_h = kronecker(x, h)
+    y.shape  # (6, )
+    ~~~
     """
 
     def __init__(self, n, m, bias=True, sigma=None):

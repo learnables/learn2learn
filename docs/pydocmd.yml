@@ -95,8 +95,8 @@ pages:
   - Documentation:
       - learn2learn: docs/learn2learn.md
       - learn2learn.data: docs/learn2learn.data.md
-      - learn2learn.optim: docs/learn2learn.optim.md
       - learn2learn.algorithms: docs/learn2learn.algorithms.md
+      - learn2learn.optim: docs/learn2learn.optim.md
       - learn2learn.nn: docs/learn2learn.nn.md
       - learn2learn.vision: docs/learn2learn.vision.md
       - learn2learn.gym: docs/learn2learn.gym.md
