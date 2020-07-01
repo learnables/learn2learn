@@ -53,7 +53,7 @@ class LearnableOptimizer(torch.nn.Module):
                     param.update = update
 
             # 3. apply update so that it's differentiable
-            l2l.meta_update(model, updates=None)
+            l2l.update_module(model, updates=None)
 
             for param in model.parameters():
                 # 4. retain grad for next update

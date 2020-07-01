@@ -9,6 +9,7 @@ generate:
       - learn2learn:
           - learn2learn.clone_module
           - learn2learn.detach_module
+          - learn2learn.update_module
           - learn2learn.magic_box
   - docs/learn2learn.data.md:
       - learn2learn.data:

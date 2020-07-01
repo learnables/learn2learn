@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import torch
-from learn2learn.utils import meta_update
+from learn2learn.utils import update_module
 
 
 class DifferentiableSGD(torch.nn.Module):
@@ -54,4 +54,4 @@ class DifferentiableSGD(torch.nn.Module):
             gradients = [p.grad for p in module.parameters()]
         updates = [None if g is None else g.mul(-self.lr)
                    for g in gradients]
-        meta_update(module, updates)
+        update_module(module, updates)

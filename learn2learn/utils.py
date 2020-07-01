@@ -202,11 +202,43 @@ def detach_distribution(dist):
     return dist
 
 
-def meta_update(module, updates=None):
+def update_module(module, updates=None):
+    r"""
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
+
+    **Description**
+
+    Updates the parameters of a module in-place, in a way that preserves differentiability.
+
+    The parameters of the module are swapped with their update values, according to:
+    \[
+    p \gets p + u,
+    \]
+    where \(p\) is the parameter, and \(u\) is its corresponding update.
+
+
+    **Arguments**
+
+    * **module** (Module) - The module to update.
+    * **updates** (list, *optional*, default=None) - A list of gradients for each parameter
+        of the model. If None, will use the tensors in .update attributes.
+
+    **Example**
+    ~~~python
+    error = loss(model(X), y)
+    grads = torch.autograd.grad(
+        error,
+        model.parameters(),
+        create_graph=True,
+    )
+    updates = [-lr * g for g in grads]
+    l2l.update_module(model, updates=updates)
+    ~~~
+    """
     if updates is not None:
         params = list(module.parameters())
         if not len(updates) == len(list(params)):
-            msg = 'WARNING:meta_update(): Parameters and updates have different length. ('
+            msg = 'WARNING:update_module(): Parameters and updates have different length. ('
             msg += str(len(params)) + ' vs ' + str(len(updates)) + ')'
             print(msg)
         for p, g in zip(params, updates):
@@ -226,7 +258,7 @@ def meta_update(module, updates=None):
 
     # Then, recurse for each submodule
     for module_key in module._modules:
-        module._modules[module_key] = meta_update(module._modules[module_key],
+        module._modules[module_key] = update_module(module._modules[module_key],
                                                   updates=None)
 
     # Finally, rebuild the flattened parameters for RNNs

@@ -4,7 +4,7 @@ import traceback
 from torch.autograd import grad
 
 from learn2learn.algorithms.base_learner import BaseLearner
-from learn2learn.utils import clone_module, meta_update
+from learn2learn.utils import clone_module, update_module
 
 
 def maml_update(model, lr, grads=None):
@@ -44,7 +44,7 @@ def maml_update(model, lr, grads=None):
         for p, g in zip(params, grads):
             if g is not None:
                 p.update = - lr * g
-    return meta_update(model)
+    return update_module(model)
 
 
 class MAML(BaseLearner):
