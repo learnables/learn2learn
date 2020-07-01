@@ -54,13 +54,16 @@ class GBML(torch.nn.Module):
         adapt_transform=True,
     )
     gbml.to(device)
+    opt = torch.optim.SGD(gbml.parameters(), lr=0.001)
 
     # Training with 1 adaptation step
     for iteration in range(10):
+        opt.zero_grad()
         task_model = gbml.clone()
         loss = compute_loss(task_model)
         task_model.adapt(loss)
         loss.backward()
+        opt.step()
     ~~~
     """
 
@@ -107,7 +110,19 @@ class GBML(torch.nn.Module):
             adapt_transform=None,
             ):
         """
-        docs
+        **Description**
+
+        Similar to `MAML.clone()`.
+
+        **Arguments**
+
+        * **first_order** (bool, *optional*, default=None) - Whether the clone uses first-
+            or second-order updates. Defaults to self.first_order.
+        * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
+        of unused parameters. Defaults to self.allow_unused.
+        * **allow_nograd** (bool, *optional*, default=False) - Whether to allow adaptation with
+            parameters that have `requires_grad = False`. Defaults to self.allow_nograd.
+
         """
         if first_order is None:
             first_order = self.first_order
@@ -138,7 +153,21 @@ class GBML(torch.nn.Module):
             allow_unused=None,
             ):
         """
-        docs
+        **Description**
+
+        Takes a gradient step on the loss and updates the cloned parameters in place.
+
+        The parameters of the transform are only adapted if `self.adapt_update` is `True`.
+
+        **Arguments**
+
+        * **loss** (Tensor) - Loss to minimize upon update.
+        * **first_order** (bool, *optional*, default=None) - Whether to use first- or
+            second-order updates. Defaults to self.first_order.
+        * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
+            of unused parameters. Defaults to self.allow_unused.
+        * **allow_nograd** (bool, *optional*, default=None) - Whether to allow adaptation with
+            parameters that have `requires_grad = False`. Defaults to self.allow_nograd.
         """
         if first_order is None:
             first_order = self.first_order
