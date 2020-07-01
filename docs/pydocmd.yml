@@ -6,7 +6,7 @@ site_name: "learn2learn"
 # documented. Higher indentation leads to smaller header size.
 generate:
   - docs/learn2learn.md:
-      - learn2learn.utils:
+      - learn2learn:
           - learn2learn.clone_module
           - learn2learn.detach_module
           - learn2learn.magic_box
@@ -25,9 +25,8 @@ generate:
   - docs/learn2learn.algorithms.md:
       - learn2learn.algorithms:
           - learn2learn.algorithms.MAML++
-          - learn2learn.algorithms.maml_update
           - learn2learn.algorithms.MetaSGD++
-          - learn2learn.algorithms.meta_sgd_update
+          - learn2learn.algorithms.GBML++
   - docs/learn2learn.gym.md:
       - learn2learn.gym++:
           - learn2learn.gym.MetaEnv

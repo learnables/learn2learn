@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 r"""
-This submodules provides additional torch Modules frequently used in meta-learning.
+Additional `torch.nn.Module`s frequently used for meta-learning.
 """
 
 from .kroneckers import *

@@ -32,7 +32,8 @@ class KroneckerLinear(nn.Module):
     \]
 
     where \(L \in \mathbb{R}^{n \times n}\) and \(R \in \mathbb{R}^{m \times m}\) are the learnable Kronecker factors.
-    This implementation can reduce the memory requirement for large linear mapping from \(\mathcal{O}(n^2 \cdot m^2)\) to \(\mathcal{O}(n^2 + m^2)\), but forces \(y \in \mathbb{R}^{nm}\).
+    This implementation can reduce the memory requirement for large linear mapping
+    from \(\mathcal{O}(n^2 \cdot m^2)\) to \(\mathcal{O}(n^2 + m^2)\), but forces \(y \in \mathbb{R}^{nm}\).
 
     The matrix \(A\) is initialized as the identity, and the bias as a zero vector.
 

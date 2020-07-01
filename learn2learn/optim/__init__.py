@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This module provides a set of utilities to write differentiable optimization
-algorithms.
+A set of utilities to write differentiable optimization algorithms.
 """
 
 from .parameter_update import ParameterUpdate
