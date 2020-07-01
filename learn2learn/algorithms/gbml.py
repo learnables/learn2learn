@@ -17,7 +17,7 @@ class GBML(torch.nn.Module):
     of `transform` used during fast-adaptation.
     For example, if the transform is `Scale` we recover Meta-SGD [2] with `adapt_transform=False`
     and Alpha MAML [4] with `adapt_transform=True`.
-    If the transform is a Kronecker-factored module (e.g. neural network, or linear), we recover 
+    If the transform is a Kronecker-factored module (e.g. neural network, or linear), we recover
     KFO from [5].
 
     **Arguments**

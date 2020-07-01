@@ -259,7 +259,7 @@ def update_module(module, updates=None):
     # Then, recurse for each submodule
     for module_key in module._modules:
         module._modules[module_key] = update_module(module._modules[module_key],
-                                                  updates=None)
+                                                    updates=None)
 
     # Finally, rebuild the flattened parameters for RNNs
     # See this issue for more details:
