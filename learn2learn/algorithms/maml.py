@@ -49,7 +49,6 @@ def maml_update(model, lr, grads=None):
 
 class MAML(BaseLearner):
     """
-
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py)
 
     **Description**
