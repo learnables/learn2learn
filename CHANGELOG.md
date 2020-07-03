@@ -11,7 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * New example: [Meta-World](https://github.com/rlworkgroup/metaworld) example with MAML-TRPO with it's own env wrapper. (@[Kostis-S-Z](https://github.com/Kostis-S-Z))
-* Add l2l.vision.benchmarks interface.
+* `l2l.vision.benchmarks` interface.
+* Differentiable optimization utilities in `l2l.optim`. (including `l2l.optim.LearnableOptimizer` for meta-descent)
+* General gradient-based meta-learning wrapper in `l2l.algorithms.GBML`.
+* Various `nn.Modules` in `l2l.nn`.
+* `l2l.update_module` as a more general alternative to `l2l.algorithms.maml_update`.
 
 ### Changed
 
