@@ -9,26 +9,26 @@ learn2learn is a software library for meta-learning research.
 learn2learn builds on top of PyTorch to accelerate two aspects of the meta-learning research cycle:
 
 * *fast prototyping*, essential in letting researchers quickly try new ideas, and
-* *correct reproducibility*, ensuring that these ideas are evaluated fairly
+* *correct reproducibility*, ensuring that these ideas are evaluated fairly.
 
 learn2learn provides low-level utilities and unified interface to create new algorithms and domains, together with high-quality implementations of existing algorithms and standardized benchmarks.
 
 **Overview**
 
-* [`learn2learn.data`](http://learn2learn.net/docs/learn2learn.data/): `TaskDataset` and its transforms, to quickly create few-shot learning datasets.
-* [`learn2learn.vision`](http://learn2learn.net/docs/learn2learn.vision/): Models, datasets, and benchmarks for few-shot learning in computer vision.
+* [`learn2learn.data`](http://learn2learn.net/docs/learn2learn.data/): `TaskDataset` and transforms to create few-shot tasks from any PyTorch dataset.
+* [`learn2learn.vision`](http://learn2learn.net/docs/learn2learn.vision/): Models, datasets, and benchmarks for computer vision and few-shot learning.
 * [`learn2learn.gym`](http://learn2learn.net/docs/learn2learn.gym/): Environment and utilities for meta-reinforcement learning.
-* [`learn2learn.algorithms`](http://learn2learn.net/docs/learn2learn.algorithms/): High-level wrappers for existing meta-learning methods.
+* [`learn2learn.algorithms`](http://learn2learn.net/docs/learn2learn.algorithms/): High-level wrappers for existing meta-learning algorithms.
 * [`learn2learn.optim`](http://learn2learn.net/docs/learn2learn.optim/): Utilities and algorithms for differentiable optimization and meta-descent.
 
 **Resources**
 
 * Website: [http://learn2learn.net/](http://learn2learn.net/)
 * Documentation: [http://learn2learn.net/docs/](http://learn2learn.net/docs/)
+* Tutorials: [http://learn2learn.net/tutorials/getting_started/](http://learn2learn.net/tutorials/getting_started/)
 * Examples: [https://github.com/learnables/learn2learn/tree/master/examples](https://github.com/learnables/learn2learn/tree/master/examples)
 * GitHub: [https://github.com/learnables/learn2learn/](https://github.com/learnables/learn2learn/)
 * Slack: [http://slack.learn2learn.net/](http://slack.learn2learn.net/)
-
 
 ## Installation
 
@@ -38,28 +38,35 @@ pip install learn2learn
 
 ## Snippets & Examples
 
-For each snippet, point to full-fledged examples and documentation.
+The following snippets provide a sneak peek at the functionalities of learn2learn.
 
 ### High-level Wrappers
 
+**Few-Shot Learning with MAML**
+
+For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the [examples](https://github.com/learnables/learn2learn/tree/master/examples/vision) folder.
+Most of them can be implemented with with the `GBML` wrapper. ([documentation](http://learn2learn.net/docs/learn2learn.algorithms/#gbml)).
 ~~~python
 maml = l2l.algorithms.MAML(model, lr=0.1)
-opt = torch.optim.SGD(gbml.parameters(), lr=0.001)
+opt = torch.optim.SGD(maml.parameters(), lr=0.001)
 for iteration in range(10):
     opt.zero_grad()
-    task_model = maml.clone()
+    task_model = maml.clone()  # torch.clone() for nn.Modules
     adaptation_loss = compute_loss(task_model)
     task_model.adapt(adaptation_loss)  # computes gradient, update task_model in-place
     evaluation_loss = compute_loss(task_model)
-    evaluation_loss.backward()
+    evaluation_loss.backward()  # gradients w.r.t. maml.parameters()
     opt.step()
 ~~~
 
+**Meta-Descent with Hypergradient**
+
+Learn any kind of optimization algorithm with the `LearnableOptimizer`. ([example](https://github.com/learnables/learn2learn/tree/master/examples/optimization) and [documentation](http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer))
 ~~~python
 linear = nn.Linear(784, 10)
-transform = l2l.optim.ModuleTransform(torch.nn.Linear)
-metaopt = l2l.optim.LearnableOptimizer(linear, transform, lr=0.01)
-opt = torch.optim.SGD(metaopt.parameters(), lr=0.001)
+transform = l2l.optim.ModuleTransform(l2l.nn.Scale)
+metaopt = l2l.optim.LearnableOptimizer(linear, transform, lr=0.01)  # metaopt has .step()
+opt = torch.optim.SGD(metaopt.parameters(), lr=0.001)  # metaopt also has .parameters()
 
 metaopt.zero_grad()
 opt.zero_grad()
@@ -69,24 +76,15 @@ opt.step()  # update metaopt
 metaopt.step()  # update linear
 ~~~
 
-### Low-Level Utilities
+### Learning Domains
 
+**Custom Few-Shot Dataset**
+
+Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in `learn2learn.vision.datasets`.
+([documentation](http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets))
 ~~~python
-error = loss(model(X), y)
-grads = torch.autograd.grad(
-    error,
-    model.parameters(),
-    create_graph=True,
-)
-updates = [-lr * g for g in grads]
-l2l.update_module(model, updates=updates)
-~~~
-
-### Few-Shot and Reinforcement Learning Domains
-
-~~~python
-dataset = l2l.data.MetaDataset(MyDataset())
-transforms = [
+dataset = l2l.data.MetaDataset(MyDataset())  # any PyTorch dataset
+transforms = [  # Easy to define your own transform
     l2l.data.transforms.NWays(dataset, n=5),
     l2l.data.transforms.KShots(dataset, k=1),
     l2l.data.transforms.LoadData(dataset),
@@ -94,25 +92,49 @@ transforms = [
 taskset = TaskDataset(dataset, transforms, num_tasks=20000)
 for task in taskset:
     X, y = task
+    # Meta-train on the task
 ~~~
 
+**Environments and Utilities for Meta-RL**
+
+Parallelize your own meta-environments with `AsyncVectorEnv`, or use the standardized ones.
+([documentation](http://localhost:8000/docs/learn2learn.gym/#metaenv))
 ~~~python
 def make_env():
     env = l2l.gym.HalfCheetahForwardBackwardEnv()
     env = cherry.envs.ActionSpaceScaler(env)
     return env
 
-env = l2l.gym.AsyncVectorEnv([make_env for _ in range(16)])
+env = l2l.gym.AsyncVectorEnv([make_env for _ in range(16)])  # uses 16 threads
 for task_config in env.sample_tasks(20):
-    env.set_task(task)
+    env.set_task(task)  # all threads receive the same task
+    state = env.reset()  # use standard Gym API
     action = my_policy(env)
     env.step(action)
 ~~~
 
+### Low-Level Utilities
 
-## Documentation
+**Differentiable Optimization**
 
-Documentation and tutorials are available on learn2learn’s website: [http://learn2learn.net](http://learn2learn.net).
+Learn and differentiate through updates of PyTorch Modules.
+([documentation](http://learn2learn.net/docs/learn2learn.optim/#parameterupdate))
+~~~python
+
+model = MyModel()
+transform = l2l.optim.KroneckerTransform(l2l.nn.KroneckerLinear)
+learned_update = l2l.optim.ParameterUpdate(  # learnable update function
+        model.parameters(), transform)
+clone = l2l.clone_module(model)  # torch.clone() for nn.Modules
+error = loss(clone(X), y)
+updates = learned_update(  # similar API as torch.autograd.grad
+    error,
+    clone.parameters(),
+    create_graph=True,
+)
+l2l.update_module(clone, updates=updates)
+loss(clone(X), y).backward()  # Gradients w.r.t model.parameters() and learned_update.parameters()
+~~~
 
 ## Changelog
 
