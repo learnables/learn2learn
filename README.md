@@ -12,6 +12,7 @@ learn2learn builds on top of PyTorch to accelerate two aspects of the meta-learn
 * *correct reproducibility*, ensuring that these ideas are evaluated fairly.
 
 learn2learn provides low-level utilities and unified interface to create new algorithms and domains, together with high-quality implementations of existing algorithms and standardized benchmarks.
+It retains compatibility with [torchvision](https://pytorch.org/vision/), [torchaudio](https://pytorch.org/audio/), [torchtext](https://pytorch.org/text/), [cherry](http://cherry-rl.net/), and any other PyTorch-based library you might be using.
 
 **Overview**
 
@@ -98,7 +99,7 @@ for task in taskset:
 **Environments and Utilities for Meta-RL**
 
 Parallelize your own meta-environments with `AsyncVectorEnv`, or use the standardized ones.
-([documentation](http://localhost:8000/docs/learn2learn.gym/#metaenv))
+([documentation](http://learn2learn.net/docs/learn2learn.gym/#metaenv))
 ~~~python
 def make_env():
     env = l2l.gym.HalfCheetahForwardBackwardEnv()
