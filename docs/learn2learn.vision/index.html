@@ -348,18 +348,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
-      learn2learn.algorithms
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../learn2learn.data/" title="learn2learn.data" class="md-nav__link">
       learn2learn.data
     </a>
@@ -372,8 +360,32 @@
 
 
   <li class="md-nav__item">
-    <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
-      learn2learn.gym
+    <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
+      learn2learn.algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.optim/" title="learn2learn.optim" class="md-nav__link">
+      learn2learn.optim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.nn/" title="learn2learn.nn" class="md-nav__link">
+      learn2learn.nn
     </a>
   </li>
 
@@ -526,6 +538,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#learn2learnvisionbenchmarks" class="md-nav__link">
+    learn2learn.vision.benchmarks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list_tasksets" class="md-nav__link">
+    list_tasksets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_tasksets" class="md-nav__link">
+    get_tasksets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -534,6 +573,18 @@
   
 </nav>
     
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
+      learn2learn.gym
+    </a>
   </li>
 
         
@@ -581,6 +632,18 @@
   <li class="md-nav__item">
     <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+      Optimization
     </a>
   </li>
 
@@ -750,6 +813,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#learn2learnvisionbenchmarks" class="md-nav__link">
+    learn2learn.vision.benchmarks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list_tasksets" class="md-nav__link">
+    list_tasksets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_tasksets" class="md-nav__link">
+    get_tasksets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -770,6 +860,7 @@
                 
                 
                 <h1 id="learn2learnvision">learn2learn.vision<a class="headerlink" href="#learn2learnvision" title="Permanent link">&para;</a></h1>
+<p>Datasets, models, and other utilities related to computer vision.</p>
 <h2 id="learn2learnvisionmodels">learn2learn.vision.models<a class="headerlink" href="#learn2learnvisionmodels" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
 <p>A set of commonly used models for meta-learning vision tasks.</p>
@@ -897,7 +988,15 @@ The background and evaluation splits are available in the <code>torchvision</cod
 </td></tr></table>
 
 <h3 id="miniimagenet">MiniImagenet<a class="headerlink" href="#miniimagenet" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MiniImagenet</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MiniImagenet</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+             <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+             <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -974,7 +1073,15 @@ Of these categories, 20 (351 classes; 448,695 images) are used for training,
 </td></tr></table>
 
 <h3 id="fc100">FC100<a class="headerlink" href="#fc100" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+      <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+      <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -1011,7 +1118,15 @@ Our data is downloaded from the link provided by [2].</p>
 </td></tr></table>
 
 <h3 id="cifarfs">CIFARFS<a class="headerlink" href="#cifarfs" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span>
+        <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -1146,6 +1261,82 @@ all images from a given class.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transform</span> <span class="o">=</span> <span class="n">RandomClassRotation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">])</span>
 </code></pre></div>
 </td></tr></table>
+
+<h2 id="learn2learnvisionbenchmarks">learn2learn.vision.benchmarks<a class="headerlink" href="#learn2learnvisionbenchmarks" title="Permanent link">&para;</a></h2>
+<p>The benchmark modules provides a convenient interface to standardized benchmarks in the literature.
+It provides train/validation/test TaskDatasets and TaskTransforms for pre-defined datasets.</p>
+<p>This utility is useful for researchers to compare new algorithms against existing benchmarks.
+For a more fine-grained control over tasks and data, we recommend directly using <code>l2l.data.TaskDataset</code> and <code>l2l.data.TaskTransforms</code>.</p>
+<h3 id="list_tasksets">list_tasksets<a class="headerlink" href="#list_tasksets" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">list_tasksets</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Returns a list of all available benchmarks.</p>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">list_tasksets</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="get_tasksets">get_tasksets<a class="headerlink" href="#get_tasksets" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span>
+             <span class="n">train_ways</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+             <span class="n">train_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+             <span class="n">test_ways</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+             <span class="n">test_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+             <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+             <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">,</span>
+             <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Returns the tasksets for a particular benchmark, using literature standard data and task transformations.</p>
+<p>The returned object is a namedtuple with attributes <code>train</code>, <code>validation</code>, <code>test</code> which
+correspond to their respective TaskDatasets.
+See <code>examples/vision/maml_miniimagenet.py</code> for an example.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>name</strong> (str) - The name of the benchmark. Full list in <code>list_tasksets()</code>.</li>
+<li><strong>train_ways</strong> (int, <em>optional</em>, default=5) - The number of classes per train tasks.</li>
+<li><strong>train_samples</strong> (int, <em>optional</em>, default=10) - The number of samples per train tasks.</li>
+<li><strong>test_ways</strong> (int, <em>optional</em>, default=5) - The number of classes per test tasks. Also used for validation tasks.</li>
+<li><strong>test_samples</strong> (int, <em>optional</em>, default=10) - The number of samples per test tasks. Also used for validation tasks.</li>
+<li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - The number of tasks in each TaskDataset.</li>
+<li><strong>root</strong> (str, <em>optional</em>, default='~/data') - Where the data is stored.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_tasks</span><span class="p">,</span> <span class="n">validation_tasks</span><span class="p">,</span> <span class="n">test_tasks</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">train_tasks</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+
+<span class="ow">or</span><span class="p">:</span>
+
+<span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
                 
                   
                 
@@ -1167,7 +1358,7 @@ all images from a given class.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../learn2learn.nn/" title="learn2learn.nn" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1176,19 +1367,19 @@ all images from a given class.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                learn2learn.gym
+                learn2learn.nn
               </span>
             </div>
           </a>
         
         
-          <a href="../../examples.vision/" title="Computer Vision" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Computer Vision
+                learn2learn.gym
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

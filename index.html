@@ -285,22 +285,42 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-demo" class="md-nav__link">
-    API Demo
+  <a href="#snippets-examples" class="md-nav__link">
+    Snippets &amp; Examples
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-level-wrappers" class="md-nav__link">
+    High-level Wrappers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-domains" class="md-nav__link">
+    Learning Domains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-level-utilities" class="md-nav__link">
+    Low-Level Utilities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#changelog" class="md-nav__link">
     Changelog
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
   </a>
   
 </li>
@@ -421,18 +441,6 @@
 
 
   <li class="md-nav__item">
-    <a href="docs/learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
-      learn2learn.algorithms
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="docs/learn2learn.data/" title="learn2learn.data" class="md-nav__link">
       learn2learn.data
     </a>
@@ -445,8 +453,32 @@
 
 
   <li class="md-nav__item">
-    <a href="docs/learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
-      learn2learn.gym
+    <a href="docs/learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
+      learn2learn.algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docs/learn2learn.optim/" title="learn2learn.optim" class="md-nav__link">
+      learn2learn.optim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docs/learn2learn.nn/" title="learn2learn.nn" class="md-nav__link">
+      learn2learn.nn
     </a>
   </li>
 
@@ -459,6 +491,18 @@
   <li class="md-nav__item">
     <a href="docs/learn2learn.vision/" title="learn2learn.vision" class="md-nav__link">
       learn2learn.vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="docs/learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
+      learn2learn.gym
     </a>
   </li>
 
@@ -507,6 +551,18 @@
   <li class="md-nav__item">
     <a href="examples.rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="examples.optim/" title="Optimization" class="md-nav__link">
+      Optimization
     </a>
   </li>
 
@@ -566,22 +622,42 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-demo" class="md-nav__link">
-    API Demo
+  <a href="#snippets-examples" class="md-nav__link">
+    Snippets &amp; Examples
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-level-wrappers" class="md-nav__link">
+    High-level Wrappers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-domains" class="md-nav__link">
+    Learning Domains
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-level-utilities" class="md-nav__link">
+    Low-Level Utilities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#changelog" class="md-nav__link">
     Changelog
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#documentation" class="md-nav__link">
-    Documentation
   </a>
   
 </li>
@@ -631,32 +707,147 @@
 
 <hr />
 <p><a href="https://travis-ci.com/learnables/learn2learn"><img alt="Build Status" src="https://travis-ci.com/learnables/learn2learn.svg?branch=master" /></a></p>
-<p>learn2learn is a PyTorch library for meta-learning implementations.</p>
-<p>The goal of meta-learning is to enable agents to <em>learn how to learn</em>.
-That is, we would like our agents to become better learners as they solve more and more tasks.
-For example, the animation below shows an agent that learns to run after a only one parameter update.</p>
-<p align="center"><img src="http://learn2learn.net/assets/img/halfcheetah.gif" height="250px" /></p>
-
-<p><strong>Features</strong></p>
-<p>learn2learn provides high- and low-level utilities for meta-learning.
-The high-level utilities allow arbitrary users to take advantage of exisiting meta-learning algorithms.
-The low-level utilities enable researchers to develop new and better meta-learning algorithms.</p>
-<p>Some features of learn2learn include:</p>
+<p>learn2learn is a software library for meta-learning research.</p>
+<p>learn2learn builds on top of PyTorch to accelerate two aspects of the meta-learning research cycle:</p>
 <ul>
-<li>Modular API: implement your own training loops with our low-level utilities.</li>
-<li>Provides various meta-learning algorithms (e.g. MAML, FOMAML, MetaSGD, ProtoNets, DiCE)</li>
-<li>Task generator with unified API, compatible with torchvision, torchtext, torchaudio, and cherry.</li>
-<li>Provides standardized meta-learning tasks for vision (Omniglot, mini-ImageNet), reinforcement learning (Particles, Mujoco), and even text (news classification).</li>
-<li>100% compatible with PyTorch -- use your own modules, datasets, or libraries!</li>
+<li><em>fast prototyping</em>, essential in letting researchers quickly try new ideas, and</li>
+<li><em>correct reproducibility</em>, ensuring that these ideas are evaluated fairly.</li>
+</ul>
+<p>learn2learn provides low-level utilities and unified interface to create new algorithms and domains, together with high-quality implementations of existing algorithms and standardized benchmarks.
+It retains compatibility with <a href="https://pytorch.org/vision/">torchvision</a>, <a href="https://pytorch.org/audio/">torchaudio</a>, <a href="https://pytorch.org/text/">torchtext</a>, <a href="http://cherry-rl.net/">cherry</a>, and any other PyTorch-based library you might be using.</p>
+<p><strong>Overview</strong></p>
+<ul>
+<li><a href="http://learn2learn.net/docs/learn2learn.data/"><code>learn2learn.data</code></a>: <code>TaskDataset</code> and transforms to create few-shot tasks from any PyTorch dataset.</li>
+<li><a href="http://learn2learn.net/docs/learn2learn.vision/"><code>learn2learn.vision</code></a>: Models, datasets, and benchmarks for computer vision and few-shot learning.</li>
+<li><a href="http://learn2learn.net/docs/learn2learn.gym/"><code>learn2learn.gym</code></a>: Environment and utilities for meta-reinforcement learning.</li>
+<li><a href="http://learn2learn.net/docs/learn2learn.algorithms/"><code>learn2learn.algorithms</code></a>: High-level wrappers for existing meta-learning algorithms.</li>
+<li><a href="http://learn2learn.net/docs/learn2learn.optim/"><code>learn2learn.optim</code></a>: Utilities and algorithms for differentiable optimization and meta-descent.</li>
+</ul>
+<p><strong>Resources</strong></p>
+<ul>
+<li>Website: <a href="http://learn2learn.net/">http://learn2learn.net/</a></li>
+<li>Documentation: <a href="http://learn2learn.net/docs/">http://learn2learn.net/docs/</a></li>
+<li>Tutorials: <a href="http://learn2learn.net/tutorials/getting_started/">http://learn2learn.net/tutorials/getting_started/</a></li>
+<li>Examples: <a href="https://github.com/learnables/learn2learn/tree/master/examples">https://github.com/learnables/learn2learn/tree/master/examples</a></li>
+<li>GitHub: <a href="https://github.com/learnables/learn2learn/">https://github.com/learnables/learn2learn/</a></li>
+<li>Slack: <a href="http://slack.learn2learn.net/">http://slack.learn2learn.net/</a></li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>pip install learn2learn
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="api-demo">API Demo<a class="headerlink" href="#api-demo" title="Permanent link">&para;</a></h2>
-<p>The following is an example of using the high-level MAML implementation on MNIST.
-For more algorithms and lower-level utilities, please refer to the <a href="http://learn2learn.net/docs/learn2learn/">documentation</a> or the <a href="https://github.com/learnables/learn2learn/tree/master/examples">examples</a>.</p>
+<h2 id="snippets-examples">Snippets &amp; Examples<a class="headerlink" href="#snippets-examples" title="Permanent link">&para;</a></h2>
+<p>The following snippets provide a sneak peek at the functionalities of learn2learn.</p>
+<h3 id="high-level-wrappers">High-level Wrappers<a class="headerlink" href="#high-level-wrappers" title="Permanent link">&para;</a></h3>
+<p><strong>Few-Shot Learning with MAML</strong></p>
+<p>For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the <a href="https://github.com/learnables/learn2learn/tree/master/examples/vision">examples</a> folder.
+Most of them can be implemented with with the <code>GBML</code> wrapper. (<a href="http://learn2learn.net/docs/learn2learn.algorithms/#gbml">documentation</a>).</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">maml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">maml</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">task_model</span> <span class="o">=</span> <span class="n">maml</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>  <span class="c1"># torch.clone() for nn.Modules</span>
+    <span class="n">adaptation_loss</span> <span class="o">=</span> <span class="n">compute_loss</span><span class="p">(</span><span class="n">task_model</span><span class="p">)</span>
+    <span class="n">task_model</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">adaptation_loss</span><span class="p">)</span>  <span class="c1"># computes gradient, update task_model in-place</span>
+    <span class="n">evaluation_loss</span> <span class="o">=</span> <span class="n">compute_loss</span><span class="p">(</span><span class="n">task_model</span><span class="p">)</span>
+    <span class="n">evaluation_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># gradients w.r.t. maml.parameters()</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Meta-Descent with Hypergradient</strong></p>
+<p>Learn any kind of optimization algorithm with the <code>LearnableOptimizer</code>. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Scale</span><span class="p">)</span>
+<span class="n">metaopt</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>  <span class="c1"># metaopt has .step()</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">metaopt</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>  <span class="c1"># metaopt also has .parameters()</span>
+
+<span class="n">metaopt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">linear</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update metaopt</span>
+<span class="n">metaopt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update linear</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="learning-domains">Learning Domains<a class="headerlink" href="#learning-domains" title="Permanent link">&para;</a></h3>
+<p><strong>Custom Few-Shot Dataset</strong></p>
+<p>Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in <code>learn2learn.vision.datasets</code>.
+(<a href="http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets">documentation</a>)</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>  <span class="c1"># any PyTorch dataset</span>
+<span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># Easy to define your own transform</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">taskset</span> <span class="o">=</span> <span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">taskset</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">task</span>
+    <span class="c1"># Meta-train on the task</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Environments and Utilities for Meta-RL</strong></p>
+<p>Parallelize your own meta-environments with <code>AsyncVectorEnv</code>, or use the standardized ones.
+(<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">make_env</span><span class="p">():</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">gym</span><span class="o">.</span><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">()</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">cherry</span><span class="o">.</span><span class="n">envs</span><span class="o">.</span><span class="n">ActionSpaceScaler</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">env</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">gym</span><span class="o">.</span><span class="n">AsyncVectorEnv</span><span class="p">([</span><span class="n">make_env</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)])</span>  <span class="c1"># uses 16 threads</span>
+<span class="k">for</span> <span class="n">task_config</span> <span class="ow">in</span> <span class="n">env</span><span class="o">.</span><span class="n">sample_tasks</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">set_task</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>  <span class="c1"># all threads receive the same task</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>  <span class="c1"># use standard Gym API</span>
+    <span class="n">action</span> <span class="o">=</span> <span class="n">my_policy</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="low-level-utilities">Low-Level Utilities<a class="headerlink" href="#low-level-utilities" title="Permanent link">&para;</a></h3>
+<p><strong>Differentiable Optimization</strong></p>
+<p>Learn and differentiate through updates of PyTorch Modules.
+(<a href="http://learn2learn.net/docs/learn2learn.optim/#parameterupdate">documentation</a>)</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -669,64 +860,24 @@ For more algorithms and lower-level utilities, please refer to the <a href="http
 10
 11
 12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">learn2learn</span> <span class="k">as</span> <span class="nn">l2l</span>
-
-<span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
-<span class="n">train_tasks</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">,</span>
-                                   <span class="n">task_transforms</span><span class="o">=</span><span class="p">[</span>
-                                        <span class="n">NWays</span><span class="p">(</span><span class="n">mnist</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
-                                        <span class="n">KShots</span><span class="p">(</span><span class="n">mnist</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-                                        <span class="n">LoadData</span><span class="p">(</span><span class="n">mnist</span><span class="p">),</span>
-                                   <span class="p">],</span>
-                                   <span class="n">num_tasks</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
-<span class="n">maml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">opt</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">maml</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">4e-3</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
-    <span class="n">learner</span> <span class="o">=</span> <span class="n">maml</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>  <span class="c1"># Creates a clone of model</span>
-    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">train_tasks</span><span class="p">:</span>
-        <span class="c1"># Split task in adaptation_task and evalutation_task</span>
-        <span class="c1"># Fast adapt</span>
-        <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">adaptation_steps</span><span class="p">):</span>
-            <span class="n">error</span> <span class="o">=</span> <span class="n">compute_loss</span><span class="p">(</span><span class="n">adaptation_task</span><span class="p">)</span>
-            <span class="n">learner</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-
-        <span class="c1"># Compute evaluation loss</span>
-        <span class="n">evaluation_error</span> <span class="o">=</span> <span class="n">compute_loss</span><span class="p">(</span><span class="n">evaluation_task</span><span class="p">)</span>
-
-        <span class="c1"># Meta-update the model parameters</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="n">evaluation_error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">KroneckerLinear</span><span class="p">)</span>
+<span class="n">learned_update</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ParameterUpdate</span><span class="p">(</span>  <span class="c1"># learnable update function</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">transform</span><span class="p">)</span>
+<span class="n">clone</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">clone_module</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>  <span class="c1"># torch.clone() for nn.Modules</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">updates</span> <span class="o">=</span> <span class="n">learned_update</span><span class="p">(</span>  <span class="c1"># similar API as torch.autograd.grad</span>
+    <span class="n">error</span><span class="p">,</span>
+    <span class="n">clone</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+    <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">l2l</span><span class="o">.</span><span class="n">update_module</span><span class="p">(</span><span class="n">clone</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients w.r.t model.parameters() and learned_update.parameters()</span>
 </code></pre></div>
 </td></tr></table>
 
 <h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h2>
 <p>A human-readable changelog is available in the <a href="CHANGELOG.md">CHANGELOG.md</a> file.</p>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p>Documentation and tutorials are available on learn2learn’s website: <a href="http://learn2learn.net">http://learn2learn.net</a>.</p>
 <h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
 <p>To cite the <code>learn2learn</code> repository in your academic publications, please use the following reference.</p>
 <blockquote>
@@ -752,8 +903,8 @@ For more algorithms and lower-level utilities, please refer to the <a href="http
 <h3 id="acknowledgements-friends">Acknowledgements &amp; Friends<a class="headerlink" href="#acknowledgements-friends" title="Permanent link">&para;</a></h3>
 <ol>
 <li>The RL environments are adapted from Tristan Deleu's <a href="https://github.com/tristandeleu/pytorch-maml-rl">implementations</a> and from the ProMP <a href="https://github.com/jonasrothfuss/ProMP/">repository</a>. Both shared with permission, under the MIT License.</li>
-<li><a href="https://github.com/tristandeleu/pytorch-meta">TorchMeta</a> is similar library, with a focus on supervised meta-learning. If learn2learn were missing a particular functionality, we would go check if TorchMeta has it. But we would also open an issue ;)</li>
-<li><a href="https://github.com/facebookresearch/higher">higher</a> is a PyTorch library that also enables differentiating through optimization inner-loops. Their approach is different from learn2learn in that they monkey-patch nn.Module to be stateless. For more information, refer to <a href="https://arxiv.org/abs/1910.01727">their ArXiv paper</a>.</li>
+<li><a href="https://github.com/tristandeleu/pytorch-meta">TorchMeta</a> is similar library, with a focus on datasets for supervised meta-learning. </li>
+<li><a href="https://github.com/facebookresearch/higher">higher</a> is a PyTorch library that enables differentiating through optimization inner-loops. While they monkey-patch <code>nn.Module</code> to be stateless, learn2learn retains the stateful PyTorch look-and-feel. For more information, refer to <a href="https://arxiv.org/abs/1910.01727">their ArXiv paper</a>.</li>
 </ol>
                 
                   
