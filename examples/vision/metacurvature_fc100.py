@@ -1,26 +1,52 @@
 #!/usr/bin/env python3
 
 """
-Demonstrates how to:
-    * use the MAML wrapper for fast-adaptation,
-    * use the benchmark interface to load mini-ImageNet, and
-    * sample tasks and split them in adaptation and evaluation sets.
+File: metacurvature_fc100.py
+Author: Seb Arnold - seba1511.net
+Email: smr.arnold@gmail.com
+Github: seba-1511
+Description:
+Demonstrates how to use the GBML wrapper to implement MetaCurvature.
 
-To contrast the use of the benchmark interface with directly instantiating mini-ImageNet datasets and tasks, compare with `protonet_miniimagenet.py`.
+A demonstration of the low-level API is available in:
+    examples/vision/anilkfo_cifarfs.py
 """
 
 import random
 import numpy as np
-
 import torch
-from torch import nn, optim
-
 import learn2learn as l2l
-from learn2learn.data.transforms import (NWays,
-                                         KShots,
-                                         LoadData,
-                                         RemapLabels,
-                                         ConsecutiveLabels)
+from learn2learn.optim.transforms import MetaCurvatureTransform
+
+
+class CifarCNN(torch.nn.Module):
+    """
+    Example of a 4-layer CNN network for FC100/CIFAR-FS.
+    """
+
+    def __init__(self, output_size=5, hidden_size=32, layers=4):
+        super(CifarCNN, self).__init__()
+        self.hidden_size = hidden_size
+        features = l2l.vision.models.ConvBase(
+            output_size=hidden_size,
+            hidden=hidden_size,
+            channels=3,
+            max_pool=False,
+            layers=layers,
+            max_pool_factor=0.5,
+        )
+        self.features = torch.nn.Sequential(
+            features,
+            l2l.nn.Lambda(lambda x: x.mean(dim=[2, 3])),
+            l2l.nn.Flatten(),
+        )
+        self.linear = torch.nn.Linear(self.hidden_size, output_size, bias=True)
+        l2l.vision.models.maml_init_(self.linear)
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.linear(x)
+        return x
 
 
 def accuracy(predictions, targets):
@@ -43,28 +69,26 @@ def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
     # Adapt the model
     for step in range(adaptation_steps):
         adaptation_error = loss(learner(adaptation_data), adaptation_labels)
-        adaptation_error /= len(adaptation_data)
         learner.adapt(adaptation_error)
 
     # Evaluate the adapted model
     predictions = learner(evaluation_data)
     evaluation_error = loss(predictions, evaluation_labels)
-    evaluation_error /= len(evaluation_data)
     evaluation_accuracy = accuracy(predictions, evaluation_labels)
     return evaluation_error, evaluation_accuracy
 
 
 def main(
-        ways=5,
-        shots=5,
-        meta_lr=0.003,
-        fast_lr=0.5,
-        meta_batch_size=32,
-        adaptation_steps=1,
-        num_iterations=60000,
-        cuda=True,
-        seed=42,
-):
+    fast_lr=0.1,
+    meta_lr=0.01,
+    num_iterations=10000,
+    meta_batch_size=16,
+    adaptation_steps=5,
+    shots=5,
+    ways=5,
+    cuda=1,
+    seed=1234
+    ):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -74,20 +98,27 @@ def main(
         device = torch.device('cuda')
 
     # Create Tasksets using the benchmark interface
-    tasksets = l2l.vision.benchmarks.get_tasksets('mini-imagenet',
-                                                  train_samples=2*shots,
-                                                  train_ways=ways,
-                                                  test_samples=2*shots,
-                                                  test_ways=ways,
-                                                  root='~/data',
+    tasksets = l2l.vision.benchmarks.get_tasksets(
+        name='fc100',
+        train_samples=2*shots,
+        train_ways=ways,
+        test_samples=2*shots,
+        test_ways=ways,
+        root='~/data',
     )
 
     # Create model
-    model = l2l.vision.models.MiniImagenetCNN(ways)
+    model = CifarCNN(output_size=ways)
     model.to(device)
-    maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
-    opt = optim.Adam(maml.parameters(), meta_lr)
-    loss = nn.CrossEntropyLoss(reduction='mean')
+    gbml = l2l.algorithms.GBML(
+        model,
+        transform=MetaCurvatureTransform,
+        lr=fast_lr,
+        adapt_transform=False,
+    )
+    gbml.to(device)
+    opt = torch.optim.Adam(gbml.parameters(), meta_lr)
+    loss = torch.nn.CrossEntropyLoss(reduction='mean')
 
     for iteration in range(num_iterations):
         opt.zero_grad()
@@ -97,7 +128,7 @@ def main(
         meta_valid_accuracy = 0.0
         for task in range(meta_batch_size):
             # Compute meta-training loss
-            learner = maml.clone()
+            learner = gbml.clone()
             batch = tasksets.train.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
@@ -111,7 +142,7 @@ def main(
             meta_train_accuracy += evaluation_accuracy.item()
 
             # Compute meta-validation loss
-            learner = maml.clone()
+            learner = gbml.clone()
             batch = tasksets.validation.sample()
             evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                                learner,
@@ -132,7 +163,7 @@ def main(
         print('Meta Valid Accuracy', meta_valid_accuracy / meta_batch_size)
 
         # Average the accumulated gradients and optimize
-        for p in maml.parameters():
+        for p in gbml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
         opt.step()
 
@@ -140,7 +171,7 @@ def main(
     meta_test_accuracy = 0.0
     for task in range(meta_batch_size):
         # Compute meta-testing loss
-        learner = maml.clone()
+        learner = gbml.clone()
         batch = tasksets.test.sample()
         evaluation_error, evaluation_accuracy = fast_adapt(batch,
                                                            learner,

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import copy
-
 import torch
 
 
@@ -178,12 +177,12 @@ def clone_distribution(dist):
 
     for param_key in clone.__dict__:
         item = clone.__dict__[param_key]
-        if isinstance(item, th.Tensor):
+        if isinstance(item, torch.Tensor):
             if item.requires_grad:
                 clone.__dict__[param_key] = dist.__dict__[param_key].clone()
-        elif isinstance(item, th.nn.Module):
+        elif isinstance(item, torch.nn.Module):
             clone.__dict__[param_key] = clone_module(dist.__dict__[param_key])
-        elif isinstance(item, th.Distribution):
+        elif isinstance(item, torch.Distribution):
             clone.__dict__[param_key] = clone_distribution(dist.__dict__[param_key])
 
     return clone
@@ -193,11 +192,77 @@ def detach_distribution(dist):
     # TODO: This function was never tested.
     for param_key in dist.__dict__:
         item = dist.__dict__[param_key]
-        if isinstance(item, th.Tensor):
+        if isinstance(item, torch.Tensor):
             if item.requires_grad:
                 dist.__dict__[param_key] = dist.__dict__[param_key].detach()
-        elif isinstance(item, th.nn.Module):
+        elif isinstance(item, torch.nn.Module):
             dist.__dict__[param_key] = detach_module(dist.__dict__[param_key])
-        elif isinstance(item, th.Distribution):
+        elif isinstance(item, torch.Distribution):
             dist.__dict__[param_key] = detach_distribution(dist.__dict__[param_key])
     return dist
+
+
+def update_module(module, updates=None):
+    r"""
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
+
+    **Description**
+
+    Updates the parameters of a module in-place, in a way that preserves differentiability.
+
+    The parameters of the module are swapped with their update values, according to:
+    \[
+    p \gets p + u,
+    \]
+    where \(p\) is the parameter, and \(u\) is its corresponding update.
+
+
+    **Arguments**
+
+    * **module** (Module) - The module to update.
+    * **updates** (list, *optional*, default=None) - A list of gradients for each parameter
+        of the model. If None, will use the tensors in .update attributes.
+
+    **Example**
+    ~~~python
+    error = loss(model(X), y)
+    grads = torch.autograd.grad(
+        error,
+        model.parameters(),
+        create_graph=True,
+    )
+    updates = [-lr * g for g in grads]
+    l2l.update_module(model, updates=updates)
+    ~~~
+    """
+    if updates is not None:
+        params = list(module.parameters())
+        if not len(updates) == len(list(params)):
+            msg = 'WARNING:update_module(): Parameters and updates have different length. ('
+            msg += str(len(params)) + ' vs ' + str(len(updates)) + ')'
+            print(msg)
+        for p, g in zip(params, updates):
+            p.update = g
+
+    # Update the params
+    for param_key in module._parameters:
+        p = module._parameters[param_key]
+        if p is not None and hasattr(p, 'update') and p.update is not None:
+            module._parameters[param_key] = p + p.update
+
+    # Second, handle the buffers if necessary
+    for buffer_key in module._buffers:
+        buff = module._buffers[buffer_key]
+        if buff is not None and hasattr(buff, 'update') and buff.update is not None:
+            module._buffers[buffer_key] = buff + buff.update
+
+    # Then, recurse for each submodule
+    for module_key in module._modules:
+        module._modules[module_key] = update_module(module._modules[module_key],
+                                                    updates=None)
+
+    # Finally, rebuild the flattened parameters for RNNs
+    # See this issue for more details:
+    # https://github.com/learnables/learn2learn/issues/139
+    module._apply(lambda x: x)
+    return module

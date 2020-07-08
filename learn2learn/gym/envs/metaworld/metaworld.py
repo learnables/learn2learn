@@ -5,8 +5,17 @@ from gym.error import DependencyNotInstalled
 try:
     from metaworld.envs.mujoco.multitask_env import MultiClassMultiTaskEnv
     from metaworld.benchmarks import ML1, ML10, ML45
-except DependencyNotInstalled:
+except (DependencyNotInstalled, ModuleNotFoundError):
     from learn2learn.gym.envs.mujoco.dummy_mujoco_env import MujocoEnv as MultiClassMultiTaskEnv
+
+    class ML1:
+        pass
+
+    class ML10:
+        pass
+
+    class ML45:
+        pass
 
 from learn2learn.gym.envs.meta_env import MetaEnv
 
