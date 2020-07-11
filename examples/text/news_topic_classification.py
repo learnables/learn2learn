@@ -55,12 +55,23 @@ def collate_tokens(values, pad_idx, eos_idx=None, left_pad=False, move_eos_to_be
         copy_tensor(v, res[i][size - len(v):] if left_pad else res[i][:len(v)])
     return res
 
+class _BatchedDataset(torch.utils.data.Dataset):
+    def __init__(self, batched):
+        self.sents = [s for s in batched[0]]
+        self.ys = [y for y in batched[1]]
+    
+    def __len__(self):
+        return len(self.ys)
+    
+    def __getitem__(self, idx):
+        return (self.sents[idx], self.ys[idx])
+
 
 def compute_loss(task, roberta, device, learner, loss_func, batch=15):
     loss = 0.0
     acc = 0.0
     for i, (x, y) in enumerate(torch.utils.data.DataLoader(
-            task, batch_size=batch, shuffle=True, num_workers=0)):
+            _BatchedDataset(task), batch_size=batch, shuffle=True, num_workers=0)):
         # RoBERTa ENCODING
         x = collate_tokens([roberta.encode(sent) for sent in x], pad_idx=1)
         with torch.no_grad():
@@ -80,8 +91,37 @@ def compute_loss(task, roberta, device, learner, loss_func, batch=15):
 
 def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5, device=torch.device("cpu"),
          download_location="/tmp/text"):
-    text_train = l2l.text.datasets.NewsClassification(root=download_location, download=True)
-    train_gen = l2l.text.datasets.TaskGenerator(text_train, ways=ways)
+    dataset = l2l.text.datasets.NewsClassification(root=download_location, download=True)
+    dataset = l2l.data.MetaDataset(dataset)
+
+    classes = list(range(len(dataset.labels))) # 41 classes
+    random.shuffle(classes)
+
+    train_dataset, validation_dataset, test_dataset = dataset, dataset, dataset
+
+    train_gen = l2l.data.TaskDataset(
+            train_dataset, num_tasks=20000, 
+            task_transforms=[
+                l2l.data.transforms.FusedNWaysKShots(
+                    train_dataset, n=ways, k=shots, filter_labels=classes[:20]),
+                l2l.data.transforms.LoadData(train_dataset),
+                l2l.data.transforms.RemapLabels(train_dataset)],)
+
+    validation_gen = l2l.data.TaskDataset(
+            validation_dataset, num_tasks=20000, 
+            task_transforms=[
+                l2l.data.transforms.FusedNWaysKShots(
+                    validation_dataset, n=ways, k=shots, filter_labels=classes[20:30]),
+                l2l.data.transforms.LoadData(validation_dataset),
+                l2l.data.transforms.RemapLabels(validation_dataset)],)
+
+    test_gen = l2l.data.TaskDataset(
+            test_dataset, num_tasks=20000, 
+            task_transforms=[
+                l2l.data.transforms.FusedNWaysKShots(
+                    test_dataset, n=ways, k=shots, filter_labels=classes[30:]),
+                l2l.data.transforms.LoadData(test_dataset),
+                l2l.data.transforms.RemapLabels(test_dataset)],)
 
     torch.hub.set_dir(download_location)
     roberta = torch.hub.load('pytorch/fairseq', 'roberta.base')
@@ -94,13 +134,14 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
     loss_func = nn.NLLLoss(reduction="sum")
 
     tqdm_bar = tqdm(range(iterations))
+
+    accs = []
     for iteration in tqdm_bar:
         iteration_error = 0.0
         iteration_acc = 0.0
         for _ in range(tps):
             learner = meta_model.clone()
-            train_task = train_gen.sample(shots=shots)
-            valid_task = train_gen.sample(shots=shots, classes_to_sample=train_task.sampled_classes)
+            train_task, valid_task = train_gen.sample(), validation_gen.sample()
 
             # Fast Adaptation
             for step in range(fas):
@@ -116,11 +157,12 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
         iteration_error /= tps
         iteration_acc /= tps
         tqdm_bar.set_description("Loss : {:.3f} Acc : {:.3f}".format(iteration_error.item(), iteration_acc))
-
+        accs.append(iteration_acc)
         # Take the meta-learning step
         opt.zero_grad()
         iteration_error.backward()
         opt.step()
+    print (f'first and best validation accuracy: {accs[0]:.4f}, {max(accs):.4f}')
 
 
 if __name__ == '__main__':
