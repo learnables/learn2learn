@@ -107,25 +107,28 @@ def meta_surrogate_loss(iteration_replays, iteration_policies, policy, baseline,
 
 
 def main(
-        env_name='AntDirection-v1',
+        env_name='Particles2D-v1',
         adapt_lr=0.1,
         meta_lr=1.0,
         adapt_steps=1,
         num_iterations=1000,
-        meta_bsz=40,
+        meta_bsz=20,
         adapt_bsz=20,
         tau=1.00,
-        gamma=0.99,
+        gamma=0.95,
         seed=42,
-        num_workers=2,
+        num_workers=10,
         cuda=0,
 ):
     cuda = bool(cuda)
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
+    device_name = 'cpu'
     if cuda:
         torch.cuda.manual_seed(seed)
+        device_name = 'cuda'
+    device = torch.device(device_name)
 
     def make_env():
         env = gym.make(env_name)
@@ -136,9 +139,9 @@ def main(
     env.seed(seed)
     env.set_task(env.sample_tasks(1)[0])
     env = ch.envs.Torch(env)
-    policy = DiagNormalPolicy(env.state_size, env.action_size)
+    policy = DiagNormalPolicy(env.state_size, env.action_size, device=device)
     if cuda:
-        policy.to('cuda')
+        policy = policy.to(device)
     baseline = LinearValue(env.state_size, env.action_size)
 
     for iteration in range(num_iterations):
@@ -156,6 +159,8 @@ def main(
             # Fast Adapt
             for step in range(adapt_steps):
                 train_episodes = task.run(clone, episodes=adapt_bsz)
+                if cuda:
+                    train_episodes = train_episodes.to(device, non_blocking=True)
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
                                        baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
@@ -177,9 +182,9 @@ def main(
         ls_max_steps = 15
         max_kl = 0.01
         if cuda:
-            policy.to('cuda', non_blocking=True)
-            baseline.to('cuda', non_blocking=True)
-            iteration_replays = [[r.to('cuda', non_blocking=True) for r in task_replays] for task_replays in
+            policy = policy.to(device, non_blocking=True)
+            baseline = baseline.to(device, non_blocking=True)
+            iteration_replays = [[r.to(device, non_blocking=True) for r in task_replays] for task_replays in
                                  iteration_replays]
 
         # Compute CG step direction

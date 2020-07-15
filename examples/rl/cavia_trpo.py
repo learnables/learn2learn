@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
 """
-Trains a 2-layer MLP with MAML-TRPO.
+Trains a 2-layer MLP with CAVIA-TRPO.
 
 Usage:
 
-python examples/rl/maml_trpo.py
+python examples/rl/cavia_trpo.py
 """
 
 import random
-from copy import deepcopy
 
 import cherry as ch
 import gym
@@ -127,13 +126,17 @@ def main(
         seed=42,
         num_workers=10,
         cuda=0,
+        num_context_params=2
 ):
     cuda = bool(cuda)
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
+    device_name = 'cpu'
     if cuda:
         torch.cuda.manual_seed(seed)
+        device_name = 'cuda'
+    device = torch.device(device_name)
 
     def make_env():
         env = gym.make(env_name)
@@ -144,9 +147,7 @@ def main(
     env.seed(seed)
     env.set_task(env.sample_tasks(1)[0])
     env = ch.envs.Torch(env)
-    policy = CaviaDiagNormalPolicy(env.state_size, env.action_size)
-    if cuda:
-        policy.to('cuda')
+    policy = CaviaDiagNormalPolicy(env.state_size, env.action_size, num_context_params=num_context_params, device=device)
     baseline = LinearValue(env.state_size, env.action_size)
 
     for iteration in range(num_iterations):
@@ -155,7 +156,9 @@ def main(
         iteration_policies = []
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
-            clone = deepcopy(policy)
+            # deepcopy is not working here
+            clone = l2l.clone_module(policy)
+
             env.set_task(task_config)
             env.reset()
             policy.reset_context()
@@ -165,6 +168,8 @@ def main(
             # Fast Adapt
             for step in range(adapt_steps):
                 train_episodes = task.run(clone, episodes=adapt_bsz)
+                if cuda:
+                    train_episodes = train_episodes.to(device, non_blocking=True)
                 clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
                                        baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
@@ -186,9 +191,8 @@ def main(
         ls_max_steps = 15
         max_kl = 0.01
         if cuda:
-            policy.to('cuda', non_blocking=True)
-            baseline.to('cuda', non_blocking=True)
-            iteration_replays = [[r.to('cuda', non_blocking=True) for r in task_replays] for task_replays in
+            baseline = baseline.to(device, non_blocking=True)
+            iteration_replays = [[r.to(device, non_blocking=True) for r in task_replays] for task_replays in
                                  iteration_replays]
 
         # Compute CG step direction
@@ -212,7 +216,8 @@ def main(
         # Line-search
         for ls_step in range(ls_max_steps):
             stepsize = backtrack_factor ** ls_step * meta_lr
-            clone = deepcopy(policy)
+            clone = l2l.clone_module(policy)
+
             for p, u in zip(clone.parameters(), step):
                 p.data.add_(-stepsize, u.data)
             new_loss, kl = meta_surrogate_loss(iteration_replays, iteration_policies, clone, baseline, tau, gamma,
