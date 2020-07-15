@@ -152,12 +152,15 @@ def main(
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
+    device_name = 'cpu'
     if cuda:
         torch.cuda.manual_seed(seed)
+        device_name = 'cuda'
+    device = torch.device(device_name)
 
-    policy = DiagNormalPolicy(env.state_size, env.action_size, activation='tanh')
+    policy = DiagNormalPolicy(env.state_size, env.action_size, activation='tanh', device=device)
     if cuda:
-        policy.to('cuda')
+        policy = policy.to(device)
     baseline = LinearValue(env.state_size, env.action_size)
 
     for iteration in range(num_iterations):
@@ -175,7 +178,10 @@ def main(
             # Fast Adapt
             for step in range(adapt_steps):
                 train_episodes = task.run(clone, episodes=adapt_bsz)
-                clone = fast_adapt_a2c(clone, train_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
+                if cuda:
+                    train_episodes = train_episodes.to(device, non_blocking=True)
+                clone = fast_adapt_a2c(clone, train_episodes, adapt_lr,
+                                       baseline, gamma, tau, first_order=True)
                 task_replay.append(train_episodes)
 
             # Compute Validation Loss
@@ -196,9 +202,9 @@ def main(
         ls_max_steps = 15
         max_kl = 0.01
         if cuda:
-            policy.to('cuda', non_blocking=True)
-            baseline.to('cuda', non_blocking=True)
-            iteration_replays = [[r.to('cuda', non_blocking=True) for r in task_replays] for task_replays in
+            policy = policy.to(device, non_blocking=True)
+            baseline = baseline.to(device, non_blocking=True)
+            iteration_replays = [[r.to(device, non_blocking=True) for r in task_replays] for task_replays in
                                  iteration_replays]
 
         # Compute CG step direction
