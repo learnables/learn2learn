@@ -239,10 +239,15 @@ def main(
                 break
 
     # Evaluate on a set of unseen tasks
-    evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, num_workers, seed, device=device)
+    evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, num_workers, seed, cuda)
 
 
-def evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, n_workers, seed, device='cpu'):
+def evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, n_workers, seed, cuda):
+    device_name = 'cpu'
+    if cuda:
+        device_name = 'cuda'
+    device = torch.device(device_name)
+
     # Parameters
     adapt_steps = 3
     adapt_bsz = 10
@@ -262,7 +267,7 @@ def evaluate(benchmark, policy, baseline, adapt_lr, gamma, tau, n_workers, seed,
         # Adapt
         for step in range(adapt_steps):
             adapt_episodes = task.run(clone, episodes=adapt_bsz)
-            if device not in 'cpu':
+            if cuda:
                 adapt_episodes = adapt_episodes.to(device, non_blocking=True)
             clone = fast_adapt_a2c(clone, adapt_episodes, adapt_lr, baseline, gamma, tau, first_order=True)
 
