@@ -157,8 +157,7 @@ def main(
 
         for task_config in tqdm(env.sample_tasks(meta_bsz), leave=False, desc='Data'):  # Samples a new config
             # deepcopy is not working here
-            clone = type(policy)(env.state_size, env.action_size, num_context_params=num_context_params, device=device)
-            clone.load_state_dict(policy.state_dict())
+            clone = l2l.clone_module(policy)
 
             env.set_task(task_config)
             env.reset()
@@ -217,9 +216,7 @@ def main(
         # Line-search
         for ls_step in range(ls_max_steps):
             stepsize = backtrack_factor ** ls_step * meta_lr
-            # deepcopy is not working here
-            clone = type(policy)(env.state_size, env.action_size, num_context_params=num_context_params, device=device)
-            clone.load_state_dict(policy.state_dict())
+            clone = l2l.clone_module(policy)
 
             for p, u in zip(clone.parameters(), step):
                 p.data.add_(-stepsize, u.data)
