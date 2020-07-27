@@ -2,72 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>http://learn2learn.net/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/tutorials/getting_started/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/tutorials/anil_tutorial/ANIL_tutorial/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn.data/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn.algorithms/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn.optim/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn.nn/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn.vision/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/docs/learn2learn.gym/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/examples.vision/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/examples.rl/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/examples.optim/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>http://learn2learn.net/changelog/</loc>
-     <lastmod>2020-07-07</lastmod>
+     <lastmod>2020-07-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>http://learn2learn.net/paper_list/</loc>
+     <lastmod>2020-07-26</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
