@@ -9,6 +9,23 @@ The following papers were announced on the [learn2learn Twitter account](https:/
 ## Submitted Papers
 
     
+**Discovering Reinforcement Learning Algorithms**
+<br />
+by *Oh, Junhyuk and Hessel, Matteo and Czarnecki, Wojciech M and
+Xu, Zhongwen and van Hasselt, Hado and Singh, Satinder and
+Silver, David*
+<br />
+[http://arxiv.org/abs/2007.08794](http://arxiv.org/abs/2007.08794)
+
+
+**On the Outsized Importance of Learning Rates in Local Update
+Methods**
+<br />
+by *Charles, Zachary and Kone{\v c}n{\'y}, Jakub*
+<br />
+[http://arxiv.org/abs/2007.00878](http://arxiv.org/abs/2007.00878)
+
+
 **Global Convergence and Induced Kernels of Gradient-Based
 Meta-Learning with Neural Nets**
 <br />
@@ -57,14 +74,6 @@ Hu, Qinghua and Wang, Weiping*
 [http://arxiv.org/abs/2007.06240](http://arxiv.org/abs/2007.06240)
 
 
-**Adaptive Task Sampling for Meta-Learning**
-<br />
-by *Liu, Chenghao and Wang, Zhihao and Sahoo, Doyen and Fang,
-Yuan and Zhang, Kun and Hoi, Steven C H*
-<br />
-[http://arxiv.org/abs/2007.08735](http://arxiv.org/abs/2007.08735)
-
-
 **MTL2L: A Context Aware Neural Optimiser**
 <br />
 by *Kuo, Nicholas I-Hsien and Harandi, Mehrtash and Fourrier,
@@ -96,15 +105,6 @@ and Zhao, Haiyu and Yi, Shuai and Li, Hongsheng*
 by *Doersch, Carl and Gupta, Ankush and Zisserman, Andrew*
 <br />
 [http://arxiv.org/abs/2007.11498](http://arxiv.org/abs/2007.11498)
-
-
-**Discovering Reinforcement Learning Algorithms**
-<br />
-by *Oh, Junhyuk and Hessel, Matteo and Czarnecki, Wojciech M and
-Xu, Zhongwen and van Hasselt, Hado and Singh, Satinder and
-Silver, David*
-<br />
-[http://arxiv.org/abs/2007.08794](http://arxiv.org/abs/2007.08794)
 
 
 **Meta-Learning a Dynamical Language Model**

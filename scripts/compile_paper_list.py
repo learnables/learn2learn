@@ -62,7 +62,7 @@ def main():
         print('No data found.')
     else:
         for i, row in enumerate(reversed(values)):
-            if row[1] and row[2] and row[3]:
+            if len(row) >= 4:
                 content += '**' + row[1] + '**' + '\n'
                 content += '<br />' + '\n'
                 content += 'by *' + row[2] + '*' + '\n'
