@@ -9,6 +9,95 @@ The following papers were announced on the [learn2learn Twitter account](https:/
 ## Submitted Papers
 
     
+**Global Convergence and Induced Kernels of Gradient-Based
+Meta-Learning with Neural Nets**
+<br />
+by *Wang, Haoxiang and Sun, Ruoyu and Li, Bo*
+<br />
+[http://arxiv.org/abs/2006.14606](http://arxiv.org/abs/2006.14606)
+
+
+**On the Iteration Complexity of Hypergradient Computation**
+<br />
+by *Grazzi, Riccardo and Franceschi, Luca and Pontil,
+Massimiliano and Salzo, Saverio*
+<br />
+[http://arxiv.org/abs/2006.16218](http://arxiv.org/abs/2006.16218)
+
+
+**On the Outsized Importance of Learning Rates in Local Update
+Methods**
+<br />
+by *Charles, Zachary and Kone{\v c}n{\'y}, Jakub*
+<br />
+[http://arxiv.org/abs/2007.00878](http://arxiv.org/abs/2007.00878)
+
+
+**Meta-SAC: Auto-tune the Entropy Temperature of Soft
+Actor-Critic via Metagradient**
+<br />
+by *Wang, Yufei and Ni, Tianwei*
+<br />
+[http://arxiv.org/abs/2007.01932](http://arxiv.org/abs/2007.01932)
+
+
+**Meta Learning in the Continuous Time Limit**
+<br />
+by *Xu, Ruitu and Chen, Lin and Karbasi, Amin*
+<br />
+[http://arxiv.org/abs/2006.10921](http://arxiv.org/abs/2006.10921)
+
+
+**Expert Training: Task Hardness Aware Meta-Learning for
+Few-Shot Classification**
+<br />
+by *Zhou, Yucan and Wang, Yu and Cai, Jianfei and Zhou, Yu and
+Hu, Qinghua and Wang, Weiping*
+<br />
+[http://arxiv.org/abs/2007.06240](http://arxiv.org/abs/2007.06240)
+
+
+**Adaptive Task Sampling for Meta-Learning**
+<br />
+by *Liu, Chenghao and Wang, Zhihao and Sahoo, Doyen and Fang,
+Yuan and Zhang, Kun and Hoi, Steven C H*
+<br />
+[http://arxiv.org/abs/2007.08735](http://arxiv.org/abs/2007.08735)
+
+
+**MTL2L: A Context Aware Neural Optimiser**
+<br />
+by *Kuo, Nicholas I-Hsien and Harandi, Mehrtash and Fourrier,
+Nicolas and Walder, Christian and Ferraro, Gabriela and
+Suominen, Hanna*
+<br />
+[http://arxiv.org/abs/2007.09343](http://arxiv.org/abs/2007.09343)
+
+
+**Navigating the Trade-Off between Multi-Task Learning and
+Learning to Multitask in Deep Neural Networks**
+<br />
+by *Ravi, Sachin and Musslick, Sebastian and Hamin, Maia and
+Willke, Theodore L and Cohen, Jonathan D*
+<br />
+[http://arxiv.org/abs/2007.10527](http://arxiv.org/abs/2007.10527)
+
+
+**Balanced Meta-Softmax for Long-Tailed Visual Recognition**
+<br />
+by *Ren, Jiawei and Yu, Cunjun and Sheng, Shunan and Ma, Xiao
+and Zhao, Haiyu and Yi, Shuai and Li, Hongsheng*
+<br />
+[http://arxiv.org/abs/2007.10740](http://arxiv.org/abs/2007.10740)
+
+
+**CrossTransformers: spatially-aware few-shot transfer**
+<br />
+by *Doersch, Carl and Gupta, Ankush and Zisserman, Andrew*
+<br />
+[http://arxiv.org/abs/2007.11498](http://arxiv.org/abs/2007.11498)
+
+
 **Discovering Reinforcement Learning Algorithms**
 <br />
 by *Oh, Junhyuk and Hessel, Matteo and Czarnecki, Wojciech M and

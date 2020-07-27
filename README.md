@@ -29,6 +29,7 @@ It retains compatibility with [torchvision](https://pytorch.org/vision/), [torch
 * Tutorials: [http://learn2learn.net/tutorials/getting_started/](http://learn2learn.net/tutorials/getting_started/)
 * Examples: [https://github.com/learnables/learn2learn/tree/master/examples](https://github.com/learnables/learn2learn/tree/master/examples)
 * GitHub: [https://github.com/learnables/learn2learn/](https://github.com/learnables/learn2learn/)
+* Twitter: [https://twitter.com/metalearn2learn](https://twitter.com/metalearn2learn)
 * Slack: [http://slack.learn2learn.net/](http://slack.learn2learn.net/)
 
 ## Installation
