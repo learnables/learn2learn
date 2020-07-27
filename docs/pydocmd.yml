@@ -105,6 +105,7 @@ pages:
       - Reinforcement Learning: examples.rl.md << ../examples/rl/README.md
       - Optimization: examples.optim.md << ../examples/optimization/README.md
   - Changelog: changelog.md << ../CHANGELOG.md
+  - Paper List: paper_list.md
   - GitHub: https://github.com/learnables/learn2learn/
 
 
