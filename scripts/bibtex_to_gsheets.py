@@ -70,7 +70,7 @@ if __name__ == '__main__':
     all_titles = [row[1] for row in existing_rows]
 
     new_rows = []
-    for entry in bib_db.entries:
+    for entry in reversed(bib_db.entries):
         # Insert into DB if title is not duplicate
         title = entry.get('title', None)
         title = title.replace('{', '').replace('}', '')
