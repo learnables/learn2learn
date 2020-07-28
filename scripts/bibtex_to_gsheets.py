@@ -67,7 +67,7 @@ if __name__ == '__main__':
         range=SAMPLE_RANGE_NAME
     ).execute()
     existing_rows = result.get('values', [])
-    all_titles = [row[1] for row in existing_rows]
+    all_titles = [row[1] for row in existing_rows if len(row) >= 2]
 
     new_rows = []
     for entry in reversed(bib_db.entries):
