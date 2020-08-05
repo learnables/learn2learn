@@ -116,7 +116,6 @@ def main(
         opt.zero_grad()
         adaptation_loss.backward()
         opt.step()
-        print('lrs', meta_learner.lrs.state_dict()['0'])
 
 
 if __name__ == '__main__':
