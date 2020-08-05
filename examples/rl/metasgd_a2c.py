@@ -78,9 +78,9 @@ def main(
     env.seed(seed)
     env = ch.envs.Torch(env)
     policy = DiagNormalPolicy(env.state_size, env.action_size)
-    meta_learner = l2l.algoritorch.MetaSGD(policy, lr=meta_lr)
+    meta_learner = l2l.algorithms.MetaSGD(policy, lr=meta_lr)
     baseline = LinearValue(env.state_size, env.action_size)
-    opt = optim.Adam(policy.parameters(), lr=meta_lr)
+    opt = optim.Adam(meta_learner.parameters(), lr=meta_lr)
     all_rewards = []
 
     for iteration in range(num_iterations):
@@ -116,6 +116,7 @@ def main(
         opt.zero_grad()
         adaptation_loss.backward()
         opt.step()
+        print('lrs', meta_learner.lrs.state_dict()['0'])
 
 
 if __name__ == '__main__':
