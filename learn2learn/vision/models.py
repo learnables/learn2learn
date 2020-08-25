@@ -4,6 +4,14 @@
 **Description**
 
 A set of commonly used models for meta-learning vision tasks.
+For simplicity, all models' `forward` conform to the following API:
+
+~~~python
+def forward(self, x):
+    x = self.features(x)
+    x = self.classifier(x)
+    return x
+~~~
 """
 
 import torch
@@ -161,13 +169,17 @@ class OmniglotFC(torch.nn.Module):
     """
 
     def __init__(self, input_size, output_size, sizes=None):
-        super(torch.nn.Module, self).__init__()
+        super(OmniglotFC, self).__init__()
         if sizes is None:
             sizes = [256, 128, 64, 64]
         layers = [LinearBlock(input_size, sizes[0]), ]
         for s_i, s_o in zip(sizes[:-1], sizes[1:]):
             layers.append(LinearBlock(s_i, s_o))
-        self.features = torch.nn.Sequential(*layers)
+        layers = torch.nn.Sequential(*layers)
+        self.features = torch.nn.Sequential(
+            l2l.nn.Flatten(),
+            layers,
+        )
         self.classifier = fc_init_(torch.nn.Linear(sizes[-1], output_size))
         self.input_size = input_size
 
@@ -258,19 +270,22 @@ class MiniImagenetCNN(torch.nn.Module):
 
     def __init__(self, output_size, hidden_size=32, layers=4):
         super(MiniImagenetCNN, self).__init__()
-        self.base = ConvBase(output_size=hidden_size,
-                             hidden=hidden_size,
-                             channels=3,
-                             max_pool=True,
-                             layers=layers,
-                             max_pool_factor=4 // layers)
+        base = ConvBase(
+            output_size=hidden_size,
+            hidden=hidden_size,
+            channels=3,
+            max_pool=True,
+            layers=layers,
+            max_pool_factor=4 // layers,
+        )
         self.features = torch.nn.Sequential(
-            self.base,
+            base,
             l2l.nn.Flatten(),
         )
         self.classifier = torch.nn.Linear(
             25 * hidden_size,
-            output_size, bias=True,
+            output_size,
+            bias=True,
         )
         maml_init_(self.classifier)
         self.hidden_size = hidden_size
