@@ -7,8 +7,9 @@ A set of commonly used models for meta-learning vision tasks.
 """
 
 import torch
+import learn2learn as l2l
+
 from scipy.stats import truncnorm
-from torch import nn
 
 
 def truncated_normal_(tensor, mean=0.0, std=1.0):
@@ -24,28 +25,29 @@ def fc_init_(module):
     if hasattr(module, 'weight') and module.weight is not None:
         truncated_normal_(module.weight.data, mean=0.0, std=0.01)
     if hasattr(module, 'bias') and module.bias is not None:
-        nn.init.constant_(module.bias.data, 0.0)
+        torch.nn.init.constant_(module.bias.data, 0.0)
     return module
 
 
 def maml_init_(module):
-    nn.init.xavier_uniform_(module.weight.data, gain=1.0)
-    nn.init.constant_(module.bias.data, 0.0)
+    torch.nn.init.xavier_uniform_(module.weight.data, gain=1.0)
+    torch.nn.init.constant_(module.bias.data, 0.0)
     return module
 
 
-class LinearBlock(nn.Module):
+class LinearBlock(torch.nn.Module):
 
     def __init__(self, input_size, output_size):
         super(LinearBlock, self).__init__()
-        self.relu = nn.ReLU()
-        self.normalize = nn.BatchNorm1d(output_size,
-                                        affine=True,
-                                        momentum=0.999,
-                                        eps=1e-3,
-                                        track_running_stats=False,
-                                        )
-        self.linear = nn.Linear(input_size, output_size)
+        self.relu = torch.nn.ReLU()
+        self.normalize = torch.nn.BatchNorm1d(
+            output_size,
+            affine=True,
+            momentum=0.999,
+            eps=1e-3,
+            track_running_stats=False,
+        )
+        self.linear = torch.nn.Linear(input_size, output_size)
         fc_init_(self.linear)
 
     def forward(self, x):
@@ -55,7 +57,7 @@ class LinearBlock(nn.Module):
         return x
 
 
-class ConvBlock(nn.Module):
+class ConvBlock(torch.nn.Module):
 
     def __init__(self,
                  in_channels,
@@ -66,28 +68,32 @@ class ConvBlock(nn.Module):
         super(ConvBlock, self).__init__()
         stride = (int(2 * max_pool_factor), int(2 * max_pool_factor))
         if max_pool:
-            self.max_pool = nn.MaxPool2d(kernel_size=stride,
-                                         stride=stride,
-                                         ceil_mode=False,
-                                         )
+            self.max_pool = torch.nn.MaxPool2d(
+                kernel_size=stride,
+                stride=stride,
+                ceil_mode=False,
+            )
             stride = (1, 1)
         else:
             self.max_pool = lambda x: x
-        self.normalize = nn.BatchNorm2d(out_channels,
-                                        affine=True,
-                                        # eps=1e-3,
-                                        # momentum=0.999,
-                                        # track_running_stats=False,
-                                        )
-        nn.init.uniform_(self.normalize.weight)
-        self.relu = nn.ReLU()
+        self.normalize = torch.nn.BatchNorm2d(
+            out_channels,
+            affine=True,
+            # eps=1e-3,
+            # momentum=0.999,
+            # track_running_stats=False,
+        )
+        torch.nn.init.uniform_(self.normalize.weight)
+        self.relu = torch.nn.ReLU()
 
-        self.conv = nn.Conv2d(in_channels,
-                              out_channels,
-                              kernel_size,
-                              stride=stride,
-                              padding=1,
-                              bias=True)
+        self.conv = torch.nn.Conv2d(
+            in_channels,
+            out_channels,
+            kernel_size,
+            stride=stride,
+            padding=1,
+            bias=True,
+        )
         maml_init_(self.conv)
 
     def forward(self, x):
@@ -98,7 +104,7 @@ class ConvBlock(nn.Module):
         return x
 
 
-class ConvBase(nn.Sequential):
+class ConvBase(torch.nn.Sequential):
 
     # NOTE:
     #     Omniglot: hidden=64, channels=1, no max_pool
@@ -126,10 +132,10 @@ class ConvBase(nn.Sequential):
         super(ConvBase, self).__init__(*core)
 
 
-class OmniglotFC(nn.Sequential):
+class OmniglotFC(torch.nn.Module):
     """
 
-    [[Source]]()
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
 
     **Description**
 
@@ -155,23 +161,26 @@ class OmniglotFC(nn.Sequential):
     """
 
     def __init__(self, input_size, output_size, sizes=None):
+        super(torch.nn.Module, self).__init__()
         if sizes is None:
             sizes = [256, 128, 64, 64]
         layers = [LinearBlock(input_size, sizes[0]), ]
         for s_i, s_o in zip(sizes[:-1], sizes[1:]):
             layers.append(LinearBlock(s_i, s_o))
-        layers.append(fc_init_(nn.Linear(sizes[-1], output_size)))
-        super(OmniglotFC, self).__init__(*layers)
+        self.features = torch.nn.Sequential(*layers)
+        self.classifier = fc_init_(torch.nn.Linear(sizes[-1], output_size))
         self.input_size = input_size
 
     def forward(self, x):
-        return super(OmniglotFC, self).forward(x.view(-1, self.input_size))
+        x = self.features(x)
+        x = self.classifier(x)
+        return x
 
 
-class OmniglotCNN(nn.Module):
+class OmniglotCNN(torch.nn.Module):
     """
 
-    [Source]()
+    [Source](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
 
     **Description**
 
@@ -204,21 +213,26 @@ class OmniglotCNN(nn.Module):
                              channels=1,
                              max_pool=False,
                              layers=layers)
-        self.linear = nn.Linear(hidden_size, output_size, bias=True)
-        self.linear.weight.data.normal_()
-        self.linear.bias.data.mul_(0.0)
+        self.features = torch.nn.Sequential(
+            l2l.nn.Lambda(lambda x: x.view(-1, 1, 28, 28)),
+            self.base,
+            l2l.nn.Lambda(lambda x: x.mean(dim=[2, 3])),
+            l2l.nn.Flatten(),
+        )
+        self.classifier = torch.nn.Linear(hidden_size, output_size, bias=True)
+        self.classifier.weight.data.normal_()
+        self.classifier.bias.data.mul_(0.0)
 
     def forward(self, x):
-        x = self.base(x.view(-1, 1, 28, 28))
-        x = x.mean(dim=[2, 3])
-        x = self.linear(x)
+        x = self.features(x)
+        x = self.classifier(x)
         return x
 
 
-class MiniImagenetCNN(nn.Module):
+class MiniImagenetCNN(torch.nn.Module):
     """
 
-    [[Source]]()
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
 
     **Description**
 
@@ -250,11 +264,18 @@ class MiniImagenetCNN(nn.Module):
                              max_pool=True,
                              layers=layers,
                              max_pool_factor=4 // layers)
-        self.linear = nn.Linear(25 * hidden_size, output_size, bias=True)
-        maml_init_(self.linear)
+        self.features = torch.nn.Sequential(
+            self.base,
+            l2l.nn.Flatten(),
+        )
+        self.classifier = torch.nn.Linear(
+            25 * hidden_size,
+            output_size, bias=True,
+        )
+        maml_init_(self.classifier)
         self.hidden_size = hidden_size
 
     def forward(self, x):
-        x = self.base(x)
-        x = self.linear(x.view(-1, 25 * self.hidden_size))
+        x = self.features(x)
+        x = self.classifier(x)
         return x
