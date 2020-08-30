@@ -316,7 +316,6 @@ class CUBirds200(torch.utils.data.Dataset):
 
     """
 
-
     def __init__(
         self,
         root,
