@@ -4,9 +4,11 @@ import os
 import tarfile
 import requests
 import scipy.io
-from PIL import Image
 
+from PIL import Image
 from torch.utils.data import Dataset
+
+from learn2learn.data.utils import download_file
 
 DATA_DIR = 'vgg_flower102'
 IMAGES_URL = 'http://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz'
@@ -34,7 +36,7 @@ class VGGFlower102(Dataset):
 
     **Description**
 
-    The VGG Flowers dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+    The VGG Flowers dataset was originally introduced by Nilsback and Zisserman, 2006 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
 
     The dataset consists of 102 classes of flowers, with each class consisting of 40 to 258 images.
     We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.
@@ -87,10 +89,8 @@ class VGGFlower102(Dataset):
         if not os.path.exists(data_path):
             os.mkdir(data_path)
         tar_path = os.path.join(data_path, os.path.basename(IMAGES_URL))
-        print('Downloading VGG Flower102 dataset')
-        req = requests.get(IMAGES_URL)
-        with open(tar_path, 'wb') as archive:
-            archive.write(req.content)
+        print('Downloading VGG Flower102 dataset (330Mb)')
+        download_file(IMAGES_URL, tar_path)
         tar_file = tarfile.open(tar_path)
         tar_file.extractall(data_path)
         tar_file.close()

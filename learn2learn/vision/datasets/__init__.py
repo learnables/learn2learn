@@ -14,3 +14,4 @@ from .cifarfs import CIFARFS
 from .fc100 import FC100
 from .vgg_flowers import VGGFlower102
 from .fgvc_aircraft import FGVCAircraft
+from .cu_birds200 import CUBirds200
