@@ -72,6 +72,8 @@ class FGVCAircraft(Dataset):
 
     The dataset consists of 10,200 images of aircraft (102 classes, each 100 images).
     We provided the raw (un-processed) images and follow the train-validation-test splits of Triantafillou et al.
+    TODO: Triantafillou et al. recommend cropping the images using the bounding box information,
+    to remove copyright information and ensure that only one plane is visible in the image.
 
     **References**
 

@@ -10,7 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* `l2l.vision.datasets.CUBirds200`.
+
 ### Changed
+
+* Optimization transforms can be accessed directly through `l2l.optim`, e.g. `l2l.optim.KroneckerTransform`.
+* All vision models adhere to the `.features` and `.classifier` interface.
 
 ### Fixed
 
