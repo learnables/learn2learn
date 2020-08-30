@@ -48,7 +48,7 @@ def clone_parameters(param_list):
     return [p.clone() for p in param_list]
 
 
-def clone_module(module):
+def clone_module(module, memo=None):
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
@@ -91,6 +91,12 @@ def clone_module(module):
     #       clone = recursive_shallow_copy(model)
     #       clone._apply(lambda t: t.clone())
 
+    if memo is None:
+        # Maps original data_ptr to the cloned tensor.
+        # Useful when a Module uses parameters from another Module; see:
+        # https://github.com/learnables/learn2learn/issues/174
+        memo = {}
+
     # First, create a copy of the module.
     # Adapted from:
     # https://github.com/pytorch/pytorch/blob/65bad41cbec096aa767b3752843eddebf845726f/torch/nn/modules/module.py#L1171
@@ -106,20 +112,36 @@ def clone_module(module):
     if hasattr(clone, '_parameters'):
         for param_key in module._parameters:
             if module._parameters[param_key] is not None:
-                cloned = module._parameters[param_key].clone()
-                clone._parameters[param_key] = cloned
+                param = module._parameters[param_key]
+                param_ptr = param.data_ptr
+                if param_ptr in memo:
+                    clone._parameters[param_key] = memo[param_ptr]
+                else:
+                    cloned = param.clone()
+                    clone._parameters[param_key] = cloned
+                    memo[param_ptr] = cloned
 
     # Third, handle the buffers if necessary
     if hasattr(clone, '_buffers'):
         for buffer_key in module._buffers:
             if clone._buffers[buffer_key] is not None and \
                     clone._buffers[buffer_key].requires_grad:
-                clone._buffers[buffer_key] = module._buffers[buffer_key].clone()
+                buff = module._buffers[buffer_key]
+                buff_ptr = buff.data_ptr
+                if buff_ptr in memo:
+                    clone._buffers[buffer_key] = memo[buff_ptr]
+                else:
+                    cloned = buff.clone()
+                    clone._buffers[buffer_key] = cloned
+                    memo[param_ptr] = cloned
 
     # Then, recurse for each submodule
     if hasattr(clone, '_modules'):
         for module_key in clone._modules:
-            clone._modules[module_key] = clone_module(module._modules[module_key])
+            clone._modules[module_key] = clone_module(
+                module._modules[module_key],
+                memo=memo,
+            )
 
     # Finally, rebuild the flattened parameters for RNNs
     # See this issue for more details:

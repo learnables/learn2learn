@@ -18,12 +18,14 @@ def close(x, y):
 class TestMAMLAlgorithm(unittest.TestCase):
 
     def setUp(self):
-        self.model = torch.nn.Sequential(torch.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
-                                          torch.nn.ReLU(),
-                                          torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                          torch.nn.Sigmoid(),
-                                          torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
-                                          torch.nn.Softmax())
+        self.model = torch.nn.Sequential(
+            torch.nn.Linear(INPUT_SIZE, HIDDEN_SIZE),
+            torch.nn.ReLU(),
+            torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+            torch.nn.Sigmoid(),
+            torch.nn.Linear(HIDDEN_SIZE, HIDDEN_SIZE),
+            torch.nn.Softmax(),
+        )
 
         self.model.register_buffer('dummy_buf', torch.zeros(1, 2, 3, 4))
 
@@ -101,7 +103,11 @@ class TestMAMLAlgorithm(unittest.TestCase):
         try:
             # Check that without allow_nograd, adaptation fails
             clone.adapt(loss)
-            self.assertTrue(False, 'adaptation successful despite requires_grad=False')  # Check that execution never gets here
+            # Check that execution never gets here
+            self.assertTrue(
+                False,
+                'adaptation successful despite requires_grad=False',
+            )
         except:
             # Check that with allow_nograd, adaptation succeeds
             clone.adapt(loss, allow_nograd=True)
@@ -112,10 +118,12 @@ class TestMAMLAlgorithm(unittest.TestCase):
                 if p.requires_grad:
                     self.assertTrue(p.grad is not None)
 
-        maml = l2l.algorithms.MAML(self.model,
-                                   lr=INNER_LR,
-                                   first_order=False,
-                                   allow_nograd=True)
+        maml = l2l.algorithms.MAML(
+            self.model,
+            lr=INNER_LR,
+            first_order=False,
+            allow_nograd=True,
+        )
         clone = maml.clone()
         loss = sum([p.norm(p=2) for p in clone.parameters()])
         # Check that without allow_nograd, adaptation succeeds thanks to init.
@@ -123,6 +131,37 @@ class TestMAMLAlgorithm(unittest.TestCase):
         clone.adapt(loss)
         self.assertTrue(close(orig_weight, self.model[2].weight))
 
+    def test_module_shared_params(self):
+
+        class TestModule(torch.nn.Module):
+            def __init__(self):
+                super(TestModule, self).__init__()
+                cnn = [
+                    torch.nn.Conv2d(3, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                    torch.nn.Conv2d(32, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                    torch.nn.Conv2d(32, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                ]
+                self.seq = torch.nn.Sequential(*cnn)
+                self.head = torch.nn.Sequential(*[
+                    torch.nn.Conv2d(32, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                    torch.nn.Conv2d(32, 100, 3, 2, 1)]
+                )
+                self.net = torch.nn.Sequential(self.seq, self.head)
+
+            def forward(self, x):
+                return self.net(x)
+
+        module = TestModule()
+        maml = l2l.algorithms.MAML(module, lr=0.1)
+        clone = maml.clone()
+        loss = sum(p.norm(p=2) for p in clone.parameters())
+        clone.adapt(loss)
+        loss = sum(p.norm(p=2) for p in clone.parameters())
+        loss.backward()
 
 
 if __name__ == '__main__':
