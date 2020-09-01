@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* `l2l.vision.datasets.DescribableTextures`
+
 ### Changed
+
+* Updated reference for citations.
 
 ### Fixed
 

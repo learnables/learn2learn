@@ -75,6 +75,8 @@ generate:
               - learn2learn.vision.datasets.CIFARFS
               - learn2learn.vision.datasets.VGGFlower102
               - learn2learn.vision.datasets.FGVCAircraft
+              - learn2learn.vision.datasets.DescribableTextures
+              - learn2learn.vision.datasets.CUBirds200
           - learn2learn.vision.transforms:
               - learn2learn.vision.transforms.RandomClassRotation
           - learn2learn.vision.benchmarks:
