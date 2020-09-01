@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 
 import os
-import requests
 import tarfile
 import torch
 
-from PIL import Image
 from learn2learn.data.utils import download_file_from_google_drive
 from torchvision.datasets.folder import default_loader
 
@@ -281,7 +279,7 @@ class CUBirds200(torch.utils.data.Dataset):
 
     **Description**
 
-    The VGG Flowers dataset was originally introduced by Wellinder et al., 2010 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+    The Caltech-UCSD Birds dataset was originally introduced by Wellinder et al., 2010 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
 
     The dataset consists of 6,033 bird images classified into 200 bird species.
     The train set consists of 140 classes, while the validation and test sets each contain 30.
@@ -293,7 +291,7 @@ class CUBirds200(torch.utils.data.Dataset):
     **References**
 
     1. Welinder et al. 2010. "Caltech-UCSD Birds 200." Caltech Technical Report.
-    2. Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
+    2. Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
     3. [http://www.vision.caltech.edu/visipedia/CUB-200.html](http://www.vision.caltech.edu/visipedia/CUB-200.html)
 
     **Arguments**
@@ -309,7 +307,7 @@ class CUBirds200(torch.utils.data.Dataset):
     **Example**
 
     ~~~python
-    train_dataset = l2l.vision.datasets.VGGFlower102(root='./data', mode='train')
+    train_dataset = l2l.vision.datasets.CUBirds200(root='./data', mode='train')
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
     ~~~
