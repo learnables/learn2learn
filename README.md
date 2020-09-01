@@ -13,7 +13,8 @@ learn2learn builds on top of PyTorch to accelerate two aspects of the meta-learn
 
 learn2learn provides low-level utilities and unified interface to create new algorithms and domains, together with high-quality implementations of existing algorithms and standardized benchmarks.
 It retains compatibility with [torchvision](https://pytorch.org/vision/), [torchaudio](https://pytorch.org/audio/), [torchtext](https://pytorch.org/text/), [cherry](http://cherry-rl.net/), and any other PyTorch-based library you might be using.
-To learn more, see our preprint: [arXiv:2008.12284](https://arxiv.org/abs/2008.12284)
+
+To learn more, see our whitepaper: [arXiv:2008.12284](https://arxiv.org/abs/2008.12284)
 
 **Overview**
 
