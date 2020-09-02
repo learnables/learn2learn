@@ -513,6 +513,27 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#describabletextures" class="md-nav__link">
+    DescribableTextures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cubirds200" class="md-nav__link">
+    CUBirds200
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quickdraw" class="md-nav__link">
+    Quickdraw
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -800,6 +821,27 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#describabletextures" class="md-nav__link">
+    DescribableTextures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cubirds200" class="md-nav__link">
+    CUBirds200
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quickdraw" class="md-nav__link">
+    Quickdraw
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -875,13 +917,24 @@
 <p>Datasets, models, and other utilities related to computer vision.</p>
 <h2 id="learn2learnvisionmodels">learn2learn.vision.models<a class="headerlink" href="#learn2learnvisionmodels" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
-<p>A set of commonly used models for meta-learning vision tasks.</p>
+<p>A set of commonly used models for meta-learning vision tasks.
+For simplicity, all models' <code>forward</code> conform to the following API:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+</code></pre></div>
+</td></tr></table>
+
 <h3 id="omniglotfc">OmniglotFC<a class="headerlink" href="#omniglotfc" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
-<p><a href="">[Source]</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.</p>
 <p><strong>References</strong></p>
@@ -908,7 +961,7 @@
 </code></pre></div>
 </td></tr></table>
 
-<p><a href="">Source</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py">Source</a></p>
 <p><strong>Description</strong></p>
 <p>The convolutional network commonly used for Omniglot, as described by Finn et al, 2017.</p>
 <p>This network assumes inputs of shapes (1, 28, 28).</p>
@@ -932,7 +985,7 @@
 </code></pre></div>
 </td></tr></table>
 
-<p><a href="">[Source]</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.</p>
 <p>This network assumes inputs of shapes (3, 84, 84).</p>
@@ -1184,13 +1237,13 @@ The classes are sampled from the CIFAR-100 dataset, and we use the splits from B
 
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/vgg_flowers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
-<p>The VGG Flowers dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The VGG Flowers dataset was originally introduced by Nilsback and Zisserman, 2006 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
 <p>The dataset consists of 102 classes of flowers, with each class consisting of 40 to 258 images.
 We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
 <p><strong>References</strong></p>
 <ol>
 <li>Nilsback, M. and A. Zisserman. 2006. "A Visual Vocabulary for Flower Classification." CVPR '06.</li>
-<li>Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
 <li><a href="https://www.robots.ox.ac.uk/~vgg/data/flowers/">https://www.robots.ox.ac.uk/~vgg/data/flowers/</a></li>
 </ol>
 <p><strong>Arguments</strong></p>
@@ -1228,11 +1281,13 @@ We provide the raw (unprocessed) images, and follow the train-validation-test sp
 <p><strong>Description</strong></p>
 <p>The FGVC Aircraft dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
 <p>The dataset consists of 10,200 images of aircraft (102 classes, each 100 images).
-We provided the raw (un-processed) images and follow the train-validation-test splits of Triantafillou et al.</p>
+We provided the raw (un-processed) images and follow the train-validation-test splits of Triantafillou et al.
+TODO: Triantafillou et al. recommend cropping the images using the bounding box information,
+to remove copyright information and ensure that only one plane is visible in the image.</p>
 <p><strong>References</strong></p>
 <ol>
 <li>Maji et al. 2013. "Fine-Grained Visual Classification of Aircraft." arXiv [cs.CV].</li>
-<li>Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
 <li><a href="http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/">http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/</a></li>
 </ol>
 <p><strong>Arguments</strong></p>
@@ -1248,6 +1303,145 @@ We provided the raw (un-processed) images and follow the train-validation-test s
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCAircraft</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="describabletextures">DescribableTextures<a class="headerlink" href="#describabletextures" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DescribableTextures</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+                    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+                    <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/describable_textures.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The VGG Describable Textures dataset was originally introduced by Cimpoi et al., 2014
+and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 5640 images organized according to 47 texture classes.
+Each class consists of 120 images between 300x300 and 640x640 pixels.
+Each image contains at least 90% of the texture.
+We follow the train-validation-test splits of Triantafillou et al., 2020.
+(33 classes for train, 7 for validation and test.)</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Cimpoi et al. 2014. "Describing Textures in the Wild." CVPR'14.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/data/dtd/">https://www.robots.ox.ac.uk/~vgg/data/dtd/</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">DescribableTextures</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="cubirds200">CUBirds200<a class="headerlink" href="#cubirds200" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CUBirds200</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+           <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+           <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+           <span class="n">include_imagenet_duplicates</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cu_birds200.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The Caltech-UCSD Birds dataset was originally introduced by Wellinder et al., 2010 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 6,033 bird images classified into 200 bird species.
+The train set consists of 140 classes, while the validation and test sets each contain 30.
+We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
+<p>This dataset includes 43 images that overlap with the ILSVRC-2012 (ImageNet) dataset.
+They are omitted by default, but can be included by setting the <code>include_imagenet_duplicates</code> flag to <code>True</code>.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Welinder et al. 2010. "Caltech-UCSD Birds 200." Caltech Technical Report.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="http://www.vision.caltech.edu/visipedia/CUB-200.html">http://www.vision.caltech.edu/visipedia/CUB-200.html</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+<li><strong>include_imagenet_duplicates</strong> (bool, <em>optional</em>, default=False) - Whether to include images that are also present in the ImageNet 2012 dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CUBirds200</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="quickdraw">Quickdraw<a class="headerlink" href="#quickdraw" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+          <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+          <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/quickdraw.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The Quickdraw dataset was originally introduced by Google Creative Lab in 2017 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+See Ha and Heck, 2017 for more information.</p>
+<p>The dataset consists of roughly 50M drawing images of 345 objects.
+Each image was hand-drawn by human annotators and is represented as black-and-white 28x28 pixel array.
+We follow the train-validation-test splits of Triantafillou et al., 2020.
+(241 classes for train, 52 for validation, and 52 for test.)</p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="https://github.com/googlecreativelab/quickdraw-dataset">https://github.com/googlecreativelab/quickdraw-dataset</a></li>
+<li>Ha, David, and Douglas Eck. 2017. "A Neural Representation of Sketch Drawings." ArXiv '17.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>

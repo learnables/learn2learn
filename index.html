@@ -727,6 +727,7 @@
 </ul>
 <p>learn2learn provides low-level utilities and unified interface to create new algorithms and domains, together with high-quality implementations of existing algorithms and standardized benchmarks.
 It retains compatibility with <a href="https://pytorch.org/vision/">torchvision</a>, <a href="https://pytorch.org/audio/">torchaudio</a>, <a href="https://pytorch.org/text/">torchtext</a>, <a href="http://cherry-rl.net/">cherry</a>, and any other PyTorch-based library you might be using.</p>
+<p>To learn more, see our whitepaper: <a href="https://arxiv.org/abs/2008.12284">arXiv:2008.12284</a></p>
 <p><strong>Overview</strong></p>
 <ul>
 <li><a href="http://learn2learn.net/docs/learn2learn.data/"><code>learn2learn.data</code></a>: <code>TaskDataset</code> and transforms to create few-shot tasks from any PyTorch dataset.</li>
@@ -742,7 +743,6 @@ It retains compatibility with <a href="https://pytorch.org/vision/">torchvision<
 <li>Tutorials: <a href="http://learn2learn.net/tutorials/getting_started/">http://learn2learn.net/tutorials/getting_started/</a></li>
 <li>Examples: <a href="https://github.com/learnables/learn2learn/tree/master/examples">https://github.com/learnables/learn2learn/tree/master/examples</a></li>
 <li>GitHub: <a href="https://github.com/learnables/learn2learn/">https://github.com/learnables/learn2learn/</a></li>
-<li>Twitter: <a href="https://twitter.com/metalearn2learn">https://twitter.com/metalearn2learn</a></li>
 <li>Slack: <a href="http://slack.learn2learn.net/">http://slack.learn2learn.net/</a></li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
@@ -894,22 +894,30 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
 <p>To cite the <code>learn2learn</code> repository in your academic publications, please use the following reference.</p>
 <blockquote>
-<p>Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. <code>"learn2learn"</code>. <a href="https://github.com/learnables/learn2learn">https://github.com/learnables/learn2learn</a>, 2019.</p>
+<p>Arnold, Sebastien M. R., Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Konstantinos Saitas Zarkias. 2020. “learn2learn: A Library for Meta-Learning Research.” arXiv [cs.LG]. http://arxiv.org/abs/2008.12284.</p>
 </blockquote>
 <p>You can also use the following Bibtex entry.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nc">@misc</span><span class="p">{</span><span class="nl">learn2learn2019</span><span class="p">,</span>
-    <span class="na">author</span>       <span class="p">=</span> <span class="s">{Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner}</span><span class="p">,</span>
-    <span class="na">title</span>        <span class="p">=</span> <span class="s">{learn2learn}</span><span class="p">,</span>
-    <span class="na">month</span>        <span class="p">=</span> <span class="nv">sep</span><span class="p">,</span>
-    <span class="na">year</span>         <span class="p">=</span> <span class="m">2019</span><span class="p">,</span>
-    <span class="na">url</span>          <span class="p">=</span> <span class="s">{https://github.com/learnables/learn2learn}</span>
-    <span class="p">}</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">Arnold2020-ss</span><span class="p">,</span>
+  <span class="na">title</span>         <span class="p">=</span> <span class="s">&quot;learn2learn: A Library for {Meta-Learning} Research&quot;</span><span class="p">,</span>
+  <span class="na">author</span>        <span class="p">=</span> <span class="s">&quot;Arnold, S{\&#39;e}bastien M R and Mahajan, Praateek and Datta,</span>
+<span class="s">                   Debajyoti and Bunner, Ian and Zarkias, Konstantinos Saitas&quot;</span><span class="p">,</span>
+  <span class="na">month</span>         <span class="p">=</span>  <span class="nv">aug</span><span class="p">,</span>
+  <span class="na">year</span>          <span class="p">=</span>  <span class="m">2020</span><span class="p">,</span>
+  <span class="na">url</span>           <span class="p">=</span> <span class="s">&quot;http://arxiv.org/abs/2008.12284&quot;</span><span class="p">,</span>
+  <span class="na">archivePrefix</span> <span class="p">=</span> <span class="s">&quot;arXiv&quot;</span><span class="p">,</span>
+  <span class="na">primaryClass</span>  <span class="p">=</span> <span class="s">&quot;cs.LG&quot;</span><span class="p">,</span>
+  <span class="na">eprint</span>        <span class="p">=</span> <span class="s">&quot;2008.12284&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
 
