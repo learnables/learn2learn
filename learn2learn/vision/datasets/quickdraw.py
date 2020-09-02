@@ -378,6 +378,7 @@ class Quickdraw(Dataset):
     **Description**
 
     The Quickdraw dataset was originally introduced by Google Creative Lab in 2017 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+    See Ha and Heck, 2017 for more information.
 
     The dataset consists of roughly 50M drawing images of 345 objects.
     Each image was hand-drawn by human annotators and is represented as black-and-white 28x28 pixel array.
@@ -388,7 +389,8 @@ class Quickdraw(Dataset):
     **References**
 
     1. [https://github.com/googlecreativelab/quickdraw-dataset](https://github.com/googlecreativelab/quickdraw-dataset)
-    2. Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
+    2. Ha, David, and Douglas Eck. 2017. "A Neural Representation of Sketch Drawings." ArXiv '17.
+    3. Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
 
     **Arguments**
 
