@@ -76,7 +76,8 @@ class DescribableTextures(Dataset):
 
     **Description**
 
-    The VGG Describable Textures dataset was originally introduced by Cimpoi et al., 2014 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+    The VGG Describable Textures dataset was originally introduced by Cimpoi et al., 2014
+    and then re-purposed for few-shot learning in Triantafillou et al., 2020.
 
     The dataset consists of 5640 images organized according to 47 texture classes.
     Each class consists of 120 images between 300x300 and 640x640 pixels.
@@ -116,7 +117,8 @@ class DescribableTextures(Dataset):
         mode='all',
         transform=None,
         target_transform=None,
-        download=False):
+        download=False,
+            ):
         root = os.path.expanduser(root)
         self.root = os.path.expanduser(root)
         self.transform = transform
