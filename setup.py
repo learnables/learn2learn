@@ -75,5 +75,7 @@ install(
         'torchvision>=0.3.0',
         'pandas',
         'requests',
+        'gsutil',
+        'tqdm',
     ],
 )

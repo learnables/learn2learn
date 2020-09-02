@@ -147,7 +147,7 @@ A human-readable changelog is available in the [CHANGELOG.md](CHANGELOG.md) file
 
 To cite the `learn2learn` repository in your academic publications, please use the following reference.
 
-> Arnold, Sébastien M. R., Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Konstantinos Saitas Zarkias. 2020. “learn2learn: A Library for Meta-Learning Research.” arXiv [cs.LG]. http://arxiv.org/abs/2008.12284.
+> Arnold, Sebastien M. R., Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Konstantinos Saitas Zarkias. 2020. “learn2learn: A Library for Meta-Learning Research.” arXiv [cs.LG]. http://arxiv.org/abs/2008.12284.
 
 You can also use the following Bibtex entry.
 

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import requests
+import tqdm
 
 
 def download_file(source, destination):
     req = requests.get(source)
     with open(destination, 'wb') as archive:
-        for chunk in req.iter_content(chunk_size=32768):
+        for chunk in tqdm.tqdm(req.iter_content(chunk_size=32768), leave=False):
             if chunk:
                 archive.write(chunk)
 
