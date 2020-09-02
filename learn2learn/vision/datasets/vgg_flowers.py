@@ -16,7 +16,7 @@ LABELS_URL = 'http://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat'
 IMAGES_DIR = 'jpg'
 LABELS_PATH = 'imagelabels.mat'
 
-# Splits from "Meta-Datasets", Triantafillou et al, 2019
+# Splits from "Meta-Datasets", Triantafillou et al, 2020
 SPLITS = {
     'train': [90, 38, 80, 30, 29, 12, 43, 27, 4, 64, 31, 99, 8, 67, 95, 77,
               78, 61, 88, 74, 55, 32, 21, 13, 79, 70, 51, 69, 14, 60, 11, 39,
@@ -44,7 +44,7 @@ class VGGFlower102(Dataset):
     **References**
 
     1. Nilsback, M. and A. Zisserman. 2006. "A Visual Vocabulary for Flower Classification." CVPR '06.
-    2. Triantafillou et al. 2019. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
+    2. Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.
     3. [https://www.robots.ox.ac.uk/~vgg/data/flowers/](https://www.robots.ox.ac.uk/~vgg/data/flowers/)
 
     **Arguments**

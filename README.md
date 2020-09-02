@@ -14,6 +14,8 @@ learn2learn builds on top of PyTorch to accelerate two aspects of the meta-learn
 learn2learn provides low-level utilities and unified interface to create new algorithms and domains, together with high-quality implementations of existing algorithms and standardized benchmarks.
 It retains compatibility with [torchvision](https://pytorch.org/vision/), [torchaudio](https://pytorch.org/audio/), [torchtext](https://pytorch.org/text/), [cherry](http://cherry-rl.net/), and any other PyTorch-based library you might be using.
 
+To learn more, see our whitepaper: [arXiv:2008.12284](https://arxiv.org/abs/2008.12284)
+
 **Overview**
 
 * [`learn2learn.data`](http://learn2learn.net/docs/learn2learn.data/): `TaskDataset` and transforms to create few-shot tasks from any PyTorch dataset.
@@ -145,18 +147,23 @@ A human-readable changelog is available in the [CHANGELOG.md](CHANGELOG.md) file
 
 To cite the `learn2learn` repository in your academic publications, please use the following reference.
 
-> Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner. `"learn2learn"`. [https://github.com/learnables/learn2learn](https://github.com/learnables/learn2learn), 2019.
+> Arnold, Sebastien M. R., Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Konstantinos Saitas Zarkias. 2020. “learn2learn: A Library for Meta-Learning Research.” arXiv [cs.LG]. http://arxiv.org/abs/2008.12284.
 
 You can also use the following Bibtex entry.
 
 ~~~bib
-@misc{learn2learn2019,
-    author       = {Sebastien M.R. Arnold, Praateek Mahajan, Debajyoti Datta, Ian Bunner},
-    title        = {learn2learn},
-    month        = sep,
-    year         = 2019,
-    url          = {https://github.com/learnables/learn2learn}
-    }
+@article{Arnold2020-ss,
+  title         = "learn2learn: A Library for {Meta-Learning} Research",
+  author        = "Arnold, S{\'e}bastien M R and Mahajan, Praateek and Datta,
+                   Debajyoti and Bunner, Ian and Zarkias, Konstantinos Saitas",
+  month         =  aug,
+  year          =  2020,
+  url           = "http://arxiv.org/abs/2008.12284",
+  archivePrefix = "arXiv",
+  primaryClass  = "cs.LG",
+  eprint        = "2008.12284"
+}
+
 ~~~
 
 ### Acknowledgements & Friends
