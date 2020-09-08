@@ -5,6 +5,8 @@ import copy
 import torch
 import learn2learn as l2l
 
+EPSILON = 1e-8
+
 
 def ref_clone_module(module):
     """
@@ -227,6 +229,48 @@ class UtilTests(unittest.TestCase):
             len(list(clone.parameters())) == len(list(original.parameters())),
             'clone and original do not have same number of parameters.',
         )
+
+        orig_params = [p.data_ptr() for p in original.parameters()]
+        duplicates = [p.data_ptr() in orig_params for p in clone.parameters()]
+        self.assertTrue(not any(duplicates), 'clone() forgot some parameters.')
+
+    def test_module_update_shared_params(self):
+        # Tests proper use of memo parameter
+
+        class TestModule(torch.nn.Module):
+            def __init__(self):
+                super(TestModule, self).__init__()
+                cnn = [
+                    torch.nn.Conv2d(3, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                    torch.nn.Conv2d(32, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                    torch.nn.Conv2d(32, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                ]
+                self.seq = torch.nn.Sequential(*cnn)
+                self.head = torch.nn.Sequential(*[
+                    torch.nn.Conv2d(32, 32, 3, 2, 1),
+                    torch.nn.ReLU(),
+                    torch.nn.Conv2d(32, 100, 3, 2, 1)]
+                )
+                self.net = torch.nn.Sequential(self.seq, self.head)
+
+            def forward(self, x):
+                return self.net(x)
+
+        original = TestModule()
+        num_original = len(list(original.parameters()))
+        clone = l2l.clone_module(original)
+        updates = [torch.randn_like(p) for p in clone.parameters()]
+        l2l.update_module(clone, updates)
+        num_clone = len(list(clone.parameters()))
+        self.assertTrue(
+            num_original == num_clone,
+            'clone and original do not have same number of parameters.',
+        )
+        for p, c, u in zip(original.parameters(), clone.parameters(), updates):
+            self.assertTrue(torch.norm(p + u - c, p=2) <= EPSILON, 'clone is not original + update.')
 
         orig_params = [p.data_ptr() for p in original.parameters()]
         duplicates = [p.data_ptr() in orig_params for p in clone.parameters()]
