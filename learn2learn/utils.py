@@ -224,7 +224,7 @@ def detach_distribution(dist):
     return dist
 
 
-def update_module(module, updates=None):
+def update_module(module, updates=None, memo=None):
     r"""
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
 
@@ -257,6 +257,8 @@ def update_module(module, updates=None):
     l2l.update_module(model, updates=updates)
     ~~~
     """
+    if memo is None:
+        memo = {}
     if updates is not None:
         params = list(module.parameters())
         if not len(updates) == len(list(params)):
@@ -270,18 +272,31 @@ def update_module(module, updates=None):
     for param_key in module._parameters:
         p = module._parameters[param_key]
         if p is not None and hasattr(p, 'update') and p.update is not None:
-            module._parameters[param_key] = p + p.update
+            if p in memo:
+                module._parameters[param_key] = memo[p]
+            else:
+                updated = p + p.update
+                memo[p] = updated
+                module._parameters[param_key] = updated
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         buff = module._buffers[buffer_key]
         if buff is not None and hasattr(buff, 'update') and buff.update is not None:
-            module._buffers[buffer_key] = buff + buff.update
+            if buff in memo:
+                module._buffers[buffer_key] = memo[buff]
+            else:
+                updated = buff + buff.update
+                memo[buff] = updated
+                module._buffers[buffer_key] = updated
 
     # Then, recurse for each submodule
     for module_key in module._modules:
-        module._modules[module_key] = update_module(module._modules[module_key],
-                                                    updates=None)
+        module._modules[module_key] = update_module(
+            module._modules[module_key],
+            updates=None,
+            memo=memo,
+        )
 
     # Finally, rebuild the flattened parameters for RNNs
     # See this issue for more details:
