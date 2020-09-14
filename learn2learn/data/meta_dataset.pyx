@@ -40,7 +40,7 @@ class MetaDataset(Dataset):
     ~~~
     """
 
-    def __init__(self, dataset):
+    def __init__(self, dataset, labels_to_indices=None, indices_to_labels=None):
 
         if not isinstance(dataset, Dataset):
             raise TypeError(
@@ -51,7 +51,10 @@ class MetaDataset(Dataset):
         if hasattr(dataset, '_bookkeeping_path'):
             self.load_bookkeeping(dataset._bookkeeping_path)
         else:
-            self.create_bookkeeping()
+            self.create_bookkeeping(
+                labels_to_indices=labels_to_indices,
+                indices_to_labels=indices_to_labels,
+            )
 
     def __getitem__(self, item):
         return self.dataset[item]
@@ -59,7 +62,7 @@ class MetaDataset(Dataset):
     def __len__(self):
         return len(self.dataset)
 
-    def create_bookkeeping(self):
+    def create_bookkeeping(self, labels_to_indices=None, indices_to_labels=None):
         """
         Iterates over the entire dataset and creates a map of target to indices.
 
@@ -69,20 +72,36 @@ class MetaDataset(Dataset):
         assert hasattr(self.dataset, '__getitem__'), \
             'Requires iterable-style dataset.'
 
-        labels_to_indices = defaultdict(list)
-        indices_to_labels = defaultdict(int)
-        for i in range(len(self.dataset)):
-            try:
-                label = self.dataset[i][1]
-                # if label is a Tensor, then take get the scalar value
-                if hasattr(label, 'item'):
-                    label = self.dataset[i][1].item()
-            except ValueError as e:
-                raise ValueError(
-                    'Requires scalar labels. \n' + str(e))
+        # Bootstrap from arguments
+        if labels_to_indices is not None:
+            self.indices_to_labels = {
+                idx: label
+                for label, indices in labels_to_indices.items()
+                for idx in indices
+            }
+            self.labels_to_indices = labels_to_indices
+            self.labels = labels_to_indices.keys()
+        elif indices_to_labels is not None:
+            self.labels_to_indices = defaultdict(list)
+            for idx, label in indices_to_labels.items():
+                self.labels_to_indices[label].append(idx)
+            self.indices_to_labels = indices_to_labels
+            self.labels = labels_to_indices.keys()
+        else:  # Create from scratch
+            labels_to_indices = defaultdict(list)
+            indices_to_labels = defaultdict(int)
+            for i in range(len(self.dataset)):
+                try:
+                    label = self.dataset[i][1]
+                    # if label is a Tensor, then take get the scalar value
+                    if hasattr(label, 'item'):
+                        label = self.dataset[i][1].item()
+                except ValueError as e:
+                    raise ValueError(
+                        'Requires scalar labels. \n' + str(e))
 
-            labels_to_indices[label].append(i)
-            indices_to_labels[i] = label
+                labels_to_indices[label].append(i)
+                indices_to_labels[i] = label
 
         self.labels_to_indices = labels_to_indices
         self.indices_to_labels = indices_to_labels

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * `l2l.vision.datasets.DescribableTextures`
 * `l2l.vision.datasets.Quickdraw`
+* Add `labels_to_indices` and `indices_to_labels` as optional arguments to `l2l.data.MetaDataset`.
 
 ### Changed
 
