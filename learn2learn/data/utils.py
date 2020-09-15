@@ -2,12 +2,19 @@
 
 import requests
 import tqdm
+import shutil
+
+CHUNK_SIZE = 1 * 1024 * 1024
 
 
-def download_file(source, destination):
-    req = requests.get(source)
+def download_file(source, destination, size=None):
+    req = requests.get(source, stream=True)
     with open(destination, 'wb') as archive:
-        for chunk in tqdm.tqdm(req.iter_content(chunk_size=32768), leave=False):
+        for chunk in tqdm.tqdm(
+            req.iter_content(chunk_size=CHUNK_SIZE),
+            total=size // CHUNK_SIZE,
+            leave=False,
+        ):
             if chunk:
                 archive.write(chunk)
 
