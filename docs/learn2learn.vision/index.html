@@ -534,6 +534,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#fgvcfungi" class="md-nav__link">
+    FGVCFungi
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -838,6 +845,13 @@
           <li class="md-nav__item">
   <a href="#quickdraw" class="md-nav__link">
     Quickdraw
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fgvcfungi" class="md-nav__link">
+    FGVCFungi
   </a>
   
 </li>
@@ -1442,6 +1456,52 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="fgvcfungi">FGVCFungi<a class="headerlink" href="#fgvcfungi" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+          <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
+          <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+          <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_fungi.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The FGVC Fungi dataset was originally introduced in the 5th Workshop on Fine-Grained Visual Categorization (FGVC)
+and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 1,394 classes and 89,760 images of fungi.
+We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
+<p><em>Important</em>
+You must agree to the original Terms of Use to use this dataset.
+More information here: <a href="https://github.com/visipedia/fgvcx_fungi_comp">https://github.com/visipedia/fgvcx_fungi_comp</a></p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="https://sites.google.com/view/fgvc5/home">https://sites.google.com/view/fgvc5/home</a></li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="https://github.com/visipedia/fgvcx_fungi_comp">https://github.com/visipedia/fgvcx_fungi_comp</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
