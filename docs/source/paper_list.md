@@ -9,6 +9,173 @@ The following papers were announced on the [learn2learn Twitter account](https:/
 ## Submitted Papers
 
     
+**On modulating the gradient for meta-learning**
+<br />
+by *Simon, Christian and Koniusz, Piotr and Nock, Richard and
+Harandi, Mehrtash*
+<br />
+[https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123530545.pdf](https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123530545.pdf)
+
+
+**Meta-Learning with Shared Amortized Variational Inference**
+<br />
+by *Iakovleva, Ekaterina and Verbeek, Jakob and Alahari, Karteek*
+<br />
+[http://arxiv.org/abs/2008.12037](http://arxiv.org/abs/2008.12037)
+
+
+**learn2learn: A Library for Meta-Learning Research**
+<br />
+by *Arnold, Sébastien M R and Mahajan, Praateek and Datta,
+Debajyoti and Bunner, Ian and Zarkias, Konstantinos Saitas*
+<br />
+[http://arxiv.org/abs/2008.12284](http://arxiv.org/abs/2008.12284)
+
+
+**A Universal Representation Transformer Layer for Few-Shot
+Image Classification**
+<br />
+by *Liu, Lu and Hamilton, William and Long, Guodong and Jiang,
+Jing and Larochelle, Hugo*
+<br />
+[http://arxiv.org/abs/2006.11702](http://arxiv.org/abs/2006.11702)
+
+
+**Safe Model-Based Meta-Reinforcement Learning: A
+Sequential Exploration-Exploitation Framework**
+<br />
+by *Lew, Thomas and Sharma, Apoorva and Harrison, James and
+Pavone, Marco*
+<br />
+[http://arxiv.org/abs/2008.11700](http://arxiv.org/abs/2008.11700)
+
+
+**Learning to Learn in a Semi-Supervised Fashion**
+<br />
+by *Chen, Yun-Chun and Chou, Chao-Te and Wang, Yu-Chiang Frank*
+<br />
+[http://arxiv.org/abs/2008.11203](http://arxiv.org/abs/2008.11203)
+
+
+**The Advantage of Conditional Meta-Learning for Biased
+Regularization and Fine-Tuning**
+<br />
+by *Denevi, Giulia and Pontil, Massimiliano and Ciliberto, Carlo*
+<br />
+[http://arxiv.org/abs/2008.10857](http://arxiv.org/abs/2008.10857)
+
+
+**Adaptive Multi-level Hyper-gradient Descent**
+<br />
+by *Jie, Renlong and Gao, Junbin and Vasnev, Andrey and Tran,
+Minh-Ngoc*
+<br />
+[http://arxiv.org/abs/2008.07277](http://arxiv.org/abs/2008.07277)
+
+
+**Few-Shot Image Classification via Contrastive
+Self-Supervised Learning**
+<br />
+by *Li, Jianyi and Liu, Guizhong*
+<br />
+[http://arxiv.org/abs/2008.09942](http://arxiv.org/abs/2008.09942)
+
+
+**Does MAML really want feature reuse only?**
+<br />
+by *Oh, Jaehoon and Yoo, Hyungjun and Kim, Changhwan and Yun,
+Se-Young*
+<br />
+[http://arxiv.org/abs/2008.08882](http://arxiv.org/abs/2008.08882)
+
+
+**Meta Learning MPC using Finite-Dimensional Gaussian
+Process Approximations**
+<br />
+by *Arcari, Elena and Carron, Andrea and Zeilinger, Melanie N*
+<br />
+[http://arxiv.org/abs/2008.05984](http://arxiv.org/abs/2008.05984)
+
+
+**Offline Meta-Reinforcement Learning with Advantage
+Weighting**
+<br />
+by *Mitchell, Eric and Rafailov, Rafael and Peng, Xue Bin and
+Levine, Sergey and Finn, Chelsea*
+<br />
+[http://arxiv.org/abs/2008.06043](http://arxiv.org/abs/2008.06043)
+
+
+**Explore then Execute: Adapting without Rewards via
+Factorized Meta-Reinforcement Learning**
+<br />
+by *Liu, Evan Zheran and Raghunathan, Aditi and Liang, Percy and
+Finn, Chelsea*
+<br />
+[http://arxiv.org/abs/2008.02790](http://arxiv.org/abs/2008.02790)
+
+
+**Offline Meta Reinforcement Learning**
+<br />
+by *Dorfman, Ron and Tamar, Aviv*
+<br />
+[http://arxiv.org/abs/2008.02598](http://arxiv.org/abs/2008.02598)
+
+
+**Few-Shot Learning via Learning the Representation,
+Provably**
+<br />
+by *Du, Simon S and Hu, Wei and Kakade, Sham M and Lee, Jason D
+and Lei, Qi*
+<br />
+[http://arxiv.org/abs/2002.09434](http://arxiv.org/abs/2002.09434)
+
+
+**Multi-Task Reinforcement Learning as a Hidden-Parameter
+Block MDP**
+<br />
+by *Zhang, Amy and Sodhani, Shagun and Khetarpal, Khimya and
+Pineau, Joelle*
+<br />
+[http://arxiv.org/abs/2007.07206](http://arxiv.org/abs/2007.07206)
+
+
+**CAMPs: Learning Context-Specific Abstractions for
+Efficient Planning in Factored MDPs**
+<br />
+by *Chitnis, Rohan and Silver, Tom and Kim, Beomjoon and
+Kaelbling, Leslie Pack and Lozano-Perez, Tomas*
+<br />
+[http://arxiv.org/abs/2007.13202](http://arxiv.org/abs/2007.13202)
+
+
+**Unsupervised Learning of Visual Features by Contrasting
+Cluster Assignments**
+<br />
+by *Caron, Mathilde and Misra, Ishan and Mairal, Julien and
+Goyal, Priya and Bojanowski, Piotr and Joulin, Armand*
+<br />
+[http://arxiv.org/abs/2006.09882](http://arxiv.org/abs/2006.09882)
+
+
+**MiCo: Mixup Co-Training for Semi-Supervised Domain
+Adaptation**
+<br />
+by *Yang, Luyu and Wang, Yan and Gao, Mingfei and Shrivastava,
+Abhinav and Weinberger, Kilian Q and Chao, Wei-Lun and Lim,
+Ser-Nam*
+<br />
+[http://arxiv.org/abs/2007.12684](http://arxiv.org/abs/2007.12684)
+
+
+**Adaptive Task Sampling for Meta-Learning**
+<br />
+by *Liu, Chenghao and Wang, Zhihao and Sahoo, Doyen and Fang,
+Yuan and Zhang, Kun and Hoi, Steven C H*
+<br />
+[http://arxiv.org/abs/2007.08735](http://arxiv.org/abs/2007.08735)
+
+
 **Discovering Reinforcement Learning Algorithms**
 <br />
 by *Oh, Junhyuk and Hessel, Matteo and Czarnecki, Wojciech M and

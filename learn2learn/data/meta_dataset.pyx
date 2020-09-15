@@ -18,20 +18,25 @@ class MetaDataset(Dataset):
 
     **Description**
 
-    It wraps a torch dataset by creating a map of target to indices.
-    This comes in handy when we want to sample elements randomly for a particular label.
+    Wraps a classification dataset to enable fast indexing of samples within classes.
 
-    Notes:
-        For l2l to work its important that the dataset returns a (data, target) tuple.
-        If your dataset doesn't return that, it should be trivial to wrap your dataset
-        with another class to do that.
-        #TODO : Add example for wrapping a non standard l2l dataset
+    This class exposes two attributes specific to the wrapped dataset:
+
+    * `labels_to_indices`: maps a class label to a list of sample indices with that label.
+    * `indices_to_labels`: maps a sample index to its corresponding class label.
+
+    Those dictionary attributes are often used to quickly create few-shot classification tasks.
+    They can be passed as arguments upon instantiation, or automatically built on-the-fly.
+    If the wrapped dataset has an attribute `_bookkeeping_path`, then the built attributes will be cached on disk and reloaded upon the next instantiation.
+    This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the first instantiation can take several hours.
+
+    Note that if only one of `labels_to_indices` or `indices_to_labels` is provided, this class builds the other one from it.
 
     **Arguments**
 
-    * **dataset** (Dataset) -  A torch dataset.
-    * **labels_to_indices** (Dict) -  A dictionary mapping label to their indices.
-                                     If not specified then we loop through all the datapoints to understand the mapping. (default: None)
+    * **dataset** (Dataset) -  A torch Dataset.
+    * **labels_to_indices** (dict, **optional**, default=None) -  A dictionary mapping labels to the indices of their samples.
+    * **indices_to_labels** (dict, **optional**, default=None) -  A dictionary mapping sample indices to their corresponding label.
 
     **Example**
     ~~~python
@@ -40,7 +45,7 @@ class MetaDataset(Dataset):
     ~~~
     """
 
-    def __init__(self, dataset):
+    def __init__(self, dataset, labels_to_indices=None, indices_to_labels=None):
 
         if not isinstance(dataset, Dataset):
             raise TypeError(
@@ -51,7 +56,10 @@ class MetaDataset(Dataset):
         if hasattr(dataset, '_bookkeeping_path'):
             self.load_bookkeeping(dataset._bookkeeping_path)
         else:
-            self.create_bookkeeping()
+            self.create_bookkeeping(
+                labels_to_indices=labels_to_indices,
+                indices_to_labels=indices_to_labels,
+            )
 
     def __getitem__(self, item):
         return self.dataset[item]
@@ -59,7 +67,7 @@ class MetaDataset(Dataset):
     def __len__(self):
         return len(self.dataset)
 
-    def create_bookkeeping(self):
+    def create_bookkeeping(self, labels_to_indices=None, indices_to_labels=None):
         """
         Iterates over the entire dataset and creates a map of target to indices.
 
@@ -69,20 +77,36 @@ class MetaDataset(Dataset):
         assert hasattr(self.dataset, '__getitem__'), \
             'Requires iterable-style dataset.'
 
-        labels_to_indices = defaultdict(list)
-        indices_to_labels = defaultdict(int)
-        for i in range(len(self.dataset)):
-            try:
-                label = self.dataset[i][1]
-                # if label is a Tensor, then take get the scalar value
-                if hasattr(label, 'item'):
-                    label = self.dataset[i][1].item()
-            except ValueError as e:
-                raise ValueError(
-                    'Requires scalar labels. \n' + str(e))
+        # Bootstrap from arguments
+        if labels_to_indices is not None:
+            self.indices_to_labels = {
+                idx: label
+                for label, indices in labels_to_indices.items()
+                for idx in indices
+            }
+            self.labels_to_indices = labels_to_indices
+            self.labels = labels_to_indices.keys()
+        elif indices_to_labels is not None:
+            self.labels_to_indices = defaultdict(list)
+            for idx, label in indices_to_labels.items():
+                self.labels_to_indices[label].append(idx)
+            self.indices_to_labels = indices_to_labels
+            self.labels = labels_to_indices.keys()
+        else:  # Create from scratch
+            labels_to_indices = defaultdict(list)
+            indices_to_labels = defaultdict(int)
+            for i in range(len(self.dataset)):
+                try:
+                    label = self.dataset[i][1]
+                    # if label is a Tensor, then take get the scalar value
+                    if hasattr(label, 'item'):
+                        label = self.dataset[i][1].item()
+                except ValueError as e:
+                    raise ValueError(
+                        'Requires scalar labels. \n' + str(e))
 
-            labels_to_indices[label].append(i)
-            indices_to_labels[i] = label
+                labels_to_indices[label].append(i)
+                indices_to_labels[i] = label
 
         self.labels_to_indices = labels_to_indices
         self.indices_to_labels = indices_to_labels

@@ -17,3 +17,4 @@ from .fgvc_aircraft import FGVCAircraft
 from .cu_birds200 import CUBirds200
 from .describable_textures import DescribableTextures
 from .quickdraw import Quickdraw
+from .fgvc_fungi import FGVCFungi
