@@ -18,20 +18,25 @@ class MetaDataset(Dataset):
 
     **Description**
 
-    It wraps a torch dataset by creating a map of target to indices.
-    This comes in handy when we want to sample elements randomly for a particular label.
+    Wraps a classification dataset to enable fast indexing of samples within classes.
 
-    Notes:
-        For l2l to work its important that the dataset returns a (data, target) tuple.
-        If your dataset doesn't return that, it should be trivial to wrap your dataset
-        with another class to do that.
-        #TODO : Add example for wrapping a non standard l2l dataset
+    This class exposes two attributes specific to the wrapped dataset:
+
+    * `labels_to_indices`: maps a class label to a list of sample indices with that label.
+    * `indices_to_labels`: maps a sample index to its corresponding class label.
+
+    Those dictionary attributes are often used to quickly create few-shot classification tasks.
+    They can be passed as arguments upon instantiation, or automatically built on-the-fly.
+    If the wrapped dataset has an attribute `_bookkeeping_path`, then the built attributes will be cached on disk and reloaded upon the next instantiation.
+    This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the first instantiation can take several hours.
+
+    Note that if only one of `labels_to_indices` or `indices_to_labels` is provided, this class builds the other one from it.
 
     **Arguments**
 
-    * **dataset** (Dataset) -  A torch dataset.
-    * **labels_to_indices** (Dict) -  A dictionary mapping label to their indices.
-                                     If not specified then we loop through all the datapoints to understand the mapping. (default: None)
+    * **dataset** (Dataset) -  A torch Dataset.
+    * **labels_to_indices** (dict, **optional**, default=None) -  A dictionary mapping labels to the indices of their samples.
+    * **indices_to_labels** (dict, **optional**, default=None) -  A dictionary mapping sample indices to their corresponding label.
 
     **Example**
     ~~~python
