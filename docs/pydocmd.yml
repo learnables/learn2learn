@@ -78,6 +78,7 @@ generate:
               - learn2learn.vision.datasets.DescribableTextures
               - learn2learn.vision.datasets.CUBirds200
               - learn2learn.vision.datasets.Quickdraw
+              - learn2learn.vision.datasets.FGVCFungi
           - learn2learn.vision.transforms:
               - learn2learn.vision.transforms.RandomClassRotation
           - learn2learn.vision.benchmarks:
