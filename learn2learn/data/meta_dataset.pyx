@@ -79,19 +79,15 @@ class MetaDataset(Dataset):
 
         # Bootstrap from arguments
         if labels_to_indices is not None:
-            self.indices_to_labels = {
+            indices_to_labels = {
                 idx: label
                 for label, indices in labels_to_indices.items()
                 for idx in indices
             }
-            self.labels_to_indices = labels_to_indices
-            self.labels = labels_to_indices.keys()
         elif indices_to_labels is not None:
-            self.labels_to_indices = defaultdict(list)
+            labels_to_indices = defaultdict(list)
             for idx, label in indices_to_labels.items():
-                self.labels_to_indices[label].append(idx)
-            self.indices_to_labels = indices_to_labels
-            self.labels = labels_to_indices.keys()
+                labels_to_indices[label].append(idx)
         else:  # Create from scratch
             labels_to_indices = defaultdict(list)
             indices_to_labels = defaultdict(int)
