@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-import torchvision as tv
 import learn2learn as l2l
 
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
+from torchvision.transforms import (Compose, ToPILImage, ToTensor, RandomCrop, RandomHorizontalFlip,
+                                    ColorJitter, Normalize)
 
 
 def tiered_imagenet_tasksets(
@@ -12,22 +13,55 @@ def tiered_imagenet_tasksets(
     test_ways=5,
     test_samples=10,
     root='~/data',
+    data_augmentation=None,
     **kwargs,
 ):
     """Tasksets for tiered-ImageNet benchmarks."""
-    data_transform = tv.transforms.ToTensor()
-    train_dataset = l2l.vision.datasets.TieredImagenet(root=root,
-                                                       transform=data_transform,
-                                                       mode='train',
-                                                       download=True)
-    valid_dataset = l2l.vision.datasets.TieredImagenet(root=root,
-                                                       transform=data_transform,
-                                                       mode='validation',
-                                                       download=True)
-    test_dataset = l2l.vision.datasets.TieredImagenet(root=root,
-                                                      transform=data_transform,
-                                                      mode='test',
-                                                      download=True)
+    if data_augmentation is None:
+        train_data_transforms = ToTensor()
+        test_data_transforms = train_data_transforms
+    elif data_augmentation == 'normalize':
+        train_data_transforms = Compose([
+            ToTensor(),
+        ])
+        test_data_transforms = train_data_transforms
+    elif data_augmentation == 'lee2019':
+        normalize = Normalize(
+            mean=[120.39586422/255.0, 115.59361427/255.0, 104.54012653/255.0],
+            std=[70.68188272/255.0, 68.27635443/255.0, 72.54505529/255.0],
+        )
+        train_data_transforms = Compose([
+            RandomCrop(84, padding=8),
+            ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
+            RandomHorizontalFlip(),
+            ToTensor(),
+            normalize,
+        ])
+        test_data_transforms = Compose([
+            ToTensor(),
+            normalize,
+        ])
+    else:
+        raise('Invalid data_augmentation argument.')
+
+    train_dataset = l2l.vision.datasets.TieredImagenet(
+        root=root,
+        transform=train_data_transforms,
+        mode='train',
+        download=True,
+    )
+    valid_dataset = l2l.vision.datasets.TieredImagenet(
+        root=root,
+        transform=test_data_transforms,
+        mode='validation',
+        download=True,
+    )
+    test_dataset = l2l.vision.datasets.TieredImagenet(
+        root=root,
+        transform=test_data_transforms,
+        mode='test',
+        download=True,
+    )
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)
