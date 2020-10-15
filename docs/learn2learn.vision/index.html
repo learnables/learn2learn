@@ -451,6 +451,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#resnet12" class="md-nav__link">
+    ResNet12
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -530,13 +537,6 @@
           <li class="md-nav__item">
   <a href="#quickdraw" class="md-nav__link">
     Quickdraw
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fgvcfungi" class="md-nav__link">
-    FGVCFungi
   </a>
   
 </li>
@@ -699,18 +699,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../paper_list/" title="Paper List" class="md-nav__link">
-      Paper List
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
     <a href="https://github.com/learnables/learn2learn/" title="GitHub" class="md-nav__link">
       GitHub
     </a>
@@ -762,6 +750,13 @@
           <li class="md-nav__item">
   <a href="#miniimagenetcnn" class="md-nav__link">
     MiniImagenetCNN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resnet12" class="md-nav__link">
+    ResNet12
   </a>
   
 </li>
@@ -845,13 +840,6 @@
           <li class="md-nav__item">
   <a href="#quickdraw" class="md-nav__link">
     Quickdraw
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#fgvcfungi" class="md-nav__link">
-    FGVCFungi
   </a>
   
 </li>
@@ -948,7 +936,7 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 </code></pre></div>
 </td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py">[Source]</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.</p>
 <p><strong>References</strong></p>
@@ -975,7 +963,7 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 </code></pre></div>
 </td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py">Source</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">Source</a></p>
 <p><strong>Description</strong></p>
 <p>The convolutional network commonly used for Omniglot, as described by Finn et al, 2017.</p>
 <p>This network assumes inputs of shapes (1, 28, 28).</p>
@@ -999,7 +987,7 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 </code></pre></div>
 </td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py">[Source]</a></p>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.</p>
 <p>This network assumes inputs of shapes (3, 84, 84).</p>
@@ -1015,6 +1003,55 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 </ul>
 <p><strong>Example</strong></p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MiniImagenetCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="resnet12">ResNet12<a class="headerlink" href="#resnet12" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
+         <span class="n">hidden_size</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span>
+         <span class="n">keep_prob</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+         <span class="n">avg_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">drop_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+         <span class="n">dropblock_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/resnet12.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The 12-layer residual network from Mishra et al, 2017.</p>
+<p>The code is adapted from <a href="https://github.com/kjunelee/MetaOptNet/">Lee et al, 2019</a>
+who share it under the Apache 2 license.</p>
+<p>List of changes:</p>
+<ul>
+<li>Rename ResNet to ResNet12.</li>
+<li>Small API modifications.</li>
+<li>Fix code style to be compatible with PEP8.</li>
+<li>Support multiple devices in DropBlock</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Mishra et al. 2017. “A Simple Neural Attentive Meta-Learner.” ICLR 18.</li>
+<li>Lee et al. 2019. “Meta-Learning with Differentiable Convex Optimization.” CVPR 19.</li>
+<li>Lee et al's code: <a href="https://github.com/kjunelee/MetaOptNet/">https://github.com/kjunelee/MetaOptNet/</a></li>
+<li>Oreshkin et al. 2018. “TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning.” NeurIPS 18.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the output.</li>
+<li><strong>hidden_size</strong> (list, <em>optional</em>, default=640) - Size of the embedding once features are extracted.
+    (640 is for mini-ImageNet; used for the classifier layer)</li>
+<li><strong>keep_prob</strong> (float, <em>optional</em>, default=1.0) - Dropout rate on the embedding layer.</li>
+<li><strong>avg_pool</strong> (bool, <em>optional</em>, default=True) - Set to False for the 16k-dim embeddings of Lee et al, 2019.</li>
+<li><strong>drop_rate</strong> (float, <em>optional</em>, default=0.1) - Dropout rate for the residual layers.</li>
+<li><strong>dropblock_size</strong> (int, <em>optional</em>, default=5) - Size of drop blocks.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -1456,52 +1493,6 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
-<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
-<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
-
-<h3 id="fgvcfungi">FGVCFungi<a class="headerlink" href="#fgvcfungi" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
-          <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span>
-          <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-          <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-          <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
-
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_fungi.py">[Source]</a></p>
-<p><strong>Description</strong></p>
-<p>The FGVC Fungi dataset was originally introduced in the 5th Workshop on Fine-Grained Visual Categorization (FGVC)
-and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
-<p>The dataset consists of 1,394 classes and 89,760 images of fungi.
-We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
-<p><em>Important</em>
-You must agree to the original Terms of Use to use this dataset.
-More information here: <a href="https://github.com/visipedia/fgvcx_fungi_comp">https://github.com/visipedia/fgvcx_fungi_comp</a></p>
-<p><strong>References</strong></p>
-<ol>
-<li><a href="https://sites.google.com/view/fgvc5/home">https://sites.google.com/view/fgvc5/home</a></li>
-<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
-<li><a href="https://github.com/visipedia/fgvcx_fungi_comp">https://github.com/visipedia/fgvcx_fungi_comp</a></li>
-</ol>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><strong>root</strong> (str) - Path to download the data.</li>
-<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
-    Must be 'train', 'validation', or 'test'.</li>
-<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
-<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
-<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
-</ul>
-<p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>

@@ -604,18 +604,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../paper_list/" title="Paper List" class="md-nav__link">
-      Paper List
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
     <a href="https://github.com/learnables/learn2learn/" title="GitHub" class="md-nav__link">
       GitHub
     </a>
@@ -740,23 +728,27 @@
                 <h1 id="learn2learndata">learn2learn.data<a class="headerlink" href="#learn2learndata" title="Permanent link">&para;</a></h1>
 <p>A set of utilities for data &amp; tasks loading, preprocessing, and sampling.</p>
 <h2 id="metadataset">MetaDataset<a class="headerlink" href="#metadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels_to_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indices_to_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
 <p><strong>Description</strong></p>
-<p>It wraps a torch dataset by creating a map of target to indices.
-This comes in handy when we want to sample elements randomly for a particular label.</p>
-<p>Notes:
-    For l2l to work its important that the dataset returns a (data, target) tuple.
-    If your dataset doesn't return that, it should be trivial to wrap your dataset
-    with another class to do that.
-    <a href="#TODO"><code>TODO</code></a> : Add example for wrapping a non standard l2l dataset</p>
+<p>Wraps a classification dataset to enable fast indexing of samples within classes.</p>
+<p>This class exposes two attributes specific to the wrapped dataset:</p>
+<ul>
+<li><code>labels_to_indices</code>: maps a class label to a list of sample indices with that label.</li>
+<li><code>indices_to_labels</code>: maps a sample index to its corresponding class label.</li>
+</ul>
+<p>Those dictionary attributes are often used to quickly create few-shot classification tasks.
+They can be passed as arguments upon instantiation, or automatically built on-the-fly.
+If the wrapped dataset has an attribute <code>_bookkeeping_path</code>, then the built attributes will be cached on disk and reloaded upon the next instantiation.
+This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the first instantiation can take several hours.</p>
+<p>Note that if only one of <code>labels_to_indices</code> or <code>indices_to_labels</code> is provided, this class builds the other one from it.</p>
 <p><strong>Arguments</strong></p>
 <ul>
-<li><strong>dataset</strong> (Dataset) -  A torch dataset.</li>
-<li><strong>labels_to_indices</strong> (Dict) -  A dictionary mapping label to their indices.
-                                 If not specified then we loop through all the datapoints to understand the mapping. (default: None)</li>
+<li><strong>dataset</strong> (Dataset) -  A torch Dataset.</li>
+<li><strong>labels_to_indices</strong> (dict, <strong>optional</strong>, default=None) -  A dictionary mapping labels to the indices of their samples.</li>
+<li><strong>indices_to_labels</strong> (dict, <strong>optional</strong>, default=None) -  A dictionary mapping sample indices to their corresponding label.</li>
 </ul>
 <p><strong>Example</strong></p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
