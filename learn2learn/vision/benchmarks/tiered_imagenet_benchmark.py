@@ -22,7 +22,7 @@ def tiered_imagenet_tasksets(
         test_data_transforms = train_data_transforms
     elif data_augmentation == 'normalize':
         train_data_transforms = Compose([
-            lambda x: x / 255.0,
+            ToTensor(),
         ])
         test_data_transforms = train_data_transforms
     elif data_augmentation == 'lee2019':
