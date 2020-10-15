@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-**Description**
-
-A set of commonly used models for meta-learning vision tasks.
-For simplicity, all models' `forward` conform to the following API:
-
-~~~python
-def forward(self, x):
-    x = self.features(x)
-    x = self.classifier(x)
-    return x
-~~~
-"""
-
 import torch
 import learn2learn as l2l
 
@@ -142,8 +128,7 @@ class ConvBase(torch.nn.Sequential):
 
 class OmniglotFC(torch.nn.Module):
     """
-
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py)
 
     **Description**
 
@@ -165,7 +150,6 @@ class OmniglotFC(torch.nn.Module):
                      output_size=10,
                      sizes=[64, 64, 64])
     ~~~
-
     """
 
     def __init__(self, input_size, output_size, sizes=None):
@@ -192,7 +176,7 @@ class OmniglotFC(torch.nn.Module):
 class OmniglotCNN(torch.nn.Module):
     """
 
-    [Source](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
+    [Source](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py)
 
     **Description**
 
@@ -244,7 +228,7 @@ class OmniglotCNN(torch.nn.Module):
 class MiniImagenetCNN(torch.nn.Module):
     """
 
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py)
 
     **Description**
 

@@ -9,6 +9,37 @@ The following papers were announced on the [learn2learn Twitter account](https:/
 ## Submitted Papers
 
     
+**Grounded Language Learning Fast and Slow**
+<br />
+by *Hill, Felix and Tieleman, Olivier and von Glehn, Tamara and
+Wong, Nathaniel and Merzic, Hamza and Clark, Stephen*
+<br />
+[http://arxiv.org/abs/2009.01719](http://arxiv.org/abs/2009.01719)
+
+
+**Sparse Meta Networks for Sequential Adaptation and its
+Application to Adaptive Language Modelling**
+<br />
+by *Munkhdalai, Tsendsuren*
+<br />
+[http://arxiv.org/abs/2009.01803](http://arxiv.org/abs/2009.01803)
+
+
+**Learning with Differentiable Perturbed Optimizers**
+<br />
+by *Berthet, Quentin and Blondel, Mathieu and Teboul, Olivier
+and Cuturi, Marco and Vert, Jean-Philippe and Bach, Francis*
+<br />
+[http://arxiv.org/abs/2002.08676](http://arxiv.org/abs/2002.08676)
+
+
+**What is being transferred in transfer learning?**
+<br />
+by *Neyshabur, Behnam and Sedghi, Hanie and Zhang, Chiyuan*
+<br />
+[http://arxiv.org/abs/2008.11687](http://arxiv.org/abs/2008.11687)
+
+
 **On modulating the gradient for meta-learning**
 <br />
 by *Simon, Christian and Koniusz, Piotr and Nock, Richard and

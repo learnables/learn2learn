@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* `l2l.vision.models.ResNet12`
 * `l2l.vision.datasets.DescribableTextures`
 * `l2l.vision.datasets.Quickdraw`
 * `l2l.vision.datasets.FGVCFungi`
