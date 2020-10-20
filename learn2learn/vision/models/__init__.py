@@ -22,5 +22,6 @@ from .cnn4 import (
     OmniglotFC,
     OmniglotCNN,
     MiniImagenetCNN,
+    CNN4,
 )
 from .resnet12 import ResNet12
