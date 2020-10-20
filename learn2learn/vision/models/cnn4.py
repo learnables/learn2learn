@@ -225,7 +225,7 @@ class OmniglotCNN(torch.nn.Module):
         return x
 
 
-class MiniImagenetCNN(torch.nn.Module):
+class CNN4(torch.nn.Module):
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py)
@@ -248,12 +248,14 @@ class MiniImagenetCNN(torch.nn.Module):
 
     **Example**
     ~~~python
-    model = MiniImagenetCNN(output_size=20, hidden_size=128, layers=3)
+    model = CNN4(output_size=20, hidden_size=128, layers=3)
     ~~~
     """
 
-    def __init__(self, output_size, hidden_size=32, layers=4):
-        super(MiniImagenetCNN, self).__init__()
+    def __init__(self, output_size, hidden_size=32, layers=4, embedding_size=None):
+        super(CNN4, self).__init__()
+        if embedding_size is None:
+            embedding_size = 25 * hidden_size
         base = ConvBase(
             output_size=hidden_size,
             hidden=hidden_size,
@@ -267,7 +269,7 @@ class MiniImagenetCNN(torch.nn.Module):
             l2l.nn.Flatten(),
         )
         self.classifier = torch.nn.Linear(
-            25 * hidden_size,
+            embedding_size,
             output_size,
             bias=True,
         )
@@ -278,3 +280,6 @@ class MiniImagenetCNN(torch.nn.Module):
         x = self.features(x)
         x = self.classifier(x)
         return x
+
+
+MiniImagenetCNN = CNN4

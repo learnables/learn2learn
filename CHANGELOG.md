@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Alias `MiniImageNetCNN` to `CNN4` and add `embedding_size` argument.
 * Optional data augmentation schemes for vision benchmarks.
 * `l2l.vision.models.ResNet12`
 * `l2l.vision.datasets.DescribableTextures`
