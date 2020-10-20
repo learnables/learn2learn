@@ -146,7 +146,8 @@ def clone_module(module, memo=None):
     # Finally, rebuild the flattened parameters for RNNs
     # See this issue for more details:
     # https://github.com/learnables/learn2learn/issues/139
-    clone = clone._apply(lambda x: x)
+    if hasattr(clone, 'flatten_parameters'):
+        clone = clone._apply(lambda x: x)
     return clone
 
 
@@ -301,5 +302,6 @@ def update_module(module, updates=None, memo=None):
     # Finally, rebuild the flattened parameters for RNNs
     # See this issue for more details:
     # https://github.com/learnables/learn2learn/issues/139
-    module._apply(lambda x: x)
+    if hasattr(module, 'flatten_parameters'):
+        module._apply(lambda x: x)
     return module
