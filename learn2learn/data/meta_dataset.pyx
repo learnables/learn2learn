@@ -192,3 +192,55 @@ class UnionMetaDataset(MetaDataset):
 
     def __len__(self):
         return len(self.indices_to_labels)
+
+
+class FilteredMetaDataset(MetaDataset):
+
+    """
+
+    **Description**
+
+    Takes in a MetaDataset and filters it to only include a subset of its labels.
+
+    Note: The labels of all datasets are **not** remapped.
+    (i.e. the labels from the original dataset are retained)
+
+    **Arguments**
+
+    * **datasets** (Dataset) -  A torch Datasets.
+    * **labels** (list of ints) - A list of labels to keep.
+
+    **Example**
+    ~~~python
+    train = torchvision.datasets.CIFARFS(root="/tmp/mnist", mode="train")
+    train = l2l.data.MetaDataset(train)
+    filtered = FilteredMetaDataset(train, [4, 8, 2, 1, 9])
+    assert len(filtered.labels) == 5
+    ~~~
+    """
+
+    def __init__(self, dataset, labels):
+        if not isinstance(dataset, MetaDataset):
+            dataset = MetaDataset(dataset)
+        self.dataset = dataset
+        self.to_true_indices = []
+        labels_to_indices = defaultdict(list)
+        indices_to_labels = defaultdict(int)
+        idx_count = 0
+        for label in labels:
+            for true_idx in dataset.labels_to_indices[label]:
+                self.to_true_indices.append(true_idx)
+                labels_to_indices[label].append(idx_count)
+                indices_to_labels[idx_count] = dataset.indices_to_labels[true_idx]
+                idx_count += 1
+
+        self.labels_to_indices = labels_to_indices
+        self.indices_to_labels = indices_to_labels
+        self.labels = list(self.labels_to_indices.keys())
+
+    def __getitem__(self, item):
+        true_idx = self.to_true_indices[item]
+        return self.dataset[true_idx]
+
+    def __len__(self):
+        return len(self.indices_to_labels)
