@@ -191,4 +191,4 @@ class UnionMetaDataset(MetaDataset):
             ds_count += len(dataset)
 
     def __len__(self):
-        return len(self.labels_to_indices)
+        return len(self.indices_to_labels)

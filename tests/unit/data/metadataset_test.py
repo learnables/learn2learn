@@ -76,6 +76,7 @@ class TestMetaDataset(TestCase):
             ]
             datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
             union = l2l.data.UnionMetaDataset(datasets)
+            self.assertEqual(len(union), sum([len(ds) for ds in datasets]))
             self.assertTrue(len(union.labels) == sum([len(ds.labels) for ds in datasets]))
             self.assertTrue(len(union.indices_to_labels) == sum([len(ds.indices_to_labels) for ds in datasets]))
             ref = datasets[1][23]
