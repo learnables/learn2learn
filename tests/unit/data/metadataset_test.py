@@ -76,6 +76,7 @@ class TestMetaDataset(TestCase):
             ]
             datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
             union = l2l.data.UnionMetaDataset(datasets)
+            self.assertEqual(len(union), sum([len(ds) for ds in datasets]))
             self.assertTrue(len(union.labels) == sum([len(ds.labels) for ds in datasets]))
             self.assertTrue(len(union.indices_to_labels) == sum([len(ds.indices_to_labels) for ds in datasets]))
             ref = datasets[1][23]
@@ -86,6 +87,29 @@ class TestMetaDataset(TestCase):
             item = union[len(datasets[0]) + 0]
             # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
             self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
+
+    def test_filtered_metadataset(self):
+        for ds_class in [
+            l2l.vision.datasets.FC100,
+            l2l.vision.datasets.CIFARFS,
+        ]:
+            datasets = [
+                ds_class('~/data', mode='train', download=True),
+                ds_class('~/data', mode='validation', download=True),
+                ds_class('~/data', mode='test', download=True),
+            ]
+            datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
+            union = l2l.data.UnionMetaDataset(datasets)
+            classes = datasets[1].labels
+            filtered = l2l.data.FilteredMetaDataset(union, classes)
+            self.assertEqual(len(filtered.labels), len(datasets[1].labels))
+            self.assertEqual(len(filtered), len(datasets[1]))
+            for label in filtered.labels:
+                self.assertTrue(label in datasets[1].labels)
+                self.assertEqual(
+                    len(filtered.labels_to_indices[label]),
+                    len(datasets[1].labels_to_indices[label])
+                )
 
 
 if __name__ == '__main__':

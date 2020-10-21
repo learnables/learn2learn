@@ -15,6 +15,7 @@ generate:
       - learn2learn.data:
           - learn2learn.data.MetaDataset
           - learn2learn.data.UnionMetaDataset
+          - learn2learn.data.FilteredMetaDataset
           - learn2learn.data.TaskDataset
           - learn2learn.data.transforms:
               - learn2learn.data.transforms.LoadData
