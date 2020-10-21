@@ -81,11 +81,11 @@ class TestMetaDataset(TestCase):
             self.assertTrue(len(union.indices_to_labels) == sum([len(ds.indices_to_labels) for ds in datasets]))
             ref = datasets[1][23]
             item = union[len(datasets[0]) + 23]
-            self.assertTrue(item[1] == ref[1])
+            # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
             self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
             ref = datasets[1][0]
             item = union[len(datasets[0]) + 0]
-            self.assertTrue(item[1] == ref[1])
+            # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
             self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
 
 
