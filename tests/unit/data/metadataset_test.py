@@ -3,6 +3,7 @@
 import unittest
 from unittest import TestCase
 
+import learn2learn as l2l
 import numpy as np
 from numpy.testing import assert_array_equal
 
@@ -62,6 +63,29 @@ class TestMetaDataset(TestCase):
         self.assertEqual(sorted(list(dict_label_to_indices.keys())), self.ds.alphabets)
         for key in dict_label_to_indices:
             self.assertEqual(dict_label_to_indices[key][0], ord(key) - 97)
+
+    def test_union_metadataset(self):
+        for ds_class in [
+            l2l.vision.datasets.FC100,
+            l2l.vision.datasets.CIFARFS,
+        ]:
+            datasets = [
+                ds_class('~/data', mode='train', download=True),
+                ds_class('~/data', mode='validation', download=True),
+                ds_class('~/data', mode='test', download=True),
+            ]
+            datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
+            union = l2l.data.UnionMetaDataset(datasets)
+            self.assertTrue(len(union.labels) == sum([len(ds.labels) for ds in datasets]))
+            self.assertTrue(len(union.indices_to_labels) == sum([len(ds.indices_to_labels) for ds in datasets]))
+            ref = datasets[1][23]
+            item = union[len(datasets[0]) + 23]
+            # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
+            self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
+            ref = datasets[1][0]
+            item = union[len(datasets[0]) + 0]
+            # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
+            self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
 
 
 if __name__ == '__main__':
