@@ -445,8 +445,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#miniimagenetcnn" class="md-nav__link">
-    MiniImagenetCNN
+  <a href="#cnn4" class="md-nav__link">
+    CNN4
   </a>
   
 </li>
@@ -748,8 +748,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#miniimagenetcnn" class="md-nav__link">
-    MiniImagenetCNN
+  <a href="#cnn4" class="md-nav__link">
+    CNN4
   </a>
   
 </li>
@@ -982,8 +982,8 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="miniimagenetcnn">MiniImagenetCNN<a class="headerlink" href="#miniimagenetcnn" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MiniImagenetCNN</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<h3 id="cnn4">CNN4<a class="headerlink" href="#cnn4" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">embedding_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -1002,7 +1002,7 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 <li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MiniImagenetCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 

@@ -382,6 +382,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#unionmetadataset" class="md-nav__link">
+    UnionMetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#taskdataset" class="md-nav__link">
     TaskDataset
   </a>
@@ -638,6 +645,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#unionmetadataset" class="md-nav__link">
+    UnionMetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#taskdataset" class="md-nav__link">
     TaskDataset
   </a>
@@ -754,6 +768,38 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="unionmetadataset">UnionMetaDataset<a class="headerlink" href="#unionmetadataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Description</strong></p>
+<p>Takes multiple MetaDataests and constructs their union.</p>
+<p>Note: The labels of all datasets are remapped to be in consecutive order.
+(i.e. the same label in two datasets will be to two different labels in the union)</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>datasets</strong> (list of Dataset) -  A list of torch Datasets.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">union</span> <span class="o">=</span> <span class="n">UnionMetaDataset</span><span class="p">([</span><span class="n">train</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">test</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">union</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
 </code></pre></div>
 </td></tr></table>
 
