@@ -68,7 +68,6 @@ class TestMetaDataset(TestCase):
         for ds_class in [
             l2l.vision.datasets.FC100,
             l2l.vision.datasets.CIFARFS,
-            l2l.vision.datasets.FullOmniglot,
         ]:
             datasets = [
                 ds_class('~/data', mode='train', download=True),
