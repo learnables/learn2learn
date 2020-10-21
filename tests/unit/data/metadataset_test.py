@@ -103,6 +103,13 @@ class TestMetaDataset(TestCase):
             classes = datasets[1].labels
             filtered = l2l.data.FilteredMetaDataset(union, classes)
             self.assertEqual(len(filtered.labels), len(datasets[1].labels))
+            self.assertEqual(len(filtered), len(datasets[1]))
+            for label in filtered.labels:
+                self.assertTrue(label in datasets[1].labels)
+                self.assertEqual(
+                    len(filtered.labels_to_indices[label]),
+                    len(datasets[1].labels_to_indices[label])
+                )
 
 
 if __name__ == '__main__':
