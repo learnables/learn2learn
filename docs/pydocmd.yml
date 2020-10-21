@@ -14,6 +14,7 @@ generate:
   - docs/learn2learn.data.md:
       - learn2learn.data:
           - learn2learn.data.MetaDataset
+          - learn2learn.data.UnionMetaDataset
           - learn2learn.data.TaskDataset
           - learn2learn.data.transforms:
               - learn2learn.data.transforms.LoadData
@@ -66,7 +67,7 @@ generate:
           - learn2learn.vision.models:
               - learn2learn.vision.models.OmniglotFC
               - learn2learn.vision.models.OmniglotCNN
-              - learn2learn.vision.models.MiniImagenetCNN
+              - learn2learn.vision.models.CNN4
               - learn2learn.vision.models.ResNet12
           - learn2learn.vision.datasets:
               - learn2learn.vision.datasets.FullOmniglot

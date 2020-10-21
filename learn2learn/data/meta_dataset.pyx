@@ -128,3 +128,67 @@ class MetaDataset(Dataset):
     def serialize_bookkeeping(self, path):
         with open(path, 'wb') as f:
             pickle.dump(self._bookkeeping, f, protocol=-1)
+
+
+class UnionMetaDataset(MetaDataset):
+
+    """
+
+    **Description**
+
+    Takes multiple MetaDataests and constructs their union.
+
+    Note: The labels of all datasets are remapped to be in consecutive order.
+    (i.e. the same label in two datasets will be to two different labels in the union)
+
+    **Arguments**
+
+    * **datasets** (list of Dataset) -  A list of torch Datasets.
+
+    **Example**
+    ~~~python
+    train = torchvision.datasets.CIFARFS(root="/tmp/mnist", mode="train")
+    train = l2l.data.MetaDataset(train)
+    valid = torchvision.datasets.CIFARFS(root="/tmp/mnist", mode="validation")
+    valid = l2l.data.MetaDataset(valid)
+    test = torchvision.datasets.CIFARFS(root="/tmp/mnist", mode="test")
+    test = l2l.data.MetaDataset(test)
+    union = UnionMetaDataset([train, valid, test])
+    assert len(union.labels) == 100
+    ~~~
+    """
+
+    def __init__(self, datasets):
+        datasets = [
+            MetaDataset(ds) if not isinstance(ds, MetaDataset) else ds
+            for ds in datasets
+        ]
+        self.datasets = datasets
+        labels_to_indices = defaultdict(list)
+        indices_to_labels = defaultdict(int)
+        labels_count = 0
+        indices_count = 0
+        for dataset in datasets:
+            labels_nooffset = {label: i for i, label in enumerate(dataset.labels)}
+            for idx, label in dataset.indices_to_labels.items():
+                label = labels_nooffset[label]
+                indices_to_labels[indices_count + idx] = labels_count + label
+                labels_to_indices[labels_count + label].append(indices_count + idx)
+            indices_count += len(dataset.indices_to_labels)
+            labels_count += len(dataset.labels_to_indices)
+
+        self.labels_to_indices = labels_to_indices
+        self.indices_to_labels = indices_to_labels
+        self.labels = list(self.labels_to_indices.keys())
+
+    def __getitem__(self, item):
+        ds_count = 0
+        for dataset in self.datasets:
+            if ds_count + len(dataset) > item:
+                data = list(dataset[item - ds_count])
+                data[1] = self.indices_to_labels[item]
+                return data
+            ds_count += len(dataset)
+
+    def __len__(self):
+        return len(self.labels_to_indices)
