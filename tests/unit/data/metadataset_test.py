@@ -68,12 +68,12 @@ class TestMetaDataset(TestCase):
         for ds_class in [
             l2l.vision.datasets.FC100,
             l2l.vision.datasets.CIFARFS,
-            l2l.vision.datasets.MiniImagenet,
+            l2l.vision.datasets.FullOmniglot,
         ]:
             datasets = [
-                ds_class('~/data', mode='train'),
-                ds_class('~/data', mode='validation'),
-                ds_class('~/data', mode='test'),
+                ds_class('~/data', mode='train', download=True),
+                ds_class('~/data', mode='validation', download=True),
+                ds_class('~/data', mode='test', download=True),
             ]
             datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
             union = l2l.data.UnionMetaDataset(datasets)
