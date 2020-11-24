@@ -57,11 +57,11 @@ install(
     cmdclass=cmd_class,
     zip_safe=False,  # as per Cython docs
     version=VERSION,
-    description='PyTorch Meta-Learning Framework for Researchers',
+    description='PyTorch Library for Meta-Learning Research',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    author='Debajyoti Datta, Ian bunner, Seb Arnold, Praateek Mahajan',
-    author_email='smr.arnold@gmail.com, praateekm@gmail.com',
+    author='Debajyoti Datta, Ian Bunner, Seb Arnold, Praateek Mahajan',
+    author_email='smr.arnold@gmail.com',
     url='https://github.com/learnables/learn2learn',
     download_url='https://github.com/learnables/learn2learn/archive/' + str(VERSION) + '.zip',
     license='MIT',
@@ -77,5 +77,7 @@ install(
         'requests',
         'gsutil',
         'tqdm',
+        'qpth>=0.0.15',
+#        'pytorch_lightning>=1.0.2',
     ],
 )
