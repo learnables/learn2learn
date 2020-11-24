@@ -36,13 +36,11 @@ def fast_adapt(batch, learner, loss, adaptation_steps, shots, ways, device):
     # Adapt the model
     for step in range(adaptation_steps):
         train_error = loss(learner(adaptation_data), adaptation_labels)
-        train_error /= len(adaptation_data)
         learner.adapt(train_error)
 
     # Evaluate the adapted model
     predictions = learner(evaluation_data)
     valid_error = loss(predictions, evaluation_labels)
-    valid_error /= len(evaluation_data)
     valid_accuracy = accuracy(predictions, evaluation_labels)
     return valid_error, valid_accuracy
 
