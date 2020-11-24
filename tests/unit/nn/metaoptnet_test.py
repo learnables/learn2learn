@@ -31,8 +31,6 @@ class SVMClassifierTests(unittest.TestCase):
             X = torch.cat(X, dim=0)
             y = torch.cat(y)
             X.requires_grad = True
-            X = X.cuda()
-            y = y.cuda()
             X_support = X + torch.randn_like(X) * NOISE
             X_query = X + torch.randn_like(X) * NOISE
 
