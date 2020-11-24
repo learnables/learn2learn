@@ -50,19 +50,19 @@ class LightningANIL(LightningEpisodicModule):
         if self.data_parallel and torch.cuda.device_count() > 1:
             self.features = torch.nn.DataParallel(self.features)
         self.classifier = l2l.algorithms.MAML(classifier, lr=self.fast_lr)
-        self.save_hyperparameters(
-            "train_ways",
-            "train_shots",
-            "train_queries",
-            "test_ways",
-            "test_shots",
-            "test_queries",
-            "lr",
-            "scheduler_step",
-            "scheduler_decay",
-            "fast_lr",
-            "adaptation_steps",
-        )
+        self.save_hyperparameters({
+            "train_ways": self.train_ways,
+            "train_shots": self.train_shots,
+            "train_queries": self.train_queries,
+            "test_ways": self.test_ways,
+            "test_shots": self.test_shots,
+            "test_queries": self.test_queries,
+            "lr": self.lr,
+            "scheduler_step": self.scheduler_step,
+            "scheduler_decay": self.scheduler_decay,
+            "fast_lr": self.fast_lr,
+            "adaptation_steps": self.adaptation_steps,
+        })
         assert (
             self.train_ways == self.test_ways
         ), "For ANIL, train_ways should be equal to test_ways."

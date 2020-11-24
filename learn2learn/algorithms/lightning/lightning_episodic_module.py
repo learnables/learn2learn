@@ -22,8 +22,6 @@ class LightningEpisodicModule(pl.LightningModule):
     scheduler_step = 20
     scheduler_decay = 1.0
 
-    devices = 0
-
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = ArgumentParser(

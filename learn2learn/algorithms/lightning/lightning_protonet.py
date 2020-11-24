@@ -77,18 +77,18 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
         self.distance_metric = kwargs.get(
             "distance_metric", LightningPrototypicalNetworks.distance_metric
         )
-        self.save_hyperparameters(
-            "train_ways",
-            "train_shots",
-            "train_queries",
-            "test_ways",
-            "test_shots",
-            "test_queries",
-            "lr",
-            "scheduler_step",
-            "scheduler_decay",
-            "distance_metric",
-        )
+        self.save_hyperparameters({
+            "train_ways": self.train_ways,
+            "train_shots": self.train_shots,
+            "train_queries": self.train_queries,
+            "test_ways": self.test_ways,
+            "test_shots": self.test_shots,
+            "test_queries": self.test_queries,
+            "lr": self.lr,
+            "scheduler_step": self.scheduler_step,
+            "scheduler_decay": self.scheduler_decay,
+            "distance_metric": self.distance_metric,
+        })
         self.data_parallel = kwargs.get("data_parallel", False)
         self.features = features
         if self.data_parallel and torch.cuda.device_count() > 1:

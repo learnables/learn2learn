@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-"""
 import numpy as np
 import torch
 
@@ -14,7 +12,8 @@ from learn2learn.algorithms.lightning import (
 
 
 class LightningMetaOptNet(LightningPrototypicalNetworks):
-    """"""
+    """
+    """
 
     svm_C_reg = 0.1
     svm_max_iters = 15
@@ -25,19 +24,19 @@ class LightningMetaOptNet(LightningPrototypicalNetworks):
         self.svm_max_iters = kwargs.get(
             "svm_max_iters", LightningMetaOptNet.svm_max_iters
         )
-        self.save_hyperparameters(
-            "train_ways",
-            "train_shots",
-            "train_queries",
-            "test_ways",
-            "test_shots",
-            "test_queries",
-            "lr",
-            "scheduler_step",
-            "scheduler_decay",
-            "svm_C_reg",
-            "svm_max_iters",
-        )
+        self.save_hyperparameters({
+            "train_ways": self.train_ways,
+            "train_shots": self.train_shots,
+            "train_queries": self.train_queries,
+            "test_ways": self.test_ways,
+            "test_shots": self.test_shots,
+            "test_queries": self.test_queries,
+            "lr": self.lr,
+            "scheduler_step": self.scheduler_step,
+            "scheduler_decay": self.scheduler_decay,
+            "svm_C_reg": self.svm_C_reg,
+            "svm_max_iters": self.svm_max_iters,
+        })
         self.classifier = SVMClassifier(
             C_reg=self.svm_C_reg, max_iters=self.svm_max_iters
         )

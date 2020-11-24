@@ -54,7 +54,7 @@ class LightningMAML(LightningEpisodicModule):
     def __init__(self, model, loss=None, **kwargs):
         super(LightningMAML, self).__init__()
         if loss is None:
-            loss = nn.CrossEntropyLoss(reduction="mean")
+            loss = torch.nn.CrossEntropyLoss(reduction="mean")
         self.loss = loss
         self.train_ways = kwargs.get("train_ways", LightningEpisodicModule.train_ways)
         self.train_shots = kwargs.get(
@@ -79,19 +79,19 @@ class LightningMAML(LightningEpisodicModule):
             "adaptation_steps", LightningMAML.adaptation_steps
         )
         self.fast_lr = kwargs.get("fast_lr", LightningMAML.fast_lr)
-        self.save_hyperparameters(
-            "train_ways",
-            "train_shots",
-            "train_queries",
-            "test_ways",
-            "test_shots",
-            "test_queries",
-            "lr",
-            "scheduler_step",
-            "scheduler_decay",
-            "fast_lr",
-            "adaptation_steps",
-        )
+        self.save_hyperparameters({
+            "train_ways": self.train_ways,
+            "train_shots": self.train_shots,
+            "train_queries": self.train_queries,
+            "test_ways": self.test_ways,
+            "test_shots": self.test_shots,
+            "test_queries": self.test_queries,
+            "lr": self.lr,
+            "scheduler_step": self.scheduler_step,
+            "scheduler_decay": self.scheduler_decay,
+            "fast_lr": self.fast_lr,
+            "adaptation_steps": self.adaptation_steps,
+        })
         self.data_parallel = kwargs.get("data_parallel", False) and torch.cuda.device_count() > 1
         assert (
             self.train_ways == self.test_ways

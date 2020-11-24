@@ -10,7 +10,7 @@ from .gbml import GBML
 from .lightning import (
     LightningEpisodicModule,
     LightningMAML,
-    LightningANIL, 
+    LightningANIL,
     LightningPrototypicalNetworks,
     LightningMetaOptNet,
 )
