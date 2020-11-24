@@ -124,7 +124,7 @@ class SVMClassifier(torch.nn.Module):
 
 
 if __name__ == "__main__":
-    from metabolts.utils import accuracy
+    from learn2learn.utils import accuracy
 
     IMAGE_SHAPES = (1, 16, 16)
     NUM_CLASSES = 10
