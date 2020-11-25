@@ -111,6 +111,7 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
         return parser
 
     def meta_learn(self, batch, batch_idx, ways, shots, queries):
+        self.features.train()
         data, labels = batch
 
         # Sort data samples by labels
