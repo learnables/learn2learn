@@ -13,7 +13,7 @@ from learn2learn.algorithms import (
     LightningMAML,
     LightningANIL,
 )
-from learn2learn.data import EpisodicBatcher
+from learn2learn.utils.lightning import EpisodicBatcher
 
 
 def main():
@@ -83,6 +83,9 @@ def main():
         args,
         gpus=1,
         accumulate_grad_batches=args.meta_batch_size,
+        logger=pl.loggers.CSVLogger(save_dir='.'),
+        log_every_n_steps=100,
+        flush_logs_every_n_steps=1000,
     )
     trainer.fit(model=algorithm, datamodule=episodic_data)
     trainer.test(ckpt_path="best")

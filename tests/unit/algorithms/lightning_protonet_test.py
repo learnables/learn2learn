@@ -4,7 +4,7 @@ import unittest
 import learn2learn as l2l
 import pytorch_lightning as pl
 
-from learn2learn.data import EpisodicBatcher
+from learn2learn.utils.lightning import EpisodicBatcher
 from learn2learn.algorithms import LightningPrototypicalNetworks
 
 
