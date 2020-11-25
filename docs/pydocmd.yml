@@ -66,7 +66,7 @@ generate:
           - learn2learn.nn.Flatten
           - learn2learn.nn.Scale
           - learn2learn.nn.PrototypicalClassifier
-          - learn2learn.nn.SVMClassifier
+          - learn2learn.nn.SVClassifier
           - learn2learn.nn.KroneckerLinear
           - learn2learn.nn.KroneckerRNN
           - learn2learn.nn.KroneckerLSTM

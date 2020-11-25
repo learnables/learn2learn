@@ -7,7 +7,6 @@ import numpy as np
 import torch
 import learn2learn as l2l
 
-from torch import nn
 from learn2learn.utils import accuracy
 from learn2learn.algorithms.lightning import (
     LightningEpisodicModule,
@@ -17,10 +16,13 @@ from learn2learn.algorithms.lightning import (
 
 class LightningANIL(LightningEpisodicModule):
 
+    """
+    """
+
     def __init__(self, features, classifier, loss=None, **kwargs):
         super(LightningANIL, self).__init__()
         if loss is None:
-            loss = nn.CrossEntropyLoss(reduction="mean")
+            loss = torch.nn.CrossEntropyLoss(reduction="mean")
         self.loss = loss
         self.train_ways = kwargs.get("train_ways", LightningEpisodicModule.train_ways)
         self.train_shots = kwargs.get(
@@ -44,12 +46,12 @@ class LightningANIL(LightningEpisodicModule):
         self.adaptation_steps = kwargs.get(
             "adaptation_steps", LightningMAML.adaptation_steps
         )
-        self.fast_lr = kwargs.get("fast_lr", LightningMAML.fast_lr)
+        self.adaptation_lr = kwargs.get("adaptation_lr", LightningMAML.adaptation_lr)
         self.data_parallel = kwargs.get("data_parallel", False)
         self.features = features
         if self.data_parallel and torch.cuda.device_count() > 1:
             self.features = torch.nn.DataParallel(self.features)
-        self.classifier = l2l.algorithms.MAML(classifier, lr=self.fast_lr)
+        self.classifier = l2l.algorithms.MAML(classifier, lr=self.adaptation_lr)
         self.save_hyperparameters({
             "train_ways": self.train_ways,
             "train_shots": self.train_shots,
@@ -60,7 +62,7 @@ class LightningANIL(LightningEpisodicModule):
             "lr": self.lr,
             "scheduler_step": self.scheduler_step,
             "scheduler_decay": self.scheduler_decay,
-            "fast_lr": self.fast_lr,
+            "adaptation_lr": self.adaptation_lr,
             "adaptation_steps": self.adaptation_steps,
         })
         assert (
@@ -76,9 +78,9 @@ class LightningANIL(LightningEpisodicModule):
             default=LightningMAML.adaptation_steps,
         )
         parser.add_argument(
-            "--fast_lr",
+            "--adaptation_lr",
             type=float,
-            default=LightningMAML.fast_lr,
+            default=LightningMAML.adaptation_lr,
         )
         parser.add_argument(
             "--data_parallel",

@@ -25,7 +25,7 @@ class TestLightningANIL(unittest.TestCase):
         seed = 42
         ways = 5
         shots = 1
-        fast_lr = 5e-1
+        adaptation_lr = 5e-1
 
         pl.seed_everything(seed)
 
@@ -45,7 +45,7 @@ class TestLightningANIL(unittest.TestCase):
         features = torch.nn.Sequential(features, Lambda(lambda x: x.view(-1, 256)))
         classifier = torch.nn.Linear(256, ways)
         # init model
-        anil = LightningANIL(features, classifier, fast_lr=fast_lr)
+        anil = LightningANIL(features, classifier, adaptation_lr=adaptation_lr)
         episodic_data = EpisodicBatcher(
             tasksets.train,
             tasksets.validation,

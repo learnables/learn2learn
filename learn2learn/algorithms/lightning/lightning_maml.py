@@ -31,7 +31,7 @@ class LightningMAML(LightningEpisodicModule):
     * **shots** (int) - Number of examples per task.
     * **adaptation_steps** (str) - Number of steps for adapting to new task.
     * **meta_lr** (float) - Learning rate of meta training.
-    * **fast_lr** (float) - Learning rate for faster training.
+    * **adaptation_lr** (float) - Learning rate for faster training.
     * **scheduler_step** (int) - Period of learning rate decay.
     * **scheduler_decay** (float) - Scalable factor of LR decay.
 
@@ -40,16 +40,15 @@ class LightningMAML(LightningEpisodicModule):
     ~~~python
     tasksets = l2l.vision.benchmarks.get_tasksets('omniglot')
     classifier = l2l.vision.models.OmniglotFC(28**2, args.ways)
-    classifier = l2l.algorithms.MAML(classifier, lr = args.fast_lr, first_order = False)
-    maml = LightningMAML(classifier, **dict_args)
+    maml = LightningMAML(classifier, adaptation_lr=0.1, **dict_args)
     episodic_data = EpisodicBatcher(tasksets.train, tasksets.validation, tasksets.test)
     trainer = pl.Trainer.from_argparse_args(args) # args : Namespace of input arguments (Check Arguments section above)
-    trainer.fit(maml, episodic_data
+    trainer.fit(maml, episodic_data)
     ~~~
     """
 
     adaptation_steps = 1
-    fast_lr = 0.1
+    adaptation_lr = 0.1
 
     def __init__(self, model, loss=None, **kwargs):
         super(LightningMAML, self).__init__()
@@ -78,7 +77,7 @@ class LightningMAML(LightningEpisodicModule):
         self.adaptation_steps = kwargs.get(
             "adaptation_steps", LightningMAML.adaptation_steps
         )
-        self.fast_lr = kwargs.get("fast_lr", LightningMAML.fast_lr)
+        self.adaptation_lr = kwargs.get("adaptation_lr", LightningMAML.adaptation_lr)
         self.save_hyperparameters({
             "train_ways": self.train_ways,
             "train_shots": self.train_shots,
@@ -89,14 +88,14 @@ class LightningMAML(LightningEpisodicModule):
             "lr": self.lr,
             "scheduler_step": self.scheduler_step,
             "scheduler_decay": self.scheduler_decay,
-            "fast_lr": self.fast_lr,
+            "adaptation_lr": self.adaptation_lr,
             "adaptation_steps": self.adaptation_steps,
         })
         self.data_parallel = kwargs.get("data_parallel", False) and torch.cuda.device_count() > 1
         assert (
             self.train_ways == self.test_ways
         ), "For MAML, train_ways should be equal to test_ways."
-        self.model = l2l.algorithms.MAML(model, lr=self.fast_lr, first_order=False)
+        self.model = l2l.algorithms.MAML(model, lr=self.adaptation_lr, first_order=False)
 
     @staticmethod
     def add_model_specific_args(parent_parser):
@@ -107,9 +106,9 @@ class LightningMAML(LightningEpisodicModule):
             default=LightningMAML.adaptation_steps,
         )
         parser.add_argument(
-            "--fast_lr",
+            "--adaptation_lr",
             type=float,
-            default=LightningMAML.fast_lr,
+            default=LightningMAML.adaptation_lr,
         )
         parser.add_argument(
             "--data_parallel",

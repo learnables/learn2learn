@@ -50,7 +50,10 @@ def svm_logits(query, support, labels, ways, shots, C_reg=0.1, max_iters=15):
     return logits
 
 
-class SVMClassifier(torch.nn.Module):
+class SVClassifier(torch.nn.Module):
+
+    """
+    """
 
     def __init__(
         self,
@@ -61,7 +64,7 @@ class SVMClassifier(torch.nn.Module):
         C_reg=0.1,
         max_iters=15,
     ):
-        super(SVMClassifier, self).__init__()
+        super(SVClassifier, self).__init__()
         self.C_reg = C_reg
         self.max_iters = max_iters
         self._normalize = normalize
@@ -151,7 +154,7 @@ if __name__ == "__main__":
         X_support = X_support.view(NUM_CLASSES * NUM_SHOTS, -1)
         X_query = X_query.view(NUM_CLASSES * NUM_SHOTS, -1)
 
-        classifier = SVMClassifier(
+        classifier = SVClassifier(
             support=X_support,
             labels=y,
             normalize=normalize,

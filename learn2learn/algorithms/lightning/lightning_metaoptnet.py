@@ -4,7 +4,7 @@ import numpy as np
 import torch
 
 from learn2learn.utils import accuracy
-from learn2learn.nn import SVMClassifier
+from learn2learn.nn import SVClassifier
 from learn2learn.algorithms.lightning import (
     LightningEpisodicModule,
     LightningPrototypicalNetworks,
@@ -37,7 +37,7 @@ class LightningMetaOptNet(LightningPrototypicalNetworks):
             "svm_C_reg": self.svm_C_reg,
             "svm_max_iters": self.svm_max_iters,
         })
-        self.classifier = SVMClassifier(
+        self.classifier = SVClassifier(
             C_reg=self.svm_C_reg, max_iters=self.svm_max_iters
         )
 

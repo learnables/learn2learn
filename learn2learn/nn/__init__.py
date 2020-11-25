@@ -7,4 +7,4 @@ Additional `torch.nn.Module`s frequently used for meta-learning.
 from .kroneckers import *
 from .misc import *
 from .protonet import PrototypicalClassifier
-from .metaoptnet import SVMClassifier
+from .metaoptnet import SVClassifier

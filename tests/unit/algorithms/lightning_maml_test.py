@@ -16,7 +16,7 @@ class TestLightningMAML(unittest.TestCase):
         seed = 42
         ways = 5
         shots = 1
-        fast_lr = 5e-1
+        adaptation_lr = 5e-1
 
         pl.seed_everything(seed)
 
@@ -35,7 +35,7 @@ class TestLightningMAML(unittest.TestCase):
         model = l2l.vision.models.CNN4(ways, embedding_size=32*4)
 
         # init model
-        maml = LightningMAML(model, fast_lr=fast_lr)
+        maml = LightningMAML(model, adaptation_lr=adaptation_lr)
         episodic_data = EpisodicBatcher(
             tasksets.train,
             tasksets.validation,
