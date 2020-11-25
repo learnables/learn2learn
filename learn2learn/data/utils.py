@@ -51,6 +51,9 @@ try:
     import pytorch_lightning as pl
 
     class EpisodicBatcher(pl.LightningDataModule):
+
+        """docstring for __init__"""
+
         def __init__(
             self,
             train_tasks,
@@ -58,7 +61,6 @@ try:
             test_tasks=None,
             epoch_length=1,
         ):
-            """docstring for __init__"""
             super(EpisodicBatcher, self).__init__()
             self.train_tasks = train_tasks
             if validation_tasks is None:

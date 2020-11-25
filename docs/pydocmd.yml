@@ -17,6 +17,7 @@ generate:
           - learn2learn.data.UnionMetaDataset
           - learn2learn.data.FilteredMetaDataset
           - learn2learn.data.TaskDataset
+          - learn2learn.data.EpisodicBatcher
           - learn2learn.data.transforms:
               - learn2learn.data.transforms.LoadData
               - learn2learn.data.transforms.NWays
@@ -30,6 +31,10 @@ generate:
           - learn2learn.algorithms.MAML++
           - learn2learn.algorithms.MetaSGD++
           - learn2learn.algorithms.GBML++
+          - learn2learn.algorithms.LightningMAML
+          - learn2learn.algorithms.LightningANIL
+          - learn2learn.algorithms.LightningPrototypicalNetworks
+          - learn2learn.algorithms.LightningMetaOptNet
   - docs/learn2learn.gym.md:
       - learn2learn.gym++:
           - learn2learn.gym.MetaEnv
@@ -60,6 +65,8 @@ generate:
           - learn2learn.nn.Lambda
           - learn2learn.nn.Flatten
           - learn2learn.nn.Scale
+          - learn2learn.nn.PrototypicalClassifier
+          - learn2learn.nn.SVMClassifier
           - learn2learn.nn.KroneckerLinear
           - learn2learn.nn.KroneckerRNN
           - learn2learn.nn.KroneckerLSTM
