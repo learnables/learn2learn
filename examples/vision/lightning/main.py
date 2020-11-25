@@ -69,7 +69,7 @@ def main():
     features = model.features
     classifier = model.classifier
 
-    # init algorithm 
+    # init algorithm
     if args.algorithm == "protonet":
         algorithm = LightningPrototypicalNetworks(features=features, **dict_args)
     elif args.algorithm == "maml":
@@ -84,7 +84,7 @@ def main():
         gpus=1,
         accumulate_grad_batches=args.meta_batch_size,
     )
-    trainer.fit(algorithm, episodic_data)
+    trainer.fit(model=algorithm, datamodule=episodic_data)
     trainer.test(ckpt_path="best")
 
 

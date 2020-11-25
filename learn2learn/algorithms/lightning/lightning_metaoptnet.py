@@ -38,7 +38,9 @@ class LightningMetaOptNet(LightningPrototypicalNetworks):
             "svm_max_iters": self.svm_max_iters,
         })
         self.classifier = SVClassifier(
-            C_reg=self.svm_C_reg, max_iters=self.svm_max_iters
+            C_reg=self.svm_C_reg,
+            max_iters=self.svm_max_iters,
+            normalize=False,
         )
 
     @staticmethod

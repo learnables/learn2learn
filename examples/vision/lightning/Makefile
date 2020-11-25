@@ -119,7 +119,6 @@ anil-mi:
 		--test_shots=5 \
 		--test_ways=5 \
 		--test_queries=5 \
-		--data_parallel \
 		--seed=42
 
 metaoptnet-mi:

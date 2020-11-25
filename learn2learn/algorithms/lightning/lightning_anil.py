@@ -91,6 +91,7 @@ class LightningANIL(LightningEpisodicModule):
 
     @torch.enable_grad()
     def meta_learn(self, batch, batch_idx, ways, shots, queries):
+        self.features.train()
         learner = self.classifier.clone()
         learner.train()
         data, labels = batch
@@ -110,7 +111,8 @@ class LightningANIL(LightningEpisodicModule):
 
         # Adapt the classifier
         for step in range(self.adaptation_steps):
-            train_error = self.loss(learner(support), support_labels)
+            preds = learner(support)
+            train_error = self.loss(preds, support_labels)
             learner.adapt(train_error)
 
         # Evaluating the adapted model

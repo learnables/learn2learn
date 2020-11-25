@@ -64,7 +64,7 @@ class LightningEpisodicModule(pl.LightningModule):
         )
         self.log(
             "train_loss",
-            train_loss,
+            train_loss.item(),
             on_step=False,
             on_epoch=False,
             prog_bar=False,
@@ -72,7 +72,7 @@ class LightningEpisodicModule(pl.LightningModule):
         )
         self.log(
             "train_accuracy",
-            train_accuracy,
+            train_accuracy.item(),
             on_step=False,
             on_epoch=True,
             prog_bar=True,
@@ -86,7 +86,7 @@ class LightningEpisodicModule(pl.LightningModule):
         )
         self.log(
             "valid_loss",
-            valid_loss,
+            valid_loss.item(),
             on_step=False,
             on_epoch=True,
             prog_bar=False,
@@ -94,13 +94,13 @@ class LightningEpisodicModule(pl.LightningModule):
         )
         self.log(
             "valid_accuracy",
-            valid_accuracy,
+            valid_accuracy.item(),
             on_step=False,
             on_epoch=True,
             prog_bar=True,
             logger=True,
         )
-        return valid_loss
+        return valid_loss.item()
 
     def test_step(self, batch, batch_idx):
         test_loss, test_accuracy = self.meta_learn(
@@ -108,7 +108,7 @@ class LightningEpisodicModule(pl.LightningModule):
         )
         self.log(
             "test_loss",
-            test_loss,
+            test_loss.item(),
             on_step=False,
             on_epoch=True,
             prog_bar=False,
@@ -116,13 +116,13 @@ class LightningEpisodicModule(pl.LightningModule):
         )
         self.log(
             "test_accuracy",
-            test_accuracy,
+            test_accuracy.item(),
             on_step=False,
             on_epoch=True,
             prog_bar=True,
             logger=True,
         )
-        return test_loss
+        return test_loss.item()
 
     def configure_optimizers(self):
         optimizer = optim.Adam(self.parameters(), lr=self.lr)
