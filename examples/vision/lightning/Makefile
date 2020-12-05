@@ -73,7 +73,8 @@ proto-mi:
 		--max_epochs=10000 \
 		--min_epochs=10000 \
 		--algorithm=protonet \
-		--meta_batch_size=4 \
+		--distance_metric='euclidean' \
+		--meta_batch_size=8 \
 		--lr=0.005 \
 		--train_shots=5 \
 		--train_ways=20 \
