@@ -58,10 +58,10 @@ install(
     zip_safe=False,  # as per Cython docs
     version=VERSION,
     description='PyTorch Meta-Learning Framework for Researchers',
-    long_description=open('README.md').read(),
+    long_description=open('README.md', encoding='utf8').read(),
     long_description_content_type='text/markdown',
     author='Debajyoti Datta, Ian bunner, Seb Arnold, Praateek Mahajan',
-    author_email='smr.arnold@gmail.com, praateekm@gmail.com',
+    author_email='smr.arnold@gmail.com',
     url='https://github.com/learnables/learn2learn',
     download_url='https://github.com/learnables/learn2learn/archive/' + str(VERSION) + '.zip',
     license='MIT',
