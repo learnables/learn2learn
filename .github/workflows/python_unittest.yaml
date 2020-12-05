@@ -13,19 +13,21 @@ jobs:
                 pytorch: ['1.6.0']
                 torchvision: ['0.7']
 
-        steps:
-            - name: Clone Repository
-              uses: actions/checkout@v2
-            - name: Set up Python
-              uses: actions/setup-python@v2
-              with:
-                python-version: ${{ matrix.python }}
-            - name: Install Dependencies
-              run: |
-                  python --version
-                  python -m pip install -U pip
-                  make dev
-            - name: Lint Code
-              run: make lint
-            - name: Run Tests
-              run: make tests
+                steps:
+                    - name: Clone Repository
+                      uses: actions/checkout@master
+                      with:
+                          ref: ${{ github.ref }}
+                    - name: Set up Python
+                      uses: actions/setup-python@v2
+                      with:
+                          python-version: ${{ matrix.python }}
+                    - name: Install Dependencies
+                      run: |
+                          python --version
+                          python -m pip install -U pip
+                          make dev
+                    - name: Lint Code
+                      run: make lint
+                    - name: Run Tests
+                      run: make tests
