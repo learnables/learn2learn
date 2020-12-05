@@ -1,5 +1,5 @@
 
-name: Python Unit Tests
+name: Testing
 
 on: [push, pull_request, create]
 
