@@ -1,0 +1,31 @@
+
+name: Python Unit Tests
+
+on: [push, pull_request]
+
+jobs:
+    tests:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-18.04]
+                python: ['3.7']
+                pytorch: ['1.6.0']
+                torchvision: ['0.7']
+
+        steps:
+            - name: Clone Repository
+              uses: actions/checkout@v2
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python }}
+            - name: Install Dependencies
+              run: |
+                  python --version
+                  python -m pip install -U pip
+                  make dev
+            - name: Lint Code
+              run: make lint
+            - name: Run Tests
+              run: make tests
