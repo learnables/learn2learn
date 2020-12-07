@@ -37,7 +37,7 @@ def main():
     pl.seed_everything(args.seed)
 
     # Create tasksets using the benchmark interface
-    if args.dataset in ["mini-imagenet", "tiered-imagenet"]:
+    if False and args.dataset in ["mini-imagenet", "tiered-imagenet"]:
         data_augmentation = "lee2019"
     else:
         data_augmentation = "normalize"
@@ -54,7 +54,7 @@ def main():
         tasksets.train,
         tasksets.validation,
         tasksets.test,
-        epoch_length=args.meta_batch_size,
+        epoch_length=args.meta_batch_size * 10,
     )
 
     # init model

@@ -57,7 +57,10 @@ class EpisodicBatcher(pl.LightningDataModule):
         )
 
     def test_dataloader(self):
+        length = self.epoch_length
+        if len(self.test_tasks) > 0:
+            length = len(self.test_tasks)
         return EpisodicBatcher.epochify(
             self.test_tasks,
-            self.epoch_length,
+            length,
         )
