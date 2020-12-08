@@ -15,7 +15,7 @@ class TestLightningProtoNets(unittest.TestCase):
         max_epochs = 20
         seed = 42
         ways = 5
-        shots = 1
+        shots = 5
 
         pl.seed_everything(seed)
 
