@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## v0.1.5
+
+### Fixed
+
+* Fix setup.py for windows installs.
+
 ## v0.1.4
 
 ### Added
