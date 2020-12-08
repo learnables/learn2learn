@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-"""
-
 import numpy as np
 import torch
 import learn2learn as l2l
@@ -17,7 +14,41 @@ from learn2learn.algorithms.lightning import (
 class LightningANIL(LightningEpisodicModule):
 
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_anil.py)
+
+    **Description**
+
+    A PyTorch Lightning module for ANIL.
+
+    **Arguments**
+
+    * **features** (Module) - A nn.Module to extract features, which will not be adaptated.
+    * **classifier** (Module) - A nn.Module taking features, mapping them to classification.
+    * **loss** (Function, *optional*, default=CrossEntropyLoss) - Loss function which maps the cost of the events.
+    * **ways** (int, *optional*, default=5) - Number of classes in a task.
+    * **shots** (int, *optional*, default=1) - Number of samples for adaptation.
+    * **adaptation_steps** (int, *optional*, default=1) - Number of steps for adapting to new task.
+    * **lr** (float, *optional*, default=0.001) - Learning rate of meta training.
+    * **adaptation_lr** (float, *optional*, default=0.1) - Learning rate for fast adaptation.
+    * **scheduler_step** (int, *optional*, default=20) - Decay interval for `lr`.
+    * **scheduler_decay** (float, *optional*, default=1.0) - Decay rate for `lr`.
+
+    **References**
+
+    1. Raghu et al. 2020. "Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML"
+
+    **Example**
+
+    ~~~python
+    tasksets = l2l.vision.benchmarks.get_tasksets('omniglot')
+    model = l2l.vision.models.OmniglotFC(28**2, args.ways)
+    anil = LightningANIL(model.features, model.classifier, adaptation_lr=0.1, **dict_args)
+    episodic_data = EpisodicBatcher(tasksets.train, tasksets.validation, tasksets.test)
+    trainer = pl.Trainer.from_argparse_args(args)
+    trainer.fit(anil, episodic_data)
+    ~~~
     """
+
 
     def __init__(self, features, classifier, loss=None, **kwargs):
         super(LightningANIL, self).__init__()

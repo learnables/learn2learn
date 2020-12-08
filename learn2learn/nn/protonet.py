@@ -22,10 +22,32 @@ def compute_prototypes(support, labels):
 class PrototypicalClassifier(torch.nn.Module):
 
     """
-    Supports:
-        * various number of shots per class.
-        * euclidean, cosine, and custom distance metrics
-        * embedding normalization
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/protonet.py)
+
+    **Description**
+
+    A module for the differentiable nearest neighbour classifier of Prototypical Networks.
+
+    **Arguments**
+
+    * **support** (Tensor, *optional*, default=None) - Tensor of support features.
+    * **labels** (Tensor, *optional*, default=None) - Labels corresponding to the support features.
+    * **distance** (str, *optional*, default='euclidean') - Distance metric between samples. ['euclidean', 'cosine']
+    * **normalize** (bool, *optional*, default=False) - Whether to normalize the inputs. Defaults to True when distance='cosine'.
+
+    **References**
+
+    1. Snell et al. 2017. "Prototypical Networks for Few-shot Learning"
+
+    **Example**
+
+    ~~~python
+    classifier = PrototypicalClassifier()
+    support = features(support_data)
+    classifier.fit_(support, labels)
+    query = features(query_data)
+    preds = classifier(query)
+    ~~~
     """
 
     def __init__(
@@ -54,17 +76,17 @@ class PrototypicalClassifier(torch.nn.Module):
         # Compute prototypes
         self.prototypes = None
         if support is not None and labels is not None:
-            self.compute_prototypes_(support, labels)
+            self.fit_(support, labels)
 
-    def compute_prototypes_(self, support, labels):
+    def fit_(self, support, labels):
         """
         **Description**
 
         Computes and updates the prototypes given support embeddings and
         corresponding labels.
 
-        * Make a differentiable version? (For Proto-MAML style algorithms)
         """
+        # TODO: Make a differentiable version? (For Proto-MAML style algorithms)
 
         # Compute new prototypes
         prototypes = self._compute_prototypes(support, labels)

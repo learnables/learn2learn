@@ -13,28 +13,30 @@ from learn2learn.algorithms.lightning import LightningEpisodicModule
 
 class LightningPrototypicalNetworks(LightningEpisodicModule):
     """
-    [[Source]](https://github.com/learnables/metabolts/blob/master/metabolts/algorithms/lightning_prototypicalnets.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_prototypicalnets.py)
 
     **Description**
 
-    A PyTorch Lightning module for Prototypical Networks, implementing the training process
-    of a classifier on a given dataset. This module takes a feature extractor as input.
-    For each class, we compute an embedding space where samples of same class group in clusters.
-    Next, we compute a prototype for each class and finally classify a sample based on the distance
-    between the prototype and query. Finally, losses are computed and backpropogated.
-    Distance can be euclidean, cosine or any metric of your choice.
+    A PyTorch Lightning module for Prototypical Networks.
 
     **Arguments**
 
     * **features** (Module) - Feature extractor which classifies input tasks.
-    * **loss** (Function) - Loss function which maps the cost of the events.
-    * **ways** (int) - Number of classes.
-    * **shots** (int) - Number of examples per class.
-    * **query** (int) - Size of query set.
-    * **distance_metric** (str) - Distance metric.
-    * **lr** (float) - Learning rate of meta training.
-    * **scheduler_step** (int) - Period of learning rate decay.
-    * **scheduler_decay** (float) - Scalable factor of LR decay.
+    * **loss** (Function, *optional*, default=CrossEntropyLoss) - Loss function which maps the cost of the events.
+    * **distance_metric** (str, *optional*, default='euclidean') - Distance metric between samples. ['euclidean', 'cosine']
+    * **train_ways** (int, *optional*, default=5) - Number of classes in for train tasks.
+    * **train_shots** (int, *optional*, default=1) - Number of support samples for train tasks.
+    * **train_queries** (int, *optional*, default=1) - Number of query samples for train tasks.
+    * **test_ways** (int, *optional*, default=5) - Number of classes in for test tasks.
+    * **test_shots** (int, *optional*, default=1) - Number of support samples for test tasks.
+    * **test_queries** (int, *optional*, default=1) - Number of query samples for test tasks.
+    * **lr** (float, *optional*, default=0.001) - Learning rate of meta training.
+    * **scheduler_step** (int, *optional*, default=20) - Decay interval for `lr`.
+    * **scheduler_decay** (float, *optional*, default=1.0) - Decay rate for `lr`.
+
+    **References**
+
+    1. Snell et al. 2017. "Prototypical Networks for Few-shot Learning"
 
     **Example**
 
@@ -43,7 +45,7 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
     features = Convnet()  # init model
     protonet = LightningPrototypicalNetworks(features, **dict_args)
     episodic_data = EpisodicBatcher(tasksets.train, tasksets.validation, tasksets.test)
-    trainer = pl.Trainer.from_argparse_args(args) # args : Namespace of input arguments (Check Arguments section above)
+    trainer = pl.Trainer.from_argparse_args(args)
     trainer.fit(protonet, episodic_data)
     ~~~
     """
@@ -132,7 +134,7 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
         query = embeddings[query_indices]
         query_labels = labels[query_indices]
 
-        self.classifier.compute_prototypes_(support, support_labels)
+        self.classifier.fit_(support, support_labels)
         logits = self.classifier(query)
         eval_loss = self.loss(logits, query_labels)
         eval_accuracy = accuracy(logits, query_labels)

@@ -13,7 +13,44 @@ from learn2learn.algorithms.lightning import (
 
 class LightningMetaOptNet(LightningPrototypicalNetworks):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_metaoptnet.py)
+
+    **Description**
+
+    A PyTorch Lightning module for MetaOptNet.
+
+    **Arguments**
+
+    * **features** (Module) - Feature extractor which classifies input tasks.
+    * **svm_C_reg** (float, *optional*, default=0.1) - Regularization weight for SVM.
+    * **svm_max_iters** (int, *optional*, default=15) - Maximum number of iterations for SVM convergence.
+    * **loss** (Function, *optional*, default=CrossEntropyLoss) - Loss function which maps the cost of the events.
+    * **train_ways** (int, *optional*, default=5) - Number of classes in for train tasks.
+    * **train_shots** (int, *optional*, default=1) - Number of support samples for train tasks.
+    * **train_queries** (int, *optional*, default=1) - Number of query samples for train tasks.
+    * **test_ways** (int, *optional*, default=5) - Number of classes in for test tasks.
+    * **test_shots** (int, *optional*, default=1) - Number of support samples for test tasks.
+    * **test_queries** (int, *optional*, default=1) - Number of query samples for test tasks.
+    * **lr** (float, *optional*, default=0.001) - Learning rate of meta training.
+    * **scheduler_step** (int, *optional*, default=20) - Decay interval for `lr`.
+    * **scheduler_decay** (float, *optional*, default=1.0) - Decay rate for `lr`.
+
+    **References**
+
+    1. Lee et al. 2019. "Meta-Learning with Differentiable Convex Optimization"
+
+    **Example**
+
+    ~~~python
+    tasksets = l2l.vision.benchmarks.get_tasksets('mini-imagenet')
+    features = Convnet()  # init model
+    metaoptnet = LightningMetaOptNet(features, **dict_args)
+    episodic_data = EpisodicBatcher(tasksets.train, tasksets.validation, tasksets.test)
+    trainer = pl.Trainer.from_argparse_args(args)
+    trainer.fit(metaoptnet, episodic_data)
+    ~~~
     """
+
 
     svm_C_reg = 0.1
     svm_max_iters = 15

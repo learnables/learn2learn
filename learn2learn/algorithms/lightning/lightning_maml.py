@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-"""
-
 import numpy as np
 import torch
 import learn2learn as l2l
@@ -13,36 +10,36 @@ from learn2learn.algorithms.lightning import LightningEpisodicModule
 
 class LightningMAML(LightningEpisodicModule):
     """
-    [[Source]](https://github.com/learnables/metabolts/blob/master/metabolts/algorithms/lightning_maml.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_maml.py)
 
     **Description**
 
-    A PyTorch Lightning module for MAML Networks, implementing the training process
-    of a model on a given dataset. This module takes a model as input.
-    We train the model on a batch of tasks, each task being trained using K samples (K-shot learning).
-    On completion of training on one batch, we get the feedback of its loss function and test it on a new
-    example test set to improve the model's parameters. We repeat the same process till we train on all batches.
+    A PyTorch Lightning module for MAML.
 
     **Arguments**
 
-    * **model** (Module) - Model can be a classifier, regression, etc.
-    * **loss** (Function) - Loss function which maps the cost of the events.
-    * **ways** (int) - Number of tasks.
-    * **shots** (int) - Number of examples per task.
-    * **adaptation_steps** (str) - Number of steps for adapting to new task.
-    * **meta_lr** (float) - Learning rate of meta training.
-    * **adaptation_lr** (float) - Learning rate for faster training.
-    * **scheduler_step** (int) - Period of learning rate decay.
-    * **scheduler_decay** (float) - Scalable factor of LR decay.
+    * **model** (Module) - A PyTorch nn.Module.
+    * **loss** (Function, *optional*, default=CrossEntropyLoss) - Loss function which maps the cost of the events.
+    * **ways** (int, *optional*, default=5) - Number of classes in a task.
+    * **shots** (int, *optional*, default=1) - Number of samples for adaptation.
+    * **adaptation_steps** (int, *optional*, default=1) - Number of steps for adapting to new task.
+    * **lr** (float, *optional*, default=0.001) - Learning rate of meta training.
+    * **adaptation_lr** (float, *optional*, default=0.1) - Learning rate for fast adaptation.
+    * **scheduler_step** (int, *optional*, default=20) - Decay interval for `lr`.
+    * **scheduler_decay** (float, *optional*, default=1.0) - Decay rate for `lr`.
+
+    **References**
+
+    1. Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."
 
     **Example**
 
     ~~~python
     tasksets = l2l.vision.benchmarks.get_tasksets('omniglot')
-    classifier = l2l.vision.models.OmniglotFC(28**2, args.ways)
+    model = l2l.vision.models.OmniglotFC(28**2, args.ways)
     maml = LightningMAML(classifier, adaptation_lr=0.1, **dict_args)
     episodic_data = EpisodicBatcher(tasksets.train, tasksets.validation, tasksets.test)
-    trainer = pl.Trainer.from_argparse_args(args) # args : Namespace of input arguments (Check Arguments section above)
+    trainer = pl.Trainer.from_argparse_args(args)
     trainer.fit(maml, episodic_data)
     ~~~
     """

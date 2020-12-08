@@ -53,7 +53,36 @@ def svm_logits(query, support, labels, ways, shots, C_reg=0.1, max_iters=15):
 class SVClassifier(torch.nn.Module):
 
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metaoptnet.py)
+
+    **Description**
+
+    A module for the differentiable SVM classifier of MetaOptNet.
+
+    **Arguments**
+
+    * **support** (Tensor, *optional*, default=None) - Tensor of support features.
+    * **labels** (Tensor, *optional*, default=None) - Labels corresponding to the support features.
+    * **ways** (str, *optional*, default=None) - Number of classes in the task.
+    * **normalize** (bool, *optional*, default=False) - Whether to normalize the inputs.
+    * **C_reg** (float, *optional*, default=0.1) - Regularization weight for SVM.
+    * **max_iters** (int, *optional*, default=15) - Maximum number of iterations for SVM convergence.
+
+    **References**
+
+    1. Lee et al. 2019. "Prototypical Networks for Few-shot Learning"
+
+    **Example**
+
+    ~~~python
+    classifier = SVMClassifier()
+    support = features(support_data)
+    classifier.fit_(support, labels)
+    query = features(query_data)
+    preds = classifier(query)
+    ~~~
     """
+
 
     def __init__(
         self,

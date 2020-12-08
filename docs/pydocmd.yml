@@ -17,7 +17,6 @@ generate:
           - learn2learn.data.UnionMetaDataset
           - learn2learn.data.FilteredMetaDataset
           - learn2learn.data.TaskDataset
-          - learn2learn.data.EpisodicBatcher
           - learn2learn.data.transforms:
               - learn2learn.data.transforms.LoadData
               - learn2learn.data.transforms.NWays
