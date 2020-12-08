@@ -49,7 +49,6 @@ class LightningANIL(LightningEpisodicModule):
     ~~~
     """
 
-
     def __init__(self, features, classifier, loss=None, **kwargs):
         super(LightningANIL, self).__init__()
         if loss is None:

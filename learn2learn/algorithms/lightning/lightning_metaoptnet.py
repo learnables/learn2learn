@@ -51,7 +51,6 @@ class LightningMetaOptNet(LightningPrototypicalNetworks):
     ~~~
     """
 
-
     svm_C_reg = 0.1
     svm_max_iters = 15
 
