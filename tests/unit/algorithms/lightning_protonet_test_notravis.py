@@ -5,18 +5,17 @@ import learn2learn as l2l
 import pytorch_lightning as pl
 
 from learn2learn.utils.lightning import EpisodicBatcher
-from learn2learn.algorithms import LightningMAML
+from learn2learn.algorithms import LightningPrototypicalNetworks
 
 
-class TestLightningMAML(unittest.TestCase):
+class TestLightningProtoNets(unittest.TestCase):
 
-    def test_maml(self):
+    def test_protonets(self):
         meta_batch_size = 4
         max_epochs = 20
         seed = 42
         ways = 5
-        shots = 1
-        adaptation_lr = 5e-1
+        shots = 5
 
         pl.seed_everything(seed)
 
@@ -30,12 +29,10 @@ class TestLightningMAML(unittest.TestCase):
             root="~/data",
         )
 
-        self.assertTrue(len(tasksets) == 3)
-
-        model = l2l.vision.models.CNN4(ways, embedding_size=32*4)
-
         # init model
-        maml = LightningMAML(model, adaptation_lr=adaptation_lr)
+        model = l2l.vision.models.CNN4(ways, embedding_size=32*4)
+        features = model.features
+        protonet = LightningPrototypicalNetworks(features, lr=3e-4)
         episodic_data = EpisodicBatcher(
             tasksets.train,
             tasksets.validation,
@@ -45,12 +42,13 @@ class TestLightningMAML(unittest.TestCase):
 
         trainer = pl.Trainer(
             accumulate_grad_batches=meta_batch_size,
+            min_epochs=max_epochs,
             max_epochs=max_epochs,
             progress_bar_refresh_rate=0,
             deterministic=True,
             weights_summary=None,
         )
-        trainer.fit(maml, episodic_data)
+        trainer.fit(protonet, episodic_data)
         acc = trainer.test(
             test_dataloaders=tasksets.test,
             verbose=False,

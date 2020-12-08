@@ -1,30 +1,21 @@
 #!/usr/bin/env python3
 
 import unittest
-import torch
 import learn2learn as l2l
 import pytorch_lightning as pl
 
 from learn2learn.utils.lightning import EpisodicBatcher
-from learn2learn.algorithms import LightningANIL
+from learn2learn.algorithms import LightningMAML
 
 
-class Lambda(torch.nn.Module):
-    def __init__(self, fn):
-        super(Lambda, self).__init__()
-        self.fn = fn
+class TestLightningMAML(unittest.TestCase):
 
-    def forward(self, x):
-        return self.fn(x)
-
-
-class TestLightningANIL(unittest.TestCase):
-    def test_anil(self):
-        meta_batch_size = 32
-        max_epochs = 5
+    def test_maml(self):
+        meta_batch_size = 4
+        max_epochs = 20
         seed = 42
         ways = 5
-        shots = 1
+        shots = 5
         adaptation_lr = 5e-1
 
         pl.seed_everything(seed)
@@ -41,11 +32,10 @@ class TestLightningANIL(unittest.TestCase):
 
         self.assertTrue(len(tasksets) == 3)
 
-        features = l2l.vision.models.ConvBase(output_size=64, channels=3, max_pool=True)
-        features = torch.nn.Sequential(features, Lambda(lambda x: x.view(-1, 256)))
-        classifier = torch.nn.Linear(256, ways)
+        model = l2l.vision.models.CNN4(ways, embedding_size=32*4)
+
         # init model
-        anil = LightningANIL(features, classifier, adaptation_lr=adaptation_lr)
+        maml = LightningMAML(model, adaptation_lr=adaptation_lr)
         episodic_data = EpisodicBatcher(
             tasksets.train,
             tasksets.validation,
@@ -55,12 +45,13 @@ class TestLightningANIL(unittest.TestCase):
 
         trainer = pl.Trainer(
             accumulate_grad_batches=meta_batch_size,
+            min_epochs=max_epochs,
             max_epochs=max_epochs,
             progress_bar_refresh_rate=0,
             deterministic=True,
             weights_summary=None,
         )
-        trainer.fit(anil, episodic_data)
+        trainer.fit(maml, episodic_data)
         acc = trainer.test(
             test_dataloaders=tasksets.test,
             verbose=False,

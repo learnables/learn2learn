@@ -15,7 +15,7 @@ class TestLightningMetaOptNet(unittest.TestCase):
         max_epochs = 20
         seed = 42
         ways = 5
-        shots = 1
+        shots = 5
 
         pl.seed_everything(seed)
 
@@ -42,6 +42,7 @@ class TestLightningMetaOptNet(unittest.TestCase):
 
         trainer = pl.Trainer(
             accumulate_grad_batches=meta_batch_size,
+            min_epochs=max_epochs,
             max_epochs=max_epochs,
             progress_bar_refresh_rate=0,
             deterministic=True,
