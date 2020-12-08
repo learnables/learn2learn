@@ -2,7 +2,7 @@
 
 --------------------------------------------------------------------------------
 
-[![Build Status](https://travis-ci.com/learnables/learn2learn.svg?branch=master)](https://travis-ci.com/learnables/learn2learn)
+![Test Status](https://github.com/learnables/learn2learn/workflows/Testing/badge.svg?branch=master)
 
 learn2learn is a software library for meta-learning research.
 
