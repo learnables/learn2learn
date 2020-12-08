@@ -12,7 +12,7 @@ NUM_SHOTS = 5
 NOISE = 0.0
 
 
-class SVMClassifierTests(unittest.TestCase):
+class SVClassifierTests(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -38,7 +38,7 @@ class SVMClassifierTests(unittest.TestCase):
             X_support = X_support.view(NUM_CLASSES * NUM_SHOTS, -1)
             X_query = X_query.view(NUM_CLASSES * NUM_SHOTS, -1)
 
-            classifier = l2l.nn.SVMClassifier(
+            classifier = l2l.nn.SVClassifier(
                 support=X_support,
                 labels=y,
                 normalize=normalize,
