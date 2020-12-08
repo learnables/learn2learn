@@ -137,4 +137,3 @@ metaoptnet-mi:
 		--test_queries=5 \
 		--data_parallel \
 		--seed=42
-

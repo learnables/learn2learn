@@ -5,12 +5,15 @@ Some utilities to interface with PyTorch Lightning.
 """
 
 import pytorch_lightning as pl
-from pytorch_lightning.utilities import rank_zero_only
+import sys
+import tqdm
 
 
 class EpisodicBatcher(pl.LightningDataModule):
 
-    """docstring for __init__"""
+    """
+    nc
+    """
 
     def __init__(
         self,
@@ -58,9 +61,27 @@ class EpisodicBatcher(pl.LightningDataModule):
 
     def test_dataloader(self):
         length = self.epoch_length
-        if len(self.test_tasks) > 0:
-            length = len(self.test_tasks)
         return EpisodicBatcher.epochify(
             self.test_tasks,
             length,
         )
+
+
+class NoLeaveProgressBar(pl.callbacks.ProgressBar):
+
+    def init_test_tqdm(self):
+        bar = tqdm.tqdm(
+            desc='Testing',
+            position=(2 * self.process_position),
+            disable=self.is_disabled,
+            leave=False,
+            dynamic_ncols=True,
+            file=sys.stdout
+        )
+        return bar
+
+
+class TrackTestAccuracyCallback(pl.callbacks.Callback):
+
+    def on_validation_end(self, trainer, module):
+        trainer.test(model=module, verbose=False)

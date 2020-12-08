@@ -83,6 +83,10 @@ def main():
         args,
         gpus=1,
         accumulate_grad_batches=args.meta_batch_size,
+        callbacks=[
+            l2l.utils.lightning.TrackTestAccuracyCallback(),
+            l2l.utils.lightning.NoLeaveProgressBar(),
+        ],
     )
     trainer.fit(model=algorithm, datamodule=episodic_data)
     trainer.test(ckpt_path="best")
