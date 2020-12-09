@@ -112,3 +112,5 @@ learn2learn/data/*.so
 alltests.txt
 docs/MUJOCO_LOG.TXT
 token.pickle
+lightning_logs/**
+examples/vision/lightning/lightning_logs/**

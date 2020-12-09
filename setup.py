@@ -57,7 +57,7 @@ install(
     cmdclass=cmd_class,
     zip_safe=False,  # as per Cython docs
     version=VERSION,
-    description='PyTorch Meta-Learning Framework for Researchers',
+    description='PyTorch Library for Meta-Learning Research',
     long_description=open('README.md', encoding='utf8').read(),
     long_description_content_type='text/markdown',
     author='Debajyoti Datta, Ian bunner, Seb Arnold, Praateek Mahajan',
@@ -77,5 +77,7 @@ install(
         'requests',
         'gsutil',
         'tqdm',
+        'qpth>=0.0.15',
+        'pytorch_lightning>=1.0.2',
     ],
 )

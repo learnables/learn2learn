@@ -121,7 +121,7 @@ class DropBlock(nn.Module):
         right_padding = int(self.block_size / 2)
 
         batch_size, channels, height, width = mask.shape
-        non_zero_idxs = mask.nonzero()
+        non_zero_idxs = mask.nonzero(as_tuple=False)
         nr_blocks = non_zero_idxs.shape[0]
 
         offsets = torch.stack(
