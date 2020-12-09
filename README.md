@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------------
 
 ![Test Status](https://github.com/learnables/learn2learn/workflows/Testing/badge.svg?branch=master)
+[![arXiv](https://img.shields.io/badge/arXiv-2008.12284-b31b1b.svg)](https://arxiv.org/abs/2008.12284)
 
 learn2learn is a software library for meta-learning research.
 
