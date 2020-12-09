@@ -432,6 +432,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#prototypicalclassifier" class="md-nav__link">
+    PrototypicalClassifier
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#svclassifier" class="md-nav__link">
+    SVClassifier
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kroneckerlinear" class="md-nav__link">
     KroneckerLinear
   </a>
@@ -618,6 +632,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#prototypicalclassifier" class="md-nav__link">
+    PrototypicalClassifier
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#svclassifier" class="md-nav__link">
+    SVClassifier
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kroneckerlinear" class="md-nav__link">
     KroneckerLinear
   </a>
@@ -663,7 +691,6 @@
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Lambda</span><span class="p">(</span><span class="n">lmb</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Utility class to create a wrapper based on a lambda function.</p>
@@ -681,12 +708,10 @@
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="flatten">Flatten<a class="headerlink" href="#flatten" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Flatten</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Utility Module to flatten inputs to <code>(batch_size, -1)</code> shape.</p>
@@ -700,12 +725,10 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (5, 3072)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="scale">Scale<a class="headerlink" href="#scale" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Scale</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A per-parameter scaling factor with learnable parameter.</p>
@@ -723,12 +746,88 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">scale</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># [.5, .5, .5]</span>
 </code></pre></div>
 </td></tr></table>
-
+<h2 id="prototypicalclassifier">PrototypicalClassifier<a class="headerlink" href="#prototypicalclassifier" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">PrototypicalClassifier</span><span class="p">(</span><span class="n">support</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">distance</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
+                       <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/protonet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A module for the differentiable nearest neighbour classifier of Prototypical Networks.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>support</strong> (Tensor, <em>optional</em>, default=None) - Tensor of support features.</li>
+<li><strong>labels</strong> (Tensor, <em>optional</em>, default=None) - Labels corresponding to the support features.</li>
+<li><strong>distance</strong> (str, <em>optional</em>, default='euclidean') - Distance metric between samples. ['euclidean', 'cosine']</li>
+<li><strong>normalize</strong> (bool, <em>optional</em>, default=False) - Whether to normalize the inputs. Defaults to True when distance='cosine'.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Snell et al. 2017. "Prototypical Networks for Few-shot Learning"</li>
+</ol>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">PrototypicalClassifier</span><span class="p">()</span>
+<span class="n">support</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">support_data</span><span class="p">)</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit_</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">query_data</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="svclassifier">SVClassifier<a class="headerlink" href="#svclassifier" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">SVClassifier</span><span class="p">(</span><span class="n">support</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">ways</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">C_reg</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+             <span class="n">max_iters</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metaoptnet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A module for the differentiable SVM classifier of MetaOptNet.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>support</strong> (Tensor, <em>optional</em>, default=None) - Tensor of support features.</li>
+<li><strong>labels</strong> (Tensor, <em>optional</em>, default=None) - Labels corresponding to the support features.</li>
+<li><strong>ways</strong> (str, <em>optional</em>, default=None) - Number of classes in the task.</li>
+<li><strong>normalize</strong> (bool, <em>optional</em>, default=False) - Whether to normalize the inputs.</li>
+<li><strong>C_reg</strong> (float, <em>optional</em>, default=0.1) - Regularization weight for SVM.</li>
+<li><strong>max_iters</strong> (int, <em>optional</em>, default=15) - Maximum number of iterations for SVM convergence.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Lee et al. 2019. "Prototypical Networks for Few-shot Learning"</li>
+</ol>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">SVMClassifier</span><span class="p">()</span>
+<span class="n">support</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">support_data</span><span class="p">)</span>
+<span class="n">classifier</span><span class="o">.</span><span class="n">fit_</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">query_data</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
 <h2 id="kroneckerlinear">KroneckerLinear<a class="headerlink" href="#kroneckerlinear" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerLinear</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A linear transformation whose parameters are expressed as a Kronecker product.</p>
@@ -767,12 +866,10 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 <span class="n">y</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># (6, )</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="kroneckerrnn">KroneckerRNN<a class="headerlink" href="#kroneckerrnn" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerRNN</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Implements a recurrent neural network whose matrices are parameterized via their Kronecker factors.
@@ -802,12 +899,10 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 <span class="n">y</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># (6, )</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="kroneckerlstm">KroneckerLSTM<a class="headerlink" href="#kroneckerlstm" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerLSTM</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Implements an LSTM using a factorization similar to the one of

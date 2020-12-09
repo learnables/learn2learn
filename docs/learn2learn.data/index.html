@@ -759,7 +759,6 @@
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels_to_indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indices_to_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Wraps a classification dataset to enable fast indexing of samples within classes.</p>
 <p>This class exposes two attributes specific to the wrapped dataset:</p>
@@ -784,12 +783,10 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="unionmetadataset">UnionMetaDataset<a class="headerlink" href="#unionmetadataset" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Takes multiple MetaDataests and constructs their union.</p>
 <p>Note: The labels of all datasets are remapped to be in consecutive order.
@@ -816,12 +813,10 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">union</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="filteredmetadataset">FilteredMetaDataset<a class="headerlink" href="#filteredmetadataset" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Takes in a MetaDataset and filters it to only include a subset of its labels.</p>
 <p>Note: The labels of all datasets are <strong>not</strong> remapped.
@@ -841,12 +836,10 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="taskdataset">TaskDataset<a class="headerlink" href="#taskdataset" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Creates a set of tasks from a given Dataset.</p>
@@ -885,7 +878,6 @@ documentation of task transforms.</p>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">task</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="learn2learndatatransforms">learn2learn.data.transforms<a class="headerlink" href="#learn2learndatatransforms" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
 <p>Collection of general task transformations.</p>
@@ -911,7 +903,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Loads a sample from the dataset given its index.</p>
@@ -923,7 +914,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Keeps samples from N random labels present in the task description.</p>
@@ -937,7 +927,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Keeps K samples for each present labels.</p>
@@ -951,7 +940,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Removes samples that do not belong to the given set of labels.</p>
@@ -964,7 +952,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Efficient implementation of FilterLabels, NWays, and KShots.</p>
@@ -982,7 +969,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Given samples from K classes, maps the labels to 0, ..., K.</p>
@@ -994,7 +980,6 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Re-orders the samples in the task description such that they are sorted in

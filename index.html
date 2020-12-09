@@ -706,7 +706,7 @@
                 <p align="center"><img src="https://raw.githubusercontent.com/learnables/learn2learn/gh-pages/assets/img/l2l-full.png" height="120px" /></p>
 
 <hr />
-<p><a href="https://travis-ci.com/learnables/learn2learn"><img alt="Build Status" src="https://travis-ci.com/learnables/learn2learn.svg?branch=master" /></a></p>
+<p><img alt="Test Status" src="https://github.com/learnables/learn2learn/workflows/Testing/badge.svg?branch=master" /></p>
 <p>learn2learn is a software library for meta-learning research.</p>
 <p>learn2learn builds on top of PyTorch to accelerate two aspects of the meta-learning research cycle:</p>
 <ul>
@@ -737,7 +737,6 @@ It retains compatibility with <a href="https://pytorch.org/vision/">torchvision<
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>pip install learn2learn
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="snippets-examples">Snippets &amp; Examples<a class="headerlink" href="#snippets-examples" title="Permanent link">&para;</a></h2>
 <p>The following snippets provide a sneak peek at the functionalities of learn2learn.</p>
 <h3 id="high-level-wrappers">High-level Wrappers<a class="headerlink" href="#high-level-wrappers" title="Permanent link">&para;</a></h3>
@@ -765,7 +764,6 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
     <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Meta-Descent with Hypergradient</strong></p>
 <p>Learn any kind of optimization algorithm with the <code>LearnableOptimizer</code>. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -791,7 +789,6 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <span class="n">metaopt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update linear</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="learning-domains">Learning Domains<a class="headerlink" href="#learning-domains" title="Permanent link">&para;</a></h3>
 <p><strong>Custom Few-Shot Dataset</strong></p>
 <p>Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in <code>learn2learn.vision.datasets</code>.
@@ -817,7 +814,6 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
     <span class="c1"># Meta-train on the task</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Environments and Utilities for Meta-RL</strong></p>
 <p>Parallelize your own meta-environments with <code>AsyncVectorEnv</code>, or use the standardized ones.
 (<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)</p>
@@ -844,7 +840,6 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
     <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="low-level-utilities">Low-Level Utilities<a class="headerlink" href="#low-level-utilities" title="Permanent link">&para;</a></h3>
 <p><strong>Differentiable Optimization</strong></p>
 <p>Learn and differentiate through updates of PyTorch Modules.
@@ -876,7 +871,6 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients w.r.t model.parameters() and learned_update.parameters()</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h2>
 <p>A human-readable changelog is available in the <a href="CHANGELOG.md">CHANGELOG.md</a> file.</p>
 <h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
@@ -908,7 +902,6 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="acknowledgements-friends">Acknowledgements &amp; Friends<a class="headerlink" href="#acknowledgements-friends" title="Permanent link">&para;</a></h3>
 <ol>
 <li>The RL environments are adapted from Tristan Deleu's <a href="https://github.com/tristandeleu/pytorch-maml-rl">implementations</a> and from the ProMP <a href="https://github.com/jonasrothfuss/ProMP/">repository</a>. Both shared with permission, under the MIT License.</li>

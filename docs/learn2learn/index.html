@@ -627,7 +627,6 @@
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">clone_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Creates a copy of a module, whose parameters/buffers/submodules
@@ -653,12 +652,10 @@ parameters.</p>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients are back-propagate all the way to net.</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="detach_module">detach_module<a class="headerlink" href="#detach_module" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">detach_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Detaches all parameters/buffers of a previously cloned module from its computational graph.</p>
@@ -679,12 +676,10 @@ parameters.</p>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients are back-propagate on clone, not net.</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="update_module">update_module<a class="headerlink" href="#update_module" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">update_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Updates the parameters of a module in-place, in a way that preserves differentiability.</p>
@@ -717,12 +712,10 @@ where <script type="math/tex">p</script> is the parameter, and <script type="mat
 <span class="n">l2l</span><span class="o">.</span><span class="n">update_module</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="magic_box">magic_box<a class="headerlink" href="#magic_box" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">magic_box</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The magic box operator, which evaluates to 1 but whose gradient is <script type="math/tex">dx</script>:</p>

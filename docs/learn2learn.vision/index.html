@@ -930,12 +930,10 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
     <span class="k">return</span> <span class="n">x</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="omniglotfc">OmniglotFC<a class="headerlink" href="#omniglotfc" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.</p>
@@ -957,12 +955,10 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
                  <span class="n">sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">])</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="omniglotcnn">OmniglotCNN<a class="headerlink" href="#omniglotcnn" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">Source</a></p>
 <p><strong>Description</strong></p>
 <p>The convolutional network commonly used for Omniglot, as described by Finn et al, 2017.</p>
@@ -981,12 +977,10 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="cnn4">CNN4<a class="headerlink" href="#cnn4" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">embedding_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.</p>
@@ -1005,7 +999,6 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="resnet12">ResNet12<a class="headerlink" href="#resnet12" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1020,7 +1013,6 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
          <span class="n">dropblock_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/resnet12.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The 12-layer residual network from Mishra et al, 2017.</p>
@@ -1054,7 +1046,6 @@ who share it under the Apache 2 license.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="learn2learnvisiondatasets">learn2learn.vision.datasets<a class="headerlink" href="#learn2learnvisiondatasets" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
 <p>Some datasets commonly used in meta-learning vision tasks.</p>
@@ -1062,7 +1053,6 @@ who share it under the Apache 2 license.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This class provides an interface to the Omniglot dataset.</p>
@@ -1102,7 +1092,6 @@ The background and evaluation splits are available in the <code>torchvision</cod
 <span class="n">omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">omniglot</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="miniimagenet">MiniImagenet<a class="headerlink" href="#miniimagenet" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1115,7 +1104,6 @@ The background and evaluation splits are available in the <code>torchvision</cod
              <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The <em>mini</em>-ImageNet dataset was originally introduced by Vinyals et al., 2016.</p>
@@ -1143,7 +1131,6 @@ The classes are sampled from the ImageNet dataset, and we use the splits from Ra
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskGenerator</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="n">ways</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="tieredimagenet">TieredImagenet<a class="headerlink" href="#tieredimagenet" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1156,7 +1143,6 @@ The classes are sampled from the ImageNet dataset, and we use the splits from Ra
                <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/tiered_imagenet.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The <em>tiered</em>-ImageNet dataset was originally introduced by Ren et al, 2018 and we download the data directly from the link provided in their repository.</p>
@@ -1187,7 +1173,6 @@ Of these categories, 20 (351 classes; 448,695 images) are used for training,
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="fc100">FC100<a class="headerlink" href="#fc100" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1200,7 +1185,6 @@ Of these categories, 20 (351 classes; 448,695 images) are used for training,
       <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The FC100 dataset was originally introduced by Oreshkin et al., 2018.</p>
@@ -1232,7 +1216,6 @@ Our data is downloaded from the link provided by [2].</p>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="cifarfs">CIFARFS<a class="headerlink" href="#cifarfs" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1245,7 +1228,6 @@ Our data is downloaded from the link provided by [2].</p>
         <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cifarfs.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The CIFAR Few-Shot dataset as originally introduced by Bertinetto et al., 2019.</p>
@@ -1272,7 +1254,6 @@ The classes are sampled from the CIFAR-100 dataset, and we use the splits from B
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskGenerator</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="n">ways</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="vggflower102">VGGFlower102<a class="headerlink" href="#vggflower102" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1285,7 +1266,6 @@ The classes are sampled from the CIFAR-100 dataset, and we use the splits from B
              <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/vgg_flowers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The VGG Flowers dataset was originally introduced by Nilsback and Zisserman, 2006 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
@@ -1314,7 +1294,6 @@ We provide the raw (unprocessed) images, and follow the train-validation-test sp
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="fgvcaircraft">FGVCAircraft<a class="headerlink" href="#fgvcaircraft" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1327,7 +1306,6 @@ We provide the raw (unprocessed) images, and follow the train-validation-test sp
              <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_aircraft.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The FGVC Aircraft dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
@@ -1358,7 +1336,6 @@ to remove copyright information and ensure that only one plane is visible in the
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="describabletextures">DescribableTextures<a class="headerlink" href="#describabletextures" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1371,7 +1348,6 @@ to remove copyright information and ensure that only one plane is visible in the
                     <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/describable_textures.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The VGG Describable Textures dataset was originally introduced by Cimpoi et al., 2014
@@ -1404,7 +1380,6 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="cubirds200">CUBirds200<a class="headerlink" href="#cubirds200" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1419,7 +1394,6 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
            <span class="n">include_imagenet_duplicates</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cu_birds200.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The Caltech-UCSD Birds dataset was originally introduced by Wellinder et al., 2010 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
@@ -1452,7 +1426,6 @@ They are omitted by default, but can be included by setting the <code>include_im
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="quickdraw">Quickdraw<a class="headerlink" href="#quickdraw" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1465,7 +1438,6 @@ They are omitted by default, but can be included by setting the <code>include_im
           <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/quickdraw.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The Quickdraw dataset was originally introduced by Google Creative Lab in 2017 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
@@ -1497,7 +1469,6 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="learn2learnvisiontransforms">learn2learn.vision.transforms<a class="headerlink" href="#learn2learnvisiontransforms" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
 <p>A set of transformations commonly used in meta-learning vision tasks.</p>
@@ -1505,7 +1476,6 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RandomClassRotation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">degrees</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Samples rotations from a given list uniformly at random, and applies it to
@@ -1518,7 +1488,6 @@ all images from a given class.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transform</span> <span class="o">=</span> <span class="n">RandomClassRotation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">])</span>
 </code></pre></div>
 </td></tr></table>
-
 <h2 id="learn2learnvisionbenchmarks">learn2learn.vision.benchmarks<a class="headerlink" href="#learn2learnvisionbenchmarks" title="Permanent link">&para;</a></h2>
 <p>The benchmark modules provides a convenient interface to standardized benchmarks in the literature.
 It provides train/validation/test TaskDatasets and TaskTransforms for pre-defined datasets.</p>
@@ -1528,7 +1497,6 @@ For a more fine-grained control over tasks and data, we recommend directly using
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">list_tasksets</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Returns a list of all available benchmarks.</p>
@@ -1540,7 +1508,6 @@ For a more fine-grained control over tasks and data, we recommend directly using
     <span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="get_tasksets">get_tasksets<a class="headerlink" href="#get_tasksets" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -1561,7 +1528,6 @@ For a more fine-grained control over tasks and data, we recommend directly using
              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Returns the tasksets for a particular benchmark, using literature standard data and task transformations.</p>

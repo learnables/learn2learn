@@ -811,7 +811,6 @@
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/meta_env.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Interface for l2l envs. Environments have a certain number of task specific parameters that uniquely
@@ -831,14 +830,12 @@ The flow is then</p>
 <span class="err">    ...</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Credit</strong></p>
 <p>Adapted from Tristan Deleu and Jonas Rothfuss' implementations.</p>
 <h2 id="asyncvectorenv">AsyncVectorEnv<a class="headerlink" href="#asyncvectorenv" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AsyncVectorEnv</span><span class="p">(</span><span class="n">env_fns</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/async_vec_env.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Asynchronous vectorized environment for working with l2l MetaEnvs.
@@ -850,7 +847,6 @@ Allows multiple environments to be run as separate processes.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/halfcheetah_forward_backward.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the half-cheetah to learn to run forward or backward.
@@ -871,7 +867,6 @@ position before and after taking the specified action divided by a small value d
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the ant to learn to run forward or backward.
@@ -894,7 +889,6 @@ prematurely ending the episode.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the Ant to learn to run in a random direction in the
@@ -917,7 +911,6 @@ prematurely ending the episode.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the humanoid to learn to run forward or backward.
@@ -938,7 +931,6 @@ position before and after taking the specified action divided by a small value d
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_direction.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the humanoid to learn to run in a random direction in the
@@ -962,7 +954,6 @@ prematurely ending the episode.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Particles2DEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/particles/particles_2d.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Each task is defined by the location of the goal. A point mass
@@ -976,7 +967,6 @@ distance from the goal.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML1</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">n_goals</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The ML1 Benchmark of Meta-World is focused on solving just one task on different object / goal
@@ -998,7 +988,6 @@ arXiv preprint arXiv:1910.10897 (2019).</li>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML10</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The ML10 Benchmark of Meta-World consists of 10 different tasks for meta-training and 5 new tasks for
@@ -1019,7 +1008,6 @@ arXiv preprint arXiv:1910.10897 (2019).</li>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML45</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Similarly to ML10, this Benchmark has a variety of 45 different tasks for meta-training and 5 new tasks for

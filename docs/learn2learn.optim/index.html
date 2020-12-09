@@ -767,7 +767,6 @@
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/learnable_optimizer.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A PyTorch Optimizer with learnable transform, enabling the implementation
@@ -815,18 +814,15 @@ In turn, the transform can be updated via your favorite optmizer.</p>
 <span class="n">metaopt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update linear</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="zero_grad">zero_grad<a class="headerlink" href="#zero_grad" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Only reset target parameters.</p>
 <h2 id="parameterupdate">ParameterUpdate<a class="headerlink" href="#parameterupdate" title="Permanent link">&para;</a></h2>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/parameter_update.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Convenience class to implement custom update functions.</p>
@@ -875,7 +871,6 @@ In this case, the returned update is <code>None</code>.</p>
     <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="forward">forward<a class="headerlink" href="#forward" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -890,7 +885,6 @@ In this case, the returned update is <code>None</code>.</p>
                         <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Similar to torch.autograd.grad, but passes the gradients through the
 provided transform.</p>
@@ -908,7 +902,6 @@ provided transform.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/update_rules/differentiable_sgd.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A callable object that applies a list of updates to the parameters of a torch.nn.Module in a differentiable manner.</p>
@@ -938,12 +931,10 @@ p \gets p - \alpha g,
 <span class="n">sgd</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">gradients</span><span class="p">)</span>  <span class="c1"># model is updated in-place</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="forward_1">forward<a class="headerlink" href="#forward_1" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>module</strong> (Module) - The module to update.</li>
@@ -959,7 +950,6 @@ gradient descent, allow you to learn optimization functions from data.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">module_cls</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The ModuleTransform creates a an optimization transform based on any nn.Module.</p>
@@ -985,12 +975,10 @@ See <code>KroneckerTransform</code> for a scalable alternative.</p>
 <span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_</span><span class="p">(</span><span class="o">-</span><span class="n">lr</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>  <span class="c1"># Not a differentiable update. See l2l.optim.DifferentiableSGD.</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="kroneckertransform">KroneckerTransform<a class="headerlink" href="#kroneckertransform" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">kronecker_cls</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The KroneckerTransform creates a an optimization transform based on nn.Module's that admit a Kronecker factorization.
@@ -1024,12 +1012,10 @@ Refer to Arnold et al., 2019 for more details.</p>
 <span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_</span><span class="p">(</span><span class="o">-</span><span class="n">lr</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>  <span class="c1"># Not a differentiable update. See l2l.optim.DifferentiableSGD.</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="metacurvaturetransform">MetaCurvatureTransform<a class="headerlink" href="#metacurvaturetransform" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaCurvatureTransform</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Implements the Meta-Curvature transform of Park and Oliva, 2019.</p>

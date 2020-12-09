@@ -467,6 +467,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#lightningmaml" class="md-nav__link">
+    LightningMAML
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightninganil" class="md-nav__link">
+    LightningANIL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightningprototypicalnetworks" class="md-nav__link">
+    LightningPrototypicalNetworks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightningmetaoptnet" class="md-nav__link">
+    LightningMetaOptNet
+  </a>
+  
+</li>
+      
       
       
       
@@ -716,6 +744,34 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#lightningmaml" class="md-nav__link">
+    LightningMAML
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightninganil" class="md-nav__link">
+    LightningANIL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightningprototypicalnetworks" class="md-nav__link">
+    LightningPrototypicalNetworks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightningmetaoptnet" class="md-nav__link">
+    LightningMetaOptNet
+  </a>
+  
+</li>
+      
       
       
       
@@ -741,7 +797,6 @@
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>High-level implementation of <em>Model-Agnostic Meta-Learning</em>.</p>
@@ -778,12 +833,10 @@ upon initialization.</p>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="adapt">adapt<a class="headerlink" href="#adapt" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Takes a gradient step on the loss and updates the cloned parameters in place.</p>
 <p><strong>Arguments</strong></p>
@@ -800,7 +853,6 @@ upon initialization.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Returns a <code>MAML</code>-wrapped copy of the module whose parameters and buffers
 are <code>torch.clone</code>d from the original module.</p>
@@ -820,7 +872,6 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lrs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/meta_sgd.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>High-level implementation of <em>Meta-SGD</em>.</p>
@@ -854,12 +905,10 @@ are learned for fast-adaptation.</p>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="clone_1">clone<a class="headerlink" href="#clone_1" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Descritpion</strong></p>
 <p>Akin to <code>MAML.clone()</code> but for MetaSGD: it includes a set of learnable fast-adaptation
 learning rates.</p>
@@ -867,7 +916,6 @@ learning rates.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Descritpion</strong></p>
 <p>Akin to <code>MAML.adapt()</code> but for MetaSGD: it updates the model with the learnable
 per-parameter learning rates.</p>
@@ -889,7 +937,6 @@ per-parameter learning rates.</p>
      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/gbml.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>General wrapper for gradient-based meta-learning implementations.</p>
@@ -963,7 +1010,6 @@ KFO from [5].</p>
     <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="clone_2">clone<a class="headerlink" href="#clone_2" title="Permanent link">&para;</a></h3>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -974,7 +1020,6 @@ KFO from [5].</p>
            <span class="n">adapt_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Similar to <code>MAML.clone()</code>.</p>
 <p><strong>Arguments</strong></p>
@@ -990,7 +1035,6 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">GBML</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><strong>Description</strong></p>
 <p>Takes a gradient step on the loss and updates the cloned parameters in place.</p>
 <p>The parameters of the transform are only adapted if <code>self.adapt_update</code> is <code>True</code>.</p>
@@ -1004,6 +1048,162 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=None) - Whether to allow adaptation with
     parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
+<h2 id="lightningmaml">LightningMAML<a class="headerlink" href="#lightningmaml" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningMAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_maml.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A PyTorch Lightning module for MAML.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>model</strong> (Module) - A PyTorch nn.Module.</li>
+<li><strong>loss</strong> (Function, <em>optional</em>, default=CrossEntropyLoss) - Loss function which maps the cost of the events.</li>
+<li><strong>ways</strong> (int, <em>optional</em>, default=5) - Number of classes in a task.</li>
+<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of samples for adaptation.</li>
+<li><strong>adaptation_steps</strong> (int, <em>optional</em>, default=1) - Number of steps for adapting to new task.</li>
+<li><strong>lr</strong> (float, <em>optional</em>, default=0.001) - Learning rate of meta training.</li>
+<li><strong>adaptation_lr</strong> (float, <em>optional</em>, default=0.1) - Learning rate for fast adaptation.</li>
+<li><strong>scheduler_step</strong> (int, <em>optional</em>, default=20) - Decay interval for <code>lr</code>.</li>
+<li><strong>scheduler_decay</strong> (float, <em>optional</em>, default=1.0) - Decay rate for <code>lr</code>.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."</li>
+</ol>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OmniglotFC</span><span class="p">(</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ways</span><span class="p">)</span>
+<span class="n">maml</span> <span class="o">=</span> <span class="n">LightningMAML</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">adaptation_lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
+<span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="o">.</span><span class="n">from_argparse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">maml</span><span class="p">,</span> <span class="n">episodic_data</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="lightninganil">LightningANIL<a class="headerlink" href="#lightninganil" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningANIL</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_anil.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A PyTorch Lightning module for ANIL.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>features</strong> (Module) - A nn.Module to extract features, which will not be adaptated.</li>
+<li><strong>classifier</strong> (Module) - A nn.Module taking features, mapping them to classification.</li>
+<li><strong>loss</strong> (Function, <em>optional</em>, default=CrossEntropyLoss) - Loss function which maps the cost of the events.</li>
+<li><strong>ways</strong> (int, <em>optional</em>, default=5) - Number of classes in a task.</li>
+<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of samples for adaptation.</li>
+<li><strong>adaptation_steps</strong> (int, <em>optional</em>, default=1) - Number of steps for adapting to new task.</li>
+<li><strong>lr</strong> (float, <em>optional</em>, default=0.001) - Learning rate of meta training.</li>
+<li><strong>adaptation_lr</strong> (float, <em>optional</em>, default=0.1) - Learning rate for fast adaptation.</li>
+<li><strong>scheduler_step</strong> (int, <em>optional</em>, default=20) - Decay interval for <code>lr</code>.</li>
+<li><strong>scheduler_decay</strong> (float, <em>optional</em>, default=1.0) - Decay rate for <code>lr</code>.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Raghu et al. 2020. "Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML"</li>
+</ol>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OmniglotFC</span><span class="p">(</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ways</span><span class="p">)</span>
+<span class="n">anil</span> <span class="o">=</span> <span class="n">LightningANIL</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span> <span class="n">adaptation_lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
+<span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="o">.</span><span class="n">from_argparse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">anil</span><span class="p">,</span> <span class="n">episodic_data</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="lightningprototypicalnetworks">LightningPrototypicalNetworks<a class="headerlink" href="#lightningprototypicalnetworks" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningPrototypicalNetworks</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_prototypicalnets.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A PyTorch Lightning module for Prototypical Networks.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>features</strong> (Module) - Feature extractor which classifies input tasks.</li>
+<li><strong>loss</strong> (Function, <em>optional</em>, default=CrossEntropyLoss) - Loss function which maps the cost of the events.</li>
+<li><strong>distance_metric</strong> (str, <em>optional</em>, default='euclidean') - Distance metric between samples. ['euclidean', 'cosine']</li>
+<li><strong>train_ways</strong> (int, <em>optional</em>, default=5) - Number of classes in for train tasks.</li>
+<li><strong>train_shots</strong> (int, <em>optional</em>, default=1) - Number of support samples for train tasks.</li>
+<li><strong>train_queries</strong> (int, <em>optional</em>, default=1) - Number of query samples for train tasks.</li>
+<li><strong>test_ways</strong> (int, <em>optional</em>, default=5) - Number of classes in for test tasks.</li>
+<li><strong>test_shots</strong> (int, <em>optional</em>, default=1) - Number of support samples for test tasks.</li>
+<li><strong>test_queries</strong> (int, <em>optional</em>, default=1) - Number of query samples for test tasks.</li>
+<li><strong>lr</strong> (float, <em>optional</em>, default=0.001) - Learning rate of meta training.</li>
+<li><strong>scheduler_step</strong> (int, <em>optional</em>, default=20) - Decay interval for <code>lr</code>.</li>
+<li><strong>scheduler_decay</strong> (float, <em>optional</em>, default=1.0) - Decay rate for <code>lr</code>.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Snell et al. 2017. "Prototypical Networks for Few-shot Learning"</li>
+</ol>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">Convnet</span><span class="p">()</span>  <span class="c1"># init model</span>
+<span class="n">protonet</span> <span class="o">=</span> <span class="n">LightningPrototypicalNetworks</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
+<span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="o">.</span><span class="n">from_argparse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">protonet</span><span class="p">,</span> <span class="n">episodic_data</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="lightningmetaoptnet">LightningMetaOptNet<a class="headerlink" href="#lightningmetaoptnet" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningMetaOptNet</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_metaoptnet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A PyTorch Lightning module for MetaOptNet.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>features</strong> (Module) - Feature extractor which classifies input tasks.</li>
+<li><strong>svm_C_reg</strong> (float, <em>optional</em>, default=0.1) - Regularization weight for SVM.</li>
+<li><strong>svm_max_iters</strong> (int, <em>optional</em>, default=15) - Maximum number of iterations for SVM convergence.</li>
+<li><strong>loss</strong> (Function, <em>optional</em>, default=CrossEntropyLoss) - Loss function which maps the cost of the events.</li>
+<li><strong>train_ways</strong> (int, <em>optional</em>, default=5) - Number of classes in for train tasks.</li>
+<li><strong>train_shots</strong> (int, <em>optional</em>, default=1) - Number of support samples for train tasks.</li>
+<li><strong>train_queries</strong> (int, <em>optional</em>, default=1) - Number of query samples for train tasks.</li>
+<li><strong>test_ways</strong> (int, <em>optional</em>, default=5) - Number of classes in for test tasks.</li>
+<li><strong>test_shots</strong> (int, <em>optional</em>, default=1) - Number of support samples for test tasks.</li>
+<li><strong>test_queries</strong> (int, <em>optional</em>, default=1) - Number of query samples for test tasks.</li>
+<li><strong>lr</strong> (float, <em>optional</em>, default=0.001) - Learning rate of meta training.</li>
+<li><strong>scheduler_step</strong> (int, <em>optional</em>, default=20) - Decay interval for <code>lr</code>.</li>
+<li><strong>scheduler_decay</strong> (float, <em>optional</em>, default=1.0) - Decay rate for <code>lr</code>.</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Lee et al. 2019. "Meta-Learning with Differentiable Convex Optimization"</li>
+</ol>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">)</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">Convnet</span><span class="p">()</span>  <span class="c1"># init model</span>
+<span class="n">metaoptnet</span> <span class="o">=</span> <span class="n">LightningMetaOptNet</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
+<span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="o">.</span><span class="n">from_argparse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">metaoptnet</span><span class="p">,</span> <span class="n">episodic_data</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
                 
                   
                 
