@@ -45,7 +45,7 @@ alltests:
 
 docs:
 	rm -f docs/mkdocs.yml
-	python scripts/compile_paper_list.py
+	#python scripts/compile_paper_list.py
 	cd docs && pydocmd build && pydocmd serve
 
 docs-deploy:

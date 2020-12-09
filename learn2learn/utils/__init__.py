@@ -305,3 +305,26 @@ def update_module(module, updates=None, memo=None):
     if hasattr(module, 'flatten_parameters'):
         module._apply(lambda x: x)
     return module
+
+
+def accuracy(preds, targets):
+    """Computes accuracy"""
+    acc = (preds.argmax(dim=1).long() == targets.long()).sum().float()
+    return acc / preds.size(0)
+
+
+class _ImportRaiser(object):
+
+    def __init__(self, name, command):
+        self.name = name
+        self.command = command
+
+    def raise_import(self):
+        msg = self.name + ' required. Try: ' + self.command
+        raise ImportError(msg)
+
+    def __getattr__(self, *args, **kwargs):
+        self.raise_import()
+
+    def __call__(self, *args, **kwargs):
+        self.raise_import()
