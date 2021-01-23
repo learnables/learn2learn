@@ -195,6 +195,8 @@ class ResNet12(nn.Module):
         (640 is for mini-ImageNet; used for the classifier layer)
     * **keep_prob** (float, *optional*, default=1.0) - Dropout rate on the embedding layer.
     * **avg_pool** (bool, *optional*, default=True) - Set to False for the 16k-dim embeddings of Lee et al, 2019.
+    * **wider** (bool, *optional*, default=True) - True uses (64, 160, 320, 640) filters akin to Lee et al, 2019.
+        False uses (64, 128, 256, 512) filters, akin to Oreshkin et al, 2018.
     * **drop_rate** (float, *optional*, default=0.1) - Dropout rate for the residual layers.
     * **dropblock_size** (int, *optional*, default=5) - Size of drop blocks.
 
@@ -210,6 +212,7 @@ class ResNet12(nn.Module):
         hidden_size=640,  # mini-ImageNet images, used for the classifier
         keep_prob=1.0,  # dropout for embedding
         avg_pool=True,  # Set to False for 16000-dim embeddings
+        wider=True,  # True mimics MetaOptNet, False mimics TADAM
         drop_rate=0.1,  # dropout for residual layers
         dropblock_size=5,
     ):
@@ -217,22 +220,26 @@ class ResNet12(nn.Module):
         self.inplanes = 3
         self.output_size = output_size
         block = BasicBlock
+        if wider:
+            num_filters = [64, 160, 320, 640]
+        else:
+            num_filters = [64, 128, 256, 512]
 
         self.layer1 = self._make_layer(
             block,
-            64,
+            num_filters[0],
             stride=2,
             drop_rate=drop_rate,
         )
         self.layer2 = self._make_layer(
             block,
-            160,
+            num_filters[1],
             stride=2,
             drop_rate=drop_rate,
         )
         self.layer3 = self._make_layer(
             block,
-            320,
+            num_filters[2],
             stride=2,
             drop_rate=drop_rate,
             drop_block=True,
@@ -240,7 +247,7 @@ class ResNet12(nn.Module):
         )
         self.layer4 = self._make_layer(
             block,
-            640,
+            num_filters[3],
             stride=2,
             drop_rate=drop_rate,
             drop_block=True,
