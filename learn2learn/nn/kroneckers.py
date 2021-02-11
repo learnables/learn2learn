@@ -80,11 +80,19 @@ class KroneckerLinear(nn.Module):
         if self.psd:
             left = left.t() @ left
             right = right.t() @ right
+        n = self.left.size(0)
+        m = self.right.size(0)
         if len(x.shape) == 1:
-            shape = x.shape
-            x = x.view(-1, 1)
-            x = kronecker_addmm(left, right, x, self.bias)
-            return x.view(*shape).to(old_device)
+            if x.size(0) != n * m:
+                raise ValueError("Input vector must have size n*m")
+            X = x.reshape(m, n).t()
+            Y = kronecker_addmm(left, right, X, self.bias)
+            y = Y.t().flatten()
+            return y.to(old_device)
+        if x.shape[-2:] != (n, m):
+            raise ValueError(
+                "Final two dimensions of input tensor must have shape (n, m)"
+            )
         x = kronecker_addmm(left, right, x, self.bias)
         return x.to(old_device)
 
