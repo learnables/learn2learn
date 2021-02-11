@@ -31,7 +31,8 @@ class Convnet(nn.Module):
         super().__init__()
         self.encoder = l2l.vision.models.ConvBase(output_size=z_dim,
                                                   hidden=hid_dim,
-                                                  channels=x_dim)
+                                                  channels=x_dim,
+                                                  max_pool=True)
         self.out_channels = 1600
 
     def forward(self, x):
