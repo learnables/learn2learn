@@ -73,7 +73,6 @@ install(
         'gym>=0.14.0',
         'torch>=1.1.0',
         'torchvision>=0.3.0',
-        'pandas',
         'requests',
         'gsutil',
         'tqdm',
