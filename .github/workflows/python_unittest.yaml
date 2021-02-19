@@ -41,7 +41,7 @@ jobs:
                   pip3 install --install-option="--no-cython-compile" cython
                   pip3 install torch==${{ matrix.pytorch }}
                   pip3 install torchvision==${{ matrix.torchvision }}
-                  pip3 install chardet<4.0  # can be remove when fix in: https://github.com/aio-libs/aiohttp/issues/5366
+                  pip3 install chardet==3.0.4  # can be remove when fix in: https://github.com/aio-libs/aiohttp/issues/5366
                   pip3 install requests numpy gym gsutil tqdm
                   make dev
             - name: Lint Code
