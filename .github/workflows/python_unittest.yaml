@@ -26,13 +26,14 @@ jobs:
 
         steps:
             - name: Clone Repository
-              uses: actions/checkout@master
+              uses: actions/checkout@v2
               with:
                 ref: ${{ github.ref }}
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
                 python-version: ${{ matrix.python }}
+                architecture: x64
             - name: Install Dependencies
               run: |
                   python3 --version
