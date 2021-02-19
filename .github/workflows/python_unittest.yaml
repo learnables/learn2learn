@@ -42,6 +42,7 @@ jobs:
                   pip3 install --install-option="--no-cython-compile" cython
                   pip3 install torch==${{ matrix.pytorch }}
                   pip3 install torchvision==${{ matrix.torchvision }}
+                  pip3 install requests numpy gym gsutil tqdm
                   make dev
             - name: Lint Code
               run: make lint
