@@ -37,11 +37,11 @@ jobs:
                 python-version: ${{ matrix.python }}
             - name: Install Dependencies
               run: |
-                  python --version
-                  python -m pip install -U pip
-                  pip install --install-option="--no-cython-compile" cython
-                  pip install torch==${{ matrix.pytorch }}
-                  pip install torchvision==${{ matrix.torchvision }}
+                  python3 --version
+                  python3 -m pip3 install -U pip3
+                  pip3 install --install-option="--no-cython-compile" cython
+                  pip3 install torch==${{ matrix.pytorch }}
+                  pip3 install torchvision==${{ matrix.torchvision }}
                   make dev
             - name: Lint Code
               run: make lint
