@@ -10,10 +10,8 @@ jobs:
             matrix:
                 os: [ubuntu-18.04, ubuntu-latest, macos-latest]
                 python: ['3.7', '3.8']
-                pytorch: ['1.3.0', '1.4.0', '1.5.0', '1.6.0', '1.7.0']
+                pytorch: ['1.4.0', '1.5.0', '1.6.0', '1.7.0']
                 include: 
-                    - pytorch: '1.3.0'
-                      torchvision: '0.4.1'
                     - pytorch: '1.4.0'
                       torchvision: '0.5.0'
                     - pytorch: '1.5.0'
@@ -28,20 +26,23 @@ jobs:
 
         steps:
             - name: Clone Repository
-              uses: actions/checkout@master
+              uses: actions/checkout@v2
               with:
                 ref: ${{ github.ref }}
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
                 python-version: ${{ matrix.python }}
+                architecture: x64
             - name: Install Dependencies
               run: |
-                  python --version
-                  python -m pip install -U pip
-                  pip install --install-option="--no-cython-compile" cython
-                  pip install torch==${{ matrix.pytorch }}
-                  pip install torchvision==${{ matrix.torchvision }}
+                  python3 --version
+                  python3 -m pip install -U pip
+                  pip3 install --install-option="--no-cython-compile" cython
+                  pip3 install torch==${{ matrix.pytorch }}
+                  pip3 install torchvision==${{ matrix.torchvision }}
+                  pip3 install chardet==3.0.4  # can be remove when fix in: https://github.com/aio-libs/aiohttp/issues/5366
+                  pip3 install requests numpy gym gsutil tqdm
                   make dev
             - name: Lint Code
               run: make lint

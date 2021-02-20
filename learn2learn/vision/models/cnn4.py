@@ -252,14 +252,21 @@ class CNN4(torch.nn.Module):
     ~~~
     """
 
-    def __init__(self, output_size, hidden_size=32, layers=4, embedding_size=None):
+    def __init__(
+        self,
+        output_size,
+        hidden_size=32,
+        layers=4,
+        channels=3,
+        embedding_size=None,
+    ):
         super(CNN4, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
         base = ConvBase(
             output_size=hidden_size,
             hidden=hidden_size,
-            channels=3,
+            channels=channels,
             max_pool=True,
             layers=layers,
             max_pool_factor=4 // layers,

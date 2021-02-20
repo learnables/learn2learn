@@ -10,6 +10,7 @@ If necessary, use the following space to provide context or more details.
 
 If your contribution modifies code in the core library (not docs, tests, or examples), please fill the following checklist.
 
+- [ ] My contribution is listed in CHANGELOG.md with attribution.
 - [x] My contribution modifies code in the main library.
 - [ ] My modifications are tested.
 - [ ] My modifications are documented.
