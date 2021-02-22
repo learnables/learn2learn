@@ -56,7 +56,6 @@ class TestMAMLAlgorithm(unittest.TestCase):
             out = clone(X)
             loss = out.norm()
             clone.adapt(loss)
-
         # Create a reference as copy of clone
         ref = copy.deepcopy(self.model)
         with torch.no_grad():
