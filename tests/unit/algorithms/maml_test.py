@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import copy
 import unittest
 import torch
 import learn2learn as l2l
@@ -42,6 +43,30 @@ class TestMAMLAlgorithm(unittest.TestCase):
             for clone in [maml.clone(), maml.clone()]:
                 out = clone(X)
                 self.assertTrue(close(ref, out))
+
+    def test_first_order_adaptation(self):
+        self.model.zero_grad()
+        maml = l2l.algorithms.MAML(self.model,
+                                   lr=INNER_LR,
+                                   first_order=True)
+        X = torch.randn(NUM_INPUTS, INPUT_SIZE)
+        clone = maml.clone()
+        # Fast adapt the clone
+        for step in range(3):
+            out = clone(X)
+            loss = out.norm()
+            clone.adapt(loss)
+        # Create a reference as copy of clone
+        ref = copy.deepcopy(self.model)
+        with torch.no_grad():
+            for rp, cp in zip(ref.parameters(), clone.parameters()):
+                rp.data.copy_(cp.data)
+        ref(X).norm().backward()
+        # Compute first-order gradients
+        loss = clone(X).norm()
+        loss.backward()
+        for pm, pr in zip(self.model.parameters(), ref.parameters()):
+            self.assertTrue(close(pm.grad, pr.grad))
 
     def test_graph_connection(self):
         maml = l2l.algorithms.MAML(self.model,
