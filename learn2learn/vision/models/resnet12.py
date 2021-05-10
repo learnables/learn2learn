@@ -215,9 +215,10 @@ class ResNet12(nn.Module):
         wider=True,  # True mimics MetaOptNet, False mimics TADAM
         drop_rate=0.1,  # dropout for residual layers
         dropblock_size=5,
+        channels=3,
     ):
         super(ResNet12, self).__init__()
-        self.inplanes = 3
+        self.inplanes = channels
         self.output_size = output_size
         block = BasicBlock
         if wider:
