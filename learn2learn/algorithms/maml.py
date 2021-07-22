@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
 import traceback
+import warnings
+import torch
+
+from torch.nn.utils import clip_grad_norm_, clip_grad_value_
 from torch.autograd import grad
 
 from learn2learn.algorithms.base_learner import BaseLearner
@@ -110,7 +114,8 @@ class MAML(BaseLearner):
               loss,
               first_order=None,
               allow_unused=None,
-              allow_nograd=None):
+              allow_nograd=None,
+              clip_grad_max_norm=None):
         """
         **Description**
 
@@ -134,6 +139,7 @@ class MAML(BaseLearner):
         if allow_nograd is None:
             allow_nograd = self.allow_nograd
         second_order = not first_order
+        gradients = []
 
         if allow_nograd:
             # Compute relevant gradients
@@ -143,7 +149,6 @@ class MAML(BaseLearner):
                                retain_graph=second_order,
                                create_graph=second_order,
                                allow_unused=allow_unused)
-            gradients = []
             grad_counter = 0
 
             # Handles gradients for non-differentiable parameters
@@ -165,6 +170,18 @@ class MAML(BaseLearner):
                 traceback.print_exc()
                 print('learn2learn: Maybe try with allow_nograd=True and/or allow_unused=True ?')
 
+        # Clip the gradients in place
+        if clip_grad_max_norm:
+            norm_type = 2.0
+            total_norm = torch.norm(torch.stack([torch.norm(g.detach(), norm_type) for g in gradients if g is not None]), norm_type)
+            if total_norm.isnan() or total_norm.isinf():
+                warnings.warn("Non-finite norm encountered in learn2learn.algorithms.MAML.adapt; continuing anyway.",
+                          FutureWarning, stacklevel=2)
+            clip_coef = clip_grad_max_norm / (total_norm + 1e-6)
+            if clip_coef < 1:
+                for g in gradients:
+                    if g is not None:
+                        g.detach().mul_(clip_coef.to(g.device))
         # Update the module
         self.module = maml_update(self.module, self.lr, gradients)
 
