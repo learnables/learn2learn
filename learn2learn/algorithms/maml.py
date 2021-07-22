@@ -4,7 +4,6 @@ import traceback
 import warnings
 import torch
 
-from torch.nn.utils import clip_grad_norm_, clip_grad_value_
 from torch.autograd import grad
 
 from learn2learn.algorithms.base_learner import BaseLearner
