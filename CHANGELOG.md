@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Gradient clipping in MAML (@[DubiousCactus](https://github.com/DubiousCactus))
 * PyTorch Lightning interface to MAML, ANIL, ProtoNet, MetaOptNet.
 * Automatic batcher for Lighting: `l2l.data.EpisodicBatcher`.
 * `l2l.nn.PrototypicalClassifier` and `l2l.nn.SVMClassifier`.

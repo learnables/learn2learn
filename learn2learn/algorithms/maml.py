@@ -170,10 +170,15 @@ class MAML(BaseLearner):
                 traceback.print_exc()
                 print('learn2learn: Maybe try with allow_nograd=True and/or allow_unused=True ?')
 
-        # Clip the gradients in place
+        # Clip the gradients in place if the argument is set, using the default L2 norm
+        # (code mainly copied from
+        # https://pytorch.org/docs/stable/_modules/torch/nn/utils/clip_grad.html with some
+        # adjustments)
         if clip_grad_max_norm:
             norm_type = 2.0
-            total_norm = torch.norm(torch.stack([torch.norm(g.detach(), norm_type) for g in gradients if g is not None]), norm_type)
+            total_norm = torch.norm(torch.stack(
+                [torch.norm(g.detach(), norm_type) for g in gradients if g is not None]
+            ), norm_type)
             if total_norm.isnan() or total_norm.isinf():
                 warnings.warn("Non-finite norm encountered in learn2learn.algorithms.MAML.adapt; continuing anyway.",
                           FutureWarning, stacklevel=2)
