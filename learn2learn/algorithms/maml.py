@@ -180,8 +180,7 @@ class MAML(BaseLearner):
                 [torch.norm(g.detach(), norm_type) for g in gradients if g is not None]
             ), norm_type)
             if total_norm.isnan() or total_norm.isinf():
-                warnings.warn("Non-finite norm encountered in learn2learn.algorithms.MAML.adapt; continuing anyway.",
-                          FutureWarning, stacklevel=2)
+                warnings.warn("Non-finite norm encountered in learn2learn.algorithms.MAML.adapt; continuing anyway.", FutureWarning, stacklevel=2)
             clip_coef = clip_grad_max_norm / (total_norm + 1e-6)
             if clip_coef < 1:
                 for g in gradients:
