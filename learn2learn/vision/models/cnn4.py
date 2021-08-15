@@ -225,6 +225,14 @@ class OmniglotCNN(torch.nn.Module):
         return x
 
 
+class CNN4Backbone(ConvBase):
+
+    def forward(self, x):
+        x = super(CNN4Backbone, self).forward(x)
+        x = x.reshape(x.size(0), -1)
+        return x
+
+
 class CNN4(torch.nn.Module):
     """
 
@@ -263,17 +271,13 @@ class CNN4(torch.nn.Module):
         super(CNN4, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
-        base = ConvBase(
+        self.features = CNN4Backbone(
             output_size=hidden_size,
             hidden=hidden_size,
             channels=channels,
             max_pool=True,
             layers=layers,
             max_pool_factor=4 // layers,
-        )
-        self.features = torch.nn.Sequential(
-            base,
-            l2l.nn.Flatten(),
         )
         self.classifier = torch.nn.Linear(
             embedding_size,

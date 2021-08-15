@@ -162,6 +162,117 @@ class DropBlock(nn.Module):
         return block_mask
 
 
+class ResNet12Backbone(nn.Module):
+
+    def __init__(
+        self,
+        hidden_size=640,  # mini-ImageNet images, used for the classifier
+        keep_prob=1.0,  # dropout for embedding
+        avg_pool=True,  # Set to False for 16000-dim embeddings
+        wider=True,  # True mimics MetaOptNet, False mimics TADAM
+        drop_rate=0.1,  # dropout for residual layers
+        dropblock_size=5,
+        channels=3,
+    ):
+        super(ResNet12Backbone, self).__init__()
+        self.inplanes = channels
+        block = BasicBlock
+        if wider:
+            num_filters = [64, 160, 320, 640]
+        else:
+            num_filters = [64, 128, 256, 512]
+
+        self.layer1 = self._make_layer(
+            block,
+            num_filters[0],
+            stride=2,
+            drop_rate=drop_rate,
+        )
+        self.layer2 = self._make_layer(
+            block,
+            num_filters[1],
+            stride=2,
+            drop_rate=drop_rate,
+        )
+        self.layer3 = self._make_layer(
+            block,
+            num_filters[2],
+            stride=2,
+            drop_rate=drop_rate,
+            drop_block=True,
+            block_size=dropblock_size,
+        )
+        self.layer4 = self._make_layer(
+            block,
+            num_filters[3],
+            stride=2,
+            drop_rate=drop_rate,
+            drop_block=True,
+            block_size=dropblock_size,
+        )
+        if avg_pool:
+            self.avgpool = nn.AvgPool2d(5, stride=1)
+        else:
+            self.avgpool = l2l.nn.Lambda(lambda x: x)
+        self.flatten = l2l.nn.Flatten()
+        self.keep_prob = keep_prob
+        self.keep_avg_pool = avg_pool
+        self.dropout = nn.Dropout(p=1.0 - self.keep_prob, inplace=False)
+        self.drop_rate = drop_rate
+
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(
+                    m.weight,
+                    mode='fan_out',
+                    nonlinearity='leaky_relu',
+                )
+            elif isinstance(m, nn.BatchNorm2d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+        self.features = torch.nn.Sequential(
+        )
+
+    def _make_layer(
+        self,
+        block,
+        planes,
+        stride=1,
+        drop_rate=0.0,
+        drop_block=False,
+        block_size=1,
+    ):
+        downsample = None
+        if stride != 1 or self.inplanes != planes * block.expansion:
+            downsample = nn.Sequential(
+                nn.Conv2d(self.inplanes, planes * block.expansion,
+                          kernel_size=1, stride=1, bias=False),
+                nn.BatchNorm2d(planes * block.expansion),
+            )
+        layers = []
+        layers.append(block(
+            self.inplanes,
+            planes,
+            stride,
+            downsample,
+            drop_rate,
+            drop_block,
+            block_size)
+        )
+        self.inplanes = planes * block.expansion
+        return nn.Sequential(*layers)
+
+    def forward(self, x):
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+        x = self.avgpool(x)
+        x = self.flatten(x)
+        x = self.dropout(x)
+        return x
+
+
 class ResNet12(nn.Module):
 
     """
@@ -218,100 +329,16 @@ class ResNet12(nn.Module):
         channels=3,
     ):
         super(ResNet12, self).__init__()
-        self.inplanes = channels
-        self.output_size = output_size
-        block = BasicBlock
-        if wider:
-            num_filters = [64, 160, 320, 640]
-        else:
-            num_filters = [64, 128, 256, 512]
-
-        self.layer1 = self._make_layer(
-            block,
-            num_filters[0],
-            stride=2,
+        self.features = ResNet12Backbone(
+            hidden_size=hidden_size,
+            keep_prob=keep_prob,
+            avg_pool=avg_pool,
+            wider=wider,
             drop_rate=drop_rate,
-        )
-        self.layer2 = self._make_layer(
-            block,
-            num_filters[1],
-            stride=2,
-            drop_rate=drop_rate,
-        )
-        self.layer3 = self._make_layer(
-            block,
-            num_filters[2],
-            stride=2,
-            drop_rate=drop_rate,
-            drop_block=True,
-            block_size=dropblock_size,
-        )
-        self.layer4 = self._make_layer(
-            block,
-            num_filters[3],
-            stride=2,
-            drop_rate=drop_rate,
-            drop_block=True,
-            block_size=dropblock_size,
-        )
-        if avg_pool:
-            self.avgpool = nn.AvgPool2d(5, stride=1)
-        else:
-            self.avgpool = l2l.nn.Lambda(lambda x: x)
-        self.keep_prob = keep_prob
-        self.keep_avg_pool = avg_pool
-        self.dropout = nn.Dropout(p=1.0 - self.keep_prob, inplace=False)
-        self.drop_rate = drop_rate
-
-        for m in self.modules():
-            if isinstance(m, nn.Conv2d):
-                nn.init.kaiming_normal_(
-                    m.weight,
-                    mode='fan_out',
-                    nonlinearity='leaky_relu',
-                )
-            elif isinstance(m, nn.BatchNorm2d):
-                nn.init.constant_(m.weight, 1)
-                nn.init.constant_(m.bias, 0)
-        self.features = torch.nn.Sequential(
-            self.layer1,
-            self.layer2,
-            self.layer3,
-            self.layer4,
-            self.avgpool,
-            l2l.nn.Flatten(),
-            self.dropout,
+            dropblock_size=dropblock_size,
+            channels=channels,
         )
         self.classifier = torch.nn.Linear(hidden_size, output_size)
-
-    def _make_layer(
-        self,
-        block,
-        planes,
-        stride=1,
-        drop_rate=0.0,
-        drop_block=False,
-        block_size=1,
-    ):
-        downsample = None
-        if stride != 1 or self.inplanes != planes * block.expansion:
-            downsample = nn.Sequential(
-                nn.Conv2d(self.inplanes, planes * block.expansion,
-                          kernel_size=1, stride=1, bias=False),
-                nn.BatchNorm2d(planes * block.expansion),
-            )
-        layers = []
-        layers.append(block(
-            self.inplanes,
-            planes,
-            stride,
-            downsample,
-            drop_rate,
-            drop_block,
-            block_size)
-        )
-        self.inplanes = planes * block.expansion
-        return nn.Sequential(*layers)
 
     def forward(self, x):
         x = self.features(x)
