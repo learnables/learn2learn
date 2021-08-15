@@ -166,7 +166,6 @@ class ResNet12Backbone(nn.Module):
 
     def __init__(
         self,
-        hidden_size=640,  # mini-ImageNet images, used for the classifier
         keep_prob=1.0,  # dropout for embedding
         avg_pool=True,  # Set to False for 16000-dim embeddings
         wider=True,  # True mimics MetaOptNet, False mimics TADAM
@@ -285,6 +284,8 @@ class ResNet12(nn.Module):
     The code is adapted from [Lee et al, 2019](https://github.com/kjunelee/MetaOptNet/)
     who share it under the Apache 2 license.
 
+    Instantiate `ResNet12Backbone` if you only need the feature extractor.
+
     List of changes:
 
     * Rename ResNet to ResNet12.
@@ -330,7 +331,6 @@ class ResNet12(nn.Module):
     ):
         super(ResNet12, self).__init__()
         self.features = ResNet12Backbone(
-            hidden_size=hidden_size,
             keep_prob=keep_prob,
             avg_pool=avg_pool,
             wider=wider,

@@ -244,6 +244,8 @@ class CNN4(torch.nn.Module):
 
     This network assumes inputs of shapes (3, 84, 84).
 
+    Instantiate `CNN4Backbone` if you only need the feature extractor.
+
     **References**
 
     1. Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.
