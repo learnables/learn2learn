@@ -26,3 +26,4 @@ from .cnn4 import (
     CNN4Backbone,
 )
 from .resnet12 import ResNet12, ResNet12Backbone
+from .wrn28 import WRN28, WRN28Backbone
