@@ -274,7 +274,6 @@ class CNN4(torch.nn.Module):
         if embedding_size is None:
             embedding_size = 25 * hidden_size
         self.features = CNN4Backbone(
-            output_size=hidden_size,
             hidden=hidden_size,
             channels=channels,
             max_pool=True,
