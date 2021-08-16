@@ -203,11 +203,12 @@ class OmniglotCNN(torch.nn.Module):
     def __init__(self, output_size=5, hidden_size=64, layers=4):
         super(OmniglotCNN, self).__init__()
         self.hidden_size = hidden_size
-        self.base = ConvBase(output_size=hidden_size,
-                             hidden=hidden_size,
-                             channels=1,
-                             max_pool=False,
-                             layers=layers)
+        self.base = ConvBase(
+             hidden=hidden_size,
+             channels=1,
+             max_pool=False,
+             layers=layers,
+        )
         self.features = torch.nn.Sequential(
             l2l.nn.Lambda(lambda x: x.view(-1, 1, 28, 28)),
             self.base,
