@@ -13,7 +13,7 @@ from learn2learn.algorithms.lightning import LightningEpisodicModule
 
 class LightningPrototypicalNetworks(LightningEpisodicModule):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_prototypicalnets.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_protonet.py)
 
     **Description**
 

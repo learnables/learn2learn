@@ -10,7 +10,7 @@ from learn2learn.algorithms.lightning import LightningEpisodicModule
 
 class LightningMAML(LightningEpisodicModule):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_maml.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_maml.py)
 
     **Description**
 

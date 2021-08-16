@@ -13,7 +13,7 @@ from learn2learn.algorithms.lightning import (
 
 class LightningMetaOptNet(LightningPrototypicalNetworks):
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_metaoptnet.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_metaoptnet.py)
 
     **Description**
 

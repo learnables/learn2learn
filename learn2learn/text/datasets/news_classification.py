@@ -1,10 +1,16 @@
+#!/usr/bin/env python3
+
 import io
 import os
 import zipfile
-
-import pandas as pd
 import requests
 import torch
+try:
+    import pandas as pd
+except ImportError:
+    from learn2learn.utils import _ImportRaiser
+    pd = _ImportRaiser('pandas', 'pip install pandas')
+
 from torch.utils.data import Dataset
 
 

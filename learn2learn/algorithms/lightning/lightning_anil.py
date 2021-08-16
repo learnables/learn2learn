@@ -14,7 +14,7 @@ from learn2learn.algorithms.lightning import (
 class LightningANIL(LightningEpisodicModule):
 
     """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning_anil.py)
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_anil.py)
 
     **Description**
 
