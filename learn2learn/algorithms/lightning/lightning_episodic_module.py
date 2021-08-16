@@ -3,12 +3,16 @@
 """
 """
 
-from learn2learn.utils import _ImportRaiser
-
 try:
     from pytorch_lightning import LightningModule
 except ImportError:
-    LightningModule = _ImportRaiser('pytorch_lightning', 'pip install pytorch_lightning')
+    from learn2learn.utils import _ImportRaiser
+
+    class LightningRaiser(_ImportRaiser):
+
+        def __init__(self, *args, **kwargs):
+            self.name = 'pytorch_lightning'
+            self.command = 'pip install pytorch_lightning==1.0.2'
 
 from torch import optim
 from argparse import ArgumentParser
