@@ -77,6 +77,6 @@ install(
         'gsutil',
         'tqdm',
         'qpth>=0.0.15',
-        'pytorch_lightning>=1.0.2',
+        #  'pytorch_lightning>=1.0.2',
     ],
 )

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -162,77 +163,40 @@ class DropBlock(nn.Module):
         return block_mask
 
 
-class ResNet12(nn.Module):
-
-    """
-    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/resnet12.py)
-
-    **Description**
-
-    The 12-layer residual network from Mishra et al, 2017.
-
-    The code is adapted from [Lee et al, 2019](https://github.com/kjunelee/MetaOptNet/)
-    who share it under the Apache 2 license.
-
-    List of changes:
-
-    * Rename ResNet to ResNet12.
-    * Small API modifications.
-    * Fix code style to be compatible with PEP8.
-    * Support multiple devices in DropBlock
-
-    **References**
-
-    1. Mishra et al. 2017. “A Simple Neural Attentive Meta-Learner.” ICLR 18.
-    2. Lee et al. 2019. “Meta-Learning with Differentiable Convex Optimization.” CVPR 19.
-    3. Lee et al's code: [https://github.com/kjunelee/MetaOptNet/](https://github.com/kjunelee/MetaOptNet/)
-    4. Oreshkin et al. 2018. “TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning.” NeurIPS 18.
-
-    **Arguments**
-
-    * **output_size** (int) - The dimensionality of the output.
-    * **hidden_size** (list, *optional*, default=640) - Size of the embedding once features are extracted.
-        (640 is for mini-ImageNet; used for the classifier layer)
-    * **keep_prob** (float, *optional*, default=1.0) - Dropout rate on the embedding layer.
-    * **avg_pool** (bool, *optional*, default=True) - Set to False for the 16k-dim embeddings of Lee et al, 2019.
-    * **drop_rate** (float, *optional*, default=0.1) - Dropout rate for the residual layers.
-    * **dropblock_size** (int, *optional*, default=5) - Size of drop blocks.
-
-    **Example**
-    ~~~python
-    model = ResNet12(output_size=ways, hidden_size=1600, avg_pool=False)
-    ~~~
-    """
+class ResNet12Backbone(nn.Module):
 
     def __init__(
         self,
-        output_size,
-        hidden_size=640,  # mini-ImageNet images, used for the classifier
         keep_prob=1.0,  # dropout for embedding
         avg_pool=True,  # Set to False for 16000-dim embeddings
+        wider=True,  # True mimics MetaOptNet, False mimics TADAM
         drop_rate=0.1,  # dropout for residual layers
         dropblock_size=5,
+        channels=3,
     ):
-        super(ResNet12, self).__init__()
-        self.inplanes = 3
-        self.output_size = output_size
+        super(ResNet12Backbone, self).__init__()
+        self.inplanes = channels
         block = BasicBlock
+        if wider:
+            num_filters = [64, 160, 320, 640]
+        else:
+            num_filters = [64, 128, 256, 512]
 
         self.layer1 = self._make_layer(
             block,
-            64,
+            num_filters[0],
             stride=2,
             drop_rate=drop_rate,
         )
         self.layer2 = self._make_layer(
             block,
-            160,
+            num_filters[1],
             stride=2,
             drop_rate=drop_rate,
         )
         self.layer3 = self._make_layer(
             block,
-            320,
+            num_filters[2],
             stride=2,
             drop_rate=drop_rate,
             drop_block=True,
@@ -240,7 +204,7 @@ class ResNet12(nn.Module):
         )
         self.layer4 = self._make_layer(
             block,
-            640,
+            num_filters[3],
             stride=2,
             drop_rate=drop_rate,
             drop_block=True,
@@ -250,6 +214,7 @@ class ResNet12(nn.Module):
             self.avgpool = nn.AvgPool2d(5, stride=1)
         else:
             self.avgpool = l2l.nn.Lambda(lambda x: x)
+        self.flatten = l2l.nn.Flatten()
         self.keep_prob = keep_prob
         self.keep_avg_pool = avg_pool
         self.dropout = nn.Dropout(p=1.0 - self.keep_prob, inplace=False)
@@ -265,16 +230,6 @@ class ResNet12(nn.Module):
             elif isinstance(m, nn.BatchNorm2d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
-        self.features = torch.nn.Sequential(
-            self.layer1,
-            self.layer2,
-            self.layer3,
-            self.layer4,
-            self.avgpool,
-            l2l.nn.Flatten(),
-            self.dropout,
-        )
-        self.classifier = torch.nn.Linear(hidden_size, output_size)
 
     def _make_layer(
         self,
@@ -304,6 +259,85 @@ class ResNet12(nn.Module):
         )
         self.inplanes = planes * block.expansion
         return nn.Sequential(*layers)
+
+    def forward(self, x):
+        x = self.layer1(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
+        x = self.avgpool(x)
+        x = self.flatten(x)
+        x = self.dropout(x)
+        return x
+
+
+class ResNet12(nn.Module):
+
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/resnet12.py)
+
+    **Description**
+
+    The 12-layer residual network from Mishra et al, 2017.
+
+    The code is adapted from [Lee et al, 2019](https://github.com/kjunelee/MetaOptNet/)
+    who share it under the Apache 2 license.
+
+    Instantiate `ResNet12Backbone` if you only need the feature extractor.
+
+    List of changes:
+
+    * Rename ResNet to ResNet12.
+    * Small API modifications.
+    * Fix code style to be compatible with PEP8.
+    * Support multiple devices in DropBlock
+
+    **References**
+
+    1. Mishra et al. 2017. “A Simple Neural Attentive Meta-Learner.” ICLR 18.
+    2. Lee et al. 2019. “Meta-Learning with Differentiable Convex Optimization.” CVPR 19.
+    3. Lee et al's code: [https://github.com/kjunelee/MetaOptNet/](https://github.com/kjunelee/MetaOptNet/)
+    4. Oreshkin et al. 2018. “TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning.” NeurIPS 18.
+
+    **Arguments**
+
+    * **output_size** (int) - The dimensionality of the output.
+    * **hidden_size** (list, *optional*, default=640) - Size of the embedding once features are extracted.
+        (640 is for mini-ImageNet; used for the classifier layer)
+    * **keep_prob** (float, *optional*, default=1.0) - Dropout rate on the embedding layer.
+    * **avg_pool** (bool, *optional*, default=True) - Set to False for the 16k-dim embeddings of Lee et al, 2019.
+    * **wider** (bool, *optional*, default=True) - True uses (64, 160, 320, 640) filters akin to Lee et al, 2019.
+        False uses (64, 128, 256, 512) filters, akin to Oreshkin et al, 2018.
+    * **drop_rate** (float, *optional*, default=0.1) - Dropout rate for the residual layers.
+    * **dropblock_size** (int, *optional*, default=5) - Size of drop blocks.
+
+    **Example**
+    ~~~python
+    model = ResNet12(output_size=ways, hidden_size=1600, avg_pool=False)
+    ~~~
+    """
+
+    def __init__(
+        self,
+        output_size,
+        hidden_size=640,  # mini-ImageNet images, used for the classifier
+        keep_prob=1.0,  # dropout for embedding
+        avg_pool=True,  # Set to False for 16000-dim embeddings
+        wider=True,  # True mimics MetaOptNet, False mimics TADAM
+        drop_rate=0.1,  # dropout for residual layers
+        dropblock_size=5,
+        channels=3,
+    ):
+        super(ResNet12, self).__init__()
+        self.features = ResNet12Backbone(
+            keep_prob=keep_prob,
+            avg_pool=avg_pool,
+            wider=wider,
+            drop_rate=drop_rate,
+            dropblock_size=dropblock_size,
+            channels=channels,
+        )
+        self.classifier = torch.nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
         x = self.features(x)
