@@ -3,13 +3,24 @@
 """
 """
 
-import pytorch_lightning as pl
+try:
+    from pytorch_lightning import LightningModule
+except ImportError:
+    from learn2learn.utils import _ImportRaiser
+
+    class LightningRaiser(_ImportRaiser):
+
+        def __init__(self, *args, **kwargs):
+            self.name = 'pytorch_lightning'
+            self.command = 'pip install pytorch_lightning==1.0.2'
+
+    LightningModule = LightningRaiser
 
 from torch import optim
 from argparse import ArgumentParser
 
 
-class LightningEpisodicModule(pl.LightningModule):
+class LightningEpisodicModule(LightningModule):
     """docstring for LightningEpisodicModule"""
 
     train_shots = 1

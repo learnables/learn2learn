@@ -105,7 +105,6 @@ class ConvBase(torch.nn.Sequential):
     #     MiniImagenet: hidden=32, channels=3, max_pool
 
     def __init__(self,
-                 output_size,
                  hidden=64,
                  channels=1,
                  max_pool=False,
@@ -204,11 +203,12 @@ class OmniglotCNN(torch.nn.Module):
     def __init__(self, output_size=5, hidden_size=64, layers=4):
         super(OmniglotCNN, self).__init__()
         self.hidden_size = hidden_size
-        self.base = ConvBase(output_size=hidden_size,
-                             hidden=hidden_size,
-                             channels=1,
-                             max_pool=False,
-                             layers=layers)
+        self.base = ConvBase(
+             hidden=hidden_size,
+             channels=1,
+             max_pool=False,
+             layers=layers,
+        )
         self.features = torch.nn.Sequential(
             l2l.nn.Lambda(lambda x: x.view(-1, 1, 28, 28)),
             self.base,
@@ -225,6 +225,14 @@ class OmniglotCNN(torch.nn.Module):
         return x
 
 
+class CNN4Backbone(ConvBase):
+
+    def forward(self, x):
+        x = super(CNN4Backbone, self).forward(x)
+        x = x.reshape(x.size(0), -1)
+        return x
+
+
 class CNN4(torch.nn.Module):
     """
 
@@ -235,6 +243,8 @@ class CNN4(torch.nn.Module):
     The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.
 
     This network assumes inputs of shapes (3, 84, 84).
+
+    Instantiate `CNN4Backbone` if you only need the feature extractor.
 
     **References**
 
@@ -263,17 +273,12 @@ class CNN4(torch.nn.Module):
         super(CNN4, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
-        base = ConvBase(
-            output_size=hidden_size,
+        self.features = CNN4Backbone(
             hidden=hidden_size,
             channels=channels,
             max_pool=True,
             layers=layers,
             max_pool_factor=4 // layers,
-        )
-        self.features = torch.nn.Sequential(
-            base,
-            l2l.nn.Flatten(),
         )
         self.classifier = torch.nn.Linear(
             embedding_size,

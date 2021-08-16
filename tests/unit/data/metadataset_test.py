@@ -18,7 +18,6 @@ class TestMetaDataset(TestCase):
         cls.meta_tensor_dataset = MetaDataset(cls.ds.tensor_dataset)
         cls.meta_str_dataset = MetaDataset(cls.ds.str_dataset)
         cls.meta_alpha_dataset = MetaDataset(cls.ds.alphabet_dataset)
-        cls.mnist_dataset = MetaDataset(cls.ds.get_mnist())
         cls.omniglot_dataset = MetaDataset(cls.ds.get_omniglot())
 
     def test_fails_with_non_torch_dataset(self):
@@ -34,14 +33,12 @@ class TestMetaDataset(TestCase):
         self.assertEqual(len(self.meta_tensor_dataset), self.ds.n)
         self.assertEqual(len(self.meta_str_dataset), self.ds.n)
         self.assertEqual(len(self.meta_alpha_dataset), 26)
-        self.assertEqual(len(self.mnist_dataset), 60000)
         self.assertEqual(len(self.omniglot_dataset), 32460)
 
     def test_data_labels_length(self):
         self.assertEqual(len(self.meta_tensor_dataset.labels), len(self.ds.tensor_classes))
         self.assertEqual(len(self.meta_str_dataset.labels), len(self.ds.str_classes))
         self.assertEqual(len(self.meta_alpha_dataset.labels), 26)
-        self.assertEqual(len(self.mnist_dataset.labels), len(self.ds.mnist_classes))
         self.assertEqual(len(self.omniglot_dataset.labels), len(self.ds.omniglot_classes))
 
     def test_data_labels_values(self):
