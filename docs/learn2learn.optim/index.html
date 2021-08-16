@@ -764,7 +764,7 @@
                 <h1 id="learn2learnoptim">learn2learn.optim<a class="headerlink" href="#learn2learnoptim" title="Permanent link">&para;</a></h1>
 <p>A set of utilities to write differentiable optimization algorithms.</p>
 <h2 id="learnableoptimizer">LearnableOptimizer<a class="headerlink" href="#learnableoptimizer" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/learnable_optimizer.py">[Source]</a></p>
@@ -791,17 +791,17 @@ In turn, the transform can be updated via your favorite optmizer.</p>
 <li>Jacobsen et al. 2019. “Meta-Descent for Online, Continual Prediction.”</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>
 <span class="n">metaopt</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">metaopt</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
@@ -815,12 +815,12 @@ In turn, the transform can be updated via your favorite optmizer.</p>
 </code></pre></div>
 </td></tr></table>
 <h3 id="zero_grad">zero_grad<a class="headerlink" href="#zero_grad" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
 <p>Only reset target parameters.</p>
 <h2 id="parameterupdate">ParameterUpdate<a class="headerlink" href="#parameterupdate" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/parameter_update.py">[Source]</a></p>
@@ -840,21 +840,21 @@ In this case, the returned update is <code>None</code>.</p>
     transform given a parameter.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">()</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">KroneckerLinear</span><span class="p">)</span>
 <span class="n">get_update</span> <span class="o">=</span> <span class="n">ParameterUpdate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span> <span class="o">+</span> <span class="n">get_update</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
@@ -872,12 +872,12 @@ In this case, the returned update is <code>None</code>.</p>
 </code></pre></div>
 </td></tr></table>
 <h3 id="forward">forward<a class="headerlink" href="#forward" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span>
                         <span class="n">parameters</span><span class="p">,</span>
                         <span class="n">create_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">retain_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -899,7 +899,7 @@ provided transform.</p>
     that do not require gradients. (Their update will be <code>None</code>.)</li>
 </ul>
 <h2 id="differentiablesgd">DifferentiableSGD<a class="headerlink" href="#differentiablesgd" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/update_rules/differentiable_sgd.py">[Source]</a></p>
@@ -918,12 +918,12 @@ p \gets p - \alpha g,
 <li><strong>lr</strong> (float) - The learning rate used to update the model.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">sgd</span> <span class="o">=</span> <span class="n">DifferentiableSGD</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">sgd</span> <span class="o">=</span> <span class="n">DifferentiableSGD</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">gradients</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
     <span class="n">loss</span><span class="p">,</span>
     <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
@@ -932,7 +932,7 @@ p \gets p - \alpha g,
 </code></pre></div>
 </td></tr></table>
 <h3 id="forward_1">forward<a class="headerlink" href="#forward_1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><strong>Arguments</strong></p>
@@ -947,7 +947,7 @@ and output model updates.
 Transforms are usually parameterized, and those parameters can be learned by
 gradient descent, allow you to learn optimization functions from data.</p>
 <h3 id="moduletransform">ModuleTransform<a class="headerlink" href="#moduletransform" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">module_cls</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">module_cls</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
@@ -962,12 +962,12 @@ See <code>KroneckerTransform</code> for a scalable alternative.</p>
 <li><strong>module_cls</strong> (callable) - A callable that instantiates the module used to transform gradients.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">linear_transform</span> <span class="o">=</span> <span class="n">ModuleTransform</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>
 <span class="n">linear_update</span> <span class="o">=</span> <span class="n">linear_transform</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>  <span class="c1"># maps gradients to updates, both of shape (1, 7840)</span>
 <span class="n">loss</span><span class="p">(</span><span class="n">classifier</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
@@ -976,7 +976,7 @@ See <code>KroneckerTransform</code> for a scalable alternative.</p>
 </code></pre></div>
 </td></tr></table>
 <h3 id="kroneckertransform">KroneckerTransform<a class="headerlink" href="#kroneckertransform" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">kronecker_cls</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">kronecker_cls</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
@@ -999,12 +999,12 @@ Refer to Arnold et al., 2019 for more details.</p>
 <li>Arnold et al. 2019. "When MAML can adapt fast and how to assist when it cannot".</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">kronecker_transform</span> <span class="o">=</span> <span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">KroneckerLinear</span><span class="p">)</span>
 <span class="n">kronecker_update</span> <span class="o">=</span> <span class="n">kronecker_transform</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
 <span class="n">loss</span><span class="p">(</span><span class="n">classifier</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
@@ -1013,7 +1013,7 @@ Refer to Arnold et al., 2019 for more details.</p>
 </code></pre></div>
 </td></tr></table>
 <h3 id="metacurvaturetransform">MetaCurvatureTransform<a class="headerlink" href="#metacurvaturetransform" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaCurvatureTransform</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaCurvatureTransform</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
@@ -1031,11 +1031,11 @@ called on a weight to instantiate the transform.</p>
 <li>Park &amp; Oliva. 2019. Meta-curvature.</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">metacurvature_update</span> <span class="o">=</span> <span class="n">MetaCurvatureTransform</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span>
 <span class="n">loss</span><span class="p">(</span><span class="n">classifier</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 <span class="n">update</span> <span class="o">=</span> <span class="n">metacurvature_update</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>

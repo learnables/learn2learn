@@ -1055,9 +1055,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>PyTorch Lightning interface to MAML, ANIL, ProtoNet, MetaOptNet.</li>
 <li>Automatic batcher for Lighting: <code>l2l.data.EpisodicBatcher</code>.</li>
 <li><code>l2l.nn.PrototypicalClassifier</code> and <code>l2l.nn.SVMClassifier</code>.</li>
+<li>Add <code>l2l.vision.models.WRN28</code>.</li>
+<li>Separate modules for <code>CNN4Backbone</code>, <code>ResNet12Backbone</code>, <code>WRN28Backbones</code> w/ pretrained weights.</li>
 </ul>
 <h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
 <h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Improved support for 1D inputs in <code>l2l.nn.KroneckerLinear</code>. (@timweiland)</li>
+</ul>
 <h2 id="v015">v0.1.5<a class="headerlink" href="#v015" title="Permanent link">&para;</a></h2>
 <h3 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">&para;</a></h3>
 <ul>
