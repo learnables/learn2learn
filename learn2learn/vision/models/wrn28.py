@@ -107,7 +107,34 @@ class WRN28Backbone(WideResNet):
 class WRN28(torch.nn.Module):
 
     """
-    pass
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/wrn28.py)
+
+    **Description**
+
+    The 28-layer 10-depth wide residual network from Dhillon et al, 2020.
+
+    The code is adapted from [Ye et al, 2020](https://github.com/Sha-Lab/FEAT)
+    who share it under the MIT license.
+
+    Instantiate `WRN28Backbone` if you only need the feature extractor.
+
+    **References**
+
+    1. Dhillon et al. 2020. “A Baseline for Few-Shot Image Classification.” ICLR 20.
+    2. Ye et al. 2020. “Few-Shot Learning via Embedding Adaptation with Set-to-Set Functions.” CVPR 20.
+    3. Ye et al's code: [https://github.com/Sha-Lab/FEAT](https://github.com/Sha-Lab/FEAT)
+
+    **Arguments**
+
+    * **output_size** (int) - The dimensionality of the output.
+    * **hidden_size** (list, *optional*, default=640) - Size of the embedding once features are extracted.
+        (640 is for mini-ImageNet; used for the classifier layer)
+    * **dropout** (float, *optional*, default=0.0) - Dropout rate.
+
+    **Example**
+    ~~~python
+    model = WRN28(output_size=ways, hidden_size=1600, avg_pool=False)
+    ~~~
     """
 
     def __init__(

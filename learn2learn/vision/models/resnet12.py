@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -229,8 +230,6 @@ class ResNet12Backbone(nn.Module):
             elif isinstance(m, nn.BatchNorm2d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
-        self.features = torch.nn.Sequential(
-        )
 
     def _make_layer(
         self,

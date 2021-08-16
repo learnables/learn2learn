@@ -76,6 +76,8 @@ generate:
               - learn2learn.vision.models.OmniglotCNN
               - learn2learn.vision.models.CNN4
               - learn2learn.vision.models.ResNet12
+              - learn2learn.vision.models.WRN28
+              - learn2learn.vision.models.get_pretrained_backbone
           - learn2learn.vision.datasets:
               - learn2learn.vision.datasets.FullOmniglot
               - learn2learn.vision.datasets.MiniImagenet

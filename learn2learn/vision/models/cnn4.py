@@ -105,7 +105,6 @@ class ConvBase(torch.nn.Sequential):
     #     MiniImagenet: hidden=32, channels=3, max_pool
 
     def __init__(self,
-                 output_size,
                  hidden=64,
                  channels=1,
                  max_pool=False,

@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * PyTorch Lightning interface to MAML, ANIL, ProtoNet, MetaOptNet.
 * Automatic batcher for Lighting: `l2l.data.EpisodicBatcher`.
 * `l2l.nn.PrototypicalClassifier` and `l2l.nn.SVMClassifier`.
-* Separate modules for `CNN4Backbone` and `ResNet12Backbone`.
+* Add `l2l.vision.models.WRN28`.
+* Separate modules for `CNN4Backbone`, `ResNet12Backbone`, `WRN28Backbones` w/ pretrained weights.
 
 ### Changed
 
