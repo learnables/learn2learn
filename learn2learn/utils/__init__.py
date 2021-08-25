@@ -325,10 +325,10 @@ def flatten_config(args, prefix=None):
         return flat_args
     elif dataclasses.is_dataclass(args):
         keys = dataclasses.fields(args)
-        getvalue = lambda x: getattr(args, x.name)
+        def getvalue(x): getattr(args, x.name)
     elif isinstance(args, dict):
         keys = args.keys()
-        getvalue = lambda x: args[x]
+        def getvalue(x): args[x]
     else:
         raise 'Unknown args'
     for key in keys:
