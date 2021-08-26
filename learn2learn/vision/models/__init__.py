@@ -52,18 +52,28 @@ __all__ = [
 
 _BACKBONE_URLS = {
     'mini-imagenet': {
-        'cnn4': 'https://zenodo.org/record/5204557/files/MiniImageNet-CNN4.pth',
-        'resnet12': 'https://zenodo.org/record/5204557/files/MiniImageNet-ResNet12.pth',
-        'wrn28': 'https://zenodo.org/record/5204557/files/MiniImageNet-WRN28.pth',
+        'cnn4': {
+            'default': 'https://zenodo.org/record/5204557/files/MiniImageNet-CNN4.pth',
+        },
+        'resnet12': {
+            'default': 'https://zenodo.org/record/5204557/files/MiniImageNet-ResNet12.pth',
+        },
+        'wrn28': {
+            'default': 'https://zenodo.org/record/5204557/files/MiniImageNet-WRN28.pth',
+        },
     },
     'tiered-imagenet': {
-        'resnet12': 'https://zenodo.org/record/5204557/files/TieredImageNet-ResNet12.pth',
-        'wrn28': 'https://zenodo.org/record/5204557/files/TieredImageNet-WRN28.pth',
+        'resnet12': {
+            'default': 'https://zenodo.org/record/5204557/files/TieredImageNet-ResNet12.pth',
+        },
+        'wrn28': {
+            'default': 'https://zenodo.org/record/5204557/files/TieredImageNet-WRN28.pth',
+        },
     },
 }
 
 
-def get_pretrained_backbone(model, dataset, root, download=False):
+def get_pretrained_backbone(model, dataset, spec='default', root, download=False):
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/__init__.py)
 
@@ -77,6 +87,7 @@ def get_pretrained_backbone(model, dataset, root, download=False):
 
     * **model** (str) - The name of the model (`cnn4`, `resnet12`, or `wrn28`)
     * **dataset** (str) - The name of the benchmark dataset (`mini-imagenet` or `tiered-imagenet`).
+    * **spec** (str, *optional*, default='default') - Which weight specification to load (`default`).
     * **root** (str) - Location of the pretrained weights.
     * **download** (bool) - Download the pretrained weights if not available?
 
@@ -93,7 +104,7 @@ def get_pretrained_backbone(model, dataset, root, download=False):
     root = os.path.expanduser(root)
     destination_dir = os.path.join(root, 'pretrained_models', dataset)
     destination = os.path.join(destination_dir, model + '.pth')
-    source = _BACKBONE_URLS[dataset][model]
+    source = _BACKBONE_URLS[dataset][model][spec]
     if not os.path.exists(destination) and download:
         print(f'Downloading {model} weights for {dataset}.')
         os.makedirs(destination_dir, exist_ok=True)
