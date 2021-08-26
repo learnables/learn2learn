@@ -68,12 +68,10 @@ def pretrain(args):
         train_samples=2*args.options.shots,
         test_ways=args.options.ways,
         test_samples=2*args.options.shots,
-    )
-
-    train_dataset = l2l.data.OnDeviceDataset(
-        train_tasks.dataset,
         device=data_device,
     )
+
+    train_dataset = train_tasks.dataset
     num_classes = int(max(train_dataset.labels)) + 1
     train_augmentation = []
     if args.options.data_augmentation == 'jitter':  # for MI / TI
