@@ -73,7 +73,7 @@ _BACKBONE_URLS = {
 }
 
 
-def get_pretrained_backbone(model, dataset, spec='default', root, download=False):
+def get_pretrained_backbone(model, dataset, spec='default', root='~/data', download=False):
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/__init__.py)
 
@@ -88,13 +88,13 @@ def get_pretrained_backbone(model, dataset, spec='default', root, download=False
     * **model** (str) - The name of the model (`cnn4`, `resnet12`, or `wrn28`)
     * **dataset** (str) - The name of the benchmark dataset (`mini-imagenet` or `tiered-imagenet`).
     * **spec** (str, *optional*, default='default') - Which weight specification to load (`default`).
-    * **root** (str) - Location of the pretrained weights.
-    * **download** (bool) - Download the pretrained weights if not available?
+    * **root** (str, *optional*, default='~/data') - Location of the pretrained weights.
+    * **download** (bool, *optional*, default=False) - Download the pretrained weights if not available?
 
     **Example**
     ~~~python
     backbone = l2l.vision.models.get_pretrained_backbone(
-        model='omniglot',
+        model='resnet12',
         dataset='mini-imagenet',
         root='~/.data',
         download=True,

@@ -119,7 +119,7 @@ def partition_task(data, labels, shots=1, ways=None):
 
 class OnDeviceDataset(torch.utils.data.TensorDataset):
 
-    def __init__(self, dataset, device=None):
+    def __init__(self, dataset, device=None, transform=None):
         data = []
         labels = []
         for x, y in dataset:
@@ -131,3 +131,12 @@ class OnDeviceDataset(torch.utils.data.TensorDataset):
             data = data.to(device)
             labels = labels.to(device)
         super(OnDeviceDataset, self).__init__(data, labels)
+        self.transform = transform
+        if hasattr(dataset, '_bookkeeping_path'):
+            self._bookkeeping_path = dataset._bookkeeping_path
+
+    def __getitem__(self, index):
+        x, y = super(OnDeviceDataset, self).__getitem__(index)
+        if self.transform is not None:
+            x = self.transform(x)
+        return x, y

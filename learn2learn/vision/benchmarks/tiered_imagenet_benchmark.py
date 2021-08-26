@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import torch
 import learn2learn as l2l
 
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
@@ -14,15 +15,20 @@ def tiered_imagenet_tasksets(
     test_samples=10,
     root='~/data',
     data_augmentation=None,
+    device=None,
     **kwargs,
 ):
     """Tasksets for tiered-ImageNet benchmarks."""
     if data_augmentation is None:
-        train_data_transforms = ToTensor()
+        to_tensor = ToTensor() if device is None else lambda x: x
+        train_data_transforms = Compose([
+            to_tensor,
+        ])
         test_data_transforms = train_data_transforms
     elif data_augmentation == 'normalize':
+        to_tensor = ToTensor() if device is None else lambda x: x
         train_data_transforms = Compose([
-            ToTensor(),
+            to_tensor,
         ])
         test_data_transforms = train_data_transforms
     elif data_augmentation == 'lee2019':
@@ -30,7 +36,10 @@ def tiered_imagenet_tasksets(
             mean=[120.39586422/255.0, 115.59361427/255.0, 104.54012653/255.0],
             std=[70.68188272/255.0, 68.27635443/255.0, 72.54505529/255.0],
         )
+        to_pil = ToPILImage() if device is not None else lambda x: x
+        to_tensor = ToTensor() if device is None else lambda x: x
         train_data_transforms = Compose([
+            to_pil,
             RandomCrop(84, padding=8),
             ColorJitter(brightness=0.4, contrast=0.4, saturation=0.4),
             RandomHorizontalFlip(),
@@ -38,7 +47,7 @@ def tiered_imagenet_tasksets(
             normalize,
         ])
         test_data_transforms = Compose([
-            ToTensor(),
+            to_tensor,
             normalize,
         ])
     else:
@@ -46,22 +55,42 @@ def tiered_imagenet_tasksets(
 
     train_dataset = l2l.vision.datasets.TieredImagenet(
         root=root,
-        transform=train_data_transforms,
         mode='train',
+        transform=ToTensor(),
         download=True,
     )
     valid_dataset = l2l.vision.datasets.TieredImagenet(
         root=root,
-        transform=test_data_transforms,
         mode='validation',
+        transform=ToTensor(),
         download=True,
     )
     test_dataset = l2l.vision.datasets.TieredImagenet(
         root=root,
-        transform=test_data_transforms,
         mode='test',
+        transform=ToTensor(),
         download=True,
     )
+    if device is None:
+        train_dataset.transform = train_data_transforms
+        valid_dataset.transform = test_data_transforms
+        test_dataset.transform = test_data_transforms
+    else:
+        train_dataset = l2l.data.OnDeviceDataset(
+            dataset=train_dataset,
+            transform=train_data_transforms,
+            device=device,
+        )
+        valid_dataset = l2l.data.OnDeviceDataset(
+            dataset=valid_dataset,
+            transform=test_data_transforms,
+            device=device,
+        )
+        test_dataset = l2l.data.OnDeviceDataset(
+            dataset=test_dataset,
+            transform=test_data_transforms,
+            device=device,
+        )
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)
