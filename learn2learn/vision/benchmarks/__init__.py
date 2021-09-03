@@ -81,6 +81,7 @@ def get_tasksets(
     * **test_ways** (int, *optional*, default=5) - The number of classes per test tasks. Also used for validation tasks.
     * **test_samples** (int, *optional*, default=10) - The number of samples per test tasks. Also used for validation tasks.
     * **num_tasks** (int, *optional*, default=-1) - The number of tasks in each TaskDataset.
+    * **device** (torch.Device, *optional*, default=None) - If not None, tasksets are loaded as Tensors on `device`.
     * **root** (str, *optional*, default='~/data') - Where the data is stored.
 
     **Example**
@@ -96,15 +97,13 @@ def get_tasksets(
     """
     root = os.path.expanduser(root)
 
-    if device is not None:
-        raise NotImplementedError('Device other than None not implemented. (yet)')
-
     # Load task-specific data and transforms
     datasets, transforms = _TASKSETS[name](train_ways=train_ways,
                                            train_samples=train_samples,
                                            test_ways=test_ways,
                                            test_samples=test_samples,
                                            root=root,
+                                           device=device,
                                            **kwargs)
     train_dataset, validation_dataset, test_dataset = datasets
     train_transforms, validation_transforms, test_transforms = transforms

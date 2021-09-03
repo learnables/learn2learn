@@ -2,6 +2,8 @@
 
 import copy
 import torch
+import argparse
+import dataclasses
 
 
 def magic_box(x):
@@ -311,6 +313,38 @@ def accuracy(preds, targets):
     """Computes accuracy"""
     acc = (preds.argmax(dim=1).long() == targets.long()).sum().float()
     return acc / preds.size(0)
+
+
+def flatten_config(args, prefix=None):
+    flat_args = dict()
+    if isinstance(args, argparse.Namespace):
+        args = vars(args)
+        return flatten_config(args)
+    elif not dataclasses.is_dataclass(args) and not isinstance(args, dict):
+        flat_args[prefix] = args
+        return flat_args
+    elif dataclasses.is_dataclass(args):
+        keys = dataclasses.fields(args)
+        def getvalue(x): getattr(args, x.name)
+    elif isinstance(args, dict):
+        keys = args.keys()
+        def getvalue(x): args[x]
+    else:
+        raise 'Unknown args'
+    for key in keys:
+        value = getvalue(key)
+        if prefix is None:
+            if isinstance(key, str):
+                prefix_child = key
+            elif isinstance(key, dataclasses.Field):
+                prefix_child = key.name
+            else:
+                raise 'Unknown key'
+        else:
+            prefix_child = prefix + '.' + key.name
+        flat_child = flatten_config(value, prefix=prefix_child)
+        flat_args.update(flat_child)
+    return flat_args
 
 
 class _ImportRaiser(object):

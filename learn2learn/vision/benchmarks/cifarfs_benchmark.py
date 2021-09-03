@@ -12,6 +12,7 @@ def cifarfs_tasksets(
     test_ways=5,
     test_samples=10,
     root='~/data',
+    device=None,
     **kwargs,
 ):
     """Tasksets for CIFAR-FS benchmarks."""
@@ -28,6 +29,19 @@ def cifarfs_tasksets(
                                                transform=data_transform,
                                                mode='test',
                                                download=True)
+    if device is not None:
+        train_dataset = l2l.data.OnDeviceDataset(
+            dataset=train_dataset,
+            device=device,
+        )
+        valid_dataset = l2l.data.OnDeviceDataset(
+            dataset=valid_dataset,
+            device=device,
+        )
+        test_dataset = l2l.data.OnDeviceDataset(
+            dataset=test_dataset,
+            device=device,
+        )
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * `l2l.nn.PrototypicalClassifier` and `l2l.nn.SVMClassifier`.
 * Add `l2l.vision.models.WRN28`.
 * Separate modules for `CNN4Backbone`, `ResNet12Backbone`, `WRN28Backbones` w/ pretrained weights.
+* Add `l2l.data.OnDeviceDataset` and implement `device` parameter for benchmarks.
 
 ### Changed
 
