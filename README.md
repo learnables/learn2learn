@@ -28,7 +28,7 @@ To learn more, see our whitepaper: [arXiv:2008.12284](https://arxiv.org/abs/2008
 **Resources**
 
 * Website: [http://learn2learn.net/](http://learn2learn.net/)
-* Documentation: [http://learn2learn.net/docs/](http://learn2learn.net/docs/)
+* Documentation: [http://learn2learn.net/docs/learn2learn](http://learn2learn.net/docs/learn2learn)
 * Tutorials: [http://learn2learn.net/tutorials/getting_started/](http://learn2learn.net/tutorials/getting_started/)
 * Examples: [https://github.com/learnables/learn2learn/tree/master/examples](https://github.com/learnables/learn2learn/tree/master/examples)
 * GitHub: [https://github.com/learnables/learn2learn/](https://github.com/learnables/learn2learn/)
