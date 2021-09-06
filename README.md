@@ -19,7 +19,7 @@ To learn more, see our whitepaper: [arXiv:2008.12284](https://arxiv.org/abs/2008
 
 **Overview**
 
-* [`learn2learn.data`](http://learn2learn.net/docs/learn2learn.data/): `TaskDataset` and transforms to create few-shot tasks from any PyTorch dataset.
+* [`learn2learn.data`](http://learn2learn.net/docs/learn2learn.data/): `Taskset` and transforms to create few-shot tasks from any PyTorch dataset.
 * [`learn2learn.vision`](http://learn2learn.net/docs/learn2learn.vision/): Models, datasets, and benchmarks for computer vision and few-shot learning.
 * [`learn2learn.gym`](http://learn2learn.net/docs/learn2learn.gym/): Environment and utilities for meta-reinforcement learning.
 * [`learn2learn.algorithms`](http://learn2learn.net/docs/learn2learn.algorithms/): High-level wrappers for existing meta-learning algorithms.
@@ -101,7 +101,7 @@ transforms = [  # Easy to define your own transform
     l2l.data.transforms.KShots(dataset, k=1),
     l2l.data.transforms.LoadData(dataset),
 ]
-taskset = TaskDataset(dataset, transforms, num_tasks=20000)
+taskset = Taskset(dataset, transforms, num_tasks=20000)
 for task in taskset:
     X, y = task
     # Meta-train on the task

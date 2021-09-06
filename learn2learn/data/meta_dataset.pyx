@@ -14,7 +14,7 @@ from torch.utils.data import Dataset
 import learn2learn as l2l
 
 
-class ClassificationMetaDataset(Dataset):
+class MetaDataset(Dataset):
     """
 
     **Description**
@@ -129,16 +129,6 @@ class ClassificationMetaDataset(Dataset):
     def serialize_bookkeeping(self, path):
         with open(path, 'wb') as f:
             pickle.dump(self._bookkeeping, f, protocol=-1)
-
-
-class MetaDataset(ClassificationMetaDataset):
-
-    def __init__(self, *args, **kwargs):
-        super(MetaDataset, self).__init__(*args, **kwargs)
-        l2l.utils.warn_once(
-            message='MetaDataset is deprecated, use ClassificationMetaDataset instead.',
-            severity='deprecation',
-        )
 
 
 class UnionMetaDataset(MetaDataset):
