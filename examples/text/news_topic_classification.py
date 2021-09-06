@@ -99,7 +99,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
 
     train_dataset, validation_dataset, test_dataset = dataset, dataset, dataset
 
-    train_gen = l2l.data.TaskDataset(
+    train_gen = l2l.data.Taskset(
             train_dataset, num_tasks=20000, 
             task_transforms=[
                 l2l.data.transforms.FusedNWaysKShots(
@@ -107,7 +107,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
                 l2l.data.transforms.LoadData(train_dataset),
                 l2l.data.transforms.RemapLabels(train_dataset)],)
 
-    validation_gen = l2l.data.TaskDataset(
+    validation_gen = l2l.data.Taskset(
             validation_dataset, num_tasks=20000, 
             task_transforms=[
                 l2l.data.transforms.FusedNWaysKShots(
@@ -115,7 +115,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
                 l2l.data.transforms.LoadData(validation_dataset),
                 l2l.data.transforms.RemapLabels(validation_dataset)],)
 
-    test_gen = l2l.data.TaskDataset(
+    test_gen = l2l.data.Taskset(
             test_dataset, num_tasks=20000, 
             task_transforms=[
                 l2l.data.transforms.FusedNWaysKShots(

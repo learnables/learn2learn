@@ -130,7 +130,7 @@ def main(num_iterations=250):
         l2l.data.transforms.LoadData(train_dataset),
         l2l.data.transforms.RemapLabels(train_dataset),
     ]
-    train_tasks = l2l.data.TaskDataset(train_dataset, task_transforms=train_transforms)
+    train_tasks = l2l.data.Taskset(train_dataset, task_transforms=train_transforms)
 #    train_loader = DataLoader(train_tasks, pin_memory=True, shuffle=True)
 
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
@@ -140,9 +140,11 @@ def main(num_iterations=250):
         l2l.data.transforms.LoadData(valid_dataset),
         l2l.data.transforms.RemapLabels(valid_dataset),
     ]
-    valid_tasks = l2l.data.TaskDataset(valid_dataset,
-                                       task_transforms=valid_transforms,
-                                       num_tasks=200)
+    valid_tasks = l2l.data.Taskset(
+        valid_dataset,
+        task_transforms=valid_transforms,
+        num_tasks=200,
+    )
 #    valid_loader = DataLoader(valid_tasks, pin_memory=True, shuffle=True)
 
     test_dataset = l2l.data.MetaDataset(test_dataset)
@@ -152,9 +154,11 @@ def main(num_iterations=250):
         l2l.data.transforms.LoadData(test_dataset),
         l2l.data.transforms.RemapLabels(test_dataset),
     ]
-    test_tasks = l2l.data.TaskDataset(test_dataset,
-                                      task_transforms=test_transforms,
-                                      num_tasks=200)
+    test_tasks = l2l.data.Taskset(
+        test_dataset,
+        task_transforms=test_transforms,
+        num_tasks=200,
+    )
 #    test_loader = DataLoader(test_tasks, pin_memory=True, shuffle=True)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)

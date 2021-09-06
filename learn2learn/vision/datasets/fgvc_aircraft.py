@@ -95,7 +95,7 @@ class FGVCAircraft(Dataset):
     ~~~python
     train_dataset = l2l.vision.datasets.FGVCAircraft(root='./data', mode='train', download=True)
     train_dataset = l2l.data.MetaDataset(train_dataset)
-    train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+    train_generator = l2l.data.Taskset(dataset=train_dataset, num_tasks=1000)
     ~~~
 
     """

@@ -89,7 +89,7 @@ class Taskset(CythonTaskDataset):
     """
 
     def __init__(self, dataset, task_transforms=None, num_tasks=-1, task_collate=None):
-        super(TaskDataset, self).__init__(
+        super(Taskset, self).__init__(
             dataset=dataset,
             task_transforms=task_transforms,
             num_tasks=num_tasks,
@@ -97,7 +97,14 @@ class Taskset(CythonTaskDataset):
         )
 
 
-TaskDataset = Taskset
+class TaskDataset(Taskset):
+
+    def __init__(self, *args, **kwargs):
+        super(TaskDataset, self).__init__(*args, **kwargs)
+        l2l.utils.warn_once(
+            message='TaskDataset is deprecated, use Taskset instead.',
+            severity='deprecation',
+        )
 
 
 cdef class CythonTaskDataset:
