@@ -47,7 +47,7 @@ cdef class DataDescription:
         self.transforms = []
 
 
-class TaskDataset(CythonTaskDataset):
+class Taskset(CythonTaskDataset):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py)
@@ -95,6 +95,9 @@ class TaskDataset(CythonTaskDataset):
             num_tasks=num_tasks,
             task_collate=task_collate,
         )
+
+
+TaskDataset = Taskset
 
 
 cdef class CythonTaskDataset:
