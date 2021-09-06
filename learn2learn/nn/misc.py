@@ -75,11 +75,13 @@ class Scale(torch.nn.Module):
     ~~~
     """
 
-    def __init__(self, shape, alpha=1.0):
+    def __init__(self, shape=None, alpha=1.0):
         super(Scale, self).__init__()
         if isinstance(shape, int):
             shape = (shape, )
-        alpha = torch.ones(**shape) * alpha
+        elif shape is None:
+            shape = (1, )
+        alpha = torch.ones(*shape) * alpha
         self.alpha = torch.nn.Parameter(alpha)
 
     def forward(self, x):
