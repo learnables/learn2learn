@@ -4,7 +4,7 @@
 """
 import numpy as np
 import torch
-
+from typing import Any
 from torch import nn
 from learn2learn.utils import accuracy
 from learn2learn.nn import PrototypicalClassifier
@@ -97,6 +97,9 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
             self.features = torch.nn.DataParallel(self.features)
         self.classifier = PrototypicalClassifier(distance=self.distance_metric)
 
+        self.support = []
+        self.support_labels = []
+
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = LightningEpisodicModule.add_model_specific_args(parent_parser)
@@ -111,6 +114,10 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
             help='Use this + CUDA_VISIBLE_DEVICES to parallelize across GPUs.',
         )
         return parser
+
+    @property
+    def should_cache_data_on_validate(self) -> bool:
+        return True
 
     def meta_learn(self, batch, batch_idx, ways, shots, queries):
         self.features.train()
@@ -139,3 +146,19 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
         eval_loss = self.loss(logits, query_labels)
         eval_accuracy = accuracy(logits, query_labels)
         return eval_loss, eval_accuracy
+
+    def cache_on_validate_step(self, batch, batch_idx):
+        data, labels = batch
+        embeddings = self.features(data)
+        for e, l in zip(embeddings, labels):
+            self.support.append(e)
+            self.support_labels.append(l)
+
+    def fit_on_validate_epoch_end(self):
+        self.classifier.fit_(torch.stack(self.support), torch.tensor(self.support_labels))
+        self.support = []
+        self.support_labels = []
+
+    def predict_step(self, batch: Any, batch_idx: int, dataloader_idx: int = 0):
+        embeddings = self.features(batch)
+        return self.classifier(embeddings)
