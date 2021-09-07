@@ -130,6 +130,9 @@ class OnDeviceDataset(torch.utils.data.TensorDataset):
         if device is not None:
             data = data.to(device)
             labels = labels.to(device)
+        if data.device == torch.device('cpu') and torch.cuda.is_available():
+            data = data.pin_memory()
+            labels = labels.pin_memory()
         super(OnDeviceDataset, self).__init__(data, labels)
         self.transform = transform
         if hasattr(dataset, '_bookkeeping_path'):
