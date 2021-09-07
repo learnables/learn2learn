@@ -25,6 +25,10 @@ generate:
               - learn2learn.data.transforms.FusedNWaysKShots
               - learn2learn.data.transforms.RemapLabels
               - learn2learn.data.transforms.ConsecutiveLabels
+        - learn2learn.data.utils:
+              - learn2learn.data.utils.OnDeviceDataset
+              - learn2learn.data.utils.InfiniteIterator
+              - learn2learn.data.utils.partition_task
   - docs/learn2learn.algorithms.md:
       - learn2learn.algorithms:
           - learn2learn.algorithms.MAML++
