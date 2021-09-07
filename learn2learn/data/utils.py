@@ -49,6 +49,26 @@ def save_response_content(response, destination):
 
 class InfiniteIterator(object):
 
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py)
+
+    **Description**
+
+    Infinitely loops over a given iterator.
+
+    **Arguments**
+
+    * **dataloader** (iterator) - Iterator to loop over.
+
+    **Example**
+    ~~~python
+    dataloader = DataLoader(dataset, shuffle=True, batch_size=32)
+    inf_dataloader = InfiniteIterator(dataloader)
+    for iteration in range(10000):  # guaranteed to reach 10,000 regardless of len(dataloader)
+        X, y = next(inf_dataloader)
+    ~~~
+    """
+
     def __init__(self, dataloader):
         self.dataloader = dataloader
         self.iterator = iter(self.dataloader)
@@ -64,11 +84,35 @@ class InfiniteIterator(object):
                 self.iterator = iter(self.dataloader)
 
 
-def partition_task(data, labels, shots=1, ways=None):
+def partition_task(data, labels, shots=1):
+
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py)
+
+    **Description**
+
+    Partitions a classification task into support and query sets.
+
+    The support set will contain `shots` samples per class, the query will take the remaining samples.
+
+    Assumes each class in `labels` is associated with the same number of samples in `data`.
+
+    **Arguments**
+
+    * **data** (Tensor) - Data to be partitioned into support and query.
+    * **labels** (Tensor) - Labels of each data sample, used for partitioning.
+    * **shots** (int, *optional*, default=1) - Number of data samples per class in the support set.
+
+    **Example**
+    ~~~python
+    X, y = taskset.sample()
+    (X_support, y_support), (X_query, y_query) = partition_task(X, y, shots=5)
+    ~~~
+    """
+
     assert data.size(0) == labels.size(0)
     unique_labels = labels.unique()
-    if ways is None:
-        ways = unique_labels.numel()
+    ways = unique_labels.numel()
     data_shape = data.shape[1:]
     num_support = ways * shots
     num_query = data.size(0) - num_support
@@ -119,6 +163,35 @@ def partition_task(data, labels, shots=1, ways=None):
 
 class OnDeviceDataset(torch.utils.data.TensorDataset):
 
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py)
+
+    **Description**
+
+    Converts an entire dataset into a TensorDataset, and optionally puts it on the desired device.
+
+    Useful to accelerate training with relatively small datasets.
+    If the device is cpu and cuda is available, the TensorDataset will live in pinned memory.
+
+    **Arguments**
+
+    * **dataset** (Dataset) - Dataset to put on a device.
+    * **device** (torch.device, *optional*, default=None) - Device of dataset. Defaults to CPU.
+    * **transform** (transform, *optional*, default=None) - Transform to apply on the first variate of the dataset's samples X.
+
+    **Example**
+    ~~~python
+    transforms = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.1307,), (0.3081,)),
+        lambda x: x.view(1, 28, 28),
+    ])
+    mnist = MNIST('~/data')
+    mnist_ondevice = OnDeviceDataset(mnist, device='cuda', transform=transforms)
+    mnist_meta = MetaDataset(mnist_ondevice)
+    ~~~
+    """
+
     def __init__(self, dataset, device=None, transform=None):
         data = []
         labels = []
@@ -130,6 +203,9 @@ class OnDeviceDataset(torch.utils.data.TensorDataset):
         if device is not None:
             data = data.to(device)
             labels = labels.to(device)
+        if data.device == torch.device('cpu') and torch.cuda.is_available():
+            data = data.pin_memory()
+            labels = labels.pin_memory()
         super(OnDeviceDataset, self).__init__(data, labels)
         self.transform = transform
         if hasattr(dataset, '_bookkeeping_path'):

@@ -42,10 +42,11 @@ extensions = [
 ]
 
 if use_cython:
-    compiler_directives = {'language_level': 3,
-                           'embedsignature': True,
-    #                       'profile': True,
-    #                       'binding': True,
+    compiler_directives = {
+        'language_level': 3,
+        'embedsignature': True,
+        #  'profile': True,
+        #  'binding': True,
     }
     extensions = cythonize(extensions, compiler_directives=compiler_directives)
 
