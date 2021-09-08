@@ -5,6 +5,7 @@ Some utilities to interface with PyTorch Lightning.
 """
 import learn2learn as l2l
 import pytorch_lightning as pl
+from torch.utils.data._utils.worker import get_worker_info
 from torch.utils.data import IterableDataset
 import sys
 import tqdm
@@ -62,7 +63,7 @@ class TaskDataParallel(IterableDataset):
         self.iteration = 0
         self.iteration = 0
 
-        if epoch_length % self.world_size != 0:
+        if epoch_length % self.worker_world_size != 0:
             raise MisconfigurationException("The `epoch_length` should be divisible by `world_size`.")
 
     @property
@@ -77,7 +78,7 @@ class TaskDataParallel(IterableDataset):
     @property
     def worker_rank(self) -> int:
         is_global_zero = self.global_rank == 0
-        return self.global_rank + self.worker_id + int(not is_global_zero)
+        return self.global_rank + self.worker_id + int(not is_global_zero and self.num_workers > 1)
 
     def __iter__(self):
         self.iteration += 1
