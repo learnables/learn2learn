@@ -54,6 +54,14 @@ class TestLightningProtoNets(unittest.TestCase):
             verbose=False,
         )
         self.assertTrue(acc[0]["valid_accuracy"] >= 0.20)
+        trainer.validate(
+            val_dataloaders=tasksets.validation,
+            verbose=False,
+        )
+        predictions = trainer.predict(
+            test_dataloaders=tasksets.validation,
+            verbose=False,
+        )
 
 
 if __name__ == "__main__":

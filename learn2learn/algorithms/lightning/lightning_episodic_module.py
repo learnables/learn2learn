@@ -161,3 +161,4 @@ class LightningEpisodicModule(LightningModule):
             gamma=self.scheduler_decay,
         )
         return [optimizer], [lr_scheduler]
+
