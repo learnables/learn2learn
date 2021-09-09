@@ -232,9 +232,11 @@ class CNN4Backbone(ConvBase):
         hidden_size=64,
         layers=4,
         channels=3,
-        max_pool=False,
-        max_pool_factor=1.0,
+        max_pool=True,
+        max_pool_factor=None,
     ):
+        if max_pool_factor is None:
+            max_pool_factor = 4 // layers
         super(CNN4Backbone, self).__init__(
             hidden=hidden_size,
             layers=layers,
