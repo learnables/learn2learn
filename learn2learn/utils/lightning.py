@@ -14,18 +14,18 @@ import tqdm
 class Epochifier(object):
 
     """
-    This class is used to sample meta_batch_size tasks to represent an epoch.
+    This class is used to sample epoch_length tasks to represent an epoch.
     """
 
-    def __init__(self, tasks: l2l.data.TaskDataset, meta_batch_size: int):
+    def __init__(self, tasks: l2l.data.TaskDataset, epoch_length: int):
         self.tasks = tasks
-        self.meta_batch_size = meta_batch_size
+        self.epoch_length = epoch_length
 
     def __getitem__(self, *args, **kwargs):
         return self.tasks.sample()
 
     def __len__(self):
-        return self.meta_batch_size
+        return self.epoch_length
 
 
 class TaskDataParallel(IterableDataset):
@@ -36,8 +36,9 @@ class TaskDataParallel(IterableDataset):
         global_rank: int,
         world_size: int,
         num_workers: int,
-        meta_batch_size: int,
+        epoch_length: int,
         seed: int,
+        requires_divisible: bool = True,
     ):
         """
         This class is used to sample tasks in a distributed setting such as DDP with multiple workers.
@@ -49,7 +50,7 @@ class TaskDataParallel(IterableDataset):
             global_rank: Rank of the current process.
             world_size: Total of number of processes.
             num_workers: Number of workers to be provided to the DataLoader.
-            meta_batch_size: The expected epoch length. This requires to be divisible by (num_workers * world_size).
+            epoch_length: The expected epoch length. This requires to be divisible by (num_workers * world_size).
             seed: The seed will be used on __iter__ call and should be the same for all processes.
 
         """
@@ -58,17 +59,18 @@ class TaskDataParallel(IterableDataset):
         self.world_size = world_size
         self.num_workers = 1 if num_workers == 0 else num_workers
         self.worker_world_size = self.world_size * self.num_workers
-        self.meta_batch_size = meta_batch_size
+        self.epoch_length = epoch_length
         self.seed = seed
         self.iteration = 0
         self.iteration = 0
+        self.requires_divisible = requires_divisible
 
-        if meta_batch_size % self.worker_world_size != 0:
-            raise MisconfigurationException("The `meta_batch_size` should be divisible by `world_size`.")
+        if requires_divisible and epoch_length % self.worker_world_size != 0:
+            raise MisconfigurationException("The `epoch_length` should be divisible by `world_size`.")
 
     @property
     def __len__(self) -> int:
-        return self.meta_batch_size // self.world_size
+        return self.epoch_length // self.world_size
 
     @property
     def worker_id(self) -> int:
@@ -100,7 +102,7 @@ class EpisodicBatcher(pl.LightningDataModule):
         train_tasks,
         validation_tasks=None,
         test_tasks=None,
-        meta_batch_size=1,
+        epoch_length=1,
     ):
         super(EpisodicBatcher, self).__init__()
         self.train_tasks = train_tasks
@@ -110,24 +112,24 @@ class EpisodicBatcher(pl.LightningDataModule):
         if test_tasks is None:
             test_tasks = validation_tasks
         self.test_tasks = test_tasks
-        self.meta_batch_size = meta_batch_size
+        self.epoch_length = epoch_length
 
     def train_dataloader(self):
         return Epochifier(
             self.train_tasks,
-            self.meta_batch_size,
+            self.epoch_length,
         )
 
     def val_dataloader(self):
         return Epochifier(
             self.validation_tasks,
-            self.meta_batch_size,
+            self.epoch_length,
         )
 
     def test_dataloader(self):
         return Epochifier(
             self.test_tasks,
-            self.meta_batch_size,
+            self.epoch_length,
         )
 
 
