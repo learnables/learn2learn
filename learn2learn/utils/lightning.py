@@ -3,32 +3,67 @@
 """
 Some utilities to interface with PyTorch Lightning.
 """
+from typing import Optional, Callable
 import learn2learn as l2l
 import pytorch_lightning as pl
 from torch.utils.data._utils.worker import get_worker_info
-from torch.utils.data import IterableDataset
+from torch.utils.data import IterableDataset, Dataset
+from torch.utils.data._utils.collate import default_collate
 import sys
 import tqdm
 
+class TaskDataParallel(IterableDataset):
 
-class Epochifier(object):
+    def __init__(
+        self,
+        tasks: l2l.data.TaskDataset,
+        epoch_length: int,
+        devices: int = 1,
+        collate_fn: Optional[Callable] = None
+    ):
+        """
+        This class is used to sample epoch_length tasks to represent an epoch.
 
-    """
-    This class is used to sample epoch_length tasks to represent an epoch.
-    """
+        It should be used when using DataParallel
 
-    def __init__(self, tasks: l2l.data.TaskDataset, epoch_length: int):
+        Args:
+            taskset: Dataset used to sample task.
+            epoch_length: The expected epoch length. This requires to be divisible by (num_workers * world_size).
+            devices: Number of devices being used.
+            collate_fn: The collate_fn to be applied on multiple tasks 
+
+        """
         self.tasks = tasks
         self.epoch_length = epoch_length
+        self.devices = devices
 
-    def __getitem__(self, *args, **kwargs):
-        return self.tasks.sample()
+        if epoch_length % devices != 0:
+            raise Exception("The `epoch_length` should be the number of `devices`.")
+
+        self.collate_fn = collate_fn
+        self.counter = 0
+
+    def __iter__(self) -> 'Epochifier':
+        self.counter = 0
+        return self
+
+    def __next__(self):
+        if self.counter >= len(self):
+            raise StopIteration
+        self.counter += self.devices
+        tasks = []
+        for _ in range(self.devices):
+            for item in self.tasks.sample():
+                tasks.append(item)
+        if self.collate_fn:
+            tasks = self.collate_fn(tasks)
+        return tasks
 
     def __len__(self):
         return self.epoch_length
 
 
-class TaskDataParallel(IterableDataset):
+class TaskDistributedDataParallel(IterableDataset):
 
     def __init__(
         self,
@@ -64,11 +99,11 @@ class TaskDataParallel(IterableDataset):
         self.iteration = 0
         self.iteration = 0
         self.requires_divisible = requires_divisible
+        self.counter = 0
 
         if requires_divisible and epoch_length % self.worker_world_size != 0:
-            raise MisconfigurationException("The `epoch_length` should be divisible by `world_size`.")
+            raise Exception("The `epoch_length` should be divisible by `world_size`.")
 
-    @property
     def __len__(self) -> int:
         return self.epoch_length // self.world_size
 
@@ -84,15 +119,21 @@ class TaskDataParallel(IterableDataset):
 
     def __iter__(self):
         self.iteration += 1
+        self.counter = 0
         pl.seed_everything(self.seed + self.iteration)
         return self
 
     def __next__(self):
+        if self.counter >= len(self):
+            raise StopIteration
         task_descriptions = []
         for _ in range(self.worker_world_size):
             task_descriptions.append(self.taskset.sample_task_description())
 
-        return self.taskset.get_task(task_descriptions[self.worker_rank])
+        data = self.taskset.get_task(task_descriptions[self.worker_rank])
+        self.counter += 1
+        return data
+
 
 
 class EpisodicBatcher(pl.LightningDataModule):
