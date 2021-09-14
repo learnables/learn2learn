@@ -7,8 +7,7 @@ from typing import Optional, Callable
 import learn2learn as l2l
 import pytorch_lightning as pl
 from torch.utils.data._utils.worker import get_worker_info
-from torch.utils.data import IterableDataset, Dataset
-from torch.utils.data._utils.collate import default_collate
+from torch.utils.data import IterableDataset
 import sys
 import tqdm
 
@@ -30,7 +29,7 @@ class TaskDataParallel(IterableDataset):
             taskset: Dataset used to sample task.
             epoch_length: The expected epoch length. This requires to be divisible by (num_workers * world_size).
             devices: Number of devices being used.
-            collate_fn: The collate_fn to be applied on multiple tasks 
+            collate_fn: The collate_fn to be applied on multiple tasks
 
         """
         self.tasks = tasks
