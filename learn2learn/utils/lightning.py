@@ -42,7 +42,7 @@ class TaskDataParallel(IterableDataset):
         self.collate_fn = collate_fn
         self.counter = 0
 
-    def __iter__(self) -> 'Epochifier':
+    def __iter__(self) -> 'TaskDataParallel':
         self.counter = 0
         return self
 
