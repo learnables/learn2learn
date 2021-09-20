@@ -97,9 +97,6 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
             self.features = torch.nn.DataParallel(self.features)
         self.classifier = PrototypicalClassifier(distance=self.distance_metric)
 
-        self.support = []
-        self.support_labels = []
-
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = LightningEpisodicModule.add_model_specific_args(parent_parser)

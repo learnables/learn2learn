@@ -7,9 +7,22 @@ from typing import Optional, Callable
 import learn2learn as l2l
 import pytorch_lightning as pl
 from torch.utils.data._utils.worker import get_worker_info
-from torch.utils.data import IterableDataset
+from torch.utils.data._utils.collate import default_collate
+from torch.utils.data import IterableDataset, Dataset
 import sys
 import tqdm
+
+
+class Epochifier(Dataset):
+    def __init__(self, tasks, length):
+        self.tasks = tasks
+        self.length = length
+
+    def __getitem__(self, *args, **kwargs):
+        return self.tasks.sample()
+
+    def __len__(self):
+        return self.length
 
 
 class TaskDataParallel(IterableDataset):
@@ -19,7 +32,7 @@ class TaskDataParallel(IterableDataset):
         tasks: l2l.data.TaskDataset,
         epoch_length: int,
         devices: int = 1,
-        collate_fn: Optional[Callable] = None
+        collate_fn: Optional[Callable] = default_collate
     ):
         """
         This class is used to sample epoch_length tasks to represent an epoch.
@@ -155,6 +168,8 @@ class EpisodicBatcher(pl.LightningDataModule):
         self.epoch_length = epoch_length
 
     def train_dataloader(self):
+        # TODO: Update the logic to use `TaskDataParallel` and `TaskDistributedDataParallel`
+        # along side a DataLoader
         return Epochifier(
             self.train_tasks,
             self.epoch_length,
