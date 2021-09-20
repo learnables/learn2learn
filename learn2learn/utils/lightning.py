@@ -11,6 +11,7 @@ from torch.utils.data import IterableDataset
 import sys
 import tqdm
 
+
 class TaskDataParallel(IterableDataset):
 
     def __init__(
@@ -27,7 +28,7 @@ class TaskDataParallel(IterableDataset):
 
         Args:
             taskset: Dataset used to sample task.
-            epoch_length: The expected epoch length. This requires to be divisible by (num_workers * world_size).
+            epoch_length: The expected epoch length. This requires to be divisible by devices.
             devices: Number of devices being used.
             collate_fn: The collate_fn to be applied on multiple tasks
 
@@ -132,7 +133,6 @@ class TaskDistributedDataParallel(IterableDataset):
         data = self.taskset.get_task(task_descriptions[self.worker_rank])
         self.counter += 1
         return data
-
 
 
 class EpisodicBatcher(pl.LightningDataModule):

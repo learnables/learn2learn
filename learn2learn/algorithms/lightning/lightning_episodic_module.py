@@ -70,15 +70,6 @@ class LightningEpisodicModule(LightningModule):
         )
         return parser
 
-    @property
-    def should_cache_data_on_validate(self) -> bool:
-        # some algorithm requires to be fitted on the new labelled data.
-        return False
-
-    @property
-    def should_fit_on_validate(self) -> bool:
-        return self.should_cache_data_on_validate and self.trainer.state.fn == TrainerFn.VALIDATING
-
     def training_step(self, batch, batch_idx):
         train_loss, train_accuracy = self.meta_learn(
             batch, batch_idx, self.train_ways, self.train_shots, self.train_queries
@@ -102,34 +93,26 @@ class LightningEpisodicModule(LightningModule):
         return train_loss
 
     def validation_step(self, batch, batch_idx):
-        if self.should_fit_on_validate:
-            # used for the algorithm to store the supports data
-            self.cache_on_validate_step(batch, batch_idx)
-        else:
-            valid_loss, valid_accuracy = self.meta_learn(
-                batch, batch_idx, self.test_ways, self.test_shots, self.test_queries
-            )
-            self.log(
-                "valid_loss",
-                valid_loss.item(),
-                on_step=False,
-                on_epoch=True,
-                prog_bar=False,
-                logger=True,
-            )
-            self.log(
-                "valid_accuracy",
-                valid_accuracy.item(),
-                on_step=False,
-                on_epoch=True,
-                prog_bar=True,
-                logger=True,
-            )
-            return valid_loss.item()
-
-    def validation_epoch_end(self, outputs):
-        if self.should_fit_on_validate:
-            self.fit_on_validate_epoch_end()
+        valid_loss, valid_accuracy = self.meta_learn(
+            batch, batch_idx, self.test_ways, self.test_shots, self.test_queries
+        )
+        self.log(
+            "valid_loss",
+            valid_loss.item(),
+            on_step=False,
+            on_epoch=True,
+            prog_bar=False,
+            logger=True,
+        )
+        self.log(
+            "valid_accuracy",
+            valid_accuracy.item(),
+            on_step=False,
+            on_epoch=True,
+            prog_bar=True,
+            logger=True,
+        )
+        return valid_loss.item()
 
     def test_step(self, batch, batch_idx):
         test_loss, test_accuracy = self.meta_learn(
@@ -161,4 +144,3 @@ class LightningEpisodicModule(LightningModule):
             gamma=self.scheduler_decay,
         )
         return [optimizer], [lr_scheduler]
-
