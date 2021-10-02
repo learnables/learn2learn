@@ -558,6 +558,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../../community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../../changelog/" title="Changelog" class="md-nav__link">
       Changelog
     </a>
@@ -774,25 +786,26 @@ In contrast, MAML updates both the head and the feature extractor:
 <h2 id="anil-implementation">ANIL Implementation<a class="headerlink" href="#anil-implementation" title="Permanent link">&para;</a></h2>
 <p>This section breaks down step-by-step the ANIL implementation with our example code.</p>
 <p><strong>Creating dataset</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">,</span>
                                           <span class="n">transform</span><span class="o">=</span><span class="n">tv</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
                                           <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p>First, data are obtained and separated into train, validation and test dataset with <a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py"><code>l2l.vision.datasets.FC100</code></a>. <code>tv.transforms.ToTensor()</code> converts Python Imaging Library (PIL) images to PyTorch tensors. <code>l2l.data.MetaDataset</code> is a thin wrapper around torch datasets that automatically generates bookkeeping information to create new tasks.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_transforms</span> <span class="o">=</span> <span class="p">[</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_transforms</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">shots</span><span class="p">),</span>
     <span class="n">LoadData</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">),</span>
     <span class="n">RemapLabels</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">),</span>
@@ -803,6 +816,7 @@ In contrast, MAML updates both the head and the feature extractor:
                                    <span class="n">num_tasks</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><code>l2l.data.TaskDataset</code> creates a set of tasks from the MetaDataset using a list of task transformations:</p>
 <ul>
 <li>
@@ -824,12 +838,12 @@ In contrast, MAML updates both the head and the feature extractor:
 <p>For more details, please refer to the <a href="http://learn2learn.net/docs/learn2learn.data/">documentation of learn2learn.data</a>.</p>
 </div>
 <p><strong>Creating model</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">features</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ConvBase</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">features</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">ConvBase</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">features</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">)))</span>
 <span class="n">features</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 <span class="n">head</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="n">ways</span><span class="p">)</span>
@@ -837,27 +851,29 @@ In contrast, MAML updates both the head and the feature extractor:
 <span class="n">head</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p>We then instantiate two modules, one for features and one for the head. ConvBase instantiates a four-layer CNN, and the head is a fully connected layer. Because we are not updating the feature extractor parameters, we only need to wrap the head with the <code>l2l.algorithms.MAML()</code> wrapper, which takes in the fast adaptation learning rate <code>fast_lr</code> used for the inner loop later.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
 <p>For more details on the MAML wrapper, please refer to the <a href="http://learn2learn.net/docs/learn2learn.algorithms/">documentation of l2l.algorithms</a>.</p>
 </div>
 <p><strong>Optimization setup</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">all_parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">head</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">all_parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">features</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">head</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">all_parameters</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">meta_lr</span><span class="p">)</span>
 <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p>Next, we set up the optimizer with mini-batch SGD using <code>torch.optim.Adam</code>, which takes in both feature and head parameters, and learning rate <code>meta_lr</code> used for the outer loop.</p>
 <p><strong>Outer loop</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iters</span><span class="p">):</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iters</span><span class="p">):</span>
     <span class="o">...</span>
     <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_bsz</span><span class="p">):</span>
         <span class="n">learner</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
@@ -865,30 +881,31 @@ In contrast, MAML updates both the head and the feature extractor:
         <span class="o">...</span>
 </code></pre></div>
 </td></tr></table>
+
 <p>For training, validation and testing, we first sample a task, then copy the head with <code>head.clone()</code>, which is a method exposed by the MAML wrapper for PyTorch modules, akin to <code>tensor.clone()</code> for PyTorch tensors. Calling <code>clone()</code> allows us to update the parameters of the clone while maintaining ability to back-propagate to the parameters in <code>head</code>. There's no need for <code>feature.clone()</code> as we are only adapting the head.</p>
 <p><strong>Inner loop</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fast_adapt</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">learner</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">adaptation_steps</span><span class="p">,</span> <span class="n">shots</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fast_adapt</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">learner</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">adaptation_steps</span><span class="p">,</span> <span class="n">shots</span><span class="p">,</span>
                <span class="n">ways</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">batch</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
@@ -912,6 +929,7 @@ In contrast, MAML updates both the head and the feature extractor:
     <span class="k">return</span> <span class="n">valid_error</span><span class="p">,</span> <span class="n">valid_accuracy</span>
 </code></pre></div>
 </td></tr></table>
+
 <p>In <code>fast_adapt()</code>, we separate data into adaptation and evaluation sets with <code>k</code> shot samples each. In each adaptation step, <code>learner.adapt()</code> takes a gradient step on the loss and updates the cloned parameter, <code>learner</code>, such that we can back-propagate through the adaptation step. Under the hood, this is achieved by calling <code>torch.autograd.grad()</code> and setting <code>create_graph=True</code>. <code>fast_adapt()</code> then returns the evaluation loss and accuracy based on the predicted and true labels.</p>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
@@ -919,14 +937,14 @@ In contrast, MAML updates both the head and the feature extractor:
 <p>To demonstrate fast adaptation, we want the algorithm to adapt to each specific task quickly within a few steps. Since the number of samples is so small in few-shot learning, increasing number of adaptation steps would not help raising the performance.</p>
 </div>
 <p><strong>Closing the outer loop</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">evaluation_error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">evaluation_error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 <span class="n">meta_train_error</span> <span class="o">+=</span> <span class="n">evaluation_error</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 <span class="n">meta_train_accuracy</span> <span class="o">+=</span> <span class="n">evaluation_accuracy</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 <span class="o">...</span>
@@ -936,6 +954,7 @@ In contrast, MAML updates both the head and the feature extractor:
 <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
+
 <p>We compute the gradients with <code>evaluation_error.backward()</code> right after the inner loop updates to free activation and adaptation buffers from memory as early as possible. Lastly, after collecting the gradients, we average the accumulated gradients and updates the parameter at the end of each iteration with <code>optimizer.step()</code>.</p>
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>Having explained the inner-workings of ANIL and its code implementation with learn2learn, I hope this tutorial will be helpful to those who are interested in using ANIL for their own research and applications.</p>

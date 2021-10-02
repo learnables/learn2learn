@@ -632,6 +632,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../changelog/" title="Changelog" class="md-nav__link">
       Changelog
     </a>
@@ -808,34 +820,37 @@
                 <h1 id="learn2learngym">learn2learn.gym<a class="headerlink" href="#learn2learngym" title="Permanent link">&para;</a></h1>
 <p>Environment, models, and other utilities related to reinforcement learning and OpenAI Gym.</p>
 <h2 id="metaenv">MetaEnv<a class="headerlink" href="#metaenv" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/meta_env.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Interface for l2l envs. Environments have a certain number of task specific parameters that uniquely
 identify the environment. Tasks are then a dictionary with the names of these parameters as keys and the
 values of these parameters as values. Environments must then implement functions to get, set and sample tasks.
 The flow is then</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nv">env</span> <span class="o">=</span> <span class="nv">EnvClass</span><span class="ss">()</span>
-<span class="nv">tasks</span> <span class="o">=</span> <span class="nv">env</span>.<span class="nv">sample_tasks</span><span class="ss">(</span><span class="nv">num_tasks</span><span class="ss">)</span>
-<span class="k">for</span> <span class="nv">task</span> <span class="nv">in</span> <span class="nv">tasks</span>:
-    <span class="nv">env</span>.<span class="nv">set_task</span><span class="ss">(</span><span class="nv">task</span><span class="ss">)</span>
-    <span class="o">*</span><span class="nv">training</span> <span class="nv">code</span> <span class="nv">here</span><span class="o">*</span>
-    ...
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">env = EnvClass()</span>
+<span class="err">tasks = env.sample_tasks(num_tasks)</span>
+<span class="err">for task in tasks:</span>
+<span class="err">    env.set_task(task)</span>
+<span class="err">    *training code here*</span>
+<span class="err">    ...</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><strong>Credit</strong></p>
 <p>Adapted from Tristan Deleu and Jonas Rothfuss' implementations.</p>
 <h2 id="asyncvectorenv">AsyncVectorEnv<a class="headerlink" href="#asyncvectorenv" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AsyncVectorEnv</span><span class="p">(</span><span class="n">env_fns</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AsyncVectorEnv</span><span class="p">(</span><span class="n">env_fns</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/async_vec_env.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Asynchronous vectorized environment for working with l2l MetaEnvs.
@@ -844,9 +859,10 @@ Allows multiple environments to be run as separate processes.</p>
 <p>Adapted from OpenAI and Tristan Deleu's implementations.</p>
 <h2 id="learn2learngymenvsmujoco">learn2learn.gym.envs.mujoco<a class="headerlink" href="#learn2learngymenvsmujoco" title="Permanent link">&para;</a></h2>
 <h3 id="halfcheetahforwardbackwardenv">HalfCheetahForwardBackwardEnv<a class="headerlink" href="#halfcheetahforwardbackwardenv" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/halfcheetah_forward_backward.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the half-cheetah to learn to run forward or backward.
@@ -864,9 +880,10 @@ position before and after taking the specified action divided by a small value d
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h3 id="antforwardbackwardenv">AntForwardBackwardEnv<a class="headerlink" href="#antforwardbackwardenv" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the ant to learn to run forward or backward.
@@ -886,9 +903,10 @@ prematurely ending the episode.</p>
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h3 id="antdirectionenv">AntDirectionEnv<a class="headerlink" href="#antdirectionenv" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the Ant to learn to run in a random direction in the
@@ -908,9 +926,10 @@ prematurely ending the episode.</p>
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h3 id="humanoidforwardbackwardenv">HumanoidForwardBackwardEnv<a class="headerlink" href="#humanoidforwardbackwardenv" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the humanoid to learn to run forward or backward.
@@ -928,9 +947,10 @@ position before and after taking the specified action divided by a small value d
 <li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
 </ol>
 <h3 id="humanoiddirectionenv">HumanoidDirectionEnv<a class="headerlink" href="#humanoiddirectionenv" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_direction.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>This environment requires the humanoid to learn to run in a random direction in the
@@ -951,9 +971,10 @@ prematurely ending the episode.</p>
 </ol>
 <h2 id="learn2learngymenvsparticles">learn2learn.gym.envs.particles<a class="headerlink" href="#learn2learngymenvsparticles" title="Permanent link">&para;</a></h2>
 <h3 id="particles2denv">Particles2DEnv<a class="headerlink" href="#particles2denv" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Particles2DEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Particles2DEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/particles/particles_2d.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Each task is defined by the location of the goal. A point mass
@@ -964,9 +985,10 @@ distance from the goal.</p>
 <p>Adapted from Jonas Rothfuss' implementation.</p>
 <h2 id="learn2learngymenvsmetaworld">learn2learn.gym.envs.metaworld<a class="headerlink" href="#learn2learngymenvsmetaworld" title="Permanent link">&para;</a></h2>
 <h3 id="metaworldml1">MetaWorldML1<a class="headerlink" href="#metaworldml1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML1</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">n_goals</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML1</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">n_goals</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The ML1 Benchmark of Meta-World is focused on solving just one task on different object / goal
@@ -985,9 +1007,10 @@ working implementation. For more information regarding this benchmark, please co
 arXiv preprint arXiv:1910.10897 (2019).</li>
 </ol>
 <h3 id="metaworldml10">MetaWorldML10<a class="headerlink" href="#metaworldml10" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML10</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML10</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The ML10 Benchmark of Meta-World consists of 10 different tasks for meta-training and 5 new tasks for
@@ -1005,9 +1028,10 @@ please consult [1].</p>
 arXiv preprint arXiv:1910.10897 (2019).</li>
 </ol>
 <h3 id="metaworldml45">MetaWorldML45<a class="headerlink" href="#metaworldml45" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML45</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML45</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Similarly to ML10, this Benchmark has a variety of 45 different tasks for meta-training and 5 new tasks for

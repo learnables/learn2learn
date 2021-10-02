@@ -464,6 +464,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#learn2learndatautils" class="md-nav__link">
+    learn2learn.data.utils
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ondevicedataset" class="md-nav__link">
+    OnDeviceDataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infiniteiterator" class="md-nav__link">
+    InfiniteIterator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_task" class="md-nav__link">
+    partition_task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -606,6 +640,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../../changelog/" title="Changelog" class="md-nav__link">
       Changelog
     </a>
@@ -734,6 +780,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#learn2learndatautils" class="md-nav__link">
+    learn2learn.data.utils
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ondevicedataset" class="md-nav__link">
+    OnDeviceDataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infiniteiterator" class="md-nav__link">
+    InfiniteIterator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_task" class="md-nav__link">
+    partition_task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -756,9 +836,10 @@
                 <h1 id="learn2learndata">learn2learn.data<a class="headerlink" href="#learn2learndata" title="Permanent link">&para;</a></h1>
 <p>A set of utilities for data &amp; tasks loading, preprocessing, and sampling.</p>
 <h2 id="metadataset">MetaDataset<a class="headerlink" href="#metadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><strong>Description</strong></p>
 <p>Wraps a classification dataset to enable fast indexing of samples within classes.</p>
 <p>This class exposes two attributes specific to the wrapped dataset:</p>
@@ -778,15 +859,17 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <li><strong>indices_to_labels</strong> (dict, <strong>optional</strong>, default=None) -  A dictionary mapping sample indices to their corresponding label.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <h2 id="unionmetadataset">UnionMetaDataset<a class="headerlink" href="#unionmetadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><strong>Description</strong></p>
 <p>Takes multiple MetaDataests and constructs their union.</p>
 <p>Note: The labels of all datasets are remapped to be in consecutive order.
@@ -796,14 +879,14 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <li><strong>datasets</strong> (list of Dataset) -  A list of torch Datasets.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 <span class="n">valid</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">)</span>
 <span class="n">valid</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
@@ -813,10 +896,12 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">union</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
 </code></pre></div>
 </td></tr></table>
+
 <h2 id="filteredmetadataset">FilteredMetaDataset<a class="headerlink" href="#filteredmetadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><strong>Description</strong></p>
 <p>Takes in a MetaDataset and filters it to only include a subset of its labels.</p>
 <p>Note: The labels of all datasets are <strong>not</strong> remapped.
@@ -827,19 +912,21 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <li><strong>labels</strong> (list of ints) - A list of labels to keep.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 <span class="n">filtered</span> <span class="o">=</span> <span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
 </code></pre></div>
 </td></tr></table>
+
 <h2 id="taskdataset">TaskDataset<a class="headerlink" href="#taskdataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Creates a set of tasks from a given Dataset.</p>
@@ -859,15 +946,15 @@ documentation of task transforms.</p>
 <li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - Number of tasks to generate.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span>
-<span class="normal">9</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>
 <span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -878,6 +965,7 @@ documentation of task transforms.</p>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">task</span>
 </code></pre></div>
 </td></tr></table>
+
 <h2 id="learn2learndatatransforms">learn2learn.data.transforms<a class="headerlink" href="#learn2learndatatransforms" title="Permanent link">&para;</a></h2>
 <p><strong>Description</strong></p>
 <p>Collection of general task transformations.</p>
@@ -900,9 +988,10 @@ data from the dataset to the list of transformations of each sample.</p>
 in order.
 Then, all samples are collated via the <code>TaskDataset</code>'s collate function.</p>
 <h3 id="loaddata">LoadData<a class="headerlink" href="#loaddata" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Loads a sample from the dataset given its index.</p>
@@ -911,9 +1000,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
 <h3 id="nways">NWays<a class="headerlink" href="#nways" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Keeps samples from N random labels present in the task description.</p>
@@ -924,9 +1014,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
     description's labels.</li>
 </ul>
 <h3 id="kshots">KShots<a class="headerlink" href="#kshots" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Keeps K samples for each present labels.</p>
@@ -937,9 +1028,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample with replacement.</li>
 </ul>
 <h3 id="filterlabels">FilterLabels<a class="headerlink" href="#filterlabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Removes samples that do not belong to the given set of labels.</p>
@@ -949,9 +1041,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>labels</strong> (list) - The list of labels to include.</li>
 </ul>
 <h3 id="fusednwayskshots">FusedNWaysKShots<a class="headerlink" href="#fusednwayskshots" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Efficient implementation of FilterLabels, NWays, and KShots.</p>
@@ -966,9 +1059,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
     all labels in the dataset.</li>
 </ul>
 <h3 id="remaplabels">RemapLabels<a class="headerlink" href="#remaplabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Given samples from K classes, maps the labels to 0, ..., K.</p>
@@ -977,9 +1071,10 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
 <h3 id="consecutivelabels">ConsecutiveLabels<a class="headerlink" href="#consecutivelabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Re-orders the samples in the task description such that they are sorted in
@@ -990,6 +1085,87 @@ but in no specific order.</p>
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
+<h2 id="learn2learndatautils">learn2learn.data.utils<a class="headerlink" href="#learn2learndatautils" title="Permanent link">&para;</a></h2>
+<h3 id="ondevicedataset">OnDeviceDataset<a class="headerlink" href="#ondevicedataset" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OnDeviceDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Converts an entire dataset into a TensorDataset, and optionally puts it on the desired device.</p>
+<p>Useful to accelerate training with relatively small datasets.
+If the device is cpu and cuda is available, the TensorDataset will live in pinned memory.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - Dataset to put on a device.</li>
+<li><strong>device</strong> (torch.device, <em>optional</em>, default=None) - Device of dataset. Defaults to CPU.</li>
+<li><strong>transform</strong> (transform, <em>optional</em>, default=None) - Transform to apply on the first variate of the dataset's samples X.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">)</span>
+<span class="n">mnist_ondevice</span> <span class="o">=</span> <span class="n">OnDeviceDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">)</span>
+<span class="n">mnist_meta</span> <span class="o">=</span> <span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist_ondevice</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="infiniteiterator">InfiniteIterator<a class="headerlink" href="#infiniteiterator" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">InfiniteIterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Infinitely loops over a given iterator.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataloader</strong> (iterator) - Iterator to loop over.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">inf_dataloader</span> <span class="o">=</span> <span class="n">InfiniteIterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>  <span class="c1"># guaranteed to reach 10,000 regardless of len(dataloader)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">inf_dataloader</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="partition_task">partition_task<a class="headerlink" href="#partition_task" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">partition_task</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Partitions a classification task into support and query sets.</p>
+<p>The support set will contain <code>shots</code> samples per class, the query will take the remaining samples.</p>
+<p>Assumes each class in <code>labels</code> is associated with the same number of samples in <code>data</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>data</strong> (Tensor) - Data to be partitioned into support and query.</li>
+<li><strong>labels</strong> (Tensor) - Labels of each data sample, used for partitioning.</li>
+<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data samples per class in the support set.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">taskset</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<span class="p">(</span><span class="n">X_support</span><span class="p">,</span> <span class="n">y_support</span><span class="p">),</span> <span class="p">(</span><span class="n">X_query</span><span class="p">,</span> <span class="n">y_query</span><span class="p">)</span> <span class="o">=</span> <span class="n">partition_task</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
                 
                   
                 

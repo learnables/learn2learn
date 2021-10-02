@@ -578,6 +578,18 @@
 
 
   <li class="md-nav__item">
+    <a href="community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="changelog/" title="Changelog" class="md-nav__link">
       Changelog
     </a>
@@ -728,32 +740,37 @@ It retains compatibility with <a href="https://pytorch.org/vision/">torchvision<
 <p><strong>Resources</strong></p>
 <ul>
 <li>Website: <a href="http://learn2learn.net/">http://learn2learn.net/</a></li>
-<li>Documentation: <a href="http://learn2learn.net/docs/">http://learn2learn.net/docs/</a></li>
+<li>Documentation: <a href="http://learn2learn.net/docs/learn2learn">http://learn2learn.net/docs/learn2learn</a></li>
 <li>Tutorials: <a href="http://learn2learn.net/tutorials/getting_started/">http://learn2learn.net/tutorials/getting_started/</a></li>
 <li>Examples: <a href="https://github.com/learnables/learn2learn/tree/master/examples">https://github.com/learnables/learn2learn/tree/master/examples</a></li>
 <li>GitHub: <a href="https://github.com/learnables/learn2learn/">https://github.com/learnables/learn2learn/</a></li>
 <li>Slack: <a href="http://slack.learn2learn.net/">http://slack.learn2learn.net/</a></li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>pip install learn2learn
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>pip install learn2learn
 </code></pre></div>
 </td></tr></table>
+
 <h2 id="snippets-examples">Snippets &amp; Examples<a class="headerlink" href="#snippets-examples" title="Permanent link">&para;</a></h2>
 <p>The following snippets provide a sneak peek at the functionalities of learn2learn.</p>
 <h3 id="high-level-wrappers">High-level Wrappers<a class="headerlink" href="#high-level-wrappers" title="Permanent link">&para;</a></h3>
-<p><strong>Few-Shot Learning with MAML</strong></p>
-<p>For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the <a href="https://github.com/learnables/learn2learn/tree/master/examples/vision">examples</a> folder.
-Most of them can be implemented with with the <code>GBML</code> wrapper. (<a href="http://learn2learn.net/docs/learn2learn.algorithms/#gbml">documentation</a>).</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">maml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<details>
+<summary><b>Few-Shot Learning with MAML</b></summary>
+
+For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the <a href="https://github.com/learnables/learn2learn/tree/master/examples/vision">examples</a> folder.
+Most of them can be implemented with with the `GBML` wrapper. (<a href="http://learn2learn.net/docs/learn2learn.algorithms/#gbml">documentation</a>).
+
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">maml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">maml</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
@@ -765,19 +782,26 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
     <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-<p><strong>Meta-Descent with Hypergradient</strong></p>
-<p>Learn any kind of optimization algorithm with the <code>LearnableOptimizer</code>. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+</details>
+
+<details>
+<summary><b>Meta-Descent with Hypergradient</b></summary>
+
+Learn any kind of optimization algorithm with the `LearnableOptimizer`. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)
+
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Scale</span><span class="p">)</span>
 <span class="n">metaopt</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>  <span class="c1"># metaopt has .step()</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">metaopt</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>  <span class="c1"># metaopt also has .parameters()</span>
@@ -790,20 +814,27 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <span class="n">metaopt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># update linear</span>
 </code></pre></div>
 </td></tr></table>
+
+</details>
+
 <h3 id="learning-domains">Learning Domains<a class="headerlink" href="#learning-domains" title="Permanent link">&para;</a></h3>
-<p><strong>Custom Few-Shot Dataset</strong></p>
-<p>Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in <code>learn2learn.vision.datasets</code>.
-(<a href="http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets">documentation</a>)</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>  <span class="c1"># any PyTorch dataset</span>
+<details>
+<summary><b>Custom Few-Shot Dataset</b></summary>
+
+Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in `learn2learn.vision.datasets`.
+(<a href="http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets">documentation</a>)
+
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>  <span class="c1"># any PyTorch dataset</span>
 <span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># Easy to define your own transform</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -815,20 +846,27 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
     <span class="c1"># Meta-train on the task</span>
 </code></pre></div>
 </td></tr></table>
-<p><strong>Environments and Utilities for Meta-RL</strong></p>
-<p>Parallelize your own meta-environments with <code>AsyncVectorEnv</code>, or use the standardized ones.
-(<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">make_env</span><span class="p">():</span>
+
+</details>
+
+<details>
+<summary><b>Environments and Utilities for Meta-RL</b></summary>
+
+Parallelize your own meta-environments with `AsyncVectorEnv`, or use the standardized ones.
+(<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)
+
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">make_env</span><span class="p">():</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">gym</span><span class="o">.</span><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">()</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">cherry</span><span class="o">.</span><span class="n">envs</span><span class="o">.</span><span class="n">ActionSpaceScaler</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">env</span>
@@ -841,23 +879,30 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
     <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
+</details>
+
 <h3 id="low-level-utilities">Low-Level Utilities<a class="headerlink" href="#low-level-utilities" title="Permanent link">&para;</a></h3>
-<p><strong>Differentiable Optimization</strong></p>
-<p>Learn and differentiate through updates of PyTorch Modules.
-(<a href="http://learn2learn.net/docs/learn2learn.optim/#parameterupdate">documentation</a>)</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<details>
+<summary><b>Differentiable Optimization</b></summary>
+
+Learn and differentiate through updates of PyTorch Modules.
+(<a href="http://learn2learn.net/docs/learn2learn.optim/#parameterupdate">documentation</a>)
+
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">KroneckerLinear</span><span class="p">)</span>
 <span class="n">learned_update</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ParameterUpdate</span><span class="p">(</span>  <span class="c1"># learnable update function</span>
         <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">transform</span><span class="p">)</span>
@@ -872,6 +917,9 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients w.r.t model.parameters() and learned_update.parameters()</span>
 </code></pre></div>
 </td></tr></table>
+
+</details>
+
 <h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h2>
 <p>A human-readable changelog is available in the <a href="CHANGELOG.md">CHANGELOG.md</a> file.</p>
 <h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
@@ -880,17 +928,17 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <p>Arnold, Sebastien M. R., Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Konstantinos Saitas Zarkias. 2020. “learn2learn: A Library for Meta-Learning Research.” arXiv [cs.LG]. http://arxiv.org/abs/2008.12284.</p>
 </blockquote>
 <p>You can also use the following Bibtex entry.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">Arnold2020-ss</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">Arnold2020-ss</span><span class="p">,</span>
   <span class="na">title</span>         <span class="p">=</span> <span class="s">&quot;learn2learn: A Library for {Meta-Learning} Research&quot;</span><span class="p">,</span>
   <span class="na">author</span>        <span class="p">=</span> <span class="s">&quot;Arnold, S{\&#39;e}bastien M R and Mahajan, Praateek and Datta,</span>
 <span class="s">                   Debajyoti and Bunner, Ian and Zarkias, Konstantinos Saitas&quot;</span><span class="p">,</span>
@@ -903,11 +951,18 @@ Most of them can be implemented with with the <code>GBML</code> wrapper. (<a hre
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
+
 <h3 id="acknowledgements-friends">Acknowledgements &amp; Friends<a class="headerlink" href="#acknowledgements-friends" title="Permanent link">&para;</a></h3>
 <ol>
-<li>The RL environments are adapted from Tristan Deleu's <a href="https://github.com/tristandeleu/pytorch-maml-rl">implementations</a> and from the ProMP <a href="https://github.com/jonasrothfuss/ProMP/">repository</a>. Both shared with permission, under the MIT License.</li>
 <li><a href="https://github.com/tristandeleu/pytorch-meta">TorchMeta</a> is similar library, with a focus on datasets for supervised meta-learning. </li>
 <li><a href="https://github.com/facebookresearch/higher">higher</a> is a PyTorch library that enables differentiating through optimization inner-loops. While they monkey-patch <code>nn.Module</code> to be stateless, learn2learn retains the stateful PyTorch look-and-feel. For more information, refer to <a href="https://arxiv.org/abs/1910.01727">their ArXiv paper</a>.</li>
+<li>We are thankful to the following open-source implementations which helped guide the design of learn2learn:<ul>
+<li>Tristan Deleu's <a href="https://github.com/tristandeleu/pytorch-maml-rl">pytorch-maml-rl</a></li>
+<li>Jonas Rothfuss' <a href="https://github.com/jonasrothfuss/ProMP/">ProMP</a></li>
+<li>Kwonjoon Lee's <a href="https://github.com/kjunelee/MetaOptNet">MetaOptNet</a></li>
+<li>Han-Jia Ye's and Hexiang Hu's <a href="https://github.com/Sha-Lab/FEAT">FEAT</a></li>
+</ul>
+</li>
 </ol>
                 
                   
