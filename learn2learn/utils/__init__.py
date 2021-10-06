@@ -86,9 +86,6 @@ def clone_module(module, memo=None):
     # TODO: This function might require that module.forward()
     #       was called in order to work properly, if forward() instanciates
     #       new variables.
-    # TODO: We can probably get away with a shallowcopy.
-    #       However, since shallow copy does not recurse, we need to write a
-    #       recursive version of shallow copy.
     # NOTE: This can probably be implemented more cleanly with
     #       clone = recursive_shallow_copy(model)
     #       clone._apply(lambda t: t.clone())
