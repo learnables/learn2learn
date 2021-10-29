@@ -50,7 +50,7 @@ docs:
 
 docs-deploy:
 	rm -f docs/mkdocs.yml
-	python scripts/compile_paper_list.py
+	#python scripts/compile_paper_list.py
 	cd docs && pydocmd gh-deploy
 
 # https://dev.to/neshaz/a-tutorial-for-tagging-releases-in-git-147e
