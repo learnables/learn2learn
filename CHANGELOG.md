@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* Fix arguments when instantiating `l2l.nn.Scale`.
+
 
 ## v0.1.6
 
