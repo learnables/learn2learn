@@ -89,8 +89,7 @@ class FGVCAircraft(Dataset):
     * **transform** (Transform, *optional*, default=None) - Input pre-processing.
     * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
     * **download** (bool, *optional*, default=False) - Whether to download the dataset.
-    * **bounding_box_crop** (bool, *optional*, default=False) - Whether to crop each image
-        using bounding box information.
+    * **bounding_box_crop** (bool, *optional*, default=False) - Whether to crop each image using bounding box information.
 
     **Example**
 
@@ -220,3 +219,12 @@ if __name__ == '__main__':
     aircraft = FGVCAircraft('~/data', download=True, bounding_box_crop=True)
     img = aircraft[0]
     print(len(aircraft))
+
+    import numpy as np
+    import tqdm
+    print('cropped:')
+    data = FGVCAircraft('~/data', download=True, bounding_box_crop=True)
+    min_size = float('inf')
+    for img, label in tqdm.tqdm(data):
+        min_size = min(min_size, *np.array(img).shape[:2])
+    print('min_size:', min_size)
