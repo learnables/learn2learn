@@ -407,7 +407,7 @@ class CUBirds200(torch.utils.data.Dataset):
 
     def __getitem__(self, i):
         image_path, label = self.data[i]
-        image = Image.open(image_path)
+        image = Image.open(image_path).convert('RGB')
         if self.bounding_box_crop:
             bbox = self.bounding_boxes[image_path]
             image = image.crop(bbox)
@@ -441,12 +441,12 @@ if __name__ == '__main__':
 
     import numpy as np
     import tqdm
-    #  print('uncropped:')
-    #  cub = CUBirds200('~/data', download=True, bounding_box_crop=False)
-    #  min_size = float('inf')
-    #  for img, label in tqdm.tqdm(cub):
-        #  min_size = min(min_size, *np.array(img).shape[:2])
-    #  print('min_size:', min_size)
+    print('uncropped:')
+    cub = CUBirds200('~/data', download=True, bounding_box_crop=False)
+    min_size = float('inf')
+    for img, label in tqdm.tqdm(cub):
+        min_size = min(min_size, *np.array(img).shape[:2])
+    print('min_size:', min_size)
 
     print('cropped:')
     cub = CUBirds200('~/data', download=True, bounding_box_crop=True)
