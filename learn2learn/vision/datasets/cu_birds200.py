@@ -407,7 +407,7 @@ class CUBirds200(torch.utils.data.Dataset):
 
     def __getitem__(self, i):
         image_path, label = self.data[i]
-        image = Image.open(image_path)
+        image = Image.open(image_path).convert('RGB')
         if self.bounding_box_crop:
             bbox = self.bounding_boxes[image_path]
             image = image.crop(bbox)
