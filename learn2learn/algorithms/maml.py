@@ -175,9 +175,10 @@ class MAML(BaseLearner):
         # adjustments)
         if clip_grad_max_norm:
             norm_type = 2.0
+            device = gradients[0].device
             total_norm = torch.norm(torch.stack(
                 [torch.norm(g.detach(), norm_type) for g in gradients if g is not None]
-            ), norm_type)
+            ).to(device), norm_type)
             if total_norm.isnan() or total_norm.isinf():
                 warnings.warn("Non-finite norm encountered in learn2learn.algorithms.MAML.adapt; continuing anyway.", FutureWarning, stacklevel=2)
             clip_coef = clip_grad_max_norm / (total_norm + 1e-6)
