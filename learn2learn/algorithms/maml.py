@@ -67,6 +67,9 @@ class MAML(BaseLearner):
     * **lr** (float) - Fast adaptation learning rate.
     * **first_order** (bool, *optional*, default=False) - Whether to use the first-order
         approximation of MAML. (FOMAML)
+    * **order_annealing_from** (int, *optional*, default=0) - Number of epochs before switching to
+        second-order derivatives (Derivative-Order Annealing). If set to 0, the entire training will
+        use second-order derivatives. If first_order=True, this parameter won't have any effect.
     * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
         of unused parameters. Defaults to `allow_nograd`.
     * **allow_nograd** (bool, *optional*, default=False) - Whether to allow adaptation with
@@ -92,12 +95,15 @@ class MAML(BaseLearner):
                  model,
                  lr,
                  first_order=False,
+                 order_annealing_epoch=0,
                  allow_unused=None,
                  allow_nograd=False):
         super(MAML, self).__init__()
         self.module = model
         self.lr = lr
         self.first_order = first_order
+        self.order_annealing_epoch = order_annealing_epoch if not first_order else 0
+        self.use_order_annealing = not first_order and order_annealing_epoch > 0
         self.allow_nograd = allow_nograd
         if allow_unused is None:
             allow_unused = allow_nograd
@@ -109,6 +115,7 @@ class MAML(BaseLearner):
     def adapt(self,
               loss,
               first_order=None,
+              epoch=None,
               allow_unused=None,
               allow_nograd=None):
         """
@@ -129,11 +136,16 @@ class MAML(BaseLearner):
         """
         if first_order is None:
             first_order = self.first_order
+        if (epoch is None and self.use_order_annealing) or (self.use_order_annealing and type(epoch) is not int):
+            raise Exception("You must pass an integer for 'epoch' since you are using order annealing")
         if allow_unused is None:
             allow_unused = self.allow_unused
         if allow_nograd is None:
             allow_nograd = self.allow_nograd
         second_order = not first_order
+        if self.use_order_annealing and epoch < self.order_annealing_epoch:
+            second_order = False
+        gradients = []
 
         if allow_nograd:
             # Compute relevant gradients
@@ -168,7 +180,7 @@ class MAML(BaseLearner):
         # Update the module
         self.module = maml_update(self.module, self.lr, gradients)
 
-    def clone(self, first_order=None, allow_unused=None, allow_nograd=None):
+    def clone(self, first_order=None, order_annealing_epoch=0, allow_unused=None, allow_nograd=None):
         """
         **Description**
 
@@ -191,6 +203,8 @@ class MAML(BaseLearner):
         """
         if first_order is None:
             first_order = self.first_order
+        if order_annealing_epoch == 0:
+            order_annealing_epoch = self.order_annealing_epoch
         if allow_unused is None:
             allow_unused = self.allow_unused
         if allow_nograd is None:
@@ -198,5 +212,6 @@ class MAML(BaseLearner):
         return MAML(clone_module(self.module),
                     lr=self.lr,
                     first_order=first_order,
+                    order_annealing_epoch=order_annealing_epoch,
                     allow_unused=allow_unused,
                     allow_nograd=allow_nograd)
