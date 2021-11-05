@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 * Fix arguments when instantiating `l2l.nn.Scale`.
+* Fix `train_loss` logging in `LightningModule` implementations with PyTorch-Lightning 1.5.
 
 
 ## v0.1.6

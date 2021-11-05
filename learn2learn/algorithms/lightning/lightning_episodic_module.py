@@ -77,7 +77,7 @@ class LightningEpisodicModule(LightningModule):
             "train_loss",
             train_loss.item(),
             on_step=False,
-            on_epoch=False,
+            on_epoch=True,
             prog_bar=False,
             logger=True,
         )
