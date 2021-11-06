@@ -232,9 +232,11 @@ class CNN4Backbone(ConvBase):
         hidden_size=64,
         layers=4,
         channels=3,
-        max_pool=False,
-        max_pool_factor=1.0,
+        max_pool=True,
+        max_pool_factor=None,
     ):
+        if max_pool_factor is None:
+            max_pool_factor = 4 // layers
         super(CNN4Backbone, self).__init__(
             hidden=hidden_size,
             layers=layers,
@@ -269,8 +271,12 @@ class CNN4(torch.nn.Module):
     **Arguments**
 
     * **output_size** (int) - The dimensionality of the network's output.
-    * **hidden_size** (int, *optional*, default=32) - The dimensionality of the hidden representation.
+    * **hidden_size** (int, *optional*, default=64) - The dimensionality of the hidden representation.
     * **layers** (int, *optional*, default=4) - The number of convolutional layers.
+    * **channels** (int, *optional*, default=3) - The number of channels in input.
+    * **max_pool** (bool, *optional*, default=True) - Whether ConvBlocks use max-pooling.
+    * **embedding_size** (int, *optional*, default=None) - Size of feature embedding.
+        Defaults to 25 * hidden_size (for mini-Imagenet).
 
     **Example**
     ~~~python
