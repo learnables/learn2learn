@@ -10,13 +10,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Bounding box cropping for Aircraft and CUB200.
+
+### Changed
+
+### Fixed
+
+* Fix arguments when instantiating `l2l.nn.Scale`.
+
+
+## v0.1.6
+
+### Added
+
 * PyTorch Lightning interface to MAML, ANIL, ProtoNet, MetaOptNet.
-* Automatic batcher for Lighting: `l2l.data.EpisodicBatcher`.
+* Automatic batcher for Lightning: `l2l.data.EpisodicBatcher`.
 * `l2l.nn.PrototypicalClassifier` and `l2l.nn.SVMClassifier`.
 * Add `l2l.vision.models.WRN28`.
 * Separate modules for `CNN4Backbone`, `ResNet12Backbone`, `WRN28Backbones` w/ pretrained weights.
+* Add `l2l.data.OnDeviceDataset` and implement `device` parameter for benchmarks.
+* (Beta) Add `l2l.data.partition_task` and `l2l.data.InfiniteIterator`.
 
 ### Changed
+
+* Renamed and clarify dropout parameters for `ResNet12`.
 
 ### Fixed
 

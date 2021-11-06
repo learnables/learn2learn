@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-TODO:
-    * Replace get_problems with mini-imagenet dataset.
-"""
-
 import random
 import copy
 import numpy as np

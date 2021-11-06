@@ -227,6 +227,22 @@ class OmniglotCNN(torch.nn.Module):
 
 class CNN4Backbone(ConvBase):
 
+    def __init__(
+        self,
+        hidden_size=64,
+        layers=4,
+        channels=3,
+        max_pool=False,
+        max_pool_factor=1.0,
+    ):
+        super(CNN4Backbone, self).__init__(
+            hidden=hidden_size,
+            layers=layers,
+            channels=channels,
+            max_pool=max_pool,
+            max_pool_factor=max_pool_factor,
+        )
+
     def forward(self, x):
         x = super(CNN4Backbone, self).forward(x)
         x = x.reshape(x.size(0), -1)
@@ -265,18 +281,19 @@ class CNN4(torch.nn.Module):
     def __init__(
         self,
         output_size,
-        hidden_size=32,
+        hidden_size=64,
         layers=4,
         channels=3,
+        max_pool=True,
         embedding_size=None,
     ):
         super(CNN4, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
         self.features = CNN4Backbone(
-            hidden=hidden_size,
+            hidden_size=hidden_size,
             channels=channels,
-            max_pool=True,
+            max_pool=max_pool,
             layers=layers,
             max_pool_factor=4 // layers,
         )

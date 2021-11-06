@@ -89,6 +89,7 @@ class FGVCAircraft(Dataset):
     * **transform** (Transform, *optional*, default=None) - Input pre-processing.
     * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
     * **download** (bool, *optional*, default=False) - Whether to download the dataset.
+    * **bounding_box_crop** (bool, *optional*, default=False) - Whether to crop each image using bounding box information.
 
     **Example**
 
@@ -100,18 +101,27 @@ class FGVCAircraft(Dataset):
 
     """
 
-    def __init__(self, root, mode='all', transform=None, target_transform=None, download=False):
+    def __init__(
+        self,
+        root,
+        mode='all',
+        transform=None,
+        target_transform=None,
+        download=False,
+        bounding_box_crop=False,
+    ):
         root = os.path.expanduser(root)
         self.root = os.path.expanduser(root)
         self.transform = transform
         self.target_transform = target_transform
+        self.bounding_box_crop = bounding_box_crop
         self._bookkeeping_path = os.path.join(self.root, 'fgvc-aircraft-' + mode + '-bookkeeping.pkl')
 
         if not self._check_exists() and download:
             self.download()
 
-        assert mode in ['train', 'validation', 'test'], \
-            'mode should be one of train, validation, test.'
+        assert mode in ['train', 'validation', 'test', 'all'], \
+            'mode should be one of: train, validation, test, all.'
         self.load_data(mode)
 
     def _check_exists(self):
@@ -161,16 +171,39 @@ class FGVCAircraft(Dataset):
         data = []
         mode = 'valid' if mode == 'validation' else mode
         split = SPLITS[mode]
+
+        # parse bounding boxes
+        if self.bounding_box_crop:
+            self.bounding_boxes = {}
+            bbox_file = os.path.join(data_path, DATA_DIR, 'images_box.txt')
+            bbox_content = {}
+            with open(bbox_file, 'r') as bbox_fd:
+                content = bbox_fd.readlines()
+                for line in content:
+                    line = line.split(' ')
+                    bbox_content[line[0]] = (
+                        int(line[1]),
+                        int(line[2]),
+                        int(line[3]),
+                        int(line[4]),
+                    )
+
+        # read images from disk
         for image, label in image_labels:
             if label in split:
-                image = os.path.join(data_path, IMAGES_DIR, image + '.jpg')
+                image_path = os.path.join(data_path, IMAGES_DIR, image + '.jpg')
+                if self.bounding_box_crop:
+                    self.bounding_boxes[image_path] = bbox_content[image]
                 label = split.index(label)
-                data.append((image, label))
+                data.append((image_path, label))
         self.data = data
 
     def __getitem__(self, i):
-        image, label = self.data[i]
-        image = Image.open(image)
+        image_path, label = self.data[i]
+        image = Image.open(image_path).convert('RGB')
+        if self.bounding_box_crop:
+            bbox = self.bounding_boxes[image_path]
+            image = image.crop(bbox)
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
@@ -183,5 +216,15 @@ class FGVCAircraft(Dataset):
 
 if __name__ == '__main__':
     assert len(SPLITS['all']) == len(SPLITS['train']) + len(SPLITS['valid']) + len(SPLITS['test'])
-    aircraft = FGVCAircraft('~/data', download=True)
+    aircraft = FGVCAircraft('~/data', download=True, bounding_box_crop=True)
+    img = aircraft[0]
     print(len(aircraft))
+
+    import numpy as np
+    import tqdm
+    print('cropped:')
+    data = FGVCAircraft('~/data', download=True, bounding_box_crop=True)
+    min_size = float('inf')
+    for img, label in tqdm.tqdm(data):
+        min_size = min(min_size, *np.array(img).shape[:2])
+    print('min_size:', min_size)
