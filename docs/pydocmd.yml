@@ -6,25 +6,29 @@ site_name: "learn2learn"
 # documented. Higher indentation leads to smaller header size.
 generate:
   - docs/learn2learn.md:
-      - learn2learn:
-          - learn2learn.clone_module
-          - learn2learn.detach_module
-          - learn2learn.update_module
-          - learn2learn.magic_box
+    - learn2learn:
+      - learn2learn.clone_module
+      - learn2learn.detach_module
+      - learn2learn.update_module
+      - learn2learn.magic_box
   - docs/learn2learn.data.md:
-      - learn2learn.data:
-          - learn2learn.data.MetaDataset
-          - learn2learn.data.UnionMetaDataset
-          - learn2learn.data.FilteredMetaDataset
-          - learn2learn.data.TaskDataset
-          - learn2learn.data.transforms:
-              - learn2learn.data.transforms.LoadData
-              - learn2learn.data.transforms.NWays
-              - learn2learn.data.transforms.KShots
-              - learn2learn.data.transforms.FilterLabels
-              - learn2learn.data.transforms.FusedNWaysKShots
-              - learn2learn.data.transforms.RemapLabels
-              - learn2learn.data.transforms.ConsecutiveLabels
+    - learn2learn.data:
+      - learn2learn.data.MetaDataset
+      - learn2learn.data.UnionMetaDataset
+      - learn2learn.data.FilteredMetaDataset
+      - learn2learn.data.TaskDataset
+      - learn2learn.data.transforms:
+          - learn2learn.data.transforms.LoadData
+          - learn2learn.data.transforms.NWays
+          - learn2learn.data.transforms.KShots
+          - learn2learn.data.transforms.FilterLabels
+          - learn2learn.data.transforms.FusedNWaysKShots
+          - learn2learn.data.transforms.RemapLabels
+          - learn2learn.data.transforms.ConsecutiveLabels
+      - learn2learn.data.utils:
+          - learn2learn.data.utils.OnDeviceDataset
+          - learn2learn.data.utils.InfiniteIterator
+          - learn2learn.data.utils.partition_task
   - docs/learn2learn.algorithms.md:
       - learn2learn.algorithms:
           - learn2learn.algorithms.MAML++
@@ -76,6 +80,8 @@ generate:
               - learn2learn.vision.models.OmniglotCNN
               - learn2learn.vision.models.CNN4
               - learn2learn.vision.models.ResNet12
+              - learn2learn.vision.models.WRN28
+              - learn2learn.vision.models.get_pretrained_backbone
           - learn2learn.vision.datasets:
               - learn2learn.vision.datasets.FullOmniglot
               - learn2learn.vision.datasets.MiniImagenet
@@ -84,6 +90,7 @@ generate:
               - learn2learn.vision.datasets.CIFARFS
               - learn2learn.vision.datasets.VGGFlower102
               - learn2learn.vision.datasets.FGVCAircraft
+              - learn2learn.vision.datasets.FGVCFungi
               - learn2learn.vision.datasets.DescribableTextures
               - learn2learn.vision.datasets.CUBirds200
               - learn2learn.vision.datasets.Quickdraw
@@ -116,6 +123,7 @@ pages:
       - Computer Vision: examples.vision.md << ../examples/vision/README.md
       - Reinforcement Learning: examples.rl.md << ../examples/rl/README.md
       - Optimization: examples.optim.md << ../examples/optimization/README.md
+  - Community: community.md
   - Changelog: changelog.md << ../CHANGELOG.md
   #- Paper List: paper_list.md
   - GitHub: https://github.com/learnables/learn2learn/

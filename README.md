@@ -28,7 +28,7 @@ To learn more, see our whitepaper: [arXiv:2008.12284](https://arxiv.org/abs/2008
 **Resources**
 
 * Website: [http://learn2learn.net/](http://learn2learn.net/)
-* Documentation: [http://learn2learn.net/docs/](http://learn2learn.net/docs/)
+* Documentation: [http://learn2learn.net/docs/learn2learn](http://learn2learn.net/docs/learn2learn)
 * Tutorials: [http://learn2learn.net/tutorials/getting_started/](http://learn2learn.net/tutorials/getting_started/)
 * Examples: [https://github.com/learnables/learn2learn/tree/master/examples](https://github.com/learnables/learn2learn/tree/master/examples)
 * GitHub: [https://github.com/learnables/learn2learn/](https://github.com/learnables/learn2learn/)
@@ -46,10 +46,12 @@ The following snippets provide a sneak peek at the functionalities of learn2lear
 
 ### High-level Wrappers
 
-**Few-Shot Learning with MAML**
+<details>
+<summary><b>Few-Shot Learning with MAML</b></summary>
 
-For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the [examples](https://github.com/learnables/learn2learn/tree/master/examples/vision) folder.
-Most of them can be implemented with with the `GBML` wrapper. ([documentation](http://learn2learn.net/docs/learn2learn.algorithms/#gbml)).
+For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the <a href="https://github.com/learnables/learn2learn/tree/master/examples/vision">examples</a> folder.
+Most of them can be implemented with with the `GBML` wrapper. (<a href="http://learn2learn.net/docs/learn2learn.algorithms/#gbml">documentation</a>).
+    
 ~~~python
 maml = l2l.algorithms.MAML(model, lr=0.1)
 opt = torch.optim.SGD(maml.parameters(), lr=0.001)
@@ -62,10 +64,13 @@ for iteration in range(10):
     evaluation_loss.backward()  # gradients w.r.t. maml.parameters()
     opt.step()
 ~~~
+</details>
 
-**Meta-Descent with Hypergradient**
+<details>
+<summary><b>Meta-Descent with Hypergradient</b></summary>
+    
+Learn any kind of optimization algorithm with the `LearnableOptimizer`. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)
 
-Learn any kind of optimization algorithm with the `LearnableOptimizer`. ([example](https://github.com/learnables/learn2learn/tree/master/examples/optimization) and [documentation](http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer))
 ~~~python
 linear = nn.Linear(784, 10)
 transform = l2l.optim.ModuleTransform(l2l.nn.Scale)
@@ -79,13 +84,16 @@ error.backward()
 opt.step()  # update metaopt
 metaopt.step()  # update linear
 ~~~
+</details>
 
 ### Learning Domains
 
-**Custom Few-Shot Dataset**
+<details>
+<summary><b>Custom Few-Shot Dataset</b></summary>
 
 Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in `learn2learn.vision.datasets`.
-([documentation](http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets))
+(<a href="http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets">documentation</a>)
+
 ~~~python
 dataset = l2l.data.MetaDataset(MyDataset())  # any PyTorch dataset
 transforms = [  # Easy to define your own transform
@@ -98,11 +106,15 @@ for task in taskset:
     X, y = task
     # Meta-train on the task
 ~~~
+</details>
 
-**Environments and Utilities for Meta-RL**
+
+<details>
+<summary><b>Environments and Utilities for Meta-RL</b></summary>
 
 Parallelize your own meta-environments with `AsyncVectorEnv`, or use the standardized ones.
-([documentation](http://learn2learn.net/docs/learn2learn.gym/#metaenv))
+(<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)
+
 ~~~python
 def make_env():
     env = l2l.gym.HalfCheetahForwardBackwardEnv()
@@ -116,13 +128,16 @@ for task_config in env.sample_tasks(20):
     action = my_policy(env)
     env.step(action)
 ~~~
+</details>
 
 ### Low-Level Utilities
 
-**Differentiable Optimization**
+<details>
+<summary><b>Differentiable Optimization</b></summary>
 
 Learn and differentiate through updates of PyTorch Modules.
-([documentation](http://learn2learn.net/docs/learn2learn.optim/#parameterupdate))
+(<a href="http://learn2learn.net/docs/learn2learn.optim/#parameterupdate">documentation</a>)
+    
 ~~~python
 
 model = MyModel()
@@ -139,6 +154,7 @@ updates = learned_update(  # similar API as torch.autograd.grad
 l2l.update_module(clone, updates=updates)
 loss(clone(X), y).backward()  # Gradients w.r.t model.parameters() and learned_update.parameters()
 ~~~
+</details>
 
 ## Changelog
 
@@ -169,6 +185,10 @@ You can also use the following Bibtex entry.
 
 ### Acknowledgements & Friends
 
-1. The RL environments are adapted from Tristan Deleu's [implementations](https://github.com/tristandeleu/pytorch-maml-rl) and from the ProMP [repository](https://github.com/jonasrothfuss/ProMP/). Both shared with permission, under the MIT License.
-2. [TorchMeta](https://github.com/tristandeleu/pytorch-meta) is similar library, with a focus on datasets for supervised meta-learning. 
-3. [higher](https://github.com/facebookresearch/higher) is a PyTorch library that enables differentiating through optimization inner-loops. While they monkey-patch `nn.Module` to be stateless, learn2learn retains the stateful PyTorch look-and-feel. For more information, refer to [their ArXiv paper](https://arxiv.org/abs/1910.01727).
+1. [TorchMeta](https://github.com/tristandeleu/pytorch-meta) is similar library, with a focus on datasets for supervised meta-learning. 
+2. [higher](https://github.com/facebookresearch/higher) is a PyTorch library that enables differentiating through optimization inner-loops. While they monkey-patch `nn.Module` to be stateless, learn2learn retains the stateful PyTorch look-and-feel. For more information, refer to [their ArXiv paper](https://arxiv.org/abs/1910.01727).
+3. We are thankful to the following open-source implementations which helped guide the design of learn2learn:
+    * Tristan Deleu's [pytorch-maml-rl](https://github.com/tristandeleu/pytorch-maml-rl)
+    * Jonas Rothfuss' [ProMP](https://github.com/jonasrothfuss/ProMP/)
+    * Kwonjoon Lee's [MetaOptNet](https://github.com/kjunelee/MetaOptNet)
+    * Han-Jia Ye's and Hexiang Hu's [FEAT](https://github.com/Sha-Lab/FEAT)

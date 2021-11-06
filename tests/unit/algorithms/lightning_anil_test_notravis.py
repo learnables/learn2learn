@@ -41,7 +41,7 @@ class TestLightningANIL(unittest.TestCase):
 
         self.assertTrue(len(tasksets) == 3)
 
-        features = l2l.vision.models.ConvBase(output_size=64, channels=3, max_pool=True)
+        features = l2l.vision.models.ConvBase(channels=3, max_pool=True)
         features = torch.nn.Sequential(features, Lambda(lambda x: x.view(-1, 256)))
         classifier = torch.nn.Linear(256, ways)
         # init model

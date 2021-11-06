@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Arnold"
+  given-names: "Sebastien M. R."
+- family-names: "Mahajan"
+  given-names: "Praateek"
+- family-names: "Datta"
+  given-names: "Debajyoti"
+- family-names: "Bunner"
+  given-names: "Ian"
+- family-names: "Saitas Zarkias"
+  given-names: "Konstantinos"
+title: "learn2learn: A Library for Meta-Learning Research"
+version: 0.1.5
+date-released: 2020-08-27
+url: "https://github.com/learnables/learn2learn"

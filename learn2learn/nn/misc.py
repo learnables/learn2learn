@@ -63,7 +63,7 @@ class Scale(torch.nn.Module):
 
     **Arguments**
 
-    * **shape** (int or tuple) - The shape of the scaling matrix.
+    * **shape** (int or tuple, *optional*, default=1) - The shape of the scaling matrix.
     * **alpha** (float, *optional*, default=1.0) - Initial value for the
         scaling factor.
 
@@ -75,11 +75,11 @@ class Scale(torch.nn.Module):
     ~~~
     """
 
-    def __init__(self, shape, alpha=1.0):
+    def __init__(self, shape=1, alpha=1.0):
         super(Scale, self).__init__()
         if isinstance(shape, int):
             shape = (shape, )
-        alpha = torch.ones(**shape)
+        alpha = torch.ones(*shape) * alpha
         self.alpha = torch.nn.Parameter(alpha)
 
     def forward(self, x):

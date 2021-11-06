@@ -14,6 +14,7 @@ def mini_imagenet_tasksets(
     test_samples=10,
     root='~/data',
     data_augmentation=None,
+    device=None,
     **kwargs,
 ):
     """Tasksets for mini-ImageNet benchmarks."""
@@ -47,21 +48,38 @@ def mini_imagenet_tasksets(
     train_dataset = l2l.vision.datasets.MiniImagenet(
         root=root,
         mode='train',
-        transform=train_data_transforms,
         download=True,
     )
     valid_dataset = l2l.vision.datasets.MiniImagenet(
         root=root,
         mode='validation',
-        transform=test_data_transforms,
         download=True,
     )
     test_dataset = l2l.vision.datasets.MiniImagenet(
         root=root,
         mode='test',
-        transform=test_data_transforms,
         download=True,
     )
+    if device is None:
+        train_dataset.transform = train_data_transforms
+        valid_dataset.transform = test_data_transforms
+        test_dataset.transform = test_data_transforms
+    else:
+        train_dataset = l2l.data.OnDeviceDataset(
+            dataset=train_dataset,
+            transform=train_data_transforms,
+            device=device,
+        )
+        valid_dataset = l2l.data.OnDeviceDataset(
+            dataset=valid_dataset,
+            transform=test_data_transforms,
+            device=device,
+        )
+        test_dataset = l2l.data.OnDeviceDataset(
+            dataset=test_dataset,
+            transform=test_data_transforms,
+            device=device,
+        )
     train_dataset = l2l.data.MetaDataset(train_dataset)
     valid_dataset = l2l.data.MetaDataset(valid_dataset)
     test_dataset = l2l.data.MetaDataset(test_dataset)

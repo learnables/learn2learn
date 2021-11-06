@@ -29,10 +29,11 @@ class Convnet(nn.Module):
 
     def __init__(self, x_dim=3, hid_dim=64, z_dim=64):
         super().__init__()
-        self.encoder = l2l.vision.models.ConvBase(output_size=z_dim,
-                                                  hidden=hid_dim,
-                                                  channels=x_dim,
-                                                  max_pool=True)
+        self.encoder = l2l.vision.models.CNN4Backbone(
+            hidden=hid_dim,
+            channels=x_dim,
+            max_pool=True,
+       )
         self.out_channels = 1600
 
     def forward(self, x):

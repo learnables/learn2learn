@@ -105,7 +105,6 @@ class ConvBase(torch.nn.Sequential):
     #     MiniImagenet: hidden=32, channels=3, max_pool
 
     def __init__(self,
-                 output_size,
                  hidden=64,
                  channels=1,
                  max_pool=False,
@@ -204,11 +203,12 @@ class OmniglotCNN(torch.nn.Module):
     def __init__(self, output_size=5, hidden_size=64, layers=4):
         super(OmniglotCNN, self).__init__()
         self.hidden_size = hidden_size
-        self.base = ConvBase(output_size=hidden_size,
-                             hidden=hidden_size,
-                             channels=1,
-                             max_pool=False,
-                             layers=layers)
+        self.base = ConvBase(
+             hidden=hidden_size,
+             channels=1,
+             max_pool=False,
+             layers=layers,
+        )
         self.features = torch.nn.Sequential(
             l2l.nn.Lambda(lambda x: x.view(-1, 1, 28, 28)),
             self.base,
@@ -225,6 +225,32 @@ class OmniglotCNN(torch.nn.Module):
         return x
 
 
+class CNN4Backbone(ConvBase):
+
+    def __init__(
+        self,
+        hidden_size=64,
+        layers=4,
+        channels=3,
+        max_pool=True,
+        max_pool_factor=None,
+    ):
+        if max_pool_factor is None:
+            max_pool_factor = 4 // layers
+        super(CNN4Backbone, self).__init__(
+            hidden=hidden_size,
+            layers=layers,
+            channels=channels,
+            max_pool=max_pool,
+            max_pool_factor=max_pool_factor,
+        )
+
+    def forward(self, x):
+        x = super(CNN4Backbone, self).forward(x)
+        x = x.reshape(x.size(0), -1)
+        return x
+
+
 class CNN4(torch.nn.Module):
     """
 
@@ -236,6 +262,8 @@ class CNN4(torch.nn.Module):
 
     This network assumes inputs of shapes (3, 84, 84).
 
+    Instantiate `CNN4Backbone` if you only need the feature extractor.
+
     **References**
 
     1. Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.
@@ -243,8 +271,12 @@ class CNN4(torch.nn.Module):
     **Arguments**
 
     * **output_size** (int) - The dimensionality of the network's output.
-    * **hidden_size** (int, *optional*, default=32) - The dimensionality of the hidden representation.
+    * **hidden_size** (int, *optional*, default=64) - The dimensionality of the hidden representation.
     * **layers** (int, *optional*, default=4) - The number of convolutional layers.
+    * **channels** (int, *optional*, default=3) - The number of channels in input.
+    * **max_pool** (bool, *optional*, default=True) - Whether ConvBlocks use max-pooling.
+    * **embedding_size** (int, *optional*, default=None) - Size of feature embedding.
+        Defaults to 25 * hidden_size (for mini-Imagenet).
 
     **Example**
     ~~~python
@@ -255,25 +287,21 @@ class CNN4(torch.nn.Module):
     def __init__(
         self,
         output_size,
-        hidden_size=32,
+        hidden_size=64,
         layers=4,
         channels=3,
+        max_pool=True,
         embedding_size=None,
     ):
         super(CNN4, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
-        base = ConvBase(
-            output_size=hidden_size,
-            hidden=hidden_size,
+        self.features = CNN4Backbone(
+            hidden_size=hidden_size,
             channels=channels,
-            max_pool=True,
+            max_pool=max_pool,
             layers=layers,
             max_pool_factor=4 // layers,
-        )
-        self.features = torch.nn.Sequential(
-            base,
-            l2l.nn.Flatten(),
         )
         self.classifier = torch.nn.Linear(
             embedding_size,

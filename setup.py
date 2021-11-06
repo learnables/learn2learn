@@ -42,10 +42,11 @@ extensions = [
 ]
 
 if use_cython:
-    compiler_directives = {'language_level': 3,
-                           'embedsignature': True,
-    #                       'profile': True,
-    #                       'binding': True,
+    compiler_directives = {
+        'language_level': 3,
+        'embedsignature': True,
+        #  'profile': True,
+        #  'binding': True,
     }
     extensions = cythonize(extensions, compiler_directives=compiler_directives)
 
@@ -67,16 +68,17 @@ install(
     license='MIT',
     classifiers=[],
     scripts=[],
-    setup_requires=['cython>=0.28.5',],
+    setup_requires=['cython>=0.28.5', ],
     install_requires=[
         'numpy>=1.15.4',
         'gym>=0.14.0',
         'torch>=1.1.0',
         'torchvision>=0.3.0',
+        'scipy',
         'requests',
         'gsutil',
         'tqdm',
         'qpth>=0.0.15',
-        'pytorch_lightning>=1.0.2',
+        #  'pytorch_lightning>=1.0.2',
     ],
 )
