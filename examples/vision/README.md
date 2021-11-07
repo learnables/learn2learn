@@ -115,3 +115,31 @@ Manually edit the above file and run:
 ~~~shell
 python examples/vision/reptile_miniimagenet.py
 ~~~
+
+## Baseline
+
+The file [supervised_pretraining.py](https://github.com/learnables/learn2learn/blob/master/examples/vision/supervised_pretraining.py) reproduces the pretraining baseline of [Dhillon et al.](https://arxiv.org/abs/1909.02729) and extends to different architectures, datasets, and data augmentation.
+
+The pretrained weights can be downloaded using `l2l.vision.models.get_pretrained_backbone()`.
+
+**Results**
+
+The *mini*-ImageNet file can easily be adapted to obtain results on Omniglot and CIFAR-FS as well.
+
+| Dataset         | Architecture | Ways | Shots | Original | learn2learn |
+|-----------------|--------------|------|-------|----------|-------------|
+| CIFAR-FS        | CNN4         | 5    | 5     | n / a    | 73.13%      |
+| FC100           | CNN4         | 5    | 5     | n / a    | 52.18%      |
+| mini-ImageNet   | ResNet12     | 5    | 5     | 73.31%   | 77.38%      |
+| tiered-ImageNet | ResNet12     | 5    | 5     | 82.88%   | 83.80%      |
+
+
+**Usage**
+
+Manually edit the above file and run:
+
+~~~shell
+python examples/vision/supervised_pretraining.py
+~~~
+
+Also see `examples/vision/Makefile` for reproducible commands.
