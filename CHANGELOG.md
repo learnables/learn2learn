@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Bounding box cropping for Aircraft and CUB200.
+* Pretrained weights for vision models.
 
 ### Changed
 
