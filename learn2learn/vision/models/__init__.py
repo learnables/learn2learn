@@ -52,22 +52,35 @@ __all__ = [
 
 _BACKBONE_URLS = {
     'mini-imagenet': {
-        'cnn4': {
-            'default': 'https://zenodo.org/record/5204557/files/MiniImageNet-CNN4.pth',
-        },
         'resnet12': {
-            'default': 'https://zenodo.org/record/5204557/files/MiniImageNet-ResNet12.pth',
+            'default': 'https://zenodo.org/record/5651278/files/25u1gtp5.pth',
+            'supervised': 'https://zenodo.org/record/5651278/files/25u1gtp5.pth',
         },
         'wrn28': {
-            'default': 'https://zenodo.org/record/5204557/files/MiniImageNet-WRN28.pth',
+            'default': 'https://zenodo.org/record/5651278/files/m8vz9plq.pth',
+            'supervised': 'https://zenodo.org/record/5651278/files/m8vz9plq.pth',
         },
     },
     'tiered-imagenet': {
         'resnet12': {
-            'default': 'https://zenodo.org/record/5204557/files/TieredImageNet-ResNet12.pth',
+            'default': 'https://zenodo.org/record/5651278/files/126od68s.pth',
+            'supervised': 'https://zenodo.org/record/5651278/files/126od68s.pth',
         },
         'wrn28': {
-            'default': 'https://zenodo.org/record/5204557/files/TieredImageNet-WRN28.pth',
+            'default': 'https://zenodo.org/record/5651278/files/2w8u50q4.pth',
+            'supervised': 'https://zenodo.org/record/5651278/files/2w8u50q4.pth',
+        },
+    },
+    'cifar-fs': {
+        'cnn4': {
+            'default': 'https://zenodo.org/record/5651278/files/2mbq7efr.pth',
+            'supervised': 'https://zenodo.org/record/5651278/files/2mbq7efr.pth',
+        },
+    },
+    'fc100': {
+        'cnn4': {
+            'default': 'https://zenodo.org/record/5651278/files/w02f5vab.pth',
+            'supervised': 'https://zenodo.org/record/5651278/files/w02f5vab.pth',
         },
     },
 }
@@ -117,6 +130,6 @@ def get_pretrained_backbone(model, dataset, spec='default', root='~/data', downl
     elif model == 'wrn28':
         pretrained = WRN28Backbone()
 
-    weights = torch.load(destination)
+    weights = torch.load(destination, map_location='cpu')
     pretrained.load_state_dict(weights)
     return pretrained
