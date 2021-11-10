@@ -42,18 +42,11 @@ class RandomClassRotation(object):
             c = self.dataset.indices_to_labels[data_description.index]
             if c not in rotations:
                 rot = random.choice(self.degrees)
-                try:
-                    rotations[c] = transforms.Compose([
-                        transforms.ToPILImage(),
-                        transforms.RandomRotation((rot, rot), fill=(0, )),
-                        transforms.ToTensor(),
-                    ])
-                except Exception:
-                    rotations[c] = transforms.Compose([
-                        transforms.ToPILImage(),
+                rotations[c] = transforms.Compose(
+                    [
                         transforms.RandomRotation((rot, rot)),
-                        transforms.ToTensor(),
-                    ])
+                    ]
+                )
             rotation = rotations[c]
             data_description.transforms.append(lambda x: (rotation(x[0]), x[1]))
         return task_description
