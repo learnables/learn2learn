@@ -33,8 +33,8 @@ class MAMLppTrainer:
     def __init__(
         self,
         ways=5,
-        k_shots=15,
-        n_queries=50,
+        k_shots=5,
+        n_queries=10,
         steps=5,
         msl_epochs=25,
         DA_epochs=50,
@@ -84,7 +84,7 @@ class MAMLppTrainer:
             (steps - 1) * self._msl_min_value_for_non_final_losses
         )
 
-        # Derivative-Order Annealing (when to start using second-order opt
+        # Derivative-Order Annealing (when to start using second-order opt)
         self._derivative_order_annealing_from_epoch = DA_epochs
 
     def _anneal_step_weights(self):
@@ -197,8 +197,9 @@ class MAMLppTrainer:
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
 
+        train_samples, val_samples = 38400, 9600 # Is that correct?
         iter_per_epoch = (
-            len(self._train_tasks) // (meta_bsz * (self._k_shots + self._n_queries))
+            train_samples // (meta_bsz * (self._k_shots + self._n_queries))
         ) + 1
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
             opt,
@@ -208,7 +209,7 @@ class MAMLppTrainer:
 
         for epoch in range(epochs):
             epoch_meta_train_loss, epoch_meta_train_acc = 0.0, 0.0
-            for _ in tqdm(range(iter_per_epoch), dynamic_ncols=True):
+            for _ in tqdm(range(iter_per_epoch)):
                 opt.zero_grad()
                 meta_train_losses, meta_train_accs = [], []
 
@@ -223,6 +224,7 @@ class MAMLppTrainer:
                     meta_train_accs.append(meta_acc)
 
                 epoch_meta_train_loss += torch.Tensor(meta_train_losses).mean().item()
+                epoch_meta_train_acc += torch.Tensor(meta_train_accs).mean().item()
 
                 # Average the accumulated gradients and optimize
                 with torch.no_grad():
@@ -244,9 +246,9 @@ class MAMLppTrainer:
                 # Go through the entire validation set, which shouldn't be shuffled, and
                 # which tasks should not be continuously resampled from!
                 meta_val_losses, meta_val_accs = [], []
-                for task in tqdm(self._valid_tasks):
+                for _ in tqdm(range(val_samples//600)):
                     learner = maml.clone()
-                    meta_batch = self._split_batch(task)
+                    meta_batch = self._split_batch(self._valid_tasks.sample())
                     loss, acc = self._testing_step(meta_batch, learner)
                     meta_val_losses.append(loss.detach())
                     meta_val_accs.append(acc)
@@ -274,10 +276,11 @@ class MAMLppTrainer:
             order_annealing_epoch=self._derivative_order_annealing_from_epoch,
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
+        test_samples = 12000
 
         meta_losses, meta_accs = [], []
-        for task in tqdm(self._test_tasks):
-            meta_batch = self._split_batch(task)
+        for _ in tqdm(range(test_samples//600)):
+            meta_batch = self._split_batch(self._test_tasks.sample())
             loss, acc = self._testing_step(meta_batch, maml.clone())
             meta_losses.append(loss)
             meta_accs.append(acc)
