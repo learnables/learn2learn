@@ -38,10 +38,10 @@ class MAMLppTrainer:
         steps=5,
         msl_epochs=25,
         DA_epochs=50,
-        cuda=1,
+        use_cuda=True,
         seed=42,
     ):
-        self._use_cuda = bool(cuda)
+        self._use_cuda = use_cuda
         self._device = torch.device("cpu")
         if self._use_cuda and torch.cuda.device_count():
             torch.cuda.manual_seed(seed)
@@ -68,7 +68,6 @@ class MAMLppTrainer:
         self._model = l2l.vision.models.MiniImagenetCNN(ways)
         if self._use_cuda:
             self._model.cuda()
-        # self._model.to(self._device)
 
         # Meta-Learning related
         self._steps = steps
@@ -78,7 +77,7 @@ class MAMLppTrainer:
 
         # Multi-Step Loss
         self._msl_epochs = msl_epochs
-        self._step_weights = torch.ones(steps) * (1.0 / steps)
+        self._step_weights = torch.ones(steps, device=self._device) * (1.0 / steps)
         self._msl_decay_rate = 1.0 / steps / msl_epochs
         self._msl_min_value_for_non_final_losses = torch.tensor(0.03 / steps)
         self._msl_max_value_for_final_loss = 1.0 - (
@@ -124,7 +123,7 @@ class MAMLppTrainer:
     ) -> Tuple[torch.Tensor, float]:
         s_inputs, s_labels = batch.support
         q_inputs, q_labels = batch.query
-        query_loss = torch.tensor(0.0)
+        query_loss = .0
 
         if self._use_cuda:
             s_inputs = s_inputs.float().cuda(device=self._device)
