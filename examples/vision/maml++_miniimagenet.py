@@ -131,12 +131,17 @@ class MAMLppTrainer:
             q_inputs = q_inputs.float().cuda(device=self._device)
             q_labels = q_labels.cuda(device=self._device)
 
+        # Derivative-Order Annealing
+        second_order = True
+        if epoch < self._derivative_order_annealing_from_epoch:
+            second_order = False
+
         # Adapt the model on the support set
         for step in range(self._steps):
             # forward + backward + optimize
             pred = learner(s_inputs)
             support_loss = self._inner_criterion(pred, s_labels)
-            learner.adapt(support_loss, epoch=epoch)
+            learner.adapt(support_loss, first_order=not second_order)
             # Multi-Step Loss
             if msl:
                 q_pred = learner(q_inputs)
@@ -192,7 +197,7 @@ class MAMLppTrainer:
         maml = l2l.algorithms.MAML(
             self._model,
             lr=fast_lr,
-            first_order=True,
+            first_order=False,
             order_annealing_epoch=self._derivative_order_annealing_from_epoch,
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
