@@ -169,7 +169,7 @@ class MAML(BaseLearner):
         # Update the module
         self.module = maml_update(self.module, self.lr, gradients)
 
-    def clone(self, first_order=None, order_annealing_epoch=0, allow_unused=None, allow_nograd=None):
+    def clone(self, first_order=None, allow_unused=None, allow_nograd=None):
         """
         **Description**
 
@@ -192,8 +192,6 @@ class MAML(BaseLearner):
         """
         if first_order is None:
             first_order = self.first_order
-        if order_annealing_epoch == 0:
-            order_annealing_epoch = self.order_annealing_epoch
         if allow_unused is None:
             allow_unused = self.allow_unused
         if allow_nograd is None:

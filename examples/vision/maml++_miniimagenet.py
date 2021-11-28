@@ -23,6 +23,8 @@ from tqdm import tqdm
 
 MetaBatch = namedtuple("MetaBatch", "support query")
 
+train_samples, val_samples, test_samples = 38400, 9600, 12000  # Is that correct?
+tasks = 600
 
 def accuracy(predictions, targets):
     predictions = predictions.argmax(dim=1).view(targets.shape)
@@ -33,8 +35,8 @@ class MAMLppTrainer:
     def __init__(
         self,
         ways=5,
-        k_shots=5,
-        n_queries=10,
+        k_shots=10,
+        n_queries=50,
         steps=5,
         msl_epochs=25,
         DA_epochs=50,
@@ -150,11 +152,10 @@ class MAMLppTrainer:
                 )
 
         q_pred = learner(q_inputs)
-        acc = accuracy(q_pred, q_labels)
-
         # Evaluate the adapted model on the query set
         if not msl:
             query_loss = self._inner_criterion(q_pred, q_labels)
+        acc = accuracy(q_pred, q_labels).detach()
 
         return query_loss, acc
 
@@ -163,7 +164,6 @@ class MAMLppTrainer:
     ) -> Tuple[torch.Tensor, float]:
         s_inputs, s_labels = batch.support
         q_inputs, q_labels = batch.query
-        query_loss = torch.tensor(0.0)
 
         if self._use_cuda:
             s_inputs = s_inputs.float().cuda(device=self._device)
@@ -180,7 +180,7 @@ class MAMLppTrainer:
 
         # Evaluate the adapted model on the query set
         q_pred = learner(q_inputs)
-        query_loss = self._inner_criterion(q_pred, q_labels)
+        query_loss = self._inner_criterion(q_pred, q_labels).detach()
         acc = accuracy(q_pred, q_labels)
 
         return query_loss, acc
@@ -198,11 +198,9 @@ class MAMLppTrainer:
             self._model,
             lr=fast_lr,
             first_order=False,
-            order_annealing_epoch=self._derivative_order_annealing_from_epoch,
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
 
-        train_samples, val_samples = 38400, 9600 # Is that correct?
         iter_per_epoch = (
             train_samples // (meta_bsz * (self._k_shots + self._n_queries))
         ) + 1
@@ -212,17 +210,17 @@ class MAMLppTrainer:
             eta_min=0.00001,
         )
 
+        # TODO: Identify and fix the mem leak
         for epoch in range(epochs):
-            epoch_meta_train_loss, epoch_meta_train_acc = 0.0, 0.0
+            epoch_meta_train_loss, epoch_meta_train_acc = .0, .0
             for _ in tqdm(range(iter_per_epoch)):
                 opt.zero_grad()
                 meta_train_losses, meta_train_accs = [], []
 
                 for _ in range(meta_bsz):
-                    learner = maml.clone()
                     meta_batch = self._split_batch(self._train_tasks.sample())
                     meta_loss, meta_acc = self._training_step(
-                        meta_batch, learner, msl=(epoch < self._msl_epochs), epoch=epoch
+                        meta_batch, maml.clone(), msl=(epoch < self._msl_epochs), epoch=epoch
                     )
                     meta_loss.backward()
                     meta_train_losses.append(meta_loss.detach())
@@ -241,6 +239,8 @@ class MAMLppTrainer:
                 # Multi-Step Loss
                 self._anneal_step_weights()
 
+            epoch_meta_train_loss /= iter_per_epoch
+            epoch_meta_train_acc /= iter_per_epoch
             print(f"==========[Epoch {epoch}]==========")
             print(f"Meta-training Loss: {epoch_meta_train_loss:.6f}")
             print(f"Meta-training Acc: {epoch_meta_train_acc:.6f}")
@@ -248,20 +248,18 @@ class MAMLppTrainer:
             # ======= Validation ========
             if (epoch + 1) % val_interval == 0:
                 # Compute the meta-validation loss
-                # Go through the entire validation set, which shouldn't be shuffled, and
+                # TODO: Go through the entire validation set, which shouldn't be shuffled, and
                 # which tasks should not be continuously resampled from!
                 meta_val_losses, meta_val_accs = [], []
-                for _ in tqdm(range(val_samples//600)):
-                    learner = maml.clone()
+                for _ in tqdm(range(val_samples // tasks)):
                     meta_batch = self._split_batch(self._valid_tasks.sample())
-                    loss, acc = self._testing_step(meta_batch, learner)
-                    meta_val_losses.append(loss.detach())
+                    loss, acc = self._testing_step(meta_batch, maml.clone())
+                    meta_val_losses.append(loss)
                     meta_val_accs.append(acc)
                 meta_val_loss = float(torch.Tensor(meta_val_losses).mean().item())
                 meta_val_acc = float(torch.Tensor(meta_val_accs).mean().item())
-
-            print(f"Meta-validation Loss: {meta_val_loss:.6f}")
-            print(f"Meta-validation Accuracy: {meta_val_acc:.6f}")
+                print(f"Meta-validation Loss: {meta_val_loss:.6f}")
+                print(f"Meta-validation Accuracy: {meta_val_acc:.6f}")
             print("============================================")
 
         return self._model.state_dict()
@@ -277,14 +275,12 @@ class MAMLppTrainer:
         maml = l2l.algorithms.MAML(
             self._model,
             lr=fast_lr,
-            first_order=True,
-            order_annealing_epoch=self._derivative_order_annealing_from_epoch,
+            first_order=False,
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
-        test_samples = 12000
 
         meta_losses, meta_accs = [], []
-        for _ in tqdm(range(test_samples//600)):
+        for _ in tqdm(range(test_samples // tasks)):
             meta_batch = self._split_batch(self._test_tasks.sample())
             loss, acc = self._testing_step(meta_batch, maml.clone())
             meta_losses.append(loss)
