@@ -66,7 +66,9 @@ class MAMLppTrainer:
 
         # Model
         self._model = l2l.vision.models.MiniImagenetCNN(ways)
-        self._model.to(self._device)
+        if self._use_cuda:
+            self._model.cuda()
+        # self._model.to(self._device)
 
         # Meta-Learning related
         self._steps = steps
