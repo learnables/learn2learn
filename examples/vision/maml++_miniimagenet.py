@@ -100,7 +100,7 @@ class MAMLppTrainer:
         """
         Separate data batch into adaptation/evalutation sets.
         """
-        images, labels_2d, labels_3d = batch
+        images, labels = batch
         batch_size = self._k_shots + self._n_queries
         indices = torch.randperm(batch_size)
         support_indices = indices[: self._k_shots]
@@ -108,10 +108,9 @@ class MAMLppTrainer:
         return MetaBatch(
             (
                 images[support_indices],
-                labels_2d[support_indices],
-                labels_3d[support_indices],
+                labels[support_indices],
             ),
-            (images[query_indices], labels_2d[query_indices], labels_3d[query_indices]),
+            (images[query_indices], labels[query_indices]),
         )
 
     def _training_step(
