@@ -126,9 +126,9 @@ class MAMLppTrainer:
 
         if self._use_cuda:
             s_inputs = s_inputs.float().cuda(device=self._device)
-            s_labels = s_labels.float().cuda(device=self._device)
+            s_labels = s_labels.cuda(device=self._device)
             q_inputs = q_inputs.float().cuda(device=self._device)
-            q_labels = q_labels.float().cuda(device=self._device)
+            q_labels = q_labels.cuda(device=self._device)
 
         # Adapt the model on the support set
         for step in range(self._steps):
@@ -161,9 +161,9 @@ class MAMLppTrainer:
 
         if self._use_cuda:
             s_inputs = s_inputs.float().cuda(device=self._device)
-            s_labels = s_labels.float().cuda(device=self._device)
+            s_labels = s_labels.cuda(device=self._device)
             q_inputs = q_inputs.float().cuda(device=self._device)
-            q_labels = q_labels.float().cuda(device=self._device)
+            q_labels = q_labels.cuda(device=self._device)
 
         # Adapt the model on the support set
         for _ in range(self._steps):
