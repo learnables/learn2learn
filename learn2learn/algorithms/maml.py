@@ -134,7 +134,6 @@ class MAML(BaseLearner):
         if allow_nograd is None:
             allow_nograd = self.allow_nograd
         second_order = not first_order
-        gradients = []
 
         if allow_nograd:
             # Compute relevant gradients
