@@ -26,6 +26,7 @@ MetaBatch = namedtuple("MetaBatch", "support query")
 train_samples, val_samples, test_samples = 38400, 9600, 12000  # Is that correct?
 tasks = 600
 
+
 def accuracy(predictions, targets):
     predictions = predictions.argmax(dim=1).view(targets.shape)
     return (predictions == targets).sum().float() / targets.size(0)
@@ -125,7 +126,7 @@ class MAMLppTrainer:
     ) -> Tuple[torch.Tensor, float]:
         s_inputs, s_labels = batch.support
         q_inputs, q_labels = batch.query
-        query_loss = .0
+        query_loss = 0.0
 
         if self._use_cuda:
             s_inputs = s_inputs.float().cuda(device=self._device)
@@ -212,7 +213,7 @@ class MAMLppTrainer:
 
         # TODO: Identify and fix the mem leak
         for epoch in range(epochs):
-            epoch_meta_train_loss, epoch_meta_train_acc = .0, .0
+            epoch_meta_train_loss, epoch_meta_train_acc = 0.0, 0.0
             for _ in tqdm(range(iter_per_epoch)):
                 opt.zero_grad()
                 meta_train_losses, meta_train_accs = [], []
@@ -220,7 +221,10 @@ class MAMLppTrainer:
                 for _ in range(meta_bsz):
                     meta_batch = self._split_batch(self._train_tasks.sample())
                     meta_loss, meta_acc = self._training_step(
-                        meta_batch, maml.clone(), msl=(epoch < self._msl_epochs), epoch=epoch
+                        meta_batch,
+                        maml.clone(),
+                        msl=(epoch < self._msl_epochs),
+                        epoch=epoch,
                     )
                     meta_loss.backward()
                     meta_train_losses.append(meta_loss.detach())
