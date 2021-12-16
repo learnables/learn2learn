@@ -18,16 +18,6 @@ from statistics import mean
 from copy import deepcopy
 
 
-class Lambda(nn.Module):
-
-    def __init__(self, fn):
-        super(Lambda, self).__init__()
-        self.fn = fn
-
-    def forward(self, x):
-        return self.fn(x)
-
-
 def accuracy(predictions, targets):
     predictions = predictions.argmax(dim=1).view(targets.shape)
     return (predictions == targets).sum().float() / targets.size(0)
@@ -132,10 +122,10 @@ def main(
 
 
     # Create model
-    features = l2l.vision.models.ConvBase(output_size=64, channels=3, max_pool=True)
-    features = torch.nn.Sequential(features, Lambda(lambda x: x.view(-1, 256)))
+    model = l2l.vision.models.CNN4(output_size=ways,hidden_size=64,embedding_size=64*4,)
+    features = model.features
+    head = model.classifier
     features.to(device)
-    head = torch.nn.Linear(256, ways)
     head = l2l.algorithms.MAML(head, lr=fast_lr)
     head.to(device)
 

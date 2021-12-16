@@ -56,6 +56,7 @@ class MiniImagenet(data.Dataset):
         Must be 'train', 'validation', or 'test'.
     * **transform** (Transform, *optional*, default=None) - Input pre-processing.
     * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
+    * **download** (bool, *optional*, default=False) - Download the dataset if it's not available.
 
     **Example**
 
@@ -67,12 +68,14 @@ class MiniImagenet(data.Dataset):
 
     """
 
-    def __init__(self,
-                 root,
-                 mode='train',
-                 transform=None,
-                 target_transform=None,
-                 download=False):
+    def __init__(
+        self,
+        root,
+        mode='train',
+        transform=None,
+        target_transform=None,
+        download=False,
+    ):
         super(MiniImagenet, self).__init__()
         self.root = os.path.expanduser(root)
         if not os.path.exists(self.root):

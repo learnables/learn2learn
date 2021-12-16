@@ -13,7 +13,8 @@ def omniglot_tasksets(
     test_ways,
     test_samples,
     root,
-    **kwargs
+    device=None,
+    **kwargs,
 ):
     """
     Benchmark definition for Omniglot.
@@ -28,18 +29,20 @@ def omniglot_tasksets(
         transform=data_transforms,
         download=True,
     )
+    if device is not None:
+        dataset = l2l.data.OnDeviceDataset(omniglot, device=device)
     dataset = l2l.data.MetaDataset(omniglot)
-    train_dataset = dataset
-    validation_datatset = dataset
-    test_dataset = dataset
 
     classes = list(range(1623))
     random.shuffle(classes)
+    train_dataset = l2l.data.FilteredMetaDataset(dataset, labels=classes[:1100])
+    validation_datatset = l2l.data.FilteredMetaDataset(dataset, labels=classes[1100:1200])
+    test_dataset = l2l.data.FilteredMetaDataset(dataset, labels=classes[1200:])
+
     train_transforms = [
         l2l.data.transforms.FusedNWaysKShots(dataset,
                                              n=train_ways,
-                                             k=train_samples,
-                                             filter_labels=classes[:1100]),
+                                             k=train_samples),
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
@@ -48,8 +51,7 @@ def omniglot_tasksets(
     validation_transforms = [
         l2l.data.transforms.FusedNWaysKShots(dataset,
                                              n=test_ways,
-                                             k=test_samples,
-                                             filter_labels=classes[1100:1200]),
+                                             k=test_samples),
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),
@@ -58,8 +60,7 @@ def omniglot_tasksets(
     test_transforms = [
         l2l.data.transforms.FusedNWaysKShots(dataset,
                                              n=test_ways,
-                                             k=test_samples,
-                                             filter_labels=classes[1200:]),
+                                             k=test_samples),
         l2l.data.transforms.LoadData(dataset),
         l2l.data.transforms.RemapLabels(dataset),
         l2l.data.transforms.ConsecutiveLabels(dataset),

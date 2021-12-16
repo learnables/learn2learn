@@ -4,8 +4,8 @@ import os
 import tarfile
 import torch
 
+from PIL import Image
 from learn2learn.data.utils import download_file_from_google_drive
-from torchvision.datasets.folder import default_loader
 
 DATA_DIR = 'cubirds200'
 DATA_FILENAME = 'CUB_200_2011.tgz'
@@ -270,6 +270,7 @@ IMAGENET_DUPLICATES = {
     ],
     'test': [],
 }
+IMAGENET_DUPLICATES['all'] = sum(IMAGENET_DUPLICATES.values(), [])
 
 
 class CUBirds200(torch.utils.data.Dataset):
@@ -303,6 +304,7 @@ class CUBirds200(torch.utils.data.Dataset):
     * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
     * **download** (bool, *optional*, default=False) - Whether to download the dataset.
     * **include_imagenet_duplicates** (bool, *optional*, default=False) - Whether to include images that are also present in the ImageNet 2012 dataset.
+    * **bounding_box_crop** (bool, *optional*, default=False) - Whether to crop each image using bounding box information.
 
     **Example**
 
@@ -322,13 +324,15 @@ class CUBirds200(torch.utils.data.Dataset):
         target_transform=None,
         download=False,
         include_imagenet_duplicates=False,
-            ):
+        bounding_box_crop=False,
+    ):
         root = os.path.expanduser(root)
         self.root = root
         self.mode = mode
         self.transform = transform
         self.target_transform = target_transform
         self.include_imagenet_duplicates = include_imagenet_duplicates
+        self.bounding_box_crop = bounding_box_crop
         self._bookkeeping_path = os.path.join(
             self.root,
             'cubirds200-' + mode + '-bookkeeping.pkl'
@@ -365,6 +369,31 @@ class CUBirds200(torch.utils.data.Dataset):
         )
         duplicates = IMAGENET_DUPLICATES[self.mode]
         self.data = []
+
+        # parse bounding boxes
+        if self.bounding_box_crop:
+            self.bounding_boxes = {}
+            bbox_file = os.path.join(self.root, DATA_DIR, 'CUB_200_2011', 'bounding_boxes.txt')
+            id2img_file = os.path.join(self.root, DATA_DIR, 'CUB_200_2011', 'images.txt')
+            with open(bbox_file, 'r') as bbox_fd:
+                content = bbox_fd.readlines()
+            id2img = {}
+            with open(id2img_file, 'r') as id2img_fd:
+                for line in id2img_fd.readlines():
+                    line = line.replace('\n', '').split(' ')
+                    id2img[line[0]] = line[1]
+            bbox_content = {}
+            for line in content:
+                line = line.split(' ')
+                x, y, width, height = (
+                    int(float(line[1])),
+                    int(float(line[2])),
+                    int(float(line[3])),
+                    int(float(line[4])),
+                )
+                bbox_content[id2img[line[0]]] = (x, y, x+width, y+height)
+
+        # read images from disk
         for class_idx, class_name in enumerate(classes):
             class_path = os.path.join(images_path, class_name)
             filenames = os.listdir(class_path)
@@ -372,11 +401,16 @@ class CUBirds200(torch.utils.data.Dataset):
                 if self.include_imagenet_duplicates or \
                    image_file not in duplicates:
                     image_path = os.path.join(class_path, image_file)
+                    if self.bounding_box_crop:
+                        self.bounding_boxes[image_path] = bbox_content[os.path.join(class_name, image_file)]
                     self.data.append((image_path, class_idx))
 
     def __getitem__(self, i):
         image_path, label = self.data[i]
-        image = default_loader(image_path)
+        image = Image.open(image_path).convert('RGB')
+        if self.bounding_box_crop:
+            bbox = self.bounding_boxes[image_path]
+            image = image.crop(bbox)
         if self.transform is not None:
             image = self.transform(image)
         if self.target_transform is not None:
@@ -404,3 +438,19 @@ if __name__ == '__main__':
     # Train w/ IM: 8239
     # Train w/out IM: 8204
     print(len(cub))
+
+    import numpy as np
+    import tqdm
+    print('uncropped:')
+    cub = CUBirds200('~/data', download=True, bounding_box_crop=False)
+    min_size = float('inf')
+    for img, label in tqdm.tqdm(cub):
+        min_size = min(min_size, *np.array(img).shape[:2])
+    print('min_size:', min_size)
+
+    print('cropped:')
+    cub = CUBirds200('~/data', download=True, bounding_box_crop=True)
+    min_size = float('inf')
+    for img, label in tqdm.tqdm(cub):
+        min_size = min(min_size, *np.array(img).shape[:2])
+    print('min_size:', min_size)
