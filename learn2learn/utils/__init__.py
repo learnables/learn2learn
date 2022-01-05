@@ -201,7 +201,6 @@ def detach_module(module, keep_requires_grad=False):
         detach_module(module._modules[module_key], keep_requires_grad=keep_requires_grad)
 
 
-
 def clone_distribution(dist):
     # TODO: This function was never tested.
     clone = copy.deepcopy(dist)
