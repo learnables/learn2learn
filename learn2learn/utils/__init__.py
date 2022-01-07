@@ -150,7 +150,7 @@ def clone_module(module, memo=None):
     return clone
 
 
-def detach_module(module):
+def detach_module(module, keep_requires_grad=False):
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
@@ -164,6 +164,9 @@ def detach_module(module):
     **Arguments**
 
     * **module** (Module) - Module to be detached.
+    * **keep_requires_grad** (bool) - By default, all parameters of the detached module will have
+    `requires_grad` set to `False`. If this flag is set to `True`, then the `requires_grad` field
+    will be the same as the pre-detached module.
 
     **Example**
 
@@ -180,17 +183,22 @@ def detach_module(module):
     # First, re-write all parameters
     for param_key in module._parameters:
         if module._parameters[param_key] is not None:
+            requires_grad = module._parameters[param_key].requires_grad
             detached = module._parameters[param_key].detach_()
+            if keep_requires_grad and requires_grad:
+                module._parameters[param_key].requires_grad_()
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         if module._buffers[buffer_key] is not None and \
                 module._buffers[buffer_key].requires_grad:
             module._buffers[buffer_key] = module._buffers[buffer_key].detach_()
+            if keep_requires_grad:  # requires_grad checked above
+                module._buffers[buffer_key].requires_grad_()
 
     # Then, recurse for each submodule
     for module_key in module._modules:
-        detach_module(module._modules[module_key])
+        detach_module(module._modules[module_key], keep_requires_grad=keep_requires_grad)
 
 
 def clone_distribution(dist):
