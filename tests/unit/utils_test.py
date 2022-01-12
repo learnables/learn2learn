@@ -169,7 +169,7 @@ class UtilTests(unittest.TestCase):
             maml = l2l.algorithms.MAML(model, lr=1e-3, allow_unused=False)
             optim = torch.optim.SGD(maml.parameters(), lr=0.001)
             data = torch.randn(30, 500, 2)
-            
+
             # Adapt and measure loss
             learner = maml.clone()
             for step in range(N_STEPS):
@@ -307,6 +307,12 @@ class UtilTests(unittest.TestCase):
 
         finally:
             assert fail == True
+
+    def test_module_detach_keep_requires_grad(self):
+        l2l.detach_module(self.model, keep_requires_grad=True)
+        self.assertTrue(all(p.requires_grad for p in self.model.parameters()))
+        l2l.detach_module(self.model)
+        self.assertTrue(all(not p.requires_grad for p in self.model.parameters()))
 
     def test_distribution_clone(self):
         pass
