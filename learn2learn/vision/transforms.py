@@ -43,7 +43,7 @@ class RandomClassRotation(object):
             if c not in rotations:
                 rot = random.choice(self.degrees)
                 try:
-                    rotations[c] = (transforms.RandomRotation((rot, rot)),)
+                    rotations[c] = transforms.RandomRotation((rot, rot))
                 except Exception:
                     rotations[c] = transforms.Compose(
                         [
