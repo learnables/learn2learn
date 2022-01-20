@@ -17,7 +17,16 @@ class RandomDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         sample = self.values[index], self.labels[index]
-        transform = tv.transforms.RandomRotation((self.rot, self.rot))
+        if float(tv.__version__.split('.')[1]) >= 11:
+            transform = tv.transforms.RandomRotation((self.rot, self.rot))
+        else:
+            transform = tv.transforms.Compose(
+                [
+                    tv.transforms.ToPILImage(),
+                    tv.transforms.RandomRotation((self.rot, self.rot)),
+                    tv.transforms.ToTensor(),
+                ]
+            )
         sample = transform(sample[0])
         return sample
 
@@ -33,7 +42,7 @@ class RandomRotateTest(unittest.TestCase):
         for _ in range(10):
             sample, channels, size = (
                 random.randrange(500, 5000),
-                random.randrange(1, 10),
+                random.randrange(1, 5),
                 random.randrange(20, 200),
             )
             data, labels = torch.rand(sample, channels, size, size), torch.rand(
