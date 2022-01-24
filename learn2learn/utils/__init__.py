@@ -212,7 +212,7 @@ def clone_distribution(dist):
                 clone.__dict__[param_key] = dist.__dict__[param_key].clone()
         elif isinstance(item, torch.nn.Module):
             clone.__dict__[param_key] = clone_module(dist.__dict__[param_key])
-        elif isinstance(item, torch.Distribution):
+        elif isinstance(item, torch.distributions.Distribution):
             clone.__dict__[param_key] = clone_distribution(dist.__dict__[param_key])
 
     return clone
@@ -227,7 +227,7 @@ def detach_distribution(dist):
                 dist.__dict__[param_key] = dist.__dict__[param_key].detach()
         elif isinstance(item, torch.nn.Module):
             dist.__dict__[param_key] = detach_module(dist.__dict__[param_key])
-        elif isinstance(item, torch.Distribution):
+        elif isinstance(item, torch.distributions.Distribution):
             dist.__dict__[param_key] = detach_distribution(dist.__dict__[param_key])
     return dist
 
