@@ -2,7 +2,7 @@ pygments
 pymdown-extensions
 cython>=0.28.5
 twine
-mkdocs==1.0.4
+mkdocs==1.2.3
 mkdocs-bootswatch==1.0
 mkdocs-material==4.6.3
 pycodestyle>=2.3.1
