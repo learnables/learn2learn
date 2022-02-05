@@ -12,6 +12,7 @@ def fc100_tasksets(
     test_ways=5,
     test_samples=10,
     root='~/data',
+    data_augmentation=None,
     device=None,
     **kwargs,
 ):
