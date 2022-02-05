@@ -59,6 +59,7 @@ def get_tasksets(
     test_samples=10,
     num_tasks=-1,
     root='~/data',
+    data_augmentation=None,
     device=None,
     **kwargs,
 ):
@@ -103,6 +104,7 @@ def get_tasksets(
                                            test_ways=test_ways,
                                            test_samples=test_samples,
                                            root=root,
+                                           data_augmentation=data_augmentation,
                                            device=device,
                                            **kwargs)
     train_dataset, validation_dataset, test_dataset = datasets
