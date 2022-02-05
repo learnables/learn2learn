@@ -65,15 +65,15 @@ def cifarfs_tasksets(
         raise('Invalid data_augmentation argument.')
         
     train_dataset = l2l.vision.datasets.CIFARFS(root=root,
-                                                transform=data_transform,
+                                                transform=train_data_transforms,
                                                 mode='train',
                                                 download=True)
     valid_dataset = l2l.vision.datasets.CIFARFS(root=root,
-                                                transform=data_transform,
+                                                transform=train_data_transforms,
                                                 mode='validation',
                                                 download=True)
     test_dataset = l2l.vision.datasets.CIFARFS(root=root,
-                                               transform=data_transform,
+                                               transform=test_data_transforms,
                                                mode='test',
                                                download=True)
     if device is not None:
