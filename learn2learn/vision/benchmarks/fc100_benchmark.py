@@ -5,6 +5,7 @@ import learn2learn as l2l
 
 from learn2learn.data.transforms import NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels
 
+from torchvision.transforms import Compose
 
 def fc100_tasksets(
     train_ways=5,
