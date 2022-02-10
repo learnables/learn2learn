@@ -81,32 +81,34 @@ class TestMetaSGDAlgorithm(unittest.TestCase):
             self.assertTrue(p.grad.norm(p=2).item() > 0.0)
 
     def test_memory_consumption(self):
-        def get_memory():
-            return torch.cuda.memory_allocated(0)
 
-        BSZ = 1024
-        INPUT_SIZE = 128
-        N_STEPS = 5
-        N_EVAL = 2
+        if torch.cuda.is_available() and torch.cuda.device_count() > 0:
+            def get_memory():
+                return torch.cuda.memory_allocated(0)
 
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        model = torch.nn.Sequential(*[
-            torch.nn.Linear(INPUT_SIZE, INPUT_SIZE) for _ in range(10)
-        ])
-        maml = l2l.algorithms.MetaSGD(model, lr=0.0001)
-        maml.to(device)
+            BSZ = 1024
+            INPUT_SIZE = 128
+            N_STEPS = 5
+            N_EVAL = 5
 
-        memory_usages = []
+            device = torch.device("cuda")
+            model = torch.nn.Sequential(*[
+                torch.nn.Linear(INPUT_SIZE, INPUT_SIZE) for _ in range(10)
+            ])
+            maml = l2l.algorithms.MetaSGD(model, lr=0.0001)
+            maml.to(device)
 
-        for evaluation in range(N_EVAL):
-            learner = maml.clone()
-            X = torch.randn(BSZ, INPUT_SIZE, device=device)
-            for step in range(N_STEPS):
-                learner.adapt(torch.norm(learner(X)))
-            memory_usages.append(get_memory())
+            memory_usages = []
 
-        for i in range(1, len(memory_usages)):
-            self.assertTrue(memory_usages[0] == memory_usages[i])
+            for evaluation in range(N_EVAL):
+                learner = maml.clone()
+                X = torch.randn(BSZ, INPUT_SIZE, device=device)
+                for step in range(N_STEPS):
+                    learner.adapt(torch.norm(learner(X)))
+                memory_usages.append(get_memory())
+
+            for i in range(1, len(memory_usages)):
+                self.assertTrue(memory_usages[0] == memory_usages[i])
 
 
 if __name__ == '__main__':
