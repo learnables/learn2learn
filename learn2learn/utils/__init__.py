@@ -313,7 +313,6 @@ def update_module(module, updates=None, memo=None):
     # https://github.com/learnables/learn2learn/issues/139
     if hasattr(module, 'flatten_parameters'):
         module._apply(lambda x: x)
-
     return module
 
 
