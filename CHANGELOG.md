@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Fix arguments when instantiating `l2l.nn.Scale`.
 * Fix `train_loss` logging in `LightningModule` implementations with PyTorch-Lightning 1.5.
 * Fix `RandomClassRotation` ([#283](https://github.com/learnables/learn2learn/pull/283)) to incorporate multi-channelled inputs. ([Varad Pimpalkhute](https://github.com/nightlessbaron/)) 
-* Fix memory leak in `maml.py` and `meta-sgd.py` and add tests to `maml_test.py` and `metasgd_test.py` to check for possible future memory leaks. ([#284] (https://github.com/learnables/learn2learn/issues/284)) ([Kevin Zhang] (https://github.com/kzhang2)) 
+* Fix memory leak in `maml.py` and `meta-sgd.py` and add tests to `maml_test.py` and `metasgd_test.py` to check for possible future memory leaks. ([#284](https://github.com/learnables/learn2learn/issues/284)) ([Kevin Zhang](https://github.com/kzhang2)) 
 
 
 ## v0.1.6
