@@ -279,22 +279,24 @@ def update_module(module, updates=None, memo=None):
     # Update the params
     for param_key in module._parameters:
         p = module._parameters[param_key]
-        if p is not None and hasattr(p, 'update') and p.update is not None:
-            if p in memo:
-                module._parameters[param_key] = memo[p]
-            else:
+        if p in memo:
+            module._parameters[param_key] = memo[p]
+        else:
+            if p is not None and hasattr(p, 'update') and p.update is not None:
                 updated = p + p.update
+                p.update = None
                 memo[p] = updated
                 module._parameters[param_key] = updated
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         buff = module._buffers[buffer_key]
-        if buff is not None and hasattr(buff, 'update') and buff.update is not None:
-            if buff in memo:
-                module._buffers[buffer_key] = memo[buff]
-            else:
+        if buff in memo:
+            module._buffers[buffer_key] = memo[buff]
+        else:
+            if buff is not None and hasattr(buff, 'update') and buff.update is not None:
                 updated = buff + buff.update
+                buff.update = None
                 memo[buff] = updated
                 module._buffers[buffer_key] = updated
 
