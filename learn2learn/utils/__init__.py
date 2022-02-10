@@ -284,6 +284,7 @@ def update_module(module, updates=None, memo=None):
                 module._parameters[param_key] = memo[p]
             else:
                 updated = p + p.update
+                p.update = None
                 memo[p] = updated
                 module._parameters[param_key] = updated
 
@@ -295,6 +296,7 @@ def update_module(module, updates=None, memo=None):
                 module._buffers[buffer_key] = memo[buff]
             else:
                 updated = buff + buff.update
+                buff.update = None
                 memo[buff] = updated
                 module._buffers[buffer_key] = updated
 
