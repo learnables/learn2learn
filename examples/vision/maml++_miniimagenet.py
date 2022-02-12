@@ -37,7 +37,7 @@ class MAMLppTrainer:
         self,
         ways=5,
         k_shots=10,
-        n_queries=50,
+        n_queries=30,
         steps=5,
         msl_epochs=25,
         DA_epochs=50,
@@ -68,7 +68,7 @@ class MAMLppTrainer:
         )
 
         # Model
-        self._model = l2l.vision.models.MiniImagenetCNN(ways)
+        self._model = l2l.vision.models.CNN4_BNRS(ways, adaptation_steps=steps)
         if self._use_cuda:
             self._model.cuda()
 
@@ -106,6 +106,7 @@ class MAMLppTrainer:
         """
         images, labels = batch
         batch_size = self._k_shots + self._n_queries
+        assert batch_size <= images.shape[0], "K+N are greater than the batch size!"
         indices = torch.randperm(batch_size)
         support_indices = indices[: self._k_shots]
         query_indices = indices[self._k_shots :]
@@ -126,7 +127,7 @@ class MAMLppTrainer:
     ) -> Tuple[torch.Tensor, float]:
         s_inputs, s_labels = batch.support
         q_inputs, q_labels = batch.query
-        query_loss = 0.0
+        query_loss = torch.tensor(.0, device=self._device)
 
         if self._use_cuda:
             s_inputs = s_inputs.float().cuda(device=self._device)
@@ -142,19 +143,19 @@ class MAMLppTrainer:
         # Adapt the model on the support set
         for step in range(self._steps):
             # forward + backward + optimize
-            pred = learner(s_inputs)
+            pred = learner(s_inputs, step)
             support_loss = self._inner_criterion(pred, s_labels)
             learner.adapt(support_loss, first_order=not second_order)
             # Multi-Step Loss
             if msl:
-                q_pred = learner(q_inputs)
+                q_pred = learner(q_inputs, step)
                 query_loss += self._step_weights[step] * self._inner_criterion(
                     q_pred, q_labels
                 )
 
-        q_pred = learner(q_inputs)
         # Evaluate the adapted model on the query set
         if not msl:
+            q_pred = learner(q_inputs, self._steps-1)
             query_loss = self._inner_criterion(q_pred, q_labels)
         acc = accuracy(q_pred, q_labels).detach()
 
@@ -173,14 +174,14 @@ class MAMLppTrainer:
             q_labels = q_labels.cuda(device=self._device)
 
         # Adapt the model on the support set
-        for _ in range(self._steps):
+        for step in range(self._steps):
             # forward + backward + optimize
-            pred = learner(s_inputs)
+            pred = learner(s_inputs, step)
             support_loss = self._inner_criterion(pred, s_labels)
             learner.adapt(support_loss)
 
         # Evaluate the adapted model on the query set
-        q_pred = learner(q_inputs)
+        q_pred = learner(q_inputs, self._steps-1)
         query_loss = self._inner_criterion(q_pred, q_labels).detach()
         acc = accuracy(q_pred, q_labels)
 
@@ -199,6 +200,7 @@ class MAMLppTrainer:
             self._model,
             lr=fast_lr,
             first_order=False,
+            allow_nograd=True, # For the parameters of the MetaBatchNorm layers
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
 
@@ -211,7 +213,6 @@ class MAMLppTrainer:
             eta_min=0.00001,
         )
 
-        # TODO: Identify and fix the mem leak
         for epoch in range(epochs):
             epoch_meta_train_loss, epoch_meta_train_acc = 0.0, 0.0
             for _ in tqdm(range(iter_per_epoch)):
@@ -236,7 +237,9 @@ class MAMLppTrainer:
                 # Average the accumulated gradients and optimize
                 with torch.no_grad():
                     for p in maml.parameters():
-                        p.grad.data.mul_(1.0 / meta_bsz)
+                        # Remember the MetaBatchNorm layer has parameters that don't require grad!
+                        if p.requires_grad:
+                            p.grad.data.mul_(1.0 / meta_bsz)
 
                 opt.step()
                 scheduler.step()
@@ -251,6 +254,9 @@ class MAMLppTrainer:
 
             # ======= Validation ========
             if (epoch + 1) % val_interval == 0:
+                # Backup the BatchNorm layers' running statistics
+                maml.backup_stats()
+
                 # Compute the meta-validation loss
                 # TODO: Go through the entire validation set, which shouldn't be shuffled, and
                 # which tasks should not be continuously resampled from!
@@ -264,6 +270,8 @@ class MAMLppTrainer:
                 meta_val_acc = float(torch.Tensor(meta_val_accs).mean().item())
                 print(f"Meta-validation Loss: {meta_val_loss:.6f}")
                 print(f"Meta-validation Accuracy: {meta_val_acc:.6f}")
+                # Restore the BatchNorm layers' running statistics
+                maml.restore_backup_stats()
             print("============================================")
 
         return self._model.state_dict()
