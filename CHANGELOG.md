@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
+* example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
 
 ## v0.1.7
 
