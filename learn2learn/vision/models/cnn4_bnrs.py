@@ -81,7 +81,6 @@ class MetaBatchNormLayer(torch.nn.Module):
         )
 
     def backup_stats(self):
-        print("Backing up!")
         self.backup_running_mean.data = deepcopy(self.running_mean.data)
         self.backup_running_var.data = deepcopy(self.running_var.data)
 
