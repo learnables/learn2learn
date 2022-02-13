@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New vision example: MAML++. (@[DubiousCactus](https://github.com/DubiousCactus))
 * Add `keep_requires_grad` flag to `detach_module`. ([Zhaofeng Wu](https://github.com/ZhaofengWu))
 
+### Changed
+
+* Implement LSLR (MAML++) in the MAML module. (@[DubiousCactus](https://github.com/DubiousCactus))
+
 ### Fixed
 
 * Fix arguments when instantiating `l2l.nn.Scale`.

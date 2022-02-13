@@ -54,6 +54,7 @@ class MAMLppTrainer:
         torch.manual_seed(seed)
 
         # Dataset
+        print("[*] Loading mini-ImageNet...")
         (
             self._train_tasks,
             self._valid_tasks,
@@ -145,7 +146,7 @@ class MAMLppTrainer:
             # forward + backward + optimize
             pred = learner(s_inputs, step)
             support_loss = self._inner_criterion(pred, s_labels)
-            learner.adapt(support_loss, first_order=not second_order)
+            learner.adapt(support_loss, first_order=not second_order, step=step)
             # Multi-Step Loss
             if msl:
                 q_pred = learner(q_inputs, step)
@@ -178,7 +179,7 @@ class MAMLppTrainer:
             # forward + backward + optimize
             pred = learner(s_inputs, step)
             support_loss = self._inner_criterion(pred, s_labels)
-            learner.adapt(support_loss)
+            learner.adapt(support_loss, step=step)
 
         # Evaluate the adapted model on the query set
         q_pred = learner(q_inputs, self._steps-1)
@@ -195,10 +196,12 @@ class MAMLppTrainer:
         epochs=100,
         val_interval=1,
     ):
-
+        print("[*] Training...")
         maml = l2l.algorithms.MAML(
             self._model,
-            lr=fast_lr,
+            lr=fast_lr, # Initialisation LR for all layers and steps
+            use_lslr=True,
+            adaptation_steps=self._steps, # For LSLR
             first_order=False,
             allow_nograd=True, # For the parameters of the MetaBatchNorm layers
         )
@@ -287,7 +290,10 @@ class MAMLppTrainer:
         maml = l2l.algorithms.MAML(
             self._model,
             lr=fast_lr,
+            use_lslr=True,
+            adaptation_steps=self._steps,
             first_order=False,
+            allow_nograd=True,
         )
         opt = torch.optim.AdamW(maml.parameters(), meta_lr, betas=(0, 0.999))
 
