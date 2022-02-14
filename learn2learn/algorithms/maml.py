@@ -48,6 +48,7 @@ def maml_update(model, lr, grads=None):
                 p.update = -lr * g
     return update_module(model)
 
+
 def maml_pp_update(model, step=None, lrs=None, grads=None):
     """
 
@@ -141,6 +142,7 @@ def maml_pp_update(model, step=None, lrs=None, grads=None):
     for module_key in model._modules:
         model._modules[module_key] = maml_pp_update(model._modules[module_key])
     return model
+
 
 class MAML(BaseLearner):
     """
