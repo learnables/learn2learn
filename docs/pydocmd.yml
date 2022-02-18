@@ -111,6 +111,7 @@ pages:
   - Tutorials:
       - Getting Started: tutorials/getting_started.md
       - Feature Reuse with ANIL: tutorials/anil_tutorial/ANIL_tutorial.md
+      - Demystifying Task-Transforms: tutorials/anil_tutorial/transform_tutorial.md
   - Documentation:
       - learn2learn: docs/learn2learn.md
       - learn2learn.data: docs/learn2learn.data.md
