@@ -24,7 +24,7 @@ Let's first start with understanding what is a task. The definition of a task va
 
 
 <p style="text-align:center;">
-<img src="docs/source/tutorials/task_transform_tutorial/few-shot.png" style="width:600; vertical-align: middle;"/>
+<img src="few-shot.png" style="width:600; vertical-align: middle;"/>
     <div class="caption">
     Few-Shot Classification Tasks. Image source: [Cloudera Fast Forward Report on Meta-Learning](https://meta-learning.fastforwardlabs.com/).
     </div>
@@ -87,7 +87,7 @@ The dataset consists of 100 different classes, having 5 samples per class. The o
 
 
 <p style="text-align:center;">
-<img src="docs/source/tutorials/task_transform_tutorial/l2l-task-transform.png" style="width:600; vertical-align: middle;"/>
+<img src="l2l-task-transform.png" style="width:600; vertical-align: middle;"/>
     <div class="caption">
     Pipeline for generating tasks in learn2learn.
     </div>
