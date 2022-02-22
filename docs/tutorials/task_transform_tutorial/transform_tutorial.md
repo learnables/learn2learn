@@ -128,7 +128,7 @@ For the rest of the tutorial, we will inspect each of the modules present in the
 
 ## MetaDataset - A wrapper for fast indexing of samples.
 
-At a high level, `MetaDataset` is a wrapper that enables fast indexing of samples of a given class in a dataset. The motivation behind building is to decrease the $\mathcal{O}(n)$ time to $\mathcal{O}(1)$ everytime we iterate over a dataset to generate tasks. Naturally, the time saved increases as the dataset size keeps on increasing. 
+At a high level, `MetaDataset` is a wrapper that enables fast indexing of samples of a given class in a dataset. The motivation behind building is to decrease the \(\mathcal{O}(n)\) time to \(\mathcal{O}(1)\) everytime we iterate over a dataset to generate tasks. Naturally, the time saved increases as the dataset size keeps on increasing. 
 
 >**Note** : The input dataset needs to be iterable.
 
@@ -136,7 +136,7 @@ At a high level, `MetaDataset` is a wrapper that enables fast indexing of sample
 1. `labels_to_indices`: A dictionary that maintains labels of classes as keys, and the corresponding indices of samples within the class in form of list as values.
 2. `indices_to_labels`: As the name suggests, a dictionary is formed with indices of samples as key, and their corresponding class labels as value.
 
-This feature comes in handy while generating tasks. For example, if you are sampling a task having `N` classes *(say, N=5)*, then using `labels_to_indices` dictionary to identify all the samples belonging to this set of 5 classes *($\mathcal{O}(c)$)* will be much more faster than iterating all the samples *($\mathcal{O}(n)$)*.
+This feature comes in handy while generating tasks. For example, if you are sampling a task having `N` classes *(say, N=5)*, then using `labels_to_indices` dictionary to identify all the samples belonging to this set of 5 classes *(\(\mathcal{O}(c)\))* will be much more faster than iterating all the samples *(\(\mathcal{O}(n)\))*.
 
 ~~~python
 from collections import defaultdict
@@ -210,7 +210,7 @@ So far, we understood the motivation for using `MetaDataset`. In the next sectio
 
 `UnionMetaDataset` is an extension of `MetaDataset`, and it is used to merge multiple datasets into one. This is useful when you want to sample heterogenous tasks - tasks in a metabatch being from different distributions.
 
-`learn2learn` implements it by simply remapping the labels of the dataset in a consecutive order. For example, say you have two datasets: $\mathcal{D}_1$: {1600 labels, 32000 samples} and $\mathcal{D}_2$: {400 labels, 12000 samples}. After wrapping the datasets using `UnionMetaDataset` we will get a MetaDataset that will have 2000 labels and 44000 samples, where the initial 1600 labels (0, 1, 2, ..., 1599) will be from $\mathcal{D}_1$ and (1600, 1601, ..., 1999) labels will be from $\mathcal{D}_2$. Same is the case for the indices of the union.
+`learn2learn` implements it by simply remapping the labels of the dataset in a consecutive order. For example, say you have two datasets: \(\mathcal{D}_1\): {1600 labels, 32000 samples} and \(\mathcal{D}_2\): {400 labels, 12000 samples}. After wrapping the datasets using `UnionMetaDataset` we will get a MetaDataset that will have 2000 labels and 44000 samples, where the initial 1600 labels (0, 1, 2, ..., 1599) will be from \(\mathcal{D}_1\) and (1600, 1601, ..., 1999) labels will be from \(\mathcal{D}_2\). Same is the case for the indices of the union.
 
 > A list of datasets is fed as input the `UnionMetaDataset`
 
@@ -388,7 +388,7 @@ We will be discussing more about the `data_description.transforms` in the next s
 
 3. If `num_tasks = N`, and you are sampling `M` tasks where `M > N`, then `M - N` tasks will definitely be repeated. In case you want to avoid it, make sure `N >= M`.
 
-4. Given a list of task transformations, the transformations are applied in the order they are listed. (Task generated using $[T_1, T_2]$ transforms might be different from that generated using $[T_2, T_1]$).
+4. Given a list of task transformations, the transformations are applied in the order they are listed. (Task generated using \([T_1, T_2]\) transforms might be different from that generated using \([T_2, T_1]\).
 
 5. A `task` is lazily sampled upon indexing, or using `.sample()`. `.sample()` is equivalent to indexing, just that before indexing, it randomly generates an index to be indexed.
 
