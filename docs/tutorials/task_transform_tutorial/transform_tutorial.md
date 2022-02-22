@@ -14,9 +14,9 @@ In this tutorial, we will explore in depth one of the core utilities [learn2lear
 *   `TaskDataset` is the core module that generates tasks from input dataset. Tasks are lazily sampled upon indexing or calling `.sample()` method.
 *   Lastly, we study different `task transforms` defined in `learn2learn` that modifies the input data such that a customised `task` is generated. 
 
-# Section 1: Motivation for generating tasks
+## Motivation for generating tasks
 
-### What is a task?
+#### What is a task?
 
 Let's first start with understanding what is a task. The definition of a task varies from one application to other, but in context of few-shot learning, a task is a *supervised-learning* approach (e.g., classification, regression) trained over a collection of _datapoints_ (images, in context of vision) that are sampled from the same distribution.
 
@@ -24,31 +24,26 @@ Let's first start with understanding what is a task. The definition of a task va
 
 
 <p style="text-align:center;">
-<img src="few-shot.png" style="width:600; vertical-align: middle;"/>
+<img src="../few-shot.png" style="width:600; vertical-align: middle;"/>
     <div class="caption">
-    Few-Shot Classification Tasks. Image source: [Cloudera Fast Forward Report on Meta-Learning](https://meta-learning.fastforwardlabs.com/).
+    Few-Shot Classification Tasks. Image source: <a href="https://meta-learning.fastforwardlabs.com/">Cloudera Fast Forward Report on Meta-Learning</a>.
     </div>
 </p>
 
 
 
-<br/>
-
 ---
 
-<br/>
 
-### How is a task used in context of meta-learning?
+#### How is a task used in context of meta-learning?
 
 Meta-learning used in the context of few-shot learning paradigm trains over different tasks (each task consists of limited number of samples) over multiple iterations of training. For example, gradient-based meta-learners learn a model initialization prior such that the model converges to the global minima on unseen tasks (tasks that were not encountered during training) using few samples/datapoints. 
 
-<br/>
 
 ---
 
-<br/>
 
-### How is a task generated?
+#### How is a task generated?
 
 In layman's terms, few-shot classification experiment is set up as a N-wayed K-shot problem. Meaning, the model needs to learn how to classify an input task over N different classes given K examples per class during training. Thus, we need to generate 'M' such tasks for training, and inferencing the meta-learner.
 
@@ -62,11 +57,9 @@ In layman's terms, few-shot classification experiment is set up as a N-wayed K-s
 
 Given any input dataset, `learn2learn` makes it easy for generating custom tasks depending on the user's usecase.
 
-<br/>
 
 ---
 
-<br/>
 
 ~~~python
 # Import modules that would be used later.
@@ -79,7 +72,7 @@ from learn2learn.vision.transforms import RandomClassRotation
 from collections import defaultdict
 ~~~
 
-# Section 2: Overview of pipeline for generating tasks
+## Overview of pipeline for generating tasks
 
 Given any input dataset, `learn2learn` makes it easy for generating custom tasks depending on the user's usecase. A high-level overall pipeline is shown in the diagram below:
 
@@ -87,7 +80,7 @@ The dataset consists of 100 different classes, having 5 samples per class. The o
 
 
 <p style="text-align:center;">
-<img src="l2l-task-transform.png" style="width:600; vertical-align: middle;"/>
+<img src="../l2l-task-transform.png" style="width:600; vertical-align: middle;"/>
     <div class="caption">
     Pipeline for generating tasks in learn2learn.
     </div>
@@ -133,7 +126,7 @@ And that's it! You have now generated one task randomly sampled from the omniglo
 
 For the rest of the tutorial, we will inspect each of the modules present in the above code, and discuss a few general strategies that can be used while generating tasks efficiently.
 
-# Section 3: MetaDataset - A wrapper for fast indexing of samples.
+## MetaDataset - A wrapper for fast indexing of samples.
 
 At a high level, `MetaDataset` is a wrapper that enables fast indexing of samples of a given class in a dataset. The motivation behind building is to decrease the $\mathcal{O}(n)$ time to $\mathcal{O}(1)$ everytime we iterate over a dataset to generate tasks. Naturally, the time saved increases as the dataset size keeps on increasing. 
 
@@ -161,21 +154,17 @@ for i in range(len(dataset)): # iterate over all samples
     indices_to_labels[i] = label # assign label to the given index
 ~~~
 
-<br/>
 
 ---
 
-<br/>
 
 > Any one of the two dictionaries can also be optionally passed as an argument upon instantiation, and the other dictionary is built using this dictionary  (See Line [81](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/meta_dataset.pyx#L81) - Line [90](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/meta_dataset.pyx#L90) on GitHub.)
 
-<br/>
 
 ---
 
-<br/>
 
-### Bookkeeping
+#### Bookkeeping
 
 `learn2learn` also provides another utility in the form of an attribute `_bookkeeping_path`. If the input dataset has the given attribute, then the built attributes *(namely, the two dictionaries, and list of labels)* will be cached on disk for latter use. It is recommended to use this utility if:
 
@@ -217,7 +206,7 @@ print(indices_to_labels)
 
 So far, we understood the motivation for using `MetaDataset`. In the next sections, we will discuss exactly how the dictionaries generated using `MetaDataset` are used for creating a task.
 
-## UnionMetaDataset - A wrapper for multiple datasets
+### UnionMetaDataset - A wrapper for multiple datasets
 
 `UnionMetaDataset` is an extension of `MetaDataset`, and it is used to merge multiple datasets into one. This is useful when you want to sample heterogenous tasks - tasks in a metabatch being from different distributions.
 
@@ -267,7 +256,7 @@ get_item(62000, datasets, union)[1] # Returns modified label
 
 > (out): 1670
 
-## FilteredMetaDataset - Filter out unwanted labels
+### FilteredMetaDataset - Filter out unwanted labels
 
 `FilteredMetaDataset` is a wrapper that takes in a `MetaDataset` and filters it to only include a subset of the desired labels.
 
@@ -281,9 +270,9 @@ print('Original Labels:', len(toy_omniglot.labels))
 print('Filtered Labels:', len(filtered.labels))
 ~~~
 
-# Section 4: TaskDataset - Core module
+## TaskDataset - Core module
 
-### Introduction
+#### Introduction
 
 This is one of the core module of `learn2learn` that is used to generate a task from a given input dataset. It takes `dataset`, and list of `task transformations` as arguments. The task transformation basically define the kind of tasks that will be generated from the dataset. (For example, `KShots` transform limits the number of samples per class in a task to `K` samples per class.) 
 
@@ -291,7 +280,7 @@ This is one of the core module of `learn2learn` that is used to generate a task 
 
 Another argument that `TaskDataset` takes as input is `num_tasks` *(an integer value)*. The value is set depending on how many tasks the user wants to generate. By default, it is kept as `-1`, meaning infinite number of tasks will be generated, and a new task is generated on sampling. In the former case, the descriptions of the task will be cached in a dictionary such that if a given task is called again, the description can be loaded instantly rather than generating it once again.
 
-### What is a task description?
+#### What is a task description?
 
 A `task_description` is a list of `DataDescription` objects with two attributes: `index`, and `transforms`. `Index` corresponds to the index of a sample in the dataset, and `transforms` is a list of transformations that will be applied to the sample.
 
@@ -309,9 +298,9 @@ for transform in transforms:
 # And rest of the task transforms do other specicial transformations on the samples without changing the number of samples present in the description 
 ~~~
 
-### How is a task generated?
+#### How is a task generated?
 
-#### **STEP 1**
+**STEP 1**
 
 An index between `[0, num_tasks)` is randomly generated.\
 (If `num_tasks = -1`, then index is always 0.)
@@ -326,7 +315,7 @@ def sample(num_tasks):
 sample(20000)
 ~~~
 
-#### **STEP 2**
+**STEP 2**
 
 There are two possible methods for generating `task_description`:
 
@@ -364,7 +353,7 @@ def sample_task_description(self):
     return description # A description modified by all the transforms present in the list.
 ~~~
 
-#### **STEP 3**
+**STEP 3**
 
 Once a `task_description` is retrieved/generated, task is generated by applying the list of transformations present in each of the `DataDescription` objects in the task description list. 
 
@@ -391,7 +380,7 @@ def get_task(self, task_description):
 
 We will be discussing more about the `data_description.transforms` in the next section, after which there will be more clarity on exactly how the above snippet modifies the data.
 
-### A few general tips
+#### A few general tips
 
 1. If you have not wrapped the dataset with `MetaDataset` or its variants, the function will automatically instantiate `MetaDataset` wrapper.
 
@@ -420,7 +409,7 @@ class DataDescription:
         self.transforms = []
 ~~~
 
-# Section 5: Task Tranforms - Modifying the input dataset
+## Task Tranforms - Modifying the input dataset
 
 Task transforms are a set of transformations that decide on what kind of a task is generated at the end. We will quickly go over some of the transforms defined in `learn2learn`, and examine how they are used.
 
@@ -428,21 +417,21 @@ To reiterate, a DataDescripton is a class that has two attributes: index, and tr
 
 > Only `LoadData` and `RemapLabels` add transforms in the list of transform attribute in `DataDescription` object.
 
-### High-Level Interface
+#### High-Level Interface
 
 Each of the task transform classes is inherited from `TaskTranform` class. All of them have a common skeleton in the form of three methods namely: `__init__()`, `__call__()` and `new_task()`.
 
 We will now discuss what each of these methods do in general.
 
-#### `__init__()` Method
+**`__init__()` Method**
 
 Initializes the newly created object, in the transform, while also inheriting some arguments such as the dataset from the parent class. Objects / variables that needed to be instantiated only again are defined here.
 
-#### `__call__()` Method
+**`__call__()` Method**
 
 It's a callable method, and is used as a function to write the `task_transform` specific functionality. Objects / variables that keep on changing are defined here.
 
-#### `new_task()` method
+**`new_task()` Method**
 
 If the `task_description` is empty (that is, `None`), then this method is called. This method loads all the samples present in the dataset to the `task_description`. For instance, check the code below. It loads all the samples present in the dataset to the `task_description` 
 
@@ -455,13 +444,13 @@ def new_task(self):
     return task_description
 ~~~
 
-### A) FusedNWaysKShots
+#### A) FusedNWaysKShots
 
 Efficient implementation of `KShots`, `NWays`, and `FilterLabels` transforms. We will be discussing each of the individual transforms in the subsequent sections. 
 
 If you are planning to make use of more than 1 or these transforms, it is recommended to make use of `FusedNWaysKshots` transform instead of using each of them individually. 
 
-### B) NWays
+#### B) NWays
 
 Keeps samples from `N` random labels present in the task description. `NWays` iterate over the current task description to generate a new description as follows:
 
@@ -506,7 +495,7 @@ def n_samples():
     return result # return new task description
 ~~~
 
-### C) KShots
+#### C) KShots
 
 It samples `K` samples per label from all the labels present in the `task_desription`. Similar to `NWays`, `KShots` iterate over the samples present in the current `task_description` to generate a new one:
 
@@ -542,7 +531,7 @@ len(list(itertools.chain(*[sampler(dds, k=2) for dds in class_to_data.values()])
 
 > (out): 3246
 
-### D) LoadData
+#### D) LoadData
 
 Loads a sample from the dataset given its index. Does so by appending a transform `lambda x: self.dataset[x]` to `transforms` attribute present in DataDescription for each sample.
 
@@ -552,21 +541,17 @@ for data_description in task_description:
     data_description.transforms.append(lambda x: dataset[x])
 ~~~
 
-<br/>
 
 ---
 
-<br/>
 
 > The above three task transforms are the main transforms that are usually used when generating few-shot learning tasks. These transforms can be used in any other.
 
-<br/>
 
 ---
 
-<br/>
 
-### E) FilterLabels
+#### E) FilterLabels
 
 It's a simple transform that removes any unwanted labels from the `task_description`. In addition to the dataset, it takes a list of labels that need to be included as an argument.
 
@@ -594,7 +579,7 @@ print(result)
 print(len(result)) # 20 samples for 5 classes each -> 100 samples
 ~~~
 
-### F) ConsecutiveLabels
+#### F) ConsecutiveLabels
 
 The transform re-orders the samples present in the `task_description` according to the label order consecutively. If you are using `RemapLabels` transform and keeping `shuffle=True`, it is recommended to keep `ConsecutiveLabels` tranform after `RemapLabels`, otherwise, while they will be homogeneously clustered, the ordering would be random. If you are using `ConsecutiveLabels` transform before `RemapLabels`, and want ordered set of labels, then keep `shuffle=False`.
 
@@ -623,7 +608,7 @@ print([p[1] for p in pairs]) # prints label (ordered list)
 > (out): [271, 702, 756, 319, 948, 840, 843, 741, 89, 413]
 > [13, 33, 34, 46, 56, 57, 62, 70, 76, 92]
 
-### G) RemapLabels
+#### G) RemapLabels
 
 The transform maps the labels of input to `0, 1, ..., N` (given `N` unique set of labels). 
 
@@ -661,7 +646,7 @@ Traceback (most recent call last):
 TypeError: 'int' object is not iterable
 ~~~
 
-# Section 6 : Conclusion
+## Conclusion
 
 Thus, we studied how `learn2learn` simplifies the process of generating few-shot learning tasks. For more details, have a look at:
 

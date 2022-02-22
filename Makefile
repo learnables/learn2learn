@@ -43,15 +43,19 @@ alltests:
 	make tests >>alltests.txt 2>&1
 	make notravis-tests >>alltests.txt 2>&1
 
-docs:
-	rm -f docs/mkdocs.yml
+predocs:
 	#python scripts/compile_paper_list.py
-	cd docs && pydocmd build && pydocmd serve
+	cp ./README.md docs/index.md
+	cp ./CHANGELOG.md docs/changelog.md
+	cp ./examples/vision/README.md docs/examples/vision.md
+	cp ./examples/rl/README.md docs/examples/rl.md
+	cp ./examples/optimization/README.md docs/examples/optim.md
 
-docs-deploy:
-	rm -f docs/mkdocs.yml
-	#python scripts/compile_paper_list.py
-	cd docs && pydocmd gh-deploy
+docs: predocs
+	mkdocs serve
+
+docs-deploy: predocs
+	mkdocs gh-deploy
 
 # https://dev.to/neshaz/a-tutorial-for-tagging-releases-in-git-147e
 release:
