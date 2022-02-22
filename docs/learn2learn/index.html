@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
     
     
       
@@ -66,6 +66,8 @@
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
@@ -127,7 +129,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -212,7 +214,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -297,6 +299,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -356,29 +370,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#clone_module" class="md-nav__link">
-    clone_module
+  <a href="#learn2learn.utils.clone_module" class="md-nav__link">
+    clone_module()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#detach_module" class="md-nav__link">
-    detach_module
+  <a href="#learn2learn.utils.detach_module" class="md-nav__link">
+    detach_module()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#update_module" class="md-nav__link">
-    update_module
+  <a href="#learn2learn.utils.update_module" class="md-nav__link">
+    update_module()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#magic_box" class="md-nav__link">
-    magic_box
+  <a href="#learn2learn.utils.magic_box" class="md-nav__link">
+    magic_box()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learn.utils.clone_distribution" class="md-nav__link">
+    clone_distribution()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learn.utils.detach_distribution" class="md-nav__link">
+    detach_distribution()
   </a>
   
 </li>
@@ -496,7 +524,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+    <a href="../../examples/vision/" title="Computer Vision" class="md-nav__link">
       Computer Vision
     </a>
   </li>
@@ -508,7 +536,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+    <a href="../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
     </a>
   </li>
@@ -520,7 +548,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+    <a href="../../examples/optim/" title="Optimization" class="md-nav__link">
       Optimization
     </a>
   </li>
@@ -588,29 +616,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#clone_module" class="md-nav__link">
-    clone_module
+  <a href="#learn2learn.utils.clone_module" class="md-nav__link">
+    clone_module()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#detach_module" class="md-nav__link">
-    detach_module
+  <a href="#learn2learn.utils.detach_module" class="md-nav__link">
+    detach_module()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#update_module" class="md-nav__link">
-    update_module
+  <a href="#learn2learn.utils.update_module" class="md-nav__link">
+    update_module()
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#magic_box" class="md-nav__link">
-    magic_box
+  <a href="#learn2learn.utils.magic_box" class="md-nav__link">
+    magic_box()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learn.utils.clone_distribution" class="md-nav__link">
+    clone_distribution()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learn.utils.detach_distribution" class="md-nav__link">
+    detach_distribution()
   </a>
   
 </li>
@@ -635,12 +677,21 @@
                 
                 
                 <h1 id="learn2learn">learn2learn<a class="headerlink" href="#learn2learn" title="Permanent link">&para;</a></h1>
-<h2 id="clone_module">clone_module<a class="headerlink" href="#clone_module" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">clone_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.utils.clone_module">
+<code class="codehilite language-python"><span class="n">clone_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.utils.clone_module" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Creates a copy of a module, whose parameters/buffers/submodules
 are created using PyTorch's torch.clone().</p>
@@ -666,38 +717,67 @@ parameters.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="detach_module">detach_module<a class="headerlink" href="#detach_module" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">detach_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+    </div>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.utils.detach_module">
+<code class="codehilite language-python"><span class="n">detach_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">keep_requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.utils.detach_module" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Detaches all parameters/buffers of a previously cloned module from its computational graph.</p>
 <p>Note: detach works in-place, so it does not return a copy.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>module</strong> (Module) - Module to be detached.</li>
+<li><strong>keep_requires_grad</strong> (bool) - By default, all parameters of the detached module will have
+<code>requires_grad</code> set to <code>False</code>. If this flag is set to <code>True</code>, then the <code>requires_grad</code> field
+will be the same as the pre-detached module.</li>
 </ul>
 <p><strong>Example</strong></p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">clone_module</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
-<span class="n">detach_module</span><span class="p">(</span><span class="n">clone</span><span class="p">)</span>
+<span class="n">detach_module</span><span class="p">(</span><span class="n">clone</span><span class="p">,</span> <span class="n">keep_requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients are back-propagate on clone, not net.</span>
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="update_module">update_module<a class="headerlink" href="#update_module" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">update_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+    </div>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.utils.update_module">
+<code class="codehilite language-python"><span class="n">update_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.utils.update_module" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Updates the parameters of a module in-place, in a way that preserves differentiability.</p>
 <p>The parameters of the module are swapped with their update values, according to:
@@ -730,12 +810,25 @@ where <script type="math/tex">p</script> is the parameter, and <script type="mat
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="magic_box">magic_box<a class="headerlink" href="#magic_box" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">magic_box</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+    </div>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.utils.magic_box">
+<code class="codehilite language-python"><span class="n">magic_box</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.utils.magic_box" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The magic box operator, which evaluates to 1 but whose gradient is <script type="math/tex">dx</script>:</p>
 <p>
@@ -762,6 +855,48 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
 <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.utils.clone_distribution">
+<code class="codehilite language-python"><span class="n">clone_distribution</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.utils.clone_distribution" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.utils.detach_distribution">
+<code class="codehilite language-python"><span class="n">detach_distribution</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.utils.detach_distribution" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -783,7 +918,7 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -792,7 +927,7 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Feature Reuse with ANIL
+                Demystifying Task-Transforms
               </span>
             </div>
           </a>
@@ -833,7 +968,7 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
     
       <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
     
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
     
   </div>
 
@@ -845,7 +980,7 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.2.3",url:{base:"../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       

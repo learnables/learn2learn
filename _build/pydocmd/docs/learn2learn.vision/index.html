@@ -1,0 +1,1508 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="http://learn2learn.net/_build/pydocmd/docs/learn2learn.vision/">
+      
+      
+        <meta name="author" content="Séb Arnold">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../../assets/img/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>learn2learn.vision - learn2learn</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700%7CUbuntu+Mono&display=fallback">
+        <style>body,input{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../../assets/css/l2l_material.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-68693545-3", "seba-1511.github.com")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#learn2learnvision" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../../../assets/img/learn2learn_white.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              learn2learn
+            </span>
+            <span class="md-header-nav__topic">
+              
+                learn2learn.vision
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../../../assets/img/learn2learn_white.png" width="48" height="48">
+      
+    </a>
+    learn2learn
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../tutorials/getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-nav__link">
+      Feature Reuse with ANIL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn/" title="learn2learn" class="md-nav__link">
+      learn2learn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn.data/" title="learn2learn.data" class="md-nav__link">
+      learn2learn.data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
+      learn2learn.algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn.optim/" title="learn2learn.optim" class="md-nav__link">
+      learn2learn.optim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn.nn/" title="learn2learn.nn" class="md-nav__link">
+      learn2learn.nn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn.vision/" title="learn2learn.vision" class="md-nav__link">
+      learn2learn.vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../docs/learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
+      learn2learn.gym
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../examples/vision/" title="Computer Vision" class="md-nav__link">
+      Computer Vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
+      Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../../examples/optim/" title="Optimization" class="md-nav__link">
+      Optimization
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../../community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/learnables/learn2learn/" title="GitHub" class="md-nav__link">
+      GitHub
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learnvisionmodels" class="md-nav__link">
+    learn2learn.vision.models
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#omniglotfc" class="md-nav__link">
+    OmniglotFC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#omniglotcnn" class="md-nav__link">
+    OmniglotCNN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn4" class="md-nav__link">
+    CNN4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resnet12" class="md-nav__link">
+    ResNet12
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrn28" class="md-nav__link">
+    WRN28
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_pretrained_backbone" class="md-nav__link">
+    get_pretrained_backbone
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learnvisiondatasets" class="md-nav__link">
+    learn2learn.vision.datasets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fullomniglot" class="md-nav__link">
+    FullOmniglot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miniimagenet" class="md-nav__link">
+    MiniImagenet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tieredimagenet" class="md-nav__link">
+    TieredImagenet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fc100" class="md-nav__link">
+    FC100
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cifarfs" class="md-nav__link">
+    CIFARFS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vggflower102" class="md-nav__link">
+    VGGFlower102
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fgvcaircraft" class="md-nav__link">
+    FGVCAircraft
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fgvcfungi" class="md-nav__link">
+    FGVCFungi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#describabletextures" class="md-nav__link">
+    DescribableTextures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cubirds200" class="md-nav__link">
+    CUBirds200
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quickdraw" class="md-nav__link">
+    Quickdraw
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learnvisiontransforms" class="md-nav__link">
+    learn2learn.vision.transforms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#randomclassrotation" class="md-nav__link">
+    RandomClassRotation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learnvisionbenchmarks" class="md-nav__link">
+    learn2learn.vision.benchmarks
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list_tasksets" class="md-nav__link">
+    list_tasksets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_tasksets" class="md-nav__link">
+    get_tasksets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/learnables/learn2learn/edit/master/docs/_build/pydocmd/docs/learn2learn.vision.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="learn2learnvision">learn2learn.vision<a class="headerlink" href="#learn2learnvision" title="Permanent link">&para;</a></h1>
+<p>Datasets, models, and other utilities related to computer vision.</p>
+<h2 id="learn2learnvisionmodels">learn2learn.vision.models<a class="headerlink" href="#learn2learnvisionmodels" title="Permanent link">&para;</a></h2>
+<p><strong>Description</strong></p>
+<p>A set of commonly used models for meta-learning vision tasks.
+For simplicity, all models' <code>forward</code> conform to the following API:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="omniglotfc">OmniglotFC<a class="headerlink" href="#omniglotfc" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The fully-connected network used for Omniglot experiments, as described in Santoro et al, 2016.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Santoro et al. 2016. “Meta-Learning with Memory-Augmented Neural Networks.” ICML.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>input_size</strong> (int) - The dimensionality of the input.</li>
+<li><strong>output_size</strong> (int) - The dimensionality of the output.</li>
+<li><strong>sizes</strong> (list, <em>optional</em>, default=None) - A list of hidden layer sizes.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+                 <span class="n">output_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">])</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="omniglotcnn">OmniglotCNN<a class="headerlink" href="#omniglotcnn" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">Source</a></p>
+<p><strong>Description</strong></p>
+<p>The convolutional network commonly used for Omniglot, as described by Finn et al, 2017.</p>
+<p>This network assumes inputs of shapes (1, 28, 28).</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. “Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.” ICML.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the network's output.</li>
+<li><strong>hidden_size</strong> (int, <em>optional</em>, default=64) - The dimensionality of the hidden representation.</li>
+<li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="cnn4">CNN4<a class="headerlink" href="#cnn4" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
+     <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+     <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+     <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+     <span class="n">max_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+     <span class="n">embedding_size</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.</p>
+<p>This network assumes inputs of shapes (3, 84, 84).</p>
+<p>Instantiate <code>CNN4Backbone</code> if you only need the feature extractor.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the network's output.</li>
+<li><strong>hidden_size</strong> (int, <em>optional</em>, default=32) - The dimensionality of the hidden representation.</li>
+<li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="resnet12">ResNet12<a class="headerlink" href="#resnet12" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
+         <span class="n">hidden_size</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span>
+         <span class="n">avg_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">wider</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+         <span class="n">embedding_dropout</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+         <span class="n">dropblock_dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+         <span class="n">dropblock_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+         <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/resnet12.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The 12-layer residual network from Mishra et al, 2017.</p>
+<p>The code is adapted from <a href="https://github.com/kjunelee/MetaOptNet/">Lee et al, 2019</a>
+who share it under the Apache 2 license.</p>
+<p>Instantiate <code>ResNet12Backbone</code> if you only need the feature extractor.</p>
+<p>List of changes:</p>
+<ul>
+<li>Rename ResNet to ResNet12.</li>
+<li>Small API modifications.</li>
+<li>Fix code style to be compatible with PEP8.</li>
+<li>Support multiple devices in DropBlock</li>
+</ul>
+<p><strong>References</strong></p>
+<ol>
+<li>Mishra et al. 2017. “A Simple Neural Attentive Meta-Learner.” ICLR 18.</li>
+<li>Lee et al. 2019. “Meta-Learning with Differentiable Convex Optimization.” CVPR 19.</li>
+<li>Lee et al's code: <a href="https://github.com/kjunelee/MetaOptNet/">https://github.com/kjunelee/MetaOptNet/</a></li>
+<li>Oreshkin et al. 2018. “TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning.” NeurIPS 18.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the output (eg, number of classes).</li>
+<li><strong>hidden_size</strong> (list, <em>optional</em>, default=640) - Size of the embedding once features are extracted.
+    (640 is for mini-ImageNet; used for the classifier layer)</li>
+<li><strong>avg_pool</strong> (bool, <em>optional</em>, default=True) - Set to False for the 16k-dim embeddings of Lee et al, 2019.</li>
+<li><strong>wider</strong> (bool, <em>optional</em>, default=True) - True uses (64, 160, 320, 640) filters akin to Lee et al, 2019.
+    False uses (64, 128, 256, 512) filters, akin to Oreshkin et al, 2018.</li>
+<li><strong>embedding_dropout</strong> (float, <em>optional</em>, default=0.0) - Dropout rate on the flattened embedding layer.</li>
+<li><strong>dropblock_dropout</strong> (float, <em>optional</em>, default=0.1) - Dropout rate for the residual layers.</li>
+<li><strong>dropblock_size</strong> (int, <em>optional</em>, default=5) - Size of drop blocks.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="wrn28">WRN28<a class="headerlink" href="#wrn28" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">WRN28</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/wrn28.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The 28-layer 10-depth wide residual network from Dhillon et al, 2020.</p>
+<p>The code is adapted from <a href="https://github.com/Sha-Lab/FEAT">Ye et al, 2020</a>
+who share it under the MIT license.</p>
+<p>Instantiate <code>WRN28Backbone</code> if you only need the feature extractor.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Dhillon et al. 2020. “A Baseline for Few-Shot Image Classification.” ICLR 20.</li>
+<li>Ye et al. 2020. “Few-Shot Learning via Embedding Adaptation with Set-to-Set Functions.” CVPR 20.</li>
+<li>Ye et al's code: <a href="https://github.com/Sha-Lab/FEAT">https://github.com/Sha-Lab/FEAT</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>output_size</strong> (int) - The dimensionality of the output.</li>
+<li><strong>hidden_size</strong> (list, <em>optional</em>, default=640) - Size of the embedding once features are extracted.
+    (640 is for mini-ImageNet; used for the classifier layer)</li>
+<li><strong>dropout</strong> (float, <em>optional</em>, default=0.0) - Dropout rate.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">WRN28</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="get_pretrained_backbone">get_pretrained_backbone<a class="headerlink" href="#get_pretrained_backbone" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_pretrained_backbone</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+                        <span class="n">dataset</span><span class="p">,</span>
+                        <span class="n">spec</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
+                        <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">,</span>
+                        <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/__init__.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Returns pretrained backbone for a benchmark dataset.</p>
+<p>The returned object is a torch.nn.Module instance.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>model</strong> (str) - The name of the model (<code>cnn4</code>, <code>resnet12</code>, or <code>wrn28</code>)</li>
+<li><strong>dataset</strong> (str) - The name of the benchmark dataset (<code>mini-imagenet</code> or <code>tiered-imagenet</code>).</li>
+<li><strong>spec</strong> (str, <em>optional</em>, default='default') - Which weight specification to load (<code>default</code>).</li>
+<li><strong>root</strong> (str, <em>optional</em>, default='~/data') - Location of the pretrained weights.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Download the pretrained weights if not available?</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">backbone</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">get_pretrained_backbone</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;resnet12&#39;</span><span class="p">,</span>
+    <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">,</span>
+    <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/.data&#39;</span><span class="p">,</span>
+    <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="learn2learnvisiondatasets">learn2learn.vision.datasets<a class="headerlink" href="#learn2learnvisiondatasets" title="Permanent link">&para;</a></h2>
+<p><strong>Description</strong></p>
+<p>Some datasets commonly used in meta-learning vision tasks.</p>
+<h3 id="fullomniglot">FullOmniglot<a class="headerlink" href="#fullomniglot" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FullOmniglot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This class provides an interface to the Omniglot dataset.</p>
+<p>The Omniglot dataset was introduced by Lake et al., 2015.
+Omniglot consists of 1623 character classes from 50 different alphabets, each containing 20 samples.
+While the original dataset is separated in background and evaluation sets,
+this class concatenates both sets and leaves to the user the choice of classes splitting
+as was done in Ravi and Larochelle, 2017.
+The background and evaluation splits are available in the <code>torchvision</code> package.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Lake et al. 2015. “Human-Level Concept Learning through Probabilistic Program Induction.” Science.</li>
+<li>Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span>
+                                            <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+                                                <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">LANCZOS</span><span class="p">),</span>
+                                                <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                                                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span>
+                                            <span class="p">]),</span>
+                                            <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">omniglot</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="miniimagenet">MiniImagenet<a class="headerlink" href="#miniimagenet" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MiniImagenet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The <em>mini</em>-ImageNet dataset was originally introduced by Vinyals et al., 2016.</p>
+<p>It consists of 60'000 colour images of sizes 84x84 pixels.
+The dataset is divided in 3 splits of 64 training, 16 validation, and 20 testing classes each containing 600 examples.
+The classes are sampled from the ImageNet dataset, and we use the splits from Ravi &amp; Larochelle, 2017.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Vinyals et al. 2016. “Matching Networks for One Shot Learning.” NeurIPS.</li>
+<li>Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MiniImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskGenerator</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="n">ways</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="tieredimagenet">TieredImagenet<a class="headerlink" href="#tieredimagenet" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TieredImagenet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/tiered_imagenet.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The <em>tiered</em>-ImageNet dataset was originally introduced by Ren et al, 2018 and we download the data directly from the link provided in their repository.</p>
+<p>Like <em>mini</em>-ImageNet, <em>tiered</em>-ImageNet builds on top of ILSVRC-12, but consists of 608 classes (779,165 images) instead of 100.
+The train-validation-test split is made such that classes from similar categories are in the same splits.
+There are 34 categories each containing between 10 and 30 classes.
+Of these categories, 20 (351 classes; 448,695 images) are used for training,
+6 (97 classes; 124,261 images) for validation, and 8 (160 class; 206,209 images) for testing.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Ren et al, 2018. "Meta-Learning for Semi-Supervised Few-Shot Classification." ICLR '18.</li>
+<li>Ren Mengye. 2018. "few-shot-ssl-public". <a href="https://github.com/renmengye/few-shot-ssl-public">https://github.com/renmengye/few-shot-ssl-public</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">TieredImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="fc100">FC100<a class="headerlink" href="#fc100" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FC100</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The FC100 dataset was originally introduced by Oreshkin et al., 2018.</p>
+<p>It is based on CIFAR100, but unlike CIFAR-FS training, validation, and testing classes are
+split so as to minimize the information overlap between splits.
+The 100 classes are grouped into 20 superclasses of which 12 (60 classes) are used for training,
+4 (20 classes) for validation, and 4 (20 classes) for testing.
+Each class contains 600 images.
+The specific splits are provided in the Supplementary Material of the paper.
+Our data is downloaded from the link provided by [2].</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Oreshkin et al. 2018. "TADAM: Task Dependent Adaptive Metric for Improved Few-Shot Learning." NeurIPS.</li>
+<li>Kwoonjoon Lee. 2019. "MetaOptNet." <a href="https://github.com/kjunelee/MetaOptNet">https://github.com/kjunelee/MetaOptNet</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="cifarfs">CIFARFS<a class="headerlink" href="#cifarfs" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CIFARFS</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cifarfs.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The CIFAR Few-Shot dataset as originally introduced by Bertinetto et al., 2019.</p>
+<p>It consists of 60'000 colour images of sizes 32x32 pixels.
+The dataset is divided in 3 splits of 64 training, 16 validation, and 20 testing classes each containing 600 examples.
+The classes are sampled from the CIFAR-100 dataset, and we use the splits from Bertinetto et al., 2019.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Bertinetto et al. 2019. "Meta-learning with differentiable closed-form solvers". ICLR.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskGenerator</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="n">ways</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="vggflower102">VGGFlower102<a class="headerlink" href="#vggflower102" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">VGGFlower102</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/vgg_flowers.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The VGG Flowers dataset was originally introduced by Nilsback and Zisserman, 2006 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 102 classes of flowers, with each class consisting of 40 to 258 images.
+We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Nilsback, M. and A. Zisserman. 2006. "A Visual Vocabulary for Flower Classification." CVPR '06.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/data/flowers/">https://www.robots.ox.ac.uk/~vgg/data/flowers/</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">VGGFlower102</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="fgvcaircraft">FGVCAircraft<a class="headerlink" href="#fgvcaircraft" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCAircraft</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_aircraft.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The FGVC Aircraft dataset was originally introduced by Maji et al., 2013 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 10,200 images of aircraft (102 classes, each 100 images).
+We provided the raw (un-processed) images and follow the train-validation-test splits of Triantafillou et al.
+TODO: Triantafillou et al. recommend cropping the images using the bounding box information,
+to remove copyright information and ensure that only one plane is visible in the image.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Maji et al. 2013. "Fine-Grained Visual Classification of Aircraft." arXiv [cs.CV].</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/">http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCAircraft</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="fgvcfungi">FGVCFungi<a class="headerlink" href="#fgvcfungi" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCFungi</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_fungi.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The FGVC Fungi dataset was originally introduced in the 5th Workshop on Fine-Grained Visual Categorization (FGVC)
+and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 1,394 classes and 89,760 images of fungi.
+We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
+<p><em>Important</em>
+You must agree to the original Terms of Use to use this dataset.
+More information here: <a href="https://github.com/visipedia/fgvcx_fungi_comp">https://github.com/visipedia/fgvcx_fungi_comp</a></p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="https://sites.google.com/view/fgvc5/home">https://sites.google.com/view/fgvc5/home</a></li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="https://github.com/visipedia/fgvcx_fungi_comp">https://github.com/visipedia/fgvcx_fungi_comp</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="describabletextures">DescribableTextures<a class="headerlink" href="#describabletextures" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DescribableTextures</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/describable_textures.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The VGG Describable Textures dataset was originally introduced by Cimpoi et al., 2014
+and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 5640 images organized according to 47 texture classes.
+Each class consists of 120 images between 300x300 and 640x640 pixels.
+Each image contains at least 90% of the texture.
+We follow the train-validation-test splits of Triantafillou et al., 2020.
+(33 classes for train, 7 for validation and test.)</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Cimpoi et al. 2014. "Describing Textures in the Wild." CVPR'14.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/data/dtd/">https://www.robots.ox.ac.uk/~vgg/data/dtd/</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">DescribableTextures</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="cubirds200">CUBirds200<a class="headerlink" href="#cubirds200" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CUBirds200</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cu_birds200.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The Caltech-UCSD Birds dataset was originally introduced by Wellinder et al., 2010 and then re-purposed for few-shot learning in Triantafillou et al., 2020.</p>
+<p>The dataset consists of 6,033 bird images classified into 200 bird species.
+The train set consists of 140 classes, while the validation and test sets each contain 30.
+We provide the raw (unprocessed) images, and follow the train-validation-test splits of Triantafillou et al.</p>
+<p>This dataset includes 43 images that overlap with the ILSVRC-2012 (ImageNet) dataset.
+They are omitted by default, but can be included by setting the <code>include_imagenet_duplicates</code> flag to <code>True</code>.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Welinder et al. 2010. "Caltech-UCSD Birds 200." Caltech Technical Report.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+<li><a href="http://www.vision.caltech.edu/visipedia/CUB-200.html">http://www.vision.caltech.edu/visipedia/CUB-200.html</a></li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+<li><strong>include_imagenet_duplicates</strong> (bool, <em>optional</em>, default=False) - Whether to include images that are also present in the ImageNet 2012 dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CUBirds200</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="quickdraw">Quickdraw<a class="headerlink" href="#quickdraw" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Quickdraw</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/quickdraw.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The Quickdraw dataset was originally introduced by Google Creative Lab in 2017 and then re-purposed for few-shot learning in Triantafillou et al., 2020.
+See Ha and Heck, 2017 for more information.</p>
+<p>The dataset consists of roughly 50M drawing images of 345 objects.
+Each image was hand-drawn by human annotators and is represented as black-and-white 28x28 pixel array.
+We follow the train-validation-test splits of Triantafillou et al., 2020.
+(241 classes for train, 52 for validation, and 52 for test.)</p>
+<p><strong>References</strong></p>
+<ol>
+<li><a href="https://github.com/googlecreativelab/quickdraw-dataset">https://github.com/googlecreativelab/quickdraw-dataset</a></li>
+<li>Ha, David, and Douglas Eck. 2017. "A Neural Representation of Sketch Drawings." ArXiv '17.</li>
+<li>Triantafillou et al. 2020. "Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples." ICLR '20.</li>
+</ol>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>root</strong> (str) - Path to download the data.</li>
+<li><strong>mode</strong> (str, <em>optional</em>, default='train') - Which split to use.
+    Must be 'train', 'validation', or 'test'.</li>
+<li><strong>transform</strong> (Transform, <em>optional</em>, default=None) - Input pre-processing.</li>
+<li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
+<li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="learn2learnvisiontransforms">learn2learn.vision.transforms<a class="headerlink" href="#learn2learnvisiontransforms" title="Permanent link">&para;</a></h2>
+<p><strong>Description</strong></p>
+<p>A set of transformations commonly used in meta-learning vision tasks.</p>
+<h3 id="randomclassrotation">RandomClassRotation<a class="headerlink" href="#randomclassrotation" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RandomClassRotation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">degrees</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Samples rotations from a given list uniformly at random, and applies it to
+all images from a given class.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>degrees</strong> (list) - The rotations to be sampled.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transform</span> <span class="o">=</span> <span class="n">RandomClassRotation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">])</span>
+</code></pre></div>
+</td></tr></table>
+<h2 id="learn2learnvisionbenchmarks">learn2learn.vision.benchmarks<a class="headerlink" href="#learn2learnvisionbenchmarks" title="Permanent link">&para;</a></h2>
+<p>The benchmark modules provides a convenient interface to standardized benchmarks in the literature.
+It provides train/validation/test TaskDatasets and TaskTransforms for pre-defined datasets.</p>
+<p>This utility is useful for researchers to compare new algorithms against existing benchmarks.
+For a more fine-grained control over tasks and data, we recommend directly using <code>l2l.data.TaskDataset</code> and <code>l2l.data.TaskTransforms</code>.</p>
+<h3 id="list_tasksets">list_tasksets<a class="headerlink" href="#list_tasksets" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">list_tasksets</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Returns a list of all available benchmarks.</p>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">list_tasksets</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<h3 id="get_tasksets">get_tasksets<a class="headerlink" href="#get_tasksets" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span>
+             <span class="n">train_ways</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+             <span class="n">train_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+             <span class="n">test_ways</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+             <span class="n">test_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+             <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+             <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">,</span>
+             <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Returns the tasksets for a particular benchmark, using literature standard data and task transformations.</p>
+<p>The returned object is a namedtuple with attributes <code>train</code>, <code>validation</code>, <code>test</code> which
+correspond to their respective TaskDatasets.
+See <code>examples/vision/maml_miniimagenet.py</code> for an example.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>name</strong> (str) - The name of the benchmark. Full list in <code>list_tasksets()</code>.</li>
+<li><strong>train_ways</strong> (int, <em>optional</em>, default=5) - The number of classes per train tasks.</li>
+<li><strong>train_samples</strong> (int, <em>optional</em>, default=10) - The number of samples per train tasks.</li>
+<li><strong>test_ways</strong> (int, <em>optional</em>, default=5) - The number of classes per test tasks. Also used for validation tasks.</li>
+<li><strong>test_samples</strong> (int, <em>optional</em>, default=10) - The number of samples per test tasks. Also used for validation tasks.</li>
+<li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - The number of tasks in each TaskDataset.</li>
+<li><strong>device</strong> (torch.Device, <em>optional</em>, default=None) - If not None, tasksets are loaded as Tensors on <code>device</code>.</li>
+<li><strong>root</strong> (str, <em>optional</em>, default='~/data') - Where the data is stored.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_tasks</span><span class="p">,</span> <span class="n">validation_tasks</span><span class="p">,</span> <span class="n">test_tasks</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">train_tasks</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+
+<span class="ow">or</span><span class="p">:</span>
+
+<span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.2.3",url:{base:"../../../.."}})</script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js"></script>
+      
+    
+  </body>
+</html>

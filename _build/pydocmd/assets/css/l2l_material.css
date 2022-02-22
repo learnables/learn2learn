@@ -1,0 +1,21 @@
+
+/*
+ * The theme colors are:
+ * blue: #009ce8
+ * orange: #ff5733
+ * */
+
+[data-md-color-primary="blue"] .md-header, [data-md-color-primary="blue"] .md-hero {
+    background-color: #009ce8 !important;
+    height: 2.8rem;
+    padding-top: 5px;
+}
+
+.md-sidebar__inner {
+    border-right: .05rem solid rgba(0,0,0,.07);
+}
+
+.md-nav--secondary {
+    border-left: .15rem solid #009ce8;
+    border-right: none;
+}

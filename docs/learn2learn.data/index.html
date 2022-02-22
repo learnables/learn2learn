@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
     
     
       
@@ -66,6 +66,8 @@
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
@@ -127,7 +129,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -219,7 +221,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -304,6 +306,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -375,28 +389,41 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#metadataset" class="md-nav__link">
+  <a href="#meta-datasets" class="md-nav__link">
+    Meta-Datasets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.data.meta_dataset.MetaDataset" class="md-nav__link">
     MetaDataset
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#unionmetadataset" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.data.meta_dataset.UnionMetaDataset" class="md-nav__link">
     UnionMetaDataset
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#filteredmetadataset" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.data.meta_dataset.FilteredMetaDataset" class="md-nav__link">
     FilteredMetaDataset
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#taskdataset" class="md-nav__link">
+  <a href="#learn2learn.data.task_dataset.TaskDataset" class="md-nav__link">
     TaskDataset
   </a>
   
@@ -411,49 +438,49 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#loaddata" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.LoadData" class="md-nav__link">
     LoadData
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#nways" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.NWays" class="md-nav__link">
     NWays
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#kshots" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.KShots" class="md-nav__link">
     KShots
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#filterlabels" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.FilterLabels" class="md-nav__link">
     FilterLabels
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fusednwayskshots" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.FusedNWaysKShots" class="md-nav__link">
     FusedNWaysKShots
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#remaplabels" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.RemapLabels" class="md-nav__link">
     RemapLabels
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#consecutivelabels" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.ConsecutiveLabels" class="md-nav__link">
     ConsecutiveLabels
   </a>
   
@@ -473,22 +500,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ondevicedataset" class="md-nav__link">
+  <a href="#learn2learn.data.utils.OnDeviceDataset" class="md-nav__link">
     OnDeviceDataset
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#infiniteiterator" class="md-nav__link">
+  <a href="#learn2learn.data.utils.InfiniteIterator" class="md-nav__link">
     InfiniteIterator
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#partition_task" class="md-nav__link">
-    partition_task
+  <a href="#learn2learn.data.utils.partition_task" class="md-nav__link">
+    partition_task()
   </a>
   
 </li>
@@ -599,7 +626,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+    <a href="../../examples/vision/" title="Computer Vision" class="md-nav__link">
       Computer Vision
     </a>
   </li>
@@ -611,7 +638,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+    <a href="../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
     </a>
   </li>
@@ -623,7 +650,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+    <a href="../../examples/optim/" title="Optimization" class="md-nav__link">
       Optimization
     </a>
   </li>
@@ -691,28 +718,41 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#metadataset" class="md-nav__link">
+  <a href="#meta-datasets" class="md-nav__link">
+    Meta-Datasets
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.data.meta_dataset.MetaDataset" class="md-nav__link">
     MetaDataset
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#unionmetadataset" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.data.meta_dataset.UnionMetaDataset" class="md-nav__link">
     UnionMetaDataset
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#filteredmetadataset" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.data.meta_dataset.FilteredMetaDataset" class="md-nav__link">
     FilteredMetaDataset
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#taskdataset" class="md-nav__link">
+  <a href="#learn2learn.data.task_dataset.TaskDataset" class="md-nav__link">
     TaskDataset
   </a>
   
@@ -727,49 +767,49 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#loaddata" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.LoadData" class="md-nav__link">
     LoadData
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#nways" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.NWays" class="md-nav__link">
     NWays
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#kshots" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.KShots" class="md-nav__link">
     KShots
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#filterlabels" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.FilterLabels" class="md-nav__link">
     FilterLabels
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fusednwayskshots" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.FusedNWaysKShots" class="md-nav__link">
     FusedNWaysKShots
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#remaplabels" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.RemapLabels" class="md-nav__link">
     RemapLabels
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#consecutivelabels" class="md-nav__link">
+  <a href="#learn2learn.data.transforms.ConsecutiveLabels" class="md-nav__link">
     ConsecutiveLabels
   </a>
   
@@ -789,22 +829,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ondevicedataset" class="md-nav__link">
+  <a href="#learn2learn.data.utils.OnDeviceDataset" class="md-nav__link">
     OnDeviceDataset
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#infiniteiterator" class="md-nav__link">
+  <a href="#learn2learn.data.utils.InfiniteIterator" class="md-nav__link">
     InfiniteIterator
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#partition_task" class="md-nav__link">
-    partition_task
+  <a href="#learn2learn.data.utils.partition_task" class="md-nav__link">
+    partition_task()
   </a>
   
 </li>
@@ -834,13 +874,24 @@
                 
                 
                 <h1 id="learn2learndata">learn2learn.data<a class="headerlink" href="#learn2learndata" title="Permanent link">&para;</a></h1>
-<p>A set of utilities for data &amp; tasks loading, preprocessing, and sampling.</p>
-<h2 id="metadataset">MetaDataset<a class="headerlink" href="#metadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+<h2 id="meta-datasets">Meta-Datasets<a class="headerlink" href="#meta-datasets" title="Permanent link">&para;</a></h2>
 
-<p><strong>Description</strong></p>
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.meta_dataset.MetaDataset">
+        <code>
+MetaDataset        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.meta_dataset.MetaDataset" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><strong>Description</strong></p>
 <p>Wraps a classification dataset to enable fast indexing of samples within classes.</p>
 <p>This class exposes two attributes specific to the wrapped dataset:</p>
 <ul>
@@ -865,12 +916,29 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="unionmetadataset">UnionMetaDataset<a class="headerlink" href="#unionmetadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.meta_dataset.UnionMetaDataset">
+        <code>
+UnionMetaDataset        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.meta_dataset.UnionMetaDataset" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><strong>Description</strong></p>
 <p>Takes multiple MetaDataests and constructs their union.</p>
 <p>Note: The labels of all datasets are remapped to be in consecutive order.
 (i.e. the same label in two datasets will be to two different labels in the union)</p>
@@ -897,12 +965,29 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="filteredmetadataset">FilteredMetaDataset<a class="headerlink" href="#filteredmetadataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.meta_dataset.FilteredMetaDataset">
+        <code>
+FilteredMetaDataset        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.meta_dataset.FilteredMetaDataset" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><strong>Description</strong></p>
 <p>Takes in a MetaDataset and filters it to only include a subset of its labels.</p>
 <p>Note: The labels of all datasets are <strong>not</strong> remapped.
 (i.e. the labels from the original dataset are retained)</p>
@@ -922,12 +1007,29 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="taskdataset">TaskDataset<a class="headerlink" href="#taskdataset" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.data.task_dataset.TaskDataset">
+        <code>
+TaskDataset        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.task_dataset.TaskDataset" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Creates a set of tasks from a given Dataset.</p>
 <p>In addition to the Dataset, TaskDataset accepts a list of task transformations (<code>task_transforms</code>)
@@ -966,45 +1068,61 @@ documentation of task transforms.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="learn2learndatatransforms">learn2learn.data.transforms<a class="headerlink" href="#learn2learndatatransforms" title="Permanent link">&para;</a></h2>
-<p><strong>Description</strong></p>
-<p>Collection of general task transformations.</p>
-<p>A task transformation is an object that implements the callable interface.
-(Either a function or an object that implements the <code>__call__</code> special method.)
-Each transformation is called on a task description, which consists of a list of
-<code>DataDescription</code> with attributes <code>index</code> and <code>transforms</code>, where
-<code>index</code> corresponds to the index of single data sample inthe dataset, and <code>transforms</code> is a list of transformations
-that will be applied to the sample.
-Each transformation must return a new task description.</p>
-<p>At first, the task description contains all samples from the dataset.
-A task transform takes this task description list and modifies it such that a particular task is
-created.
-For example, the <code>NWays</code> task transform filters data samples from the task description
-such that remaining ones belong to a random subset of all classes available.
-(The size of the subset is controlled via the class's <code>n</code> argument.)
-On the other hand, the <code>LoadData</code> task transform simply appends a call to load the actual
-data from the dataset to the list of transformations of each sample.</p>
-<p>To create a task from a task description, the <code>TaskDataset</code> applies each sample's list of <code>transform</code>s
-in order.
-Then, all samples are collated via the <code>TaskDataset</code>'s collate function.</p>
-<h3 id="loaddata">LoadData<a class="headerlink" href="#loaddata" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+<h2 id="learn2learndatatransforms">learn2learn.data.transforms<a class="headerlink" href="#learn2learndatatransforms" title="Permanent link">&para;</a></h2>
+<p>Transforms to help automatically generate tasks.</p>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.LoadData">
+        <code>
+LoadData        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.LoadData" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Loads a sample from the dataset given its index.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
-<h3 id="nways">NWays<a class="headerlink" href="#nways" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.NWays">
+        <code>
+NWays        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.NWays" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Keeps samples from N random labels present in the task description.</p>
 <p><strong>Arguments</strong></p>
@@ -1013,12 +1131,30 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>n</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from the task
     description's labels.</li>
 </ul>
-<h3 id="kshots">KShots<a class="headerlink" href="#kshots" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.KShots">
+        <code>
+KShots        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.KShots" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Keeps K samples for each present labels.</p>
 <p><strong>Arguments</strong></p>
@@ -1027,12 +1163,30 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>k</strong> (int, <em>optional</em>, default=1) - The number of samples per label.</li>
 <li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample with replacement.</li>
 </ul>
-<h3 id="filterlabels">FilterLabels<a class="headerlink" href="#filterlabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.FilterLabels">
+        <code>
+FilterLabels        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.FilterLabels" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Removes samples that do not belong to the given set of labels.</p>
 <p><strong>Arguments</strong></p>
@@ -1040,12 +1194,30 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 <li><strong>labels</strong> (list) - The list of labels to include.</li>
 </ul>
-<h3 id="fusednwayskshots">FusedNWaysKShots<a class="headerlink" href="#fusednwayskshots" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.FusedNWaysKShots">
+        <code>
+FusedNWaysKShots        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.FusedNWaysKShots" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Efficient implementation of FilterLabels, NWays, and KShots.</p>
 <p><strong>Arguments</strong></p>
@@ -1058,24 +1230,60 @@ Then, all samples are collated via the <code>TaskDataset</code>'s collate functi
 <li><strong>filter_labels</strong> (list, <em>optional</em>, default=None) - The list of labels to include. Defaults to
     all labels in the dataset.</li>
 </ul>
-<h3 id="remaplabels">RemapLabels<a class="headerlink" href="#remaplabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.RemapLabels">
+        <code>
+RemapLabels        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.RemapLabels" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Given samples from K classes, maps the labels to 0, ..., K.</p>
 <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
-<h3 id="consecutivelabels">ConsecutiveLabels<a class="headerlink" href="#consecutivelabels" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.transforms.ConsecutiveLabels">
+        <code>
+ConsecutiveLabels        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.transforms.ConsecutiveLabels" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Re-orders the samples in the task description such that they are sorted in
 consecutive order.</p>
@@ -1085,13 +1293,32 @@ but in no specific order.</p>
 <ul>
 <li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
 </ul>
-<h2 id="learn2learndatautils">learn2learn.data.utils<a class="headerlink" href="#learn2learndatautils" title="Permanent link">&para;</a></h2>
-<h3 id="ondevicedataset">OnDeviceDataset<a class="headerlink" href="#ondevicedataset" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OnDeviceDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+
+
+    </div>
+
+  </div>
+
+<h2 id="learn2learndatautils">learn2learn.data.utils<a class="headerlink" href="#learn2learndatautils" title="Permanent link">&para;</a></h2>
+<p>Help functions to work with data and tasks.</p>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.utils.OnDeviceDataset">
+        <code>
+OnDeviceDataset        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.utils.OnDeviceDataset" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Converts an entire dataset into a TensorDataset, and optionally puts it on the desired device.</p>
 <p>Useful to accelerate training with relatively small datasets.
@@ -1121,12 +1348,29 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="infiniteiterator">InfiniteIterator<a class="headerlink" href="#infiniteiterator" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">InfiniteIterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.utils.InfiniteIterator">
+        <code>
+InfiniteIterator        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.data.utils.InfiniteIterator" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Infinitely loops over a given iterator.</p>
 <p><strong>Arguments</strong></p>
@@ -1144,12 +1388,27 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="partition_task">partition_task<a class="headerlink" href="#partition_task" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">partition_task</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.data.utils.partition_task">
+<code class="codehilite language-python"><span class="n">partition_task</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.data.utils.partition_task" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Partitions a classification task into support and query sets.</p>
 <p>The support set will contain <code>shots</code> samples per class, the query will take the remaining samples.</p>
@@ -1166,6 +1425,10 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
 <span class="p">(</span><span class="n">X_support</span><span class="p">,</span> <span class="n">y_support</span><span class="p">),</span> <span class="p">(</span><span class="n">X_query</span><span class="p">,</span> <span class="n">y_query</span><span class="p">)</span> <span class="o">=</span> <span class="n">partition_task</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -1237,7 +1500,7 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
     
       <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
     
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
     
   </div>
 
@@ -1249,7 +1512,7 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.2.3",url:{base:"../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       

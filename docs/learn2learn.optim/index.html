@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
     
     
       
@@ -66,6 +66,8 @@
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
@@ -127,7 +129,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -219,7 +221,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -300,6 +302,18 @@
   <li class="md-nav__item">
     <a href="../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-nav__link">
       Feature Reuse with ANIL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
     </a>
   </li>
 
@@ -399,7 +413,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#learnableoptimizer" class="md-nav__link">
+  <a href="#learn2learn.optim.learnable_optimizer.LearnableOptimizer" class="md-nav__link">
     LearnableOptimizer
   </a>
   
@@ -407,8 +421,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#zero_grad" class="md-nav__link">
-    zero_grad
+  <a href="#learn2learn.optim.learnable_optimizer.LearnableOptimizer.zero_grad" class="md-nav__link">
+    zero_grad()
   </a>
   
 </li>
@@ -419,7 +433,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parameterupdate" class="md-nav__link">
+  <a href="#learn2learn.optim.parameter_update.ParameterUpdate" class="md-nav__link">
     ParameterUpdate
   </a>
   
@@ -427,8 +441,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forward" class="md-nav__link">
-    forward
+  <a href="#learn2learn.optim.parameter_update.ParameterUpdate.forward" class="md-nav__link">
+    forward()
   </a>
   
 </li>
@@ -439,7 +453,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#differentiablesgd" class="md-nav__link">
+  <a href="#learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD" class="md-nav__link">
     DifferentiableSGD
   </a>
   
@@ -447,8 +461,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forward_1" class="md-nav__link">
-    forward
+  <a href="#learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD.forward" class="md-nav__link">
+    forward()
   </a>
   
 </li>
@@ -467,21 +481,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#moduletransform" class="md-nav__link">
+  <a href="#learn2learn.optim.transforms.module_transform.ModuleTransform" class="md-nav__link">
     ModuleTransform
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#kroneckertransform" class="md-nav__link">
+  <a href="#learn2learn.optim.transforms.kronecker_transform.KroneckerTransform" class="md-nav__link">
     KroneckerTransform
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#metacurvaturetransform" class="md-nav__link">
+  <a href="#learn2learn.optim.transforms.metacurvature_transform.MetaCurvatureTransform" class="md-nav__link">
     MetaCurvatureTransform
   </a>
   
@@ -569,7 +583,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+    <a href="../../examples/vision/" title="Computer Vision" class="md-nav__link">
       Computer Vision
     </a>
   </li>
@@ -581,7 +595,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+    <a href="../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
     </a>
   </li>
@@ -593,7 +607,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+    <a href="../../examples/optim/" title="Optimization" class="md-nav__link">
       Optimization
     </a>
   </li>
@@ -661,7 +675,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#learnableoptimizer" class="md-nav__link">
+  <a href="#learn2learn.optim.learnable_optimizer.LearnableOptimizer" class="md-nav__link">
     LearnableOptimizer
   </a>
   
@@ -669,8 +683,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#zero_grad" class="md-nav__link">
-    zero_grad
+  <a href="#learn2learn.optim.learnable_optimizer.LearnableOptimizer.zero_grad" class="md-nav__link">
+    zero_grad()
   </a>
   
 </li>
@@ -681,7 +695,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#parameterupdate" class="md-nav__link">
+  <a href="#learn2learn.optim.parameter_update.ParameterUpdate" class="md-nav__link">
     ParameterUpdate
   </a>
   
@@ -689,8 +703,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forward" class="md-nav__link">
-    forward
+  <a href="#learn2learn.optim.parameter_update.ParameterUpdate.forward" class="md-nav__link">
+    forward()
   </a>
   
 </li>
@@ -701,7 +715,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#differentiablesgd" class="md-nav__link">
+  <a href="#learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD" class="md-nav__link">
     DifferentiableSGD
   </a>
   
@@ -709,8 +723,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forward_1" class="md-nav__link">
-    forward
+  <a href="#learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD.forward" class="md-nav__link">
+    forward()
   </a>
   
 </li>
@@ -729,21 +743,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#moduletransform" class="md-nav__link">
+  <a href="#learn2learn.optim.transforms.module_transform.ModuleTransform" class="md-nav__link">
     ModuleTransform
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#kroneckertransform" class="md-nav__link">
+  <a href="#learn2learn.optim.transforms.kronecker_transform.KroneckerTransform" class="md-nav__link">
     KroneckerTransform
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#metacurvaturetransform" class="md-nav__link">
+  <a href="#learn2learn.optim.transforms.metacurvature_transform.MetaCurvatureTransform" class="md-nav__link">
     MetaCurvatureTransform
   </a>
   
@@ -774,13 +788,23 @@
                 
                 
                 <h1 id="learn2learnoptim">learn2learn.optim<a class="headerlink" href="#learn2learnoptim" title="Permanent link">&para;</a></h1>
-<p>A set of utilities to write differentiable optimization algorithms.</p>
-<h2 id="learnableoptimizer">LearnableOptimizer<a class="headerlink" href="#learnableoptimizer" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/learnable_optimizer.py">[Source]</a></p>
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.optim.learnable_optimizer.LearnableOptimizer">
+        <code>
+LearnableOptimizer        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.optim.learnable_optimizer.LearnableOptimizer" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/learnable_optimizer.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A PyTorch Optimizer with learnable transform, enabling the implementation
 of meta-descent / hyper-gradient algorithms.</p>
@@ -828,18 +852,59 @@ In turn, the transform can be updated via your favorite optmizer.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="zero_grad">zero_grad<a class="headerlink" href="#zero_grad" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LearnableOptimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-</code></pre></div>
-</td></tr></table>
 
-<p>Only reset target parameters.</p>
-<h2 id="parameterupdate">ParameterUpdate<a class="headerlink" href="#parameterupdate" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">transform</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/parameter_update.py">[Source]</a></p>
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.optim.learnable_optimizer.LearnableOptimizer.zero_grad">
+<code class="codehilite language-python"><span class="n">zero_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.optim.learnable_optimizer.LearnableOptimizer.zero_grad" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Only reset target parameters.</p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.optim.parameter_update.ParameterUpdate">
+        <code>
+ParameterUpdate        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.optim.parameter_update.ParameterUpdate" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/parameter_update.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Convenience class to implement custom update functions.</p>
 <p>Objects instantiated from this class behave similarly to <code>torch.autograd.grad</code>,
@@ -888,22 +953,27 @@ In this case, the returned update is <code>None</code>.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="forward">forward<a class="headerlink" href="#forward" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ParameterUpdate</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span>
-                        <span class="n">parameters</span><span class="p">,</span>
-                        <span class="n">create_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">retain_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">allow_unused</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
+
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.optim.parameter_update.ParameterUpdate.forward">
+<code class="codehilite language-python"><span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">retain_graph</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.optim.parameter_update.ParameterUpdate.forward" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
 <p>Similar to torch.autograd.grad, but passes the gradients through the
 provided transform.</p>
 <p><strong>Arguments</strong></p>
@@ -916,12 +986,38 @@ provided transform.</p>
 <li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=False) - Properly handles parameters
     that do not require gradients. (Their update will be <code>None</code>.)</li>
 </ul>
-<h2 id="differentiablesgd">DifferentiableSGD<a class="headerlink" href="#differentiablesgd" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/update_rules/differentiable_sgd.py">[Source]</a></p>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 class="doc doc-heading" id="learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD">
+        <code>
+DifferentiableSGD        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/update_rules/differentiable_sgd.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A callable object that applies a list of updates to the parameters of a torch.nn.Module in a differentiable manner.</p>
 <p>For each parameter <script type="math/tex">p</script> and corresponding gradient <script type="math/tex">g</script>, calling an instance of this class results in updating parameters:</p>
@@ -951,28 +1047,65 @@ p \gets p - \alpha g,
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="forward_1">forward<a class="headerlink" href="#forward_1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DifferentiableSGD</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Arguments</strong></p>
+
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD.forward">
+<code class="codehilite language-python"><span class="n">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.optim.update_rules.differentiable_sgd.DifferentiableSGD.forward" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Arguments</strong></p>
 <ul>
 <li><strong>module</strong> (Module) - The module to update.</li>
 <li><strong>gradients</strong> (list, <em>optional</em>, default=None) - A list of gradients for each parameter
     of the module. If None, will use the gradients in .grad attributes.</li>
 </ul>
-<h2 id="learn2learnoptimtransforms">learn2learn.optim.transforms<a class="headerlink" href="#learn2learnoptimtransforms" title="Permanent link">&para;</a></h2>
-<p>Optimization transforms are special modules that take gradients as inputs
-and output model updates.
-Transforms are usually parameterized, and those parameters can be learned by
-gradient descent, allow you to learn optimization functions from data.</p>
-<h3 id="moduletransform">ModuleTransform<a class="headerlink" href="#moduletransform" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">module_cls</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="learn2learnoptimtransforms">learn2learn.optim.transforms<a class="headerlink" href="#learn2learnoptimtransforms" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.optim.transforms.module_transform.ModuleTransform">
+        <code>
+ModuleTransform        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.optim.transforms.module_transform.ModuleTransform" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The ModuleTransform creates a an optimization transform based on any nn.Module.</p>
 <p>ModuleTransform automatically instanciates a module from its class, based on a given parameter.
@@ -998,12 +1131,29 @@ See <code>KroneckerTransform</code> for a scalable alternative.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="kroneckertransform">KroneckerTransform<a class="headerlink" href="#kroneckertransform" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">kronecker_cls</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.optim.transforms.kronecker_transform.KroneckerTransform">
+        <code>
+KroneckerTransform        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.optim.transforms.kronecker_transform.KroneckerTransform" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>The KroneckerTransform creates a an optimization transform based on nn.Module's that admit a Kronecker factorization.
 (see <code>l2l.nn.Kronecker*</code>)</p>
@@ -1037,12 +1187,29 @@ Refer to Arnold et al., 2019 for more details.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="metacurvaturetransform">MetaCurvatureTransform<a class="headerlink" href="#metacurvaturetransform" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaCurvatureTransform</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.optim.transforms.metacurvature_transform.MetaCurvatureTransform">
+        <code>
+MetaCurvatureTransform        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.optim.transforms.metacurvature_transform.MetaCurvatureTransform" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/module_transform.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Implements the Meta-Curvature transform of Park and Oliva, 2019.</p>
 <p>Unlike <code>ModuleTranform</code> and <code>KroneckerTransform</code>, this class does not wrap other Modules but is directly
@@ -1068,6 +1235,12 @@ called on a weight to instantiate the transform.</p>
 <span class="n">classifier</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_</span><span class="p">(</span><span class="o">-</span><span class="n">lr</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>  <span class="c1"># Not a differentiable update. See l2l.optim.DifferentiableSGD.</span>
 </code></pre></div>
 </td></tr></table>
+
+
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -1139,7 +1312,7 @@ called on a weight to instantiate the transform.</p>
     
       <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
     
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
     
   </div>
 
@@ -1151,7 +1324,7 @@ called on a weight to instantiate the transform.</p>
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.2.3",url:{base:"../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       

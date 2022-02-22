@@ -1,0 +1,1140 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.gym/">
+      
+      
+        <meta name="author" content="Séb Arnold">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>learn2learn.gym - learn2learn</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700%7CUbuntu+Mono&display=fallback">
+        <style>body,input{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/l2l_material.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-68693545-3", "seba-1511.github.com")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#learn2learngym" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              learn2learn
+            </span>
+            <span class="md-header-nav__topic">
+              
+                learn2learn.gym
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
+      
+    </a>
+    learn2learn
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-nav__link">
+      Feature Reuse with ANIL
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn/" title="learn2learn" class="md-nav__link">
+      learn2learn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.data/" title="learn2learn.data" class="md-nav__link">
+      learn2learn.data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
+      learn2learn.algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.optim/" title="learn2learn.optim" class="md-nav__link">
+      learn2learn.optim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.nn/" title="learn2learn.nn" class="md-nav__link">
+      learn2learn.nn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.vision/" title="learn2learn.vision" class="md-nav__link">
+      learn2learn.vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        learn2learn.gym
+      </label>
+    
+    <a href="./" title="learn2learn.gym" class="md-nav__link md-nav__link--active">
+      learn2learn.gym
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metaenv" class="md-nav__link">
+    MetaEnv
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asyncvectorenv" class="md-nav__link">
+    AsyncVectorEnv
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learngymenvsmujoco" class="md-nav__link">
+    learn2learn.gym.envs.mujoco
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#halfcheetahforwardbackwardenv" class="md-nav__link">
+    HalfCheetahForwardBackwardEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#antforwardbackwardenv" class="md-nav__link">
+    AntForwardBackwardEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#antdirectionenv" class="md-nav__link">
+    AntDirectionEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#humanoidforwardbackwardenv" class="md-nav__link">
+    HumanoidForwardBackwardEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#humanoiddirectionenv" class="md-nav__link">
+    HumanoidDirectionEnv
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learngymenvsparticles" class="md-nav__link">
+    learn2learn.gym.envs.particles
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#particles2denv" class="md-nav__link">
+    Particles2DEnv
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learngymenvsmetaworld" class="md-nav__link">
+    learn2learn.gym.envs.metaworld
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metaworldml1" class="md-nav__link">
+    MetaWorldML1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaworldml10" class="md-nav__link">
+    MetaWorldML10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaworldml45" class="md-nav__link">
+    MetaWorldML45
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+      Computer Vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+      Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+      Optimization
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/learnables/learn2learn/" title="GitHub" class="md-nav__link">
+      GitHub
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metaenv" class="md-nav__link">
+    MetaEnv
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asyncvectorenv" class="md-nav__link">
+    AsyncVectorEnv
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learngymenvsmujoco" class="md-nav__link">
+    learn2learn.gym.envs.mujoco
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#halfcheetahforwardbackwardenv" class="md-nav__link">
+    HalfCheetahForwardBackwardEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#antforwardbackwardenv" class="md-nav__link">
+    AntForwardBackwardEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#antdirectionenv" class="md-nav__link">
+    AntDirectionEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#humanoidforwardbackwardenv" class="md-nav__link">
+    HumanoidForwardBackwardEnv
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#humanoiddirectionenv" class="md-nav__link">
+    HumanoidDirectionEnv
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learngymenvsparticles" class="md-nav__link">
+    learn2learn.gym.envs.particles
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#particles2denv" class="md-nav__link">
+    Particles2DEnv
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learngymenvsmetaworld" class="md-nav__link">
+    learn2learn.gym.envs.metaworld
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#metaworldml1" class="md-nav__link">
+    MetaWorldML1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaworldml10" class="md-nav__link">
+    MetaWorldML10
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaworldml45" class="md-nav__link">
+    MetaWorldML45
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/learnables/learn2learn/edit/master/docs/docs/learn2learn.gym.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="learn2learngym">learn2learn.gym<a class="headerlink" href="#learn2learngym" title="Permanent link">&para;</a></h1>
+<p>Environment, models, and other utilities related to reinforcement learning and OpenAI Gym.</p>
+<h2 id="metaenv">MetaEnv<a class="headerlink" href="#metaenv" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/meta_env.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Interface for l2l envs. Environments have a certain number of task specific parameters that uniquely
+identify the environment. Tasks are then a dictionary with the names of these parameters as keys and the
+values of these parameters as values. Environments must then implement functions to get, set and sample tasks.
+The flow is then</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">env = EnvClass()</span>
+<span class="err">tasks = env.sample_tasks(num_tasks)</span>
+<span class="err">for task in tasks:</span>
+<span class="err">    env.set_task(task)</span>
+<span class="err">    *training code here*</span>
+<span class="err">    ...</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Credit</strong></p>
+<p>Adapted from Tristan Deleu and Jonas Rothfuss' implementations.</p>
+<h2 id="asyncvectorenv">AsyncVectorEnv<a class="headerlink" href="#asyncvectorenv" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AsyncVectorEnv</span><span class="p">(</span><span class="n">env_fns</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/async_vec_env.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Asynchronous vectorized environment for working with l2l MetaEnvs.
+Allows multiple environments to be run as separate processes.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from OpenAI and Tristan Deleu's implementations.</p>
+<h2 id="learn2learngymenvsmujoco">learn2learn.gym.envs.mujoco<a class="headerlink" href="#learn2learngymenvsmujoco" title="Permanent link">&para;</a></h2>
+<h3 id="halfcheetahforwardbackwardenv">HalfCheetahForwardBackwardEnv<a class="headerlink" href="#halfcheetahforwardbackwardenv" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/halfcheetah_forward_backward.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the half-cheetah to learn to run forward or backward.
+At each time step the half-cheetah receives a signal composed of a
+control cost and a reward equal to its average velocity in the direction
+of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the half-cheetah should
+move backward and +1 indicates the half-cheetah should move forward.
+The velocity is calculated as the distance (in the target direction) of the half-cheetah's torso
+position before and after taking the specified action divided by a small value dt.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
+<h3 id="antforwardbackwardenv">AntForwardBackwardEnv<a class="headerlink" href="#antforwardbackwardenv" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_forward_backward.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the ant to learn to run forward or backward.
+At each time step the ant receives a signal composed of a
+control cost and a reward equal to its average velocity in the direction
+of the plane. The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the ant should
+move backward and +1 indicates the ant should move forward.
+The velocity is calculated as the distance (in the direction of the plane) of the ant's torso
+position before and after taking the specified action divided by a small value dt.
+As noted in [1], a small positive bonus is added to the reward to stop the ant from
+prematurely ending the episode.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
+<h3 id="antdirectionenv">AntDirectionEnv<a class="headerlink" href="#antdirectionenv" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">AntDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/ant_direction.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the Ant to learn to run in a random direction in the
+XY plane. At each time step the ant receives a signal composed of a
+control cost and a reward equal to its average velocity in the direction
+of the plane. The tasks are 2d-arrays sampled uniformly along the unit circle.
+The target direction is indicated by the vector from the origin to the sampled point.
+The velocity is calculated as the distance (in the target direction) of the ant's torso
+position before and after taking the specified action divided by a small value dt.
+As noted in [1], a small positive bonus is added to the reward to stop the ant from
+prematurely ending the episode.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
+<h3 id="humanoidforwardbackwardenv">HumanoidForwardBackwardEnv<a class="headerlink" href="#humanoidforwardbackwardenv" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidForwardBackwardEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_forward_backward.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the humanoid to learn to run forward or backward.
+At each time step the humanoid receives a signal composed of a
+control cost and a reward equal to its average velocity in the target direction.
+The tasks are Bernoulli samples on {-1, 1} with probability 0.5, where -1 indicates the humanoid should
+move backward and +1 indicates the humanoid should move forward.
+The velocity is calculated as the distance (in the target direction) of the humanoid's torso
+position before and after taking the specified action divided by a small value dt.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
+<h3 id="humanoiddirectionenv">HumanoidDirectionEnv<a class="headerlink" href="#humanoiddirectionenv" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">HumanoidDirectionEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/mujoco/humanoid_direction.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>This environment requires the humanoid to learn to run in a random direction in the
+XY plane. At each time step the humanoid receives a signal composed of a
+control cost and a reward equal to its average velocity in the target direction.
+The tasks are 2d-arrays sampled uniformly along the unit circle.
+The target direction is indicated by the vector from the origin to the sampled point.
+The velocity is calculated as the distance (in the target direction) of the humanoid's torso
+position before and after taking the specified action divided by a small value dt.
+A small positive bonus is added to the reward to stop the humanoid from
+prematurely ending the episode.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks." arXiv [cs.LG].</li>
+<li>Rothfuss et al. 2018. "ProMP: Proximal Meta-Policy Search." arXiv [cs.LG].</li>
+</ol>
+<h2 id="learn2learngymenvsparticles">learn2learn.gym.envs.particles<a class="headerlink" href="#learn2learngymenvsparticles" title="Permanent link">&para;</a></h2>
+<h3 id="particles2denv">Particles2DEnv<a class="headerlink" href="#particles2denv" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Particles2DEnv</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/particles/particles_2d.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Each task is defined by the location of the goal. A point mass
+receives a directional force and moves accordingly
+(clipped in [-0.1,0.1]). The reward is equal to the negative
+distance from the goal.</p>
+<p><strong>Credit</strong></p>
+<p>Adapted from Jonas Rothfuss' implementation.</p>
+<h2 id="learn2learngymenvsmetaworld">learn2learn.gym.envs.metaworld<a class="headerlink" href="#learn2learngymenvsmetaworld" title="Permanent link">&para;</a></h2>
+<h3 id="metaworldml1">MetaWorldML1<a class="headerlink" href="#metaworldml1" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML1</span><span class="p">(</span><span class="n">task_name</span><span class="p">,</span> <span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">n_goals</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The ML1 Benchmark of Meta-World is focused on solving just one task on different object / goal
+configurations.This task can be either one of the following: 'reach', 'push' and 'pick-and-place'.
+The meta-training is performed on a set of 50 randomly chosen once initial object and goal positions.
+The meta-testing is performed on a held-out set of 10 new different configurations. The starting state
+of the robot arm is always fixed. The goal positions are not provided in the observation space, forcing
+the Sawyer robot arm to explore and adapt to the new goal through trial-and-error. This is considered
+a relatively easy problem for a meta-learning algorithm to solve and acts as a sanity check to a
+working implementation. For more information regarding this benchmark, please consult [1].</p>
+<p><strong>Credit</strong></p>
+<p>Original implementation found in https://github.com/rlworkgroup/metaworld.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Yu, Tianhe, et al. "Meta-world: A benchmark and evaluation for multi-task and meta reinforcement learning."
+arXiv preprint arXiv:1910.10897 (2019).</li>
+</ol>
+<h3 id="metaworldml10">MetaWorldML10<a class="headerlink" href="#metaworldml10" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML10</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>The ML10 Benchmark of Meta-World consists of 10 different tasks for meta-training and 5 new tasks for
+meta-testing. For each task there is only one goal that is randomly chosen once. The starting state and
+object position is random. The meta-training tasks have been intentionally selected to have a
+structural similarity to the test tasks. No task ID is provided in the observation space, meaning the
+meta-learning algorithm will need to identify each task from experience. This is a much harder problem
+than ML1 which probably requires more samples to train. For more information regarding this benchmark,
+please consult [1].</p>
+<p><strong>Credit</strong></p>
+<p>Original implementation found in https://github.com/rlworkgroup/metaworld.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Yu, Tianhe, et al. "Meta-world: A benchmark and evaluation for multi-task and meta reinforcement learning."
+arXiv preprint arXiv:1910.10897 (2019).</li>
+</ol>
+<h3 id="metaworldml45">MetaWorldML45<a class="headerlink" href="#metaworldml45" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaWorldML45</span><span class="p">(</span><span class="n">env_type</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">sample_all</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">task_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/gym/envs/metaworld/metaworld.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Similarly to ML10, this Benchmark has a variety of 45 different tasks for meta-training and 5 new tasks for
+meta-testing. For each task there is only one goal that is randomly chosen once. The starting state and
+object position is random. No task ID is provided in the observation space, meaning the meta-learning
+algorithm will need to identify each task from experience. This benchmark is significantly difficult to
+solve due to the diversity across tasks. For more information regarding this benchmark, please consult [1].</p>
+<p><strong>Credit</strong></p>
+<p>Original implementation found in https://github.com/rlworkgroup/metaworld.</p>
+<p><strong>References</strong></p>
+<ol>
+<li>Yu, Tianhe, et al. "Meta-world: A benchmark and evaluation for multi-task and meta reinforcement learning."
+arXiv preprint arXiv:1910.10897 (2019).</li>
+</ol>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../learn2learn.vision/" title="learn2learn.vision" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                learn2learn.vision
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../examples.vision/" title="Computer Vision" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Computer Vision
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js"></script>
+      
+    
+  </body>
+</html>

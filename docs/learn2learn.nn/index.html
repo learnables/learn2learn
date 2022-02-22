@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
     
     
       
@@ -66,6 +66,8 @@
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
@@ -127,7 +129,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -219,7 +221,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -300,6 +302,18 @@
   <li class="md-nav__item">
     <a href="../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-nav__link">
       Feature Reuse with ANIL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
     </a>
   </li>
 
@@ -411,58 +425,123 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lambda" class="md-nav__link">
-    Lambda
+  <a href="#classifiers" class="md-nav__link">
+    Classifiers
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flatten" class="md-nav__link">
-    Flatten
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scale" class="md-nav__link">
-    Scale
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prototypicalclassifier" class="md-nav__link">
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.protonet.PrototypicalClassifier" class="md-nav__link">
     PrototypicalClassifier
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.protonet.PrototypicalClassifier.fit_" class="md-nav__link">
+    fit_()
+  </a>
+  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#svclassifier" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metaoptnet.SVClassifier" class="md-nav__link">
     SVClassifier
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metaoptnet.SVClassifier.fit_" class="md-nav__link">
+    fit_()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#kroneckerlinear" class="md-nav__link">
+  <a href="#kroneckers" class="md-nav__link">
+    Kroneckers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.kroneckers.KroneckerLinear" class="md-nav__link">
     KroneckerLinear
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#kroneckerrnn" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.kroneckers.KroneckerRNN" class="md-nav__link">
     KroneckerRNN
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#kroneckerlstm" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.kroneckers.KroneckerLSTM" class="md-nav__link">
     KroneckerLSTM
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#misc" class="md-nav__link">
+    Misc
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.Lambda" class="md-nav__link">
+    Lambda
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.Scale" class="md-nav__link">
+    Scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.Flatten" class="md-nav__link">
+    Flatten
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -531,7 +610,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+    <a href="../../examples/vision/" title="Computer Vision" class="md-nav__link">
       Computer Vision
     </a>
   </li>
@@ -543,7 +622,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+    <a href="../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
     </a>
   </li>
@@ -555,7 +634,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+    <a href="../../examples/optim/" title="Optimization" class="md-nav__link">
       Optimization
     </a>
   </li>
@@ -623,58 +702,123 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#lambda" class="md-nav__link">
-    Lambda
+  <a href="#classifiers" class="md-nav__link">
+    Classifiers
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flatten" class="md-nav__link">
-    Flatten
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#scale" class="md-nav__link">
-    Scale
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prototypicalclassifier" class="md-nav__link">
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.protonet.PrototypicalClassifier" class="md-nav__link">
     PrototypicalClassifier
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.protonet.PrototypicalClassifier.fit_" class="md-nav__link">
+    fit_()
+  </a>
+  
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#svclassifier" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metaoptnet.SVClassifier" class="md-nav__link">
     SVClassifier
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metaoptnet.SVClassifier.fit_" class="md-nav__link">
+    fit_()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#kroneckerlinear" class="md-nav__link">
+  <a href="#kroneckers" class="md-nav__link">
+    Kroneckers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.kroneckers.KroneckerLinear" class="md-nav__link">
     KroneckerLinear
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#kroneckerrnn" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.kroneckers.KroneckerRNN" class="md-nav__link">
     KroneckerRNN
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#kroneckerlstm" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.kroneckers.KroneckerLSTM" class="md-nav__link">
     KroneckerLSTM
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#misc" class="md-nav__link">
+    Misc
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.Lambda" class="md-nav__link">
+    Lambda
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.Scale" class="md-nav__link">
+    Scale
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.Flatten" class="md-nav__link">
+    Flatten
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -698,84 +842,24 @@
                 
                 
                 <h1 id="learn2learnnn">learn2learn.nn<a class="headerlink" href="#learn2learnnn" title="Permanent link">&para;</a></h1>
-<p>Additional <code>torch.nn.Module</code>s frequently used for meta-learning.</p>
-<h2 id="lambda">Lambda<a class="headerlink" href="#lambda" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Lambda</span><span class="p">(</span><span class="n">lmb</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+<h2 id="classifiers">Classifiers<a class="headerlink" href="#classifiers" title="Permanent link">&para;</a></h2>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
-<p><strong>Description</strong></p>
-<p>Utility class to create a wrapper based on a lambda function.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><strong>lmb</strong> (callable) - The function to call in the forward pass.</li>
-</ul>
-<p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mean23</span> <span class="o">=</span> <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>  <span class="c1"># mean23 is a Module</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">mean23</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-</code></pre></div>
-</td></tr></table>
 
-<h2 id="flatten">Flatten<a class="headerlink" href="#flatten" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Flatten</span><span class="p">()</span>
-</code></pre></div>
-</td></tr></table>
+  <div class="doc doc-object doc-class">
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
-<p><strong>Description</strong></p>
-<p>Utility Module to flatten inputs to <code>(batch_size, -1)</code> shape.</p>
-<p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">flatten</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (5, 3072)</span>
-</code></pre></div>
-</td></tr></table>
 
-<h2 id="scale">Scale<a class="headerlink" href="#scale" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Scale</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
-<p><strong>Description</strong></p>
-<p>A per-parameter scaling factor with learnable parameter.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><strong>shape</strong> (int or tuple) - The shape of the scaling matrix.</li>
-<li><strong>alpha</strong> (float, <em>optional</em>, default=1.0) - Initial value for the
-    scaling factor.</li>
-</ul>
-<p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">scale</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scale</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># [.5, .5, .5]</span>
-</code></pre></div>
-</td></tr></table>
+<h3 class="doc doc-heading" id="learn2learn.nn.protonet.PrototypicalClassifier">
+        <code>
+PrototypicalClassifier        </code>
 
-<h2 id="prototypicalclassifier">PrototypicalClassifier<a class="headerlink" href="#prototypicalclassifier" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">PrototypicalClassifier</span><span class="p">(</span><span class="n">support</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">distance</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">,</span>
-                       <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/protonet.py">[Source]</a></p>
+
+<a class="headerlink" href="#learn2learn.nn.protonet.PrototypicalClassifier" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/protonet.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A module for the differentiable nearest neighbour classifier of Prototypical Networks.</p>
 <p><strong>Arguments</strong></p>
@@ -802,22 +886,61 @@
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="svclassifier">SVClassifier<a class="headerlink" href="#svclassifier" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">SVClassifier</span><span class="p">(</span><span class="n">support</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">ways</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">C_reg</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-             <span class="n">max_iters</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metaoptnet.py">[Source]</a></p>
+
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.nn.protonet.PrototypicalClassifier.fit_">
+<code class="codehilite language-python"><span class="n">fit_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.nn.protonet.PrototypicalClassifier.fit_" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
+<p>Computes and updates the prototypes given support embeddings and
+corresponding labels.</p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.metaoptnet.SVClassifier">
+        <code>
+SVClassifier        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.metaoptnet.SVClassifier" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metaoptnet.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A module for the differentiable SVM classifier of MetaOptNet.</p>
 <p><strong>Arguments</strong></p>
@@ -846,12 +969,59 @@
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="kroneckerlinear">KroneckerLinear<a class="headerlink" href="#kroneckerlinear" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerLinear</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">psd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
+
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.nn.metaoptnet.SVClassifier.fit_">
+<code class="codehilite language-python"><span class="n">fit_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_reg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.nn.metaoptnet.SVClassifier.fit_" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="kroneckers">Kroneckers<a class="headerlink" href="#kroneckers" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.kroneckers.KroneckerLinear">
+        <code>
+KroneckerLinear        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.kroneckers.KroneckerLinear" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A linear transformation whose parameters are expressed as a Kronecker product.</p>
 <p>This Module maps an input vector <script type="math/tex">x \in \mathbb{R}^{nm} </script> to <script type="math/tex">y = Ax + b</script> such that:</p>
@@ -890,12 +1060,29 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="kroneckerrnn">KroneckerRNN<a class="headerlink" href="#kroneckerrnn" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerRNN</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.kroneckers.KroneckerRNN">
+        <code>
+KroneckerRNN        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.kroneckers.KroneckerRNN" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Implements a recurrent neural network whose matrices are parameterized via their Kronecker factors.
 (See <code>KroneckerLinear</code> for details.)</p>
@@ -925,12 +1112,29 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="kroneckerlstm">KroneckerLSTM<a class="headerlink" href="#kroneckerlstm" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KroneckerLSTM</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.kroneckers.KroneckerLSTM">
+        <code>
+KroneckerLSTM        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.kroneckers.KroneckerLSTM" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/kroneckers.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Implements an LSTM using a factorization similar to the one of
 <code>KroneckerLinear</code>.</p>
@@ -959,6 +1163,129 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 <span class="n">y</span><span class="o">.</span><span class="n">shape</span>  <span class="c1"># (6, )</span>
 </code></pre></div>
 </td></tr></table>
+
+
+
+    </div>
+
+  </div>
+
+<h2 id="misc">Misc<a class="headerlink" href="#misc" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.misc.Lambda">
+        <code>
+Lambda        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.misc.Lambda" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Utility class to create a wrapper based on a lambda function.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>lmb</strong> (callable) - The function to call in the forward pass.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mean23</span> <span class="o">=</span> <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>  <span class="c1"># mean23 is a Module</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">mean23</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.misc.Scale">
+        <code>
+Scale        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.misc.Scale" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>A per-parameter scaling factor with learnable parameter.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>shape</strong> (int or tuple, <em>optional</em>, default=1) - The shape of the scaling matrix.</li>
+<li><strong>alpha</strong> (float, <em>optional</em>, default=1.0) - Initial value for the
+    scaling factor.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scale</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># [.5, .5, .5]</span>
+</code></pre></div>
+</td></tr></table>
+
+
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.nn.misc.Flatten">
+        <code>
+Flatten        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.nn.misc.Flatten" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Utility Module to flatten inputs to <code>(batch_size, -1)</code> shape.</p>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">flatten</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (5, 3072)</span>
+</code></pre></div>
+</td></tr></table>
+
+
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -1030,7 +1357,7 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
     
       <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
     
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
     
   </div>
 
@@ -1042,7 +1369,7 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.2.3",url:{base:"../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       

@@ -1,0 +1,1260 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="http://learn2learn.net/docs/learn2learn.data/">
+      
+      
+        <meta name="author" content="Séb Arnold">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>learn2learn.data - learn2learn</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700%7CUbuntu+Mono&display=fallback">
+        <style>body,input{font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Ubuntu Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../assets/css/l2l_material.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-68693545-3", "seba-1511.github.com")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#learn2learndata" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+          
+            <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              learn2learn
+            </span>
+            <span class="md-header-nav__topic">
+              
+                learn2learn.data
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+      
+        <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
+      
+    </a>
+    learn2learn
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/learnables/learn2learn/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    learnables/learn2learn
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-nav__link">
+      Feature Reuse with ANIL
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn/" title="learn2learn" class="md-nav__link">
+      learn2learn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        learn2learn.data
+      </label>
+    
+    <a href="./" title="learn2learn.data" class="md-nav__link md-nav__link--active">
+      learn2learn.data
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadataset" class="md-nav__link">
+    MetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unionmetadataset" class="md-nav__link">
+    UnionMetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filteredmetadataset" class="md-nav__link">
+    FilteredMetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taskdataset" class="md-nav__link">
+    TaskDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learndatatransforms" class="md-nav__link">
+    learn2learn.data.transforms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loaddata" class="md-nav__link">
+    LoadData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nways" class="md-nav__link">
+    NWays
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kshots" class="md-nav__link">
+    KShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filterlabels" class="md-nav__link">
+    FilterLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusednwayskshots" class="md-nav__link">
+    FusedNWaysKShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remaplabels" class="md-nav__link">
+    RemapLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consecutivelabels" class="md-nav__link">
+    ConsecutiveLabels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learndatautils" class="md-nav__link">
+    learn2learn.data.utils
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ondevicedataset" class="md-nav__link">
+    OnDeviceDataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infiniteiterator" class="md-nav__link">
+    InfiniteIterator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_task" class="md-nav__link">
+    partition_task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-nav__link">
+      learn2learn.algorithms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.optim/" title="learn2learn.optim" class="md-nav__link">
+      learn2learn.optim
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.nn/" title="learn2learn.nn" class="md-nav__link">
+      learn2learn.nn
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.vision/" title="learn2learn.vision" class="md-nav__link">
+      learn2learn.vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../learn2learn.gym/" title="learn2learn.gym" class="md-nav__link">
+      learn2learn.gym
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+      Computer Vision
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+      Reinforcement Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+      Optimization
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../community/" title="Community" class="md-nav__link">
+      Community
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="https://github.com/learnables/learn2learn/" title="GitHub" class="md-nav__link">
+      GitHub
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadataset" class="md-nav__link">
+    MetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unionmetadataset" class="md-nav__link">
+    UnionMetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filteredmetadataset" class="md-nav__link">
+    FilteredMetaDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#taskdataset" class="md-nav__link">
+    TaskDataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learndatatransforms" class="md-nav__link">
+    learn2learn.data.transforms
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loaddata" class="md-nav__link">
+    LoadData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nways" class="md-nav__link">
+    NWays
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kshots" class="md-nav__link">
+    KShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filterlabels" class="md-nav__link">
+    FilterLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fusednwayskshots" class="md-nav__link">
+    FusedNWaysKShots
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remaplabels" class="md-nav__link">
+    RemapLabels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consecutivelabels" class="md-nav__link">
+    ConsecutiveLabels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learn2learndatautils" class="md-nav__link">
+    learn2learn.data.utils
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ondevicedataset" class="md-nav__link">
+    OnDeviceDataset
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infiniteiterator" class="md-nav__link">
+    InfiniteIterator
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_task" class="md-nav__link">
+    partition_task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/learnables/learn2learn/edit/master/docs/docs/learn2learn.data.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="learn2learndata">learn2learn.data<a class="headerlink" href="#learn2learndata" title="Permanent link">&para;</a></h1>
+<p>A set of utilities for data &amp; tasks loading, preprocessing, and sampling.</p>
+<h2 id="metadataset">MetaDataset<a class="headerlink" href="#metadataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Description</strong></p>
+<p>Wraps a classification dataset to enable fast indexing of samples within classes.</p>
+<p>This class exposes two attributes specific to the wrapped dataset:</p>
+<ul>
+<li><code>labels_to_indices</code>: maps a class label to a list of sample indices with that label.</li>
+<li><code>indices_to_labels</code>: maps a sample index to its corresponding class label.</li>
+</ul>
+<p>Those dictionary attributes are often used to quickly create few-shot classification tasks.
+They can be passed as arguments upon instantiation, or automatically built on-the-fly.
+If the wrapped dataset has an attribute <code>_bookkeeping_path</code>, then the built attributes will be cached on disk and reloaded upon the next instantiation.
+This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the first instantiation can take several hours.</p>
+<p>Note that if only one of <code>labels_to_indices</code> or <code>indices_to_labels</code> is provided, this class builds the other one from it.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) -  A torch Dataset.</li>
+<li><strong>labels_to_indices</strong> (dict, <strong>optional</strong>, default=None) -  A dictionary mapping labels to the indices of their samples.</li>
+<li><strong>indices_to_labels</strong> (dict, <strong>optional</strong>, default=None) -  A dictionary mapping sample indices to their corresponding label.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="unionmetadataset">UnionMetaDataset<a class="headerlink" href="#unionmetadataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Description</strong></p>
+<p>Takes multiple MetaDataests and constructs their union.</p>
+<p>Note: The labels of all datasets are remapped to be in consecutive order.
+(i.e. the same label in two datasets will be to two different labels in the union)</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>datasets</strong> (list of Dataset) -  A list of torch Datasets.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+<span class="n">union</span> <span class="o">=</span> <span class="n">UnionMetaDataset</span><span class="p">([</span><span class="n">train</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">test</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">union</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="filteredmetadataset">FilteredMetaDataset<a class="headerlink" href="#filteredmetadataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><strong>Description</strong></p>
+<p>Takes in a MetaDataset and filters it to only include a subset of its labels.</p>
+<p>Note: The labels of all datasets are <strong>not</strong> remapped.
+(i.e. the labels from the original dataset are retained)</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>datasets</strong> (Dataset) -  A torch Datasets.</li>
+<li><strong>labels</strong> (list of ints) - A list of labels to keep.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">filtered</span> <span class="o">=</span> <span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="taskdataset">TaskDataset<a class="headerlink" href="#taskdataset" title="Permanent link">&para;</a></h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">task_transforms</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">task_collate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Creates a set of tasks from a given Dataset.</p>
+<p>In addition to the Dataset, TaskDataset accepts a list of task transformations (<code>task_transforms</code>)
+which define the kind of tasks sampled from the dataset.</p>
+<p>The tasks are lazily sampled upon indexing (or calling the <code>.sample()</code> method), and their
+descriptions cached for later use.
+If <code>num_tasks</code> is -1, the TaskDataset will not cache task descriptions and instead continuously resample
+new ones.
+In this case, the length of the TaskDataset is set to 1.</p>
+<p>For more information on tasks and task descriptions, please refer to the
+documentation of task transforms.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - Dataset of data to compute tasks.</li>
+<li><strong>task_transforms</strong> (list, <em>optional</em>, default=None) - List of task transformations.</li>
+<li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - Number of tasks to generate.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>
+<span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">taskset</span> <span class="o">=</span> <span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">taskset</span><span class="p">:</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">task</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="learn2learndatatransforms">learn2learn.data.transforms<a class="headerlink" href="#learn2learndatatransforms" title="Permanent link">&para;</a></h2>
+<p><strong>Description</strong></p>
+<p>Collection of general task transformations.</p>
+<p>A task transformation is an object that implements the callable interface.
+(Either a function or an object that implements the <code>__call__</code> special method.)
+Each transformation is called on a task description, which consists of a list of
+<code>DataDescription</code> with attributes <code>index</code> and <code>transforms</code>, where
+<code>index</code> corresponds to the index of single data sample inthe dataset, and <code>transforms</code> is a list of transformations
+that will be applied to the sample.
+Each transformation must return a new task description.</p>
+<p>At first, the task description contains all samples from the dataset.
+A task transform takes this task description list and modifies it such that a particular task is
+created.
+For example, the <code>NWays</code> task transform filters data samples from the task description
+such that remaining ones belong to a random subset of all classes available.
+(The size of the subset is controlled via the class's <code>n</code> argument.)
+On the other hand, the <code>LoadData</code> task transform simply appends a call to load the actual
+data from the dataset to the list of transformations of each sample.</p>
+<p>To create a task from a task description, the <code>TaskDataset</code> applies each sample's list of <code>transform</code>s
+in order.
+Then, all samples are collated via the <code>TaskDataset</code>'s collate function.</p>
+<h3 id="loaddata">LoadData<a class="headerlink" href="#loaddata" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LoadData</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Loads a sample from the dataset given its index.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+</ul>
+<h3 id="nways">NWays<a class="headerlink" href="#nways" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Keeps samples from N random labels present in the task description.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>n</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from the task
+    description's labels.</li>
+</ul>
+<h3 id="kshots">KShots<a class="headerlink" href="#kshots" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Keeps K samples for each present labels.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>k</strong> (int, <em>optional</em>, default=1) - The number of samples per label.</li>
+<li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample with replacement.</li>
+</ul>
+<h3 id="filterlabels">FilterLabels<a class="headerlink" href="#filterlabels" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FilterLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Removes samples that do not belong to the given set of labels.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>labels</strong> (list) - The list of labels to include.</li>
+</ul>
+<h3 id="fusednwayskshots">FusedNWaysKShots<a class="headerlink" href="#fusednwayskshots" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FusedNWaysKShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Efficient implementation of FilterLabels, NWays, and KShots.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+<li><strong>n</strong> (int, <em>optional</em>, default=2) - Number of labels to sample from the task
+    description's labels.</li>
+<li><strong>k</strong> (int, <em>optional</em>, default=1) - The number of samples per label.</li>
+<li><strong>replacement</strong> (bool, <em>optional</em>, default=False) - Whether to sample shots with replacement.</li>
+<li><strong>filter_labels</strong> (list, <em>optional</em>, default=None) - The list of labels to include. Defaults to
+    all labels in the dataset.</li>
+</ul>
+<h3 id="remaplabels">RemapLabels<a class="headerlink" href="#remaplabels" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RemapLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Given samples from K classes, maps the labels to 0, ..., K.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+</ul>
+<h3 id="consecutivelabels">ConsecutiveLabels<a class="headerlink" href="#consecutivelabels" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ConsecutiveLabels</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Re-orders the samples in the task description such that they are sorted in
+consecutive order.</p>
+<p>Note: when used before <code>RemapLabels</code>, the labels will be homogeneously clustered,
+but in no specific order.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - The dataset from which to load the sample.</li>
+</ul>
+<h2 id="learn2learndatautils">learn2learn.data.utils<a class="headerlink" href="#learn2learndatautils" title="Permanent link">&para;</a></h2>
+<h3 id="ondevicedataset">OnDeviceDataset<a class="headerlink" href="#ondevicedataset" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OnDeviceDataset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Converts an entire dataset into a TensorDataset, and optionally puts it on the desired device.</p>
+<p>Useful to accelerate training with relatively small datasets.
+If the device is cpu and cuda is available, the TensorDataset will live in pinned memory.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong> (Dataset) - Dataset to put on a device.</li>
+<li><strong>device</strong> (torch.device, <em>optional</em>, default=None) - Device of dataset. Defaults to CPU.</li>
+<li><strong>transform</strong> (transform, <em>optional</em>, default=None) - Transform to apply on the first variate of the dataset's samples X.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="s1">&#39;~/data&#39;</span><span class="p">)</span>
+<span class="n">mnist_ondevice</span> <span class="o">=</span> <span class="n">OnDeviceDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="p">)</span>
+<span class="n">mnist_meta</span> <span class="o">=</span> <span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist_ondevice</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="infiniteiterator">InfiniteIterator<a class="headerlink" href="#infiniteiterator" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">InfiniteIterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Infinitely loops over a given iterator.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataloader</strong> (iterator) - Iterator to loop over.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">inf_dataloader</span> <span class="o">=</span> <span class="n">InfiniteIterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>  <span class="c1"># guaranteed to reach 10,000 regardless of len(dataloader)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">inf_dataloader</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<h3 id="partition_task">partition_task<a class="headerlink" href="#partition_task" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">partition_task</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Partitions a classification task into support and query sets.</p>
+<p>The support set will contain <code>shots</code> samples per class, the query will take the remaining samples.</p>
+<p>Assumes each class in <code>labels</code> is associated with the same number of samples in <code>data</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>data</strong> (Tensor) - Data to be partitioned into support and query.</li>
+<li><strong>labels</strong> (Tensor) - Labels of each data sample, used for partitioning.</li>
+<li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data samples per class in the support set.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">taskset</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<span class="p">(</span><span class="n">X_support</span><span class="p">,</span> <span class="n">y_support</span><span class="p">),</span> <span class="p">(</span><span class="n">X_query</span><span class="p">,</span> <span class="n">y_query</span><span class="p">)</span> <span class="o">=</span> <span class="n">partition_task</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../learn2learn/" title="learn2learn" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                learn2learn
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../learn2learn.algorithms/" title="learn2learn.algorithms" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                learn2learn.algorithms
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/learnables" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js"></script>
+      
+    
+  </body>
+</html>

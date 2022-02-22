@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
     
     
       
@@ -66,6 +66,8 @@
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
@@ -127,7 +129,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -219,7 +221,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -300,6 +302,18 @@
   <li class="md-nav__item">
     <a href="../../tutorials/anil_tutorial/ANIL_tutorial/" title="Feature Reuse with ANIL" class="md-nav__link">
       Feature Reuse with ANIL
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../tutorials/task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
     </a>
   </li>
 
@@ -387,7 +401,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#maml" class="md-nav__link">
+  <a href="#high-level-interfaces" class="md-nav__link">
+    High-Level Interfaces
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.maml.MAML" class="md-nav__link">
     MAML
   </a>
   
@@ -395,15 +417,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#adapt" class="md-nav__link">
-    adapt
+  <a href="#learn2learn.algorithms.maml.MAML.adapt" class="md-nav__link">
+    adapt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#clone" class="md-nav__link">
-    clone
+  <a href="#learn2learn.algorithms.maml.MAML.clone" class="md-nav__link">
+    clone()
   </a>
   
 </li>
@@ -412,9 +434,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#metasgd" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.meta_sgd.MetaSGD" class="md-nav__link">
     MetaSGD
   </a>
   
@@ -422,15 +444,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone_1" class="md-nav__link">
-    clone
+  <a href="#learn2learn.algorithms.meta_sgd.MetaSGD.adapt" class="md-nav__link">
+    adapt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adapt_1" class="md-nav__link">
-    adapt
+  <a href="#learn2learn.algorithms.meta_sgd.MetaSGD.clone" class="md-nav__link">
+    clone()
   </a>
   
 </li>
@@ -439,9 +461,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#gbml" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.gbml.GBML" class="md-nav__link">
     GBML
   </a>
   
@@ -449,16 +471,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone_2" class="md-nav__link">
-    clone
+  <a href="#learn2learn.algorithms.gbml.GBML.adapt" class="md-nav__link">
+    adapt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adapt_2" class="md-nav__link">
-    adapt
+  <a href="#learn2learn.algorithms.gbml.GBML.clone" class="md-nav__link">
+    clone()
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -468,30 +495,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lightningmaml" class="md-nav__link">
+  <a href="#pytorch-lightning" class="md-nav__link">
+    PyTorch Lightning
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_maml.LightningMAML" class="md-nav__link">
     LightningMAML
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lightninganil" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_anil.LightningANIL" class="md-nav__link">
     LightningANIL
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lightningprototypicalnetworks" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" class="md-nav__link">
     LightningPrototypicalNetworks
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lightningmetaoptnet" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet" class="md-nav__link">
     LightningMetaOptNet
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -584,7 +624,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.vision/" title="Computer Vision" class="md-nav__link">
+    <a href="../../examples/vision/" title="Computer Vision" class="md-nav__link">
       Computer Vision
     </a>
   </li>
@@ -596,7 +636,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+    <a href="../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
     </a>
   </li>
@@ -608,7 +648,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../examples.optim/" title="Optimization" class="md-nav__link">
+    <a href="../../examples/optim/" title="Optimization" class="md-nav__link">
       Optimization
     </a>
   </li>
@@ -676,7 +716,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#maml" class="md-nav__link">
+  <a href="#high-level-interfaces" class="md-nav__link">
+    High-Level Interfaces
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.maml.MAML" class="md-nav__link">
     MAML
   </a>
   
@@ -684,15 +732,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#adapt" class="md-nav__link">
-    adapt
+  <a href="#learn2learn.algorithms.maml.MAML.adapt" class="md-nav__link">
+    adapt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#clone" class="md-nav__link">
-    clone
+  <a href="#learn2learn.algorithms.maml.MAML.clone" class="md-nav__link">
+    clone()
   </a>
   
 </li>
@@ -701,9 +749,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#metasgd" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.meta_sgd.MetaSGD" class="md-nav__link">
     MetaSGD
   </a>
   
@@ -711,15 +759,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone_1" class="md-nav__link">
-    clone
+  <a href="#learn2learn.algorithms.meta_sgd.MetaSGD.adapt" class="md-nav__link">
+    adapt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adapt_1" class="md-nav__link">
-    adapt
+  <a href="#learn2learn.algorithms.meta_sgd.MetaSGD.clone" class="md-nav__link">
+    clone()
   </a>
   
 </li>
@@ -728,9 +776,9 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#gbml" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.gbml.GBML" class="md-nav__link">
     GBML
   </a>
   
@@ -738,16 +786,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#clone_2" class="md-nav__link">
-    clone
+  <a href="#learn2learn.algorithms.gbml.GBML.adapt" class="md-nav__link">
+    adapt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#adapt_2" class="md-nav__link">
-    adapt
+  <a href="#learn2learn.algorithms.gbml.GBML.clone" class="md-nav__link">
+    clone()
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -757,30 +810,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lightningmaml" class="md-nav__link">
+  <a href="#pytorch-lightning" class="md-nav__link">
+    PyTorch Lightning
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_maml.LightningMAML" class="md-nav__link">
     LightningMAML
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lightninganil" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_anil.LightningANIL" class="md-nav__link">
     LightningANIL
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lightningprototypicalnetworks" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" class="md-nav__link">
     LightningPrototypicalNetworks
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#lightningmetaoptnet" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet" class="md-nav__link">
     LightningMetaOptNet
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -804,13 +870,24 @@
                 
                 
                 <h1 id="learn2learnalgorithms">learn2learn.algorithms<a class="headerlink" href="#learn2learnalgorithms" title="Permanent link">&para;</a></h1>
-<p>A set of high-level algorithm implementations, with easy-to-use API.</p>
-<h2 id="maml">MAML<a class="headerlink" href="#maml" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
+<h2 id="high-level-interfaces">High-Level Interfaces<a class="headerlink" href="#high-level-interfaces" title="Permanent link">&para;</a></h2>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py">[Source]</a></p>
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.maml.MAML">
+        <code>
+MAML        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.maml.MAML" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/maml.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>High-level implementation of <em>Model-Agnostic Meta-Learning</em>.</p>
 <p>This class wraps an arbitrary nn.Module and augments it with <code>clone()</code> and <code>adapt()</code>
@@ -847,12 +924,27 @@ upon initialization.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="adapt">adapt<a class="headerlink" href="#adapt" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
+
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.algorithms.maml.MAML.adapt">
+<code class="codehilite language-python"><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.algorithms.maml.MAML.adapt" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
 <p>Takes a gradient step on the loss and updates the cloned parameters in place.</p>
 <p><strong>Arguments</strong></p>
 <ul>
@@ -864,12 +956,28 @@ upon initialization.</p>
 <li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=None) - Whether to allow adaptation with
     parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
-<h3 id="clone">clone<a class="headerlink" href="#clone" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MAML</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.algorithms.maml.MAML.clone">
+<code class="codehilite language-python"><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.algorithms.maml.MAML.clone" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
 <p>Returns a <code>MAML</code>-wrapped copy of the module whose parameters and buffers
 are <code>torch.clone</code>d from the original module.</p>
 <p>This implies that back-propagating losses on the cloned module will
@@ -884,12 +992,38 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=False) - Whether to allow adaptation with
     parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
-<h2 id="metasgd">MetaSGD<a class="headerlink" href="#metasgd" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">lrs</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/meta_sgd.py">[Source]</a></p>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.meta_sgd.MetaSGD">
+        <code>
+MetaSGD        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.meta_sgd.MetaSGD" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/meta_sgd.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>High-level implementation of <em>Meta-SGD</em>.</p>
 <p>This class wraps an arbitrary nn.Module and augments it with <code>clone()</code> and <code>adapt</code>
@@ -923,42 +1057,85 @@ are learned for fast-adaptation.</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="clone_1">clone<a class="headerlink" href="#clone_1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Descritpion</strong></p>
-<p>Akin to <code>MAML.clone()</code> but for MetaSGD: it includes a set of learnable fast-adaptation
-learning rates.</p>
-<h3 id="adapt_1">adapt<a class="headerlink" href="#adapt_1" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaSGD</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Descritpion</strong></p>
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.algorithms.meta_sgd.MetaSGD.adapt">
+<code class="codehilite language-python"><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.algorithms.meta_sgd.MetaSGD.adapt" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Descritpion</strong></p>
 <p>Akin to <code>MAML.adapt()</code> but for MetaSGD: it updates the model with the learnable
 per-parameter learning rates.</p>
-<h2 id="gbml">GBML<a class="headerlink" href="#gbml" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">GBML</span><span class="p">(</span><span class="n">module</span><span class="p">,</span>
-     <span class="n">transform</span><span class="p">,</span>
-     <span class="n">lr</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-     <span class="n">adapt_transform</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-     <span class="n">first_order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-     <span class="n">allow_unused</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-     <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/gbml.py">[Source]</a></p>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.algorithms.meta_sgd.MetaSGD.clone">
+<code class="codehilite language-python"><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.algorithms.meta_sgd.MetaSGD.clone" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Descritpion</strong></p>
+<p>Akin to <code>MAML.clone()</code> but for MetaSGD: it includes a set of learnable fast-adaptation
+learning rates.</p>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.gbml.GBML">
+        <code>
+GBML        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.gbml.GBML" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/gbml.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>General wrapper for gradient-based meta-learning implementations.</p>
 <p>A variety of algorithms can simply be implemented by changing the kind
@@ -1008,8 +1185,7 @@ KFO from [5].</p>
 16
 17
 18
-19
-20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">SmallCNN</span><span class="p">()</span>
+19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">SmallCNN</span><span class="p">()</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>
 <span class="n">gbml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">GBML</span><span class="p">(</span>
     <span class="n">module</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
@@ -1020,8 +1196,7 @@ KFO from [5].</p>
 <span class="n">gbml</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">gbml</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 
-<span class="n">__Training</span> <span class="k">with</span> <span class="mi">1</span> <span class="n">adaptation</span> <span class="n">step__</span>
-
+<span class="c1"># Training with 1 adaptation step</span>
 <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
     <span class="n">task_model</span> <span class="o">=</span> <span class="n">gbml</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
@@ -1032,34 +1207,27 @@ KFO from [5].</p>
 </code></pre></div>
 </td></tr></table>
 
-<h3 id="clone_2">clone<a class="headerlink" href="#clone_2" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">GBML</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-           <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-           <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-           <span class="n">adapt_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
-<p>Similar to <code>MAML.clone()</code>.</p>
-<p><strong>Arguments</strong></p>
-<ul>
-<li><strong>first_order</strong> (bool, <em>optional</em>, default=None) - Whether the clone uses first-
-    or second-order updates. Defaults to self.first_order.</li>
-<li><strong>allow_unused</strong> (bool, <em>optional</em>, default=None) - Whether to allow differentiation
-of unused parameters. Defaults to self.allow_unused.</li>
-<li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=False) - Whether to allow adaptation with
-    parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
-</ul>
-<h3 id="adapt_2">adapt<a class="headerlink" href="#adapt_2" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">GBML</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><strong>Description</strong></p>
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.algorithms.gbml.GBML.adapt">
+<code class="codehilite language-python"><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.algorithms.gbml.GBML.adapt" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
 <p>Takes a gradient step on the loss and updates the cloned parameters in place.</p>
 <p>The parameters of the transform are only adapted if <code>self.adapt_update</code> is <code>True</code>.</p>
 <p><strong>Arguments</strong></p>
@@ -1072,12 +1240,71 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=None) - Whether to allow adaptation with
     parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
 </ul>
-<h2 id="lightningmaml">LightningMAML<a class="headerlink" href="#lightningmaml" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningMAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_maml.py">[Source]</a></p>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 class="doc doc-heading" id="learn2learn.algorithms.gbml.GBML.clone">
+<code class="codehilite language-python"><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">adapt_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+<a class="headerlink" href="#learn2learn.algorithms.gbml.GBML.clone" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
+<p>Similar to <code>MAML.clone()</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>first_order</strong> (bool, <em>optional</em>, default=None) - Whether the clone uses first-
+    or second-order updates. Defaults to self.first_order.</li>
+<li><strong>allow_unused</strong> (bool, <em>optional</em>, default=None) - Whether to allow differentiation
+of unused parameters. Defaults to self.allow_unused.</li>
+<li><strong>allow_nograd</strong> (bool, <em>optional</em>, default=False) - Whether to allow adaptation with
+    parameters that have <code>requires_grad = False</code>. Defaults to self.allow_nograd.</li>
+</ul>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="pytorch-lightning">PyTorch Lightning<a class="headerlink" href="#pytorch-lightning" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_maml.LightningMAML">
+        <code>
+LightningMAML        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_maml.LightningMAML" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_maml.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A PyTorch Lightning module for MAML.</p>
 <p><strong>Arguments</strong></p>
@@ -1111,12 +1338,29 @@ of unused parameters. Defaults to self.allow_unused.</li>
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="lightninganil">LightningANIL<a class="headerlink" href="#lightninganil" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningANIL</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_anil.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_anil.LightningANIL">
+        <code>
+LightningANIL        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_anil.LightningANIL" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_anil.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A PyTorch Lightning module for ANIL.</p>
 <p><strong>Arguments</strong></p>
@@ -1151,12 +1395,29 @@ of unused parameters. Defaults to self.allow_unused.</li>
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="lightningprototypicalnetworks">LightningPrototypicalNetworks<a class="headerlink" href="#lightningprototypicalnetworks" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningPrototypicalNetworks</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_protonet.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks">
+        <code>
+LightningPrototypicalNetworks        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_protonet.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A PyTorch Lightning module for Prototypical Networks.</p>
 <p><strong>Arguments</strong></p>
@@ -1193,12 +1454,29 @@ of unused parameters. Defaults to self.allow_unused.</li>
 </code></pre></div>
 </td></tr></table>
 
-<h2 id="lightningmetaoptnet">LightningMetaOptNet<a class="headerlink" href="#lightningmetaoptnet" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">LightningMetaOptNet</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div>
-</td></tr></table>
 
-<p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_metaoptnet.py">[Source]</a></p>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet">
+        <code>
+LightningMetaOptNet        </code>
+
+
+
+<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/algorithms/lightning/lightning_metaoptnet.py">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>A PyTorch Lightning module for MetaOptNet.</p>
 <p><strong>Arguments</strong></p>
@@ -1235,6 +1513,12 @@ of unused parameters. Defaults to self.allow_unused.</li>
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">metaoptnet</span><span class="p">,</span> <span class="n">episodic_data</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+
+
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -1306,7 +1590,7 @@ of unused parameters. Defaults to self.allow_unused.</li>
     
       <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
     
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
     
   </div>
 
@@ -1318,7 +1602,7 @@ of unused parameters. Defaults to self.allow_unused.</li>
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.2.3",url:{base:"../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       

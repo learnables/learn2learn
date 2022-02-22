@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
     
     
       
@@ -66,6 +66,8 @@
     
     <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
     
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
     
@@ -127,7 +129,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="http://learn2learn.net" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
+        <a href="http://learn2learn.net/" title="learn2learn" aria-label="learn2learn" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../../assets/img/learn2learn_white.png" width="24" height="24">
           
@@ -219,7 +221,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="http://learn2learn.net" title="learn2learn" class="md-nav__button md-logo">
+    <a href="http://learn2learn.net/" title="learn2learn" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../../assets/img/learn2learn_white.png" width="48" height="48">
       
@@ -379,6 +381,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-nav__link">
+      Demystifying Task-Transforms
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -517,7 +531,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../examples.vision/" title="Computer Vision" class="md-nav__link">
+    <a href="../../../examples/vision/" title="Computer Vision" class="md-nav__link">
       Computer Vision
     </a>
   </li>
@@ -529,7 +543,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../examples.rl/" title="Reinforcement Learning" class="md-nav__link">
+    <a href="../../../examples/rl/" title="Reinforcement Learning" class="md-nav__link">
       Reinforcement Learning
     </a>
   </li>
@@ -541,7 +555,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../../examples.optim/" title="Optimization" class="md-nav__link">
+    <a href="../../../examples/optim/" title="Optimization" class="md-nav__link">
       Optimization
     </a>
   </li>
@@ -795,7 +809,6 @@ In contrast, MAML updates both the head and the feature extractor:
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>First, data are obtained and separated into train, validation and test dataset with <a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py"><code>l2l.vision.datasets.FC100</code></a>. <code>tv.transforms.ToTensor()</code> converts Python Imaging Library (PIL) images to PyTorch tensors. <code>l2l.data.MetaDataset</code> is a thin wrapper around torch datasets that automatically generates bookkeeping information to create new tasks.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -816,7 +829,6 @@ In contrast, MAML updates both the head and the feature extractor:
                                    <span class="n">num_tasks</span><span class="o">=</span><span class="mi">20000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p><code>l2l.data.TaskDataset</code> creates a set of tasks from the MetaDataset using a list of task transformations:</p>
 <ul>
 <li>
@@ -851,7 +863,6 @@ In contrast, MAML updates both the head and the feature extractor:
 <span class="n">head</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>We then instantiate two modules, one for features and one for the head. ConvBase instantiates a four-layer CNN, and the head is a fully connected layer. Because we are not updating the feature extractor parameters, we only need to wrap the head with the <code>l2l.algorithms.MAML()</code> wrapper, which takes in the fast adaptation learning rate <code>fast_lr</code> used for the inner loop later.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
@@ -865,7 +876,6 @@ In contrast, MAML updates both the head and the feature extractor:
 <span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Next, we set up the optimizer with mini-batch SGD using <code>torch.optim.Adam</code>, which takes in both feature and head parameters, and learning rate <code>meta_lr</code> used for the outer loop.</p>
 <p><strong>Outer loop</strong></p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -881,7 +891,6 @@ In contrast, MAML updates both the head and the feature extractor:
         <span class="o">...</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>For training, validation and testing, we first sample a task, then copy the head with <code>head.clone()</code>, which is a method exposed by the MAML wrapper for PyTorch modules, akin to <code>tensor.clone()</code> for PyTorch tensors. Calling <code>clone()</code> allows us to update the parameters of the clone while maintaining ability to back-propagate to the parameters in <code>head</code>. There's no need for <code>feature.clone()</code> as we are only adapting the head.</p>
 <p><strong>Inner loop</strong></p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -929,7 +938,6 @@ In contrast, MAML updates both the head and the feature extractor:
     <span class="k">return</span> <span class="n">valid_error</span><span class="p">,</span> <span class="n">valid_accuracy</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>In <code>fast_adapt()</code>, we separate data into adaptation and evaluation sets with <code>k</code> shot samples each. In each adaptation step, <code>learner.adapt()</code> takes a gradient step on the loss and updates the cloned parameter, <code>learner</code>, such that we can back-propagate through the adaptation step. Under the hood, this is achieved by calling <code>torch.autograd.grad()</code> and setting <code>create_graph=True</code>. <code>fast_adapt()</code> then returns the evaluation loss and accuracy based on the predicted and true labels.</p>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
@@ -954,7 +962,6 @@ In contrast, MAML updates both the head and the feature extractor:
 <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>We compute the gradients with <code>evaluation_error.backward()</code> right after the inner loop updates to free activation and adaptation buffers from memory as early as possible. Lastly, after collecting the gradients, we average the accumulated gradients and updates the parameter at the end of each iteration with <code>optimizer.step()</code>.</p>
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>Having explained the inner-workings of ANIL and its code implementation with learn2learn, I hope this tutorial will be helpful to those who are interested in using ANIL for their own research and applications.</p>
@@ -999,13 +1006,13 @@ In contrast, MAML updates both the head and the feature extractor:
           </a>
         
         
-          <a href="../../../docs/learn2learn/" title="learn2learn" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../../task_transform_tutorial/transform_tutorial/" title="Demystifying Task-Transforms" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                learn2learn
+                Demystifying Task-Transforms
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -1034,7 +1041,7 @@ In contrast, MAML updates both the head and the feature extractor:
     
       <a href="https://twitter.com/seba1511" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
     
-      <a href="http://seba1511.net" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
+      <a href="https://github.com/learnables/learn2learn/issues/new" target="_blank" rel="noopener" title="bug" class="md-footer-social__link fa fa-bug"></a>
     
   </div>
 
@@ -1046,7 +1053,7 @@ In contrast, MAML updates both the head and the feature extractor:
     
       <script src="../../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      <script>app.initialize({version:"1.2.3",url:{base:"../../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       
