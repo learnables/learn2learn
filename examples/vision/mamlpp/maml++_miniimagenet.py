@@ -20,6 +20,9 @@ from collections import namedtuple
 from typing import Tuple
 from tqdm import tqdm
 
+from examples.vision.mamlpp.cnn4_bnrs import CNN4_BNRS
+from examples.vision.mamlpp.MAMLpp import MAMLpp
+
 
 MetaBatch = namedtuple("MetaBatch", "support query")
 
@@ -69,7 +72,7 @@ class MAMLppTrainer:
         )
 
         # Model
-        self._model = l2l.vision.models.CNN4_BNRS(ways, adaptation_steps=steps)
+        self._model = CNN4_BNRS(ways, adaptation_steps=steps)
         if self._use_cuda:
             self._model.cuda()
 
@@ -122,7 +125,7 @@ class MAMLppTrainer:
     def _training_step(
         self,
         batch: MetaBatch,
-        learner: l2l.algorithms.MAML,
+        learner: MAMLpp,
         msl: bool = True,
         epoch: int = 0,
     ) -> Tuple[torch.Tensor, float]:
@@ -163,7 +166,7 @@ class MAMLppTrainer:
         return query_loss, acc
 
     def _testing_step(
-        self, batch: MetaBatch, learner: l2l.algorithms.MAML
+        self, batch: MetaBatch, learner: MAMLpp
     ) -> Tuple[torch.Tensor, float]:
         s_inputs, s_labels = batch.support
         q_inputs, q_labels = batch.query
@@ -197,10 +200,9 @@ class MAMLppTrainer:
         val_interval=1,
     ):
         print("[*] Training...")
-        maml = l2l.algorithms.MAML(
+        maml = MAMLpp(
             self._model,
             lr=fast_lr, # Initialisation LR for all layers and steps
-            use_lslr=True,
             adaptation_steps=self._steps, # For LSLR
             first_order=False,
             allow_nograd=True, # For the parameters of the MetaBatchNorm layers
@@ -287,10 +289,9 @@ class MAMLppTrainer:
         meta_bsz=5,
     ):
         self._model.load_state_dict(model_state_dict)
-        maml = l2l.algorithms.MAML(
+        maml = MAMLpp(
             self._model,
             lr=fast_lr,
-            use_lslr=True,
             adaptation_steps=self._steps,
             first_order=False,
             allow_nograd=True,

@@ -30,7 +30,6 @@ from .cnn4 import (
     CNN4,
     CNN4Backbone,
 )
-from .cnn4_bnrs import CNN4_BNRS
 
 from .resnet12 import ResNet12, ResNet12Backbone
 from .wrn28 import WRN28, WRN28Backbone
@@ -45,7 +44,6 @@ __all__ = [
     'OmniglotCNN',
     'MiniImagenetCNN',
     'CNN4',
-    'CNN4_BNRS',
     'CNN4Backbone',
     'ResNet12',
     'ResNet12Backbone',
