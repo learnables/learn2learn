@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* New vision example: MAML++. (@[DubiousCactus](https://github.com/DubiousCactus))
+
 ### Changed
 
 ### Fixed
@@ -20,12 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Bounding box cropping for Aircraft and CUB200.
 * Pretrained weights for vision models with: `l2l.vision.models.get_pretrained_backbone()`.
-* New vision example: MAML++. (@[DubiousCactus](https://github.com/DubiousCactus))
 * Add `keep_requires_grad` flag to `detach_module`. ([Zhaofeng Wu](https://github.com/ZhaofengWu))
 
 ### Changed
-
-* Implement LSLR (MAML++) in the MAML module. (@[DubiousCactus](https://github.com/DubiousCactus))
 
 ### Fixed
 
