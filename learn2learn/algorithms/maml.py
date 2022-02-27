@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-import torch
 import traceback
-
 from torch.autograd import grad
 
 from learn2learn.algorithms.base_learner import BaseLearner
-from learn2learn.utils import clone_module, update_module, clone_named_parameters
+from learn2learn.utils import clone_module, update_module
 
 
 def maml_update(model, lr, grads=None):
@@ -40,12 +38,12 @@ def maml_update(model, lr, grads=None):
     if grads is not None:
         params = list(model.parameters())
         if not len(grads) == len(list(params)):
-            msg = "WARNING:maml_update(): Parameters and gradients have different length. ("
-            msg += str(len(params)) + " vs " + str(len(grads)) + ")"
+            msg = 'WARNING:maml_update(): Parameters and gradients have different length. ('
+            msg += str(len(params)) + ' vs ' + str(len(grads)) + ')'
             print(msg)
         for p, g in zip(params, grads):
             if g is not None:
-                p.update = -lr * g
+                p.update = - lr * g
     return update_module(model)
 
 
@@ -90,14 +88,12 @@ class MAML(BaseLearner):
     ~~~
     """
 
-    def __init__(
-        self,
-        model,
-        lr,
-        first_order=False,
-        allow_unused=None,
-        allow_nograd=False,
-    ):
+    def __init__(self,
+                 model,
+                 lr,
+                 first_order=False,
+                 allow_unused=None,
+                 allow_nograd=False):
         super(MAML, self).__init__()
         self.module = model
         self.lr = lr
@@ -107,32 +103,14 @@ class MAML(BaseLearner):
             allow_unused = allow_nograd
         self.allow_unused = allow_unused
 
-    def _init_lslr_parameters(
-        self, model: torch.nn.Module, adaptation_steps: int, init_lr: float
-    ) -> torch.nn.ParameterDict:
-        lslr = torch.nn.ParameterDict()
-        for layer_name, layer in model.named_modules():
-            # If the layer has learnable parameters
-            if (
-                len(
-                    [
-                        name
-                        for name, param in layer.named_parameters(recurse=False)
-                        if param.requires_grad
-                    ]
-                )
-                > 0
-            ):
-                lslr[layer_name.replace(".", "-")] = torch.nn.Parameter(
-                    data=torch.ones(adaptation_steps) * init_lr,
-                    requires_grad=True,
-                )
-        return lslr
-
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
 
-    def adapt(self, loss, first_order=None, allow_unused=None, allow_nograd=None):
+    def adapt(self,
+              loss,
+              first_order=None,
+              allow_unused=None,
+              allow_nograd=None):
         """
         **Description**
 
@@ -141,13 +119,13 @@ class MAML(BaseLearner):
         **Arguments**
 
         * **loss** (Tensor) - Loss to minimize upon update.
-        * **step** (int) - Current inner loop step. Used to fetch the corresponding learning rate.
         * **first_order** (bool, *optional*, default=None) - Whether to use first- or
             second-order updates. Defaults to self.first_order.
         * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
             of unused parameters. Defaults to self.allow_unused.
         * **allow_nograd** (bool, *optional*, default=None) - Whether to allow adaptation with
             parameters that have `requires_grad = False`. Defaults to self.allow_nograd.
+
         """
         if first_order is None:
             first_order = self.first_order
@@ -160,13 +138,11 @@ class MAML(BaseLearner):
         if allow_nograd:
             # Compute relevant gradients
             diff_params = [p for p in self.module.parameters() if p.requires_grad]
-            grad_params = grad(
-                loss,
-                diff_params,
-                retain_graph=second_order,
-                create_graph=second_order,
-                allow_unused=allow_unused,
-            )
+            grad_params = grad(loss,
+                               diff_params,
+                               retain_graph=second_order,
+                               create_graph=second_order,
+                               allow_unused=allow_unused)
             gradients = []
             grad_counter = 0
 
@@ -180,18 +156,14 @@ class MAML(BaseLearner):
                 gradients.append(gradient)
         else:
             try:
-                gradients = grad(
-                    loss,
-                    self.module.parameters(),
-                    retain_graph=second_order,
-                    create_graph=second_order,
-                    allow_unused=allow_unused,
-                )
+                gradients = grad(loss,
+                                 self.module.parameters(),
+                                 retain_graph=second_order,
+                                 create_graph=second_order,
+                                 allow_unused=allow_unused)
             except RuntimeError:
                 traceback.print_exc()
-                print(
-                    "learn2learn: Maybe try with allow_nograd=True and/or allow_unused=True ?"
-                )
+                print('learn2learn: Maybe try with allow_nograd=True and/or allow_unused=True ?')
 
         # Update the module
         self.module = maml_update(self.module, self.lr, gradients)
@@ -223,10 +195,8 @@ class MAML(BaseLearner):
             allow_unused = self.allow_unused
         if allow_nograd is None:
             allow_nograd = self.allow_nograd
-        return MAML(
-            clone_module(self.module),
-            lr=self.lr,
-            first_order=first_order,
-            allow_unused=allow_unused,
-            allow_nograd=allow_nograd,
-        )
+        return MAML(clone_module(self.module),
+                    lr=self.lr,
+                    first_order=first_order,
+                    allow_unused=allow_unused,
+                    allow_nograd=allow_nograd)
