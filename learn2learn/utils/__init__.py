@@ -175,9 +175,9 @@ def detach_module(module, keep_requires_grad=False):
     **Example**
 
     ~~~python
-    net = nn.Sequential(Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
+    net = nn.Sequential(nn.Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
     clone = clone_module(net)
-    detach_module(clone)
+    detach_module(clone, keep_requires_grad=True)
     error = loss(clone(X), y)
     error.backward()  # Gradients are back-propagate on clone, not net.
     ~~~
