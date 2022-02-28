@@ -50,6 +50,10 @@ def clone_parameters(param_list):
     return [p.clone() for p in param_list]
 
 
+def clone_named_parameters(param_dict):
+    return {k: p.clone() for k, p in param_dict.items()}
+
+
 def clone_module(module, memo=None):
     """
 
