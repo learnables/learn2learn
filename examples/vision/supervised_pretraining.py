@@ -30,7 +30,6 @@ def fast_adapt(
         data=data,
         labels=labels,
         shots=args.options.shots,
-        ways=args.options.ways,
     )
     classifier.fit_(support_data, support_labels)
     preds = classifier(query_data)
