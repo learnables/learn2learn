@@ -361,6 +361,7 @@ def flatten_config(args, prefix=None):
 class _ImportRaiser(object):
 
     def __init__(self, name, command):
+        super(_ImportRaiser, self).__init__()
         self.name = name
         self.command = command
 
