@@ -16,7 +16,7 @@ except ImportError:
             self.command = command
 
     name, command = 'pytorch_lightning', 'pip install pytorch_lightning==1.0.2'
-    LightningModule = LightningRaiser(name, command)()
+    LightningModule = LightningRaiser(name, command)
 
 from torch import optim
 from argparse import ArgumentParser
