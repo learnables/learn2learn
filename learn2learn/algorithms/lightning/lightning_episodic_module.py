@@ -10,12 +10,13 @@ except ImportError:
 
     class LightningRaiser(_ImportRaiser):
 
-        def __init__(self, *args, **kwargs):
-            super(LightningRaiser, self).__init__()
-            self.name = 'pytorch_lightning'
-            self.command = 'pip install pytorch_lightning==1.0.2'
+        def __init__(self, name, command, **kwargs):
+            super().__init__(name, command)
+            self.name = name
+            self.command = command
 
-    LightningModule = LightningRaiser
+    name, command = 'pytorch_lightning', 'pip install pytorch_lightning==1.0.2'
+    LightningModule = LightningRaiser(name, command)()
 
 from torch import optim
 from argparse import ArgumentParser
