@@ -28,7 +28,6 @@ class CifarCNN(torch.nn.Module):
         super(CifarCNN, self).__init__()
         self.hidden_size = hidden_size
         features = l2l.vision.models.ConvBase(
-            output_size=hidden_size,
             hidden=hidden_size,
             channels=3,
             max_pool=False,
