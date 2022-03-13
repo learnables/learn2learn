@@ -30,7 +30,7 @@ class Convnet(nn.Module):
     def __init__(self, x_dim=3, hid_dim=64, z_dim=64):
         super().__init__()
         self.encoder = l2l.vision.models.CNN4Backbone(
-            hidden=hid_dim,
+            hidden_size=hid_dim,
             channels=x_dim,
             max_pool=True,
        )
@@ -100,11 +100,11 @@ if __name__ == '__main__':
 
     path_data = '~/data'
     train_dataset = l2l.vision.datasets.MiniImagenet(
-        root=path_data, mode='train')
+        root=path_data, mode='train', download=True)
     valid_dataset = l2l.vision.datasets.MiniImagenet(
-        root=path_data, mode='validation')
+        root=path_data, mode='validation', download=True)
     test_dataset = l2l.vision.datasets.MiniImagenet(
-        root=path_data, mode='test')
+        root=path_data, mode='test', download=True)
 
     train_dataset = l2l.data.MetaDataset(train_dataset)
     train_transforms = [
