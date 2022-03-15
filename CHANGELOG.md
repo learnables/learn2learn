@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-* example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
+* Example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
+* Loading duplicate FGVC Aircraft images.
 
 ## v0.1.7
 
