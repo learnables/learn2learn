@@ -136,7 +136,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
     tqdm_bar = tqdm(range(iterations))
 
     accs = []
-    for iteration in tqdm_bar:
+    for _ in tqdm_bar:
         iteration_error = 0.0
         iteration_acc = 0.0
         for _ in range(tps):
@@ -144,7 +144,7 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
             train_task, valid_task = train_gen.sample(), validation_gen.sample()
 
             # Fast Adaptation
-            for step in range(fas):
+            for _ in range(fas):
                 train_error, _ = compute_loss(train_task, roberta, device, learner, loss_func, batch=shots * ways)
                 learner.adapt(train_error)
 
