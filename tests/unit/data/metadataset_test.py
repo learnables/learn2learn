@@ -62,50 +62,54 @@ class TestMetaDataset(TestCase):
             self.assertEqual(dict_label_to_indices[key][0], ord(key) - 97)
 
     def test_union_metadataset(self):
-        for ds_class in [
-            l2l.vision.datasets.FC100,
-            l2l.vision.datasets.CIFARFS,
-        ]:
-            datasets = [
-                ds_class('~/data', mode='train', download=True),
-                ds_class('~/data', mode='validation', download=True),
-                ds_class('~/data', mode='test', download=True),
-            ]
-            datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
-            union = l2l.data.UnionMetaDataset(datasets)
-            self.assertEqual(len(union), sum([len(ds) for ds in datasets]))
-            self.assertTrue(len(union.labels) == sum([len(ds.labels) for ds in datasets]))
-            self.assertTrue(len(union.indices_to_labels) == sum([len(ds.indices_to_labels) for ds in datasets]))
-            ref = datasets[1][23]
-            item = union[len(datasets[0]) + 23]
-            # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
-            self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
-            ref = datasets[1][0]
-            item = union[len(datasets[0]) + 0]
-            # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
-            self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
+        datasets = [
+            self.ds.get_mnist(),
+            self.ds.get_omniglot(),
+        ]
+        datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
+        union = l2l.data.UnionMetaDataset(datasets)
+        self.assertEqual(len(union), sum([len(ds) for ds in datasets]))
+        self.assertTrue(len(union.labels) == sum([len(ds.labels) for ds in datasets]))
+        self.assertTrue(len(union.indices_to_labels) == sum([len(ds.indices_to_labels) for ds in datasets]))
+        ref = datasets[1][23]
+        item = union[len(datasets[0]) + 23]
+        # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
+        self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
+        ref = datasets[1][0]
+        item = union[len(datasets[0]) + 0]
+        # self.assertTrue(item[1] == ref[1])  # Would fail, because labels are remapped.
+        self.assertTrue(np.linalg.norm(np.array(item[0]) - np.array(ref[0])) <= 1e-6)
 
     def test_filtered_metadataset(self):
-        for ds_class in [
-            l2l.vision.datasets.FC100,
-            l2l.vision.datasets.CIFARFS,
+        for dataset in [
+            self.ds.get_omniglot(),
+            self.ds.get_mnist(),
         ]:
-            datasets = [
-                ds_class('~/data', mode='train', download=True),
-                ds_class('~/data', mode='validation', download=True),
-                ds_class('~/data', mode='test', download=True),
-            ]
-            datasets = [l2l.data.MetaDataset(ds) for ds in datasets]
-            union = l2l.data.UnionMetaDataset(datasets)
-            classes = datasets[1].labels
-            filtered = l2l.data.FilteredMetaDataset(union, classes)
-            self.assertEqual(len(filtered.labels), len(datasets[1].labels))
-            self.assertEqual(len(filtered), len(datasets[1]))
-            for label in filtered.labels:
-                self.assertTrue(label in datasets[1].labels)
+            dataset = l2l.data.MetaDataset(dataset)
+            all_classes = dataset.labels
+            even_classes = [i for i in all_classes if i % 2 == 0]
+            odd_classes = [i for i in all_classes if i % 2 == 1]
+            evens = l2l.data.FilteredMetaDataset(dataset, even_classes)
+            odds = l2l.data.FilteredMetaDataset(dataset, odd_classes)
+
+            self.assertEqual(sorted(even_classes), sorted(evens.labels))
+            self.assertEqual(sorted(odd_classes), sorted(odds.labels))
+
+            union = l2l.data.UnionMetaDataset((evens, odds))
+            self.assertEqual(sorted(union.labels), sorted(all_classes))
+
+            for label in evens.labels:
+                self.assertTrue(label in even_classes)
                 self.assertEqual(
-                    len(filtered.labels_to_indices[label]),
-                    len(datasets[1].labels_to_indices[label])
+                    len(evens.labels_to_indices[label]),
+                    len(dataset.labels_to_indices[label])
+                )
+
+            for label in odds.labels:
+                self.assertTrue(label in odd_classes)
+                self.assertEqual(
+                    len(odds.labels_to_indices[label]),
+                    len(dataset.labels_to_indices[label])
                 )
 
 

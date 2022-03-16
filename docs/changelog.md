@@ -9,18 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-
-* New vision example: MAML++. (@[DubiousCactus](https://github.com/DubiousCactus))
 * Add tutorial: "Demystifying Task Transforms", ([Varad Pimpalkhute](https://github.com/nightlessbaron/))
 
 ### Changed
 
-* Documentation: uses `mkdocstrings` instead of `pydoc-markdown`.
-
 ### Fixed
-
-* Example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
-* Loading duplicate FGVC Aircraft images.
+* example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
 
 ## v0.1.7
 
@@ -29,8 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Bounding box cropping for Aircraft and CUB200.
 * Pretrained weights for vision models with: `l2l.vision.models.get_pretrained_backbone()`.
 * Add `keep_requires_grad` flag to `detach_module`. ([Zhaofeng Wu](https://github.com/ZhaofengWu))
-
-### Changed
 
 ### Fixed
 

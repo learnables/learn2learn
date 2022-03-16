@@ -13,14 +13,15 @@ class MetaEnv(Env):
     identify the environment. Tasks are then a dictionary with the names of these parameters as keys and the
     values of these parameters as values. Environments must then implement functions to get, set and sample tasks.
     The flow is then
-    ```
+
+    ~~~python
     env = EnvClass()
     tasks = env.sample_tasks(num_tasks)
     for task in tasks:
         env.set_task(task)
-        *training code here*
+        # *training code here*
         ...
-    ```
+    ~~~
 
     **Credit**
 
@@ -29,7 +30,7 @@ class MetaEnv(Env):
     """
 
     def __init__(self, task=None):
-        super(Env, self).__init__()
+        super(MetaEnv, self).__init__()
         if task is None:
             task = self.sample_tasks(1)[0]
         self.set_task(task)

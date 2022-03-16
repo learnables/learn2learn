@@ -153,7 +153,7 @@ class FGVCAircraft(Dataset):
                         'images_family_test.txt']
         images_labels = []
         for family in family_names:
-            with open(os.path.join(data_path, DATA_DIR, family_names[0]), 'r') as family_file:
+            with open(os.path.join(data_path, DATA_DIR, family), 'r') as family_file:
                 for line in family_file.readlines():
                     image, label = line.split(' ', 1)
                     images_labels.append((image.strip(), label.strip()))

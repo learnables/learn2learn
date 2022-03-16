@@ -188,6 +188,37 @@ class TestMAMLAlgorithm(unittest.TestCase):
         loss = sum(p.norm(p=2) for p in clone.parameters())
         loss.backward()
 
+    def test_memory_consumption(self):
+
+        if torch.cuda.is_available() and torch.cuda.device_count() > 0:
+            def get_memory():
+                return torch.cuda.memory_allocated(0)
+
+            BSZ = 1024
+            INPUT_SIZE = 128
+            N_STEPS = 5
+            N_EVAL = 5
+
+            device = torch.device("cuda")
+            model = torch.nn.Sequential(*[
+                torch.nn.Linear(INPUT_SIZE, INPUT_SIZE) for _ in range(10)
+            ])
+            maml = l2l.algorithms.MAML(model, lr=0.0001)
+            maml.to(device)
+
+            memory_usages = []
+
+            for evaluation in range(N_EVAL):
+                learner = maml.clone()
+                X = torch.randn(BSZ, INPUT_SIZE, device=device)
+                for step in range(N_STEPS):
+                    learner.adapt(torch.norm(learner(X)))
+
+                memory_usages.append(get_memory())
+
+            for i in range(1, len(memory_usages)):
+                self.assertTrue(memory_usages[0] == memory_usages[i])
+
 
 if __name__ == '__main__':
     unittest.main()

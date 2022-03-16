@@ -94,7 +94,7 @@ class MiniImagenet(data.Dataset):
             google_drive_file_id = '1KY5e491bkLFqJDp0-UWou3463Mo8AOco'
             dropbox_file_link = 'https://www.dropbox.com/s/ip1b7se3gij3r1b/mini-imagenet-cache-validation.pkl?dl=1'
         else:
-            raise ('ValueError', 'Needs to be train, test or validation')
+            raise ValueError('Needs to be train, test or validation')
 
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
         try:

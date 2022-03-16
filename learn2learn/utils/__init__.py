@@ -50,6 +50,10 @@ def clone_parameters(param_list):
     return [p.clone() for p in param_list]
 
 
+def clone_named_parameters(param_dict):
+    return {k: p.clone() for k, p in param_dict.items()}
+
+
 def clone_module(module, memo=None):
     """
 
@@ -171,9 +175,9 @@ def detach_module(module, keep_requires_grad=False):
     **Example**
 
     ~~~python
-    net = nn.Sequential(Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
+    net = nn.Sequential(nn.Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
     clone = clone_module(net)
-    detach_module(clone)
+    detach_module(clone, keep_requires_grad=True)
     error = loss(clone(X), y)
     error.backward()  # Gradients are back-propagate on clone, not net.
     ~~~
@@ -279,22 +283,24 @@ def update_module(module, updates=None, memo=None):
     # Update the params
     for param_key in module._parameters:
         p = module._parameters[param_key]
-        if p is not None and hasattr(p, 'update') and p.update is not None:
-            if p in memo:
-                module._parameters[param_key] = memo[p]
-            else:
+        if p in memo:
+            module._parameters[param_key] = memo[p]
+        else:
+            if p is not None and hasattr(p, 'update') and p.update is not None:
                 updated = p + p.update
+                p.update = None
                 memo[p] = updated
                 module._parameters[param_key] = updated
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         buff = module._buffers[buffer_key]
-        if buff is not None and hasattr(buff, 'update') and buff.update is not None:
-            if buff in memo:
-                module._buffers[buffer_key] = memo[buff]
-            else:
+        if buff in memo:
+            module._buffers[buffer_key] = memo[buff]
+        else:
+            if buff is not None and hasattr(buff, 'update') and buff.update is not None:
                 updated = buff + buff.update
+                buff.update = None
                 memo[buff] = updated
                 module._buffers[buffer_key] = updated
 

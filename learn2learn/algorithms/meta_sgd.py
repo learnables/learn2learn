@@ -46,12 +46,16 @@ def meta_sgd_update(model, lrs=None, grads=None):
         p = model._parameters[param_key]
         if p is not None and p.grad is not None:
             model._parameters[param_key] = p - p._lr * p.grad
+            p.grad = None
+            p._lr = None
 
     # Second, handle the buffers if necessary
     for buffer_key in model._buffers:
         buff = model._buffers[buffer_key]
         if buff is not None and buff.grad is not None and buff._lr is not None:
             model._buffers[buffer_key] = buff - buff._lr * buff.grad
+            buff.grad = None
+            buff._lr = None
 
     # Then, recurse for each submodule
     for module_key in model._modules:
