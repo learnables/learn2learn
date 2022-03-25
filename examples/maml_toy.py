@@ -22,7 +22,7 @@ class Model(nn.Module):
     def __init__(self):
         super(Model, self).__init__()
         self.mu = nn.Parameter(th.randn(DIM))
-        self.sigma = nn.Parameter(th.randn(DIM))
+        self.sigma = nn.Parameter(th.abs(th.randn(DIM)))
 
     def forward(self, x=None):
         return dist.Normal(self.mu, self.sigma)
@@ -31,7 +31,7 @@ class Model(nn.Module):
 def main():
     task_dist = dist.Normal(th.zeros(2 * DIM), th.ones(2 * DIM))
     model = Model()
-    maml = l2l.algorithms.MAML(model, lr=1e-2)
+    maml = l2l.optim.LSLR(l2l.algorithms.MAML(model, lr=1e-2), init_lr=1e-2, adaptation_steps=1)
     opt = optim.Adam(maml.parameters())
 
     for i in range(TIMESTEPS):
