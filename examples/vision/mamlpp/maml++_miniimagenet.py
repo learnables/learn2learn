@@ -20,7 +20,7 @@ from collections import namedtuple
 from typing import Tuple
 from tqdm import tqdm
 
-from examples.vision.mamlpp.cnn4_bnrs import CNN4_BNRS
+from learn2learn.vision.models.cnn4_bnrs import CNN4_BNRS
 from examples.vision.mamlpp.MAMLpp import MAMLpp
 
 
