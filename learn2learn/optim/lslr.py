@@ -52,9 +52,9 @@ class LSLR:
     def __init__(self, module: torch.nn.Module, adaptation_steps: int, init_lr: float):
         module.update_func = self.update_with_lslr
         self.model = module
-        # self.model.lslr = self._init_lslr_parameters(
-        #     adaptation_steps=adaptation_steps, init_lr=init_lr
-        # )
+        self.model.lslr = self._init_lslr_parameters(
+            adaptation_steps=adaptation_steps, init_lr=init_lr
+        )
         self._current_step = 0
 
     def _init_lslr_parameters(
@@ -79,7 +79,7 @@ class LSLR:
                 )
         return lslr
 
-    def update_with_lslr(self, model: torch.nn.Module, lr=0.01, grads=None, **kwargs):
+    def update_with_lslr(self, model: torch.nn.Module, lr=None, grads=None, **kwargs):
         # TODO: Turn this into a GBML gradient transform instead?
         """
 
@@ -101,17 +101,6 @@ class LSLR:
         if grads is not None:
             params = list(model.parameters())
             if not len(grads) == len(list(params)):
-                msg = 'WARNING:maml_update(): Parameters and gradients have different length. ('
-                msg += str(len(params)) + ' vs ' + str(len(grads)) + ')'
-                print(msg)
-            for p, g in zip(params, grads):
-                if g is not None:
-                    p.update = - lr * g
-        return update_module(model)
-
-        if grads is not None:
-            params = list(model.parameters())
-            if not len(grads) == len(list(params)):
                 msg = "WARNING:maml_update(): Parameters and gradients have different length. ("
                 msg += str(len(params)) + " vs " + str(len(grads)) + ")"
                 print(msg)
@@ -128,8 +117,7 @@ class LSLR:
                     layer_name = name[: name.rfind(".")].replace(
                         ".", "-"
                     )  # Extract the layer name from the named parameter
-                    # lr = self.model.lslr[layer_name][self._current_step]
-                    lr = 0.01
+                    lr = self.model.lslr[layer_name][self._current_step]
                     assert (
                         lr is not None
                     ), f"Parameter {name} does not have a learning rate in LSLR dict!"
@@ -162,23 +150,21 @@ class LSLR:
         if name == "clone":
             def override(*args, **kwargs):
                 method = object.__getattribute__(self.model, name)
-                # lslr = {k: p.detach() for k, p in self.model.lslr.items()}
+                lslr = {k: p.clone() for k, p in self.model.lslr.items()}
                 # Original clone method
                 self.model = method(*args, **kwargs)
                 # Override the update function to LSLR
                 with torch.no_grad():
                     self.model.update_func = self.update_with_lslr
-                # self.model.lslr = lslr
+                    self.model.lslr = lslr
                 return self
             attr = override
-        elif name == "adapt_":
-            print("Overriding adapt()")
+        elif name == "adapt":
             def override(*args, **kwargs):
                 assert 'step' in kwargs, "Keyword argument 'step' not passed to the adapt() method"
                 with torch.no_grad():
                     self._current_step = kwargs['step']
                     del kwargs['step']
-                    print(f"Setting step to {self._current_step}")
                 method = object.__getattribute__(self.model, name)
                 method(*args, **kwargs)
             attr = override
