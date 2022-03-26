@@ -12,7 +12,6 @@ import torch
 import torch.nn.functional as F
 
 from copy import deepcopy
-from learn2learn.vision.models.cnn4 import maml_init_, fc_init_
 
 
 class BatchNorm_BNRS(torch.nn.Module):
@@ -100,5 +99,3 @@ class BatchNorm_BNRS(torch.nn.Module):
         return "{num_features}, eps={eps}, momentum={momentum}, affine={affine}".format(
             **self.__dict__
         )
-
-

@@ -8,9 +8,7 @@ CNN4 extended with Batch-Norm Running Statistics.
 """
 
 import torch
-import torch.nn.functional as F
 
-from copy import deepcopy
 from learn2learn.vision.models.bnrs import BatchNorm_BNRS
 from learn2learn.vision.models.cnn4 import maml_init_, fc_init_
 
@@ -92,8 +90,13 @@ class ConvBase_BNRS(torch.nn.Sequential):
     #     MiniImagenet: hidden=32, channels=3, max_pool
 
     def __init__(
-        self, hidden=64, channels=1, max_pool=False, layers=4, max_pool_factor=1.0,
-        adaptation_steps=1
+        self,
+        hidden=64,
+        channels=1,
+        max_pool=False,
+        layers=4,
+        max_pool_factor=1.0,
+        adaptation_steps=1,
     ):
         core = [
             ConvBlock_BNRS(
@@ -102,7 +105,7 @@ class ConvBase_BNRS(torch.nn.Sequential):
                 (3, 3),
                 max_pool=max_pool,
                 max_pool_factor=max_pool_factor,
-                adaptation_steps=adaptation_steps
+                adaptation_steps=adaptation_steps,
             ),
         ]
         for _ in range(layers - 1):
@@ -113,7 +116,7 @@ class ConvBase_BNRS(torch.nn.Sequential):
                     kernel_size=(3, 3),
                     max_pool=max_pool,
                     max_pool_factor=max_pool_factor,
-                    adaptation_steps=adaptation_steps
+                    adaptation_steps=adaptation_steps,
                 )
             )
         super(ConvBase_BNRS, self).__init__(*core)
@@ -142,7 +145,7 @@ class CNN4Backbone_BNRS(ConvBase_BNRS):
             channels=channels,
             max_pool=max_pool,
             max_pool_factor=max_pool_factor,
-            adaptation_steps=adaptation_steps
+            adaptation_steps=adaptation_steps,
         )
 
     def forward(self, x, step):
