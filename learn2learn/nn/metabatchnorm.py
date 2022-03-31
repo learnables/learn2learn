@@ -78,32 +78,36 @@ class MetaBatchNorm(torch.nn.Module):
         self.backup_running_mean = torch.zeros(self.running_mean.shape)
         self.backup_running_var = torch.ones(self.running_var.shape)
         self.momentum = momentum
+        self._steps = adaptation_steps
+        self._current_step = 0
 
     def forward(
         self,
         input,
-        step,
+        inference=False,
     ):
         """
         **Arguments**
 
         * **input** (tensor) - Input data batch, size either can be any.
-        * **step** (int) - The current inner loop step being taken. This is used when to learn per
-        step params and collecting per step batch statistics.
+        * **inferencep** (bool, *optional*, default=False) - when set to `True`, uses the final step's parameters and running statistics. When set to `False`, automatically infers the current adaptation step.
         """
-        assert (
-            step < self.running_mean.shape[0]
-        ), f"Running forward with step={step} when initialised with {self.running_mean.shape[0]} steps!"
-        return F.batch_norm(
+        step = self._current_step
+        if inference:
+            step = self._steps - 1
+        output = F.batch_norm(
             input,
-            self.running_mean[step],
-            self.running_var[step],
-            self.weight[step],
-            self.bias[step],
+            self.running_mean[self._current_step],
+            self.running_var[self._current_step],
+            self.weight[self._current_step],
+            self.bias[self._current_step],
             training=True,
             momentum=self.momentum,
             eps=self.eps,
         )
+        if not inference:
+            self._current_step = self._current_step + 1 if self._current_step < (self._steps - 1) else 0
+        return output
 
     def backup_stats(self):
         self.backup_running_mean.data = deepcopy(self.running_mean.data)

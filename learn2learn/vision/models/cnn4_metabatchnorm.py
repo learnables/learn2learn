@@ -28,9 +28,9 @@ class LinearBlock_MetaBatchNorm(torch.nn.Module):
         self.linear = torch.nn.Linear(input_size, output_size)
         fc_init_(self.linear)
 
-    def forward(self, x, step):
+    def forward(self, x, inference=False):
         x = self.linear(x)
-        x = self.normalize(x, step)
+        x = self.normalize(x, inference=inference)
         x = self.relu(x)
         return x
 
@@ -76,9 +76,9 @@ class ConvBlock_MetaBatchNorm(torch.nn.Module):
         )
         maml_init_(self.conv)
 
-    def forward(self, x, step):
+    def forward(self, x, inference=False):
         x = self.conv(x)
-        x = self.normalize(x, step)
+        x = self.normalize(x, inference=inference)
         x = self.relu(x)
         x = self.max_pool(x)
         return x
@@ -122,9 +122,9 @@ class ConvBase_MetaBatchNorm(torch.nn.Sequential):
             )
         super(ConvBase_MetaBatchNorm, self).__init__(*core)
 
-    def forward(self, x, step):
+    def forward(self, x, inference=False):
         for module in self:
-            x = module(x, step)
+            x = module(x, inference=inference)
         return x
 
 
@@ -149,8 +149,8 @@ class CNN4Backbone_MetaBatchNorm(ConvBase_MetaBatchNorm):
             max_pool_factor=max_pool_factor,
         )
 
-    def forward(self, x, step):
-        x = super(CNN4Backbone_MetaBatchNorm, self).forward(x, step)
+    def forward(self, x, inference=False):
+        x = super(CNN4Backbone_MetaBatchNorm, self).forward(x, inference=inference)
         x = x.reshape(x.size(0), -1)
         return x
 
@@ -236,7 +236,15 @@ class CNN4_MetaBatchNorm(torch.nn.Module):
             if type(layer) is MetaBatchNorm:
                 layer.restore_backup_stats()
 
-    def forward(self, x, step):
-        x = self.features(x, step)
+    def forward(self, x, inference=False):
+        """
+        **Arguments**
+
+        * **input** (tensor) - Input data batch, size either can be any.
+        * **inferencep** (bool, *optional*, default=False) - when set to `True`, uses the final
+        step's parameters and running statistics. When set to `False`, automatically infers the
+        current adaptation step.
+        """
+        x = self.features(x, inference=inference)
         x = self.classifier(x)
         return x
