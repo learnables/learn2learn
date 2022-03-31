@@ -16,12 +16,38 @@ from copy import deepcopy
 
 class MetaBatchNorm(torch.nn.Module):
     """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metabatchnorm.py)
+
+    **Description**
+
     An extension of Pytorch's BatchNorm layer, with the Per-Step Batch Normalisation Running
     Statistics and Per-Step Batch Normalisation Weights and Biases improvements proposed in
-    MAML++ by Antoniou et al. It is adapted from the original Pytorch implementation at
+    "How to train your MAML".
+    It is adapted from the original Pytorch implementation at
     https://github.com/AntreasAntoniou/HowToTrainYourMAMLPytorch,
     with heavy refactoring and a bug fix
     (https://github.com/AntreasAntoniou/HowToTrainYourMAMLPytorch/issues/42).
+
+    **Arguments**
+
+    * **num_features** (int) - number of input features.
+    * **adaptation_steps** (int) - number of inner-loop adaptation steps.
+    * **eps** (float, *optional*, default=1e-5) - a value added to the denominator for numerical stability.
+    * **momentum** (float, *optional*, default=0.1) - the value used for the running_mean and running_var computation. Can be set to None for cumulative moving average (i.e. simple average).
+    * **affine** (bool, *optional*, default=True) - a boolean value that when set to True, this module has learnable affine parameters.
+
+    **References**
+
+    1. Antoniou et al. 2019. "How to train your MAML." ICLR.
+
+    **Example**
+
+    ~~~python
+    batch_norm = MetaBatchNorm(100, 5)
+    input = torch.randn(20, 100, 35, 45)
+    for step in range(5):
+        output = batch_norm(input, step)
+    ~~~
     """
 
     def __init__(
@@ -31,13 +57,11 @@ class MetaBatchNorm(torch.nn.Module):
         eps=1e-5,
         momentum=0.1,
         affine=True,
-        meta_batch_norm=True,
     ):
         super(MetaBatchNorm, self).__init__()
         self.num_features = num_features
         self.eps = eps
         self.affine = affine
-        self.meta_batch_norm = meta_batch_norm
         self.num_features = num_features
         self.running_mean = torch.nn.Parameter(
             torch.zeros(adaptation_steps, num_features), requires_grad=False
@@ -61,10 +85,11 @@ class MetaBatchNorm(torch.nn.Module):
         step,
     ):
         """
-        :param input: input data batch, size either can be any.
-        :param step: The current inner loop step being taken. This is used when to learn per step params and
-         collecting per step batch statistics.
-        :return: The result of the batch norm operation.
+        **Arguments**
+
+        * **input** (tensor) - Input data batch, size either can be any.
+        * **step** (int) - The current inner loop step being taken. This is used when to learn per
+        step params and collecting per step batch statistics.
         """
         assert (
             step < self.running_mean.shape[0]
