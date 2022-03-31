@@ -70,12 +70,13 @@ plugins:
           show_category_heading: true
           show_signature: true
           show_signature_annotations: false
-          separate_signature: false
+          separate_signature: true
           group_by_category: false
           member_order: 'alphabetical'
-          show_bases: false
+          show_bases: true
           show_if_no_docstring: true
           show_submodules: false
+          heading_level: 3
 
 markdown_extensions:
     - mdx_math
