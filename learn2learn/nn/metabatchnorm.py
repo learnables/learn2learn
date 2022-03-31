@@ -32,9 +32,13 @@ class MetaBatchNorm(torch.nn.Module):
 
     * **num_features** (int) - number of input features.
     * **adaptation_steps** (int) - number of inner-loop adaptation steps.
-    * **eps** (float, *optional*, default=1e-5) - a value added to the denominator for numerical stability.
-    * **momentum** (float, *optional*, default=0.1) - the value used for the running_mean and running_var computation. Can be set to None for cumulative moving average (i.e. simple average).
-    * **affine** (bool, *optional*, default=True) - a boolean value that when set to True, this module has learnable affine parameters.
+    * **eps** (float, *optional*, default=1e-5) - a value added to the denominator for numerical
+    stability.
+    * **momentum** (float, *optional*, default=0.1) - the value used for the running_mean and
+    running_var computation. Can be set to None for cumulative moving average (i.e. simple
+    average).
+    * **affine** (bool, *optional*, default=True) - a boolean value that when set to True, this
+    module has learnable affine parameters.
 
     **References**
 
@@ -90,7 +94,9 @@ class MetaBatchNorm(torch.nn.Module):
         **Arguments**
 
         * **input** (tensor) - Input data batch, size either can be any.
-        * **inferencep** (bool, *optional*, default=False) - when set to `True`, uses the final step's parameters and running statistics. When set to `False`, automatically infers the current adaptation step.
+        * **inferencep** (bool, *optional*, default=False) - when set to `True`, uses the final
+        step's parameters and running statistics. When set to `False`, automatically infers the
+        current adaptation step.
         """
         step = self._current_step
         if inference:
@@ -106,7 +112,9 @@ class MetaBatchNorm(torch.nn.Module):
             eps=self.eps,
         )
         if not inference:
-            self._current_step = self._current_step + 1 if self._current_step < (self._steps - 1) else 0
+            self._current_step = (
+                self._current_step + 1 if self._current_step < (self._steps - 1) else 0
+            )
         return output
 
     def backup_stats(self):

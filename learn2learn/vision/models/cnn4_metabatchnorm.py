@@ -178,7 +178,8 @@ class CNN4_MetaBatchNorm(torch.nn.Module):
 
     * **output_size** (int) - The dimensionality of the network's output.
     * **adaptation_steps** (int) - Number of inner-loop adaptation steps.
-    * **hidden_size** (int, *optional*, default=64) - The dimensionality of the hidden representation.
+    * **hidden_size** (int, *optional*, default=64) - The dimensionality of the hidden
+    representation.
     * **layers** (int, *optional*, default=4) - The number of convolutional layers.
     * **channels** (int, *optional*, default=3) - The number of channels in input.
     * **max_pool** (bool, *optional*, default=True) - Whether ConvBlocks use max-pooling.
