@@ -4,20 +4,21 @@
 #
 
 """
-CNN4 extended with Batch-Norm Running Statistics.
+CNN4 using a MetaBatchNorm layer allowing to accumulate per-step running statistics and use
+per-step bias and variance parameters.
 """
 
 import torch
 
-from learn2learn.vision.models.bnrs import BatchNorm_BNRS
+from learn2learn.nn.metabatchnorm import MetaBatchNorm
 from learn2learn.vision.models.cnn4 import maml_init_, fc_init_
 
 
-class LinearBlock_BNRS(torch.nn.Module):
+class LinearBlock_MetaBatchNorm(torch.nn.Module):
     def __init__(self, input_size, output_size, adaptation_steps):
-        super(LinearBlock_BNRS, self).__init__()
+        super(LinearBlock_MetaBatchNorm, self).__init__()
         self.relu = torch.nn.ReLU()
-        self.normalize = BatchNorm_BNRS(
+        self.normalize = MetaBatchNorm(
             output_size,
             affine=True,
             momentum=0.999,
@@ -34,7 +35,7 @@ class LinearBlock_BNRS(torch.nn.Module):
         return x
 
 
-class ConvBlock_BNRS(torch.nn.Module):
+class ConvBlock_MetaBatchNorm(torch.nn.Module):
     def __init__(
         self,
         in_channels,
@@ -44,7 +45,7 @@ class ConvBlock_BNRS(torch.nn.Module):
         max_pool_factor=1.0,
         adaptation_steps=1,
     ):
-        super(ConvBlock_BNRS, self).__init__()
+        super(ConvBlock_MetaBatchNorm, self).__init__()
         stride = (int(2 * max_pool_factor), int(2 * max_pool_factor))
         if max_pool:
             self.max_pool = torch.nn.MaxPool2d(
@@ -55,7 +56,7 @@ class ConvBlock_BNRS(torch.nn.Module):
             stride = (1, 1)
         else:
             self.max_pool = lambda x: x
-        self.normalize = BatchNorm_BNRS(
+        self.normalize = MetaBatchNorm(
             out_channels,
             affine=True,
             adaptation_steps=adaptation_steps,
@@ -83,7 +84,7 @@ class ConvBlock_BNRS(torch.nn.Module):
         return x
 
 
-class ConvBase_BNRS(torch.nn.Sequential):
+class ConvBase_MetaBatchNorm(torch.nn.Sequential):
 
     # NOTE:
     #     Omniglot: hidden=64, channels=1, no max_pool
@@ -99,7 +100,7 @@ class ConvBase_BNRS(torch.nn.Sequential):
         adaptation_steps=1,
     ):
         core = [
-            ConvBlock_BNRS(
+            ConvBlock_MetaBatchNorm(
                 channels,
                 hidden,
                 (3, 3),
@@ -110,7 +111,7 @@ class ConvBase_BNRS(torch.nn.Sequential):
         ]
         for _ in range(layers - 1):
             core.append(
-                ConvBlock_BNRS(
+                ConvBlock_MetaBatchNorm(
                     hidden,
                     hidden,
                     kernel_size=(3, 3),
@@ -119,7 +120,7 @@ class ConvBase_BNRS(torch.nn.Sequential):
                     adaptation_steps=adaptation_steps,
                 )
             )
-        super(ConvBase_BNRS, self).__init__(*core)
+        super(ConvBase_MetaBatchNorm, self).__init__(*core)
 
     def forward(self, x, step):
         for module in self:
@@ -127,7 +128,7 @@ class ConvBase_BNRS(torch.nn.Sequential):
         return x
 
 
-class CNN4Backbone_BNRS(ConvBase_BNRS):
+class CNN4Backbone_MetaBatchNorm(ConvBase_MetaBatchNorm):
     def __init__(
         self,
         hidden_size=64,
@@ -139,7 +140,7 @@ class CNN4Backbone_BNRS(ConvBase_BNRS):
     ):
         if max_pool_factor is None:
             max_pool_factor = 4 // layers
-        super(CNN4Backbone_BNRS, self).__init__(
+        super(CNN4Backbone_MetaBatchNorm, self).__init__(
             hidden=hidden_size,
             layers=layers,
             channels=channels,
@@ -149,12 +150,12 @@ class CNN4Backbone_BNRS(ConvBase_BNRS):
         )
 
     def forward(self, x, step):
-        x = super(CNN4Backbone_BNRS, self).forward(x, step)
+        x = super(CNN4Backbone_MetaBatchNorm, self).forward(x, step)
         x = x.reshape(x.size(0), -1)
         return x
 
 
-class CNN4_BNRS(torch.nn.Module):
+class CNN4_MetaBatchNorm(torch.nn.Module):
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py)
@@ -197,10 +198,10 @@ class CNN4_BNRS(torch.nn.Module):
         embedding_size=None,
         adaptation_steps=1,
     ):
-        super(CNN4_BNRS, self).__init__()
+        super(CNN4_MetaBatchNorm, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
-        self.features = CNN4Backbone_BNRS(
+        self.features = CNN4Backbone_MetaBatchNorm(
             hidden_size=hidden_size,
             channels=channels,
             max_pool=max_pool,
@@ -221,7 +222,7 @@ class CNN4_BNRS(torch.nn.Module):
         Backup stored batch statistics before running a validation epoch.
         """
         for layer in self.features.modules():
-            if type(layer) is BatchNorm_BNRS:
+            if type(layer) is MetaBatchNorm:
                 layer.backup_stats()
 
     def restore_backup_stats(self):
@@ -229,7 +230,7 @@ class CNN4_BNRS(torch.nn.Module):
         Reset stored batch statistics from the stored backup.
         """
         for layer in self.features.modules():
-            if type(layer) is BatchNorm_BNRS:
+            if type(layer) is MetaBatchNorm:
                 layer.restore_backup_stats()
 
     def forward(self, x, step):

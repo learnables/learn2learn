@@ -14,7 +14,7 @@ import torch.nn.functional as F
 from copy import deepcopy
 
 
-class BatchNorm_BNRS(torch.nn.Module):
+class MetaBatchNorm(torch.nn.Module):
     """
     An extension of Pytorch's BatchNorm layer, with the Per-Step Batch Normalisation Running
     Statistics and Per-Step Batch Normalisation Weights and Biases improvements proposed in
@@ -33,7 +33,7 @@ class BatchNorm_BNRS(torch.nn.Module):
         meta_batch_norm=True,
         adaptation_steps: int = 1,
     ):
-        super(BatchNorm_BNRS, self).__init__()
+        super(MetaBatchNorm, self).__init__()
         self.num_features = num_features
         self.eps = eps
         self.affine = affine
