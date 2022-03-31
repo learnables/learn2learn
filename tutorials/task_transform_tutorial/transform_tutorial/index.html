@@ -1037,14 +1037,14 @@
 </ol>
 <p>Given any input dataset, <code>learn2learn</code> makes it easy for generating custom tasks depending on the user's usecase.</p>
 <hr />
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Import modules that would be used later.</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Import modules that would be used later.</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">pickle</span><span class="o">,</span> <span class="nn">itertools</span><span class="o">,</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">learn2learn</span> <span class="k">as</span> <span class="nn">l2l</span>
 <span class="kn">import</span> <span class="nn">torchvision</span> <span class="k">as</span> <span class="nn">tv</span>
@@ -1065,34 +1065,34 @@
 </p>
 
 <p>The below code snippet shows to generate customised tasks using any input custom using <code>learn2learn</code>.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># 1. Apply transforms on input data if any (eg., Resizing, converting arrays to tensors)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># 1. Apply transforms on input data if any (eg., Resizing, converting arrays to tensors)</span>
 <span class="n">data_transform</span> <span class="o">=</span> <span class="n">tv</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">tv</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">LANCZOS</span><span class="p">),</span> <span class="n">tv</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()])</span> 
 
 <span class="c1"># 2. Download the dataset, and apply the above transforms on each of the samples</span>
@@ -1136,19 +1136,19 @@
 1. <code>labels_to_indices</code>: A dictionary that maintains labels of classes as keys, and the corresponding indices of samples within the class in form of list as values.
 2. <code>indices_to_labels</code>: As the name suggests, a dictionary is formed with indices of samples as key, and their corresponding class labels as value.</p>
 <p>This feature comes in handy while generating tasks. For example, if you are sampling a task having <code>N</code> classes <em>(say, N=5)</em>, then using <code>labels_to_indices</code> dictionary to identify all the samples belonging to this set of 5 classes <em>(<script type="math/tex">\mathcal{O}(c)</script>)</em> will be much more faster than iterating all the samples <em>(<script type="math/tex">\mathcal{O}(n)</script>)</em>.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="n">labels_to_indices</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span> <span class="c1"># each label will store list of sample indices</span>
 <span class="n">indices_to_labels</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># each index will store corresponding sample&#39;s label</span>
@@ -1178,22 +1178,22 @@
 <p><em>For example, we add <code>_bookkeeping_path</code> attribute while generating <a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py">FC100</a> dataset as follows:</em> </p>
 <p><code>self._bookkeeping_path = os.path.join(self.root, 'fc100-bookkeeping-' + mode + '.pkl')</code></p>
 <p>where, mode is either <em>train, validation,</em> or <em>test</em> (depends on how you are defining your dataset. It's also possible that you are loading the entire dataset, and then creating train-valid-test splits. In that case, you can remove the mode variable)</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pickle</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pickle</span>
 
 <span class="c1"># The variables can be loaded from the saved .pkl file</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;~\data/omniglot-bookkeeping.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1225,14 +1225,14 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>A list of datasets is fed as input the <code>UnionMetaDataset</code></p>
 </blockquote>
 <p>Below code shows how a high level implementation of the wrapper:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset_omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~\data&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset_omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~\data&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dataset_omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset_omniglot</span><span class="p">)</span> <span class="c1"># If not wrapped, UnionMetaDataset takes care of it.</span>
 <span class="n">dataset_fc100</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~\data&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dataset_fc100</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">dataset_fc100</span><span class="p">)</span>
@@ -1242,10 +1242,10 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <span class="n">union</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">UnionMetaDataset</span><span class="p">(</span><span class="n">datasets</span><span class="p">)</span> <span class="c1"># a list of datasets is fed as argument</span>
 </code></pre></div>
 </td></tr></table>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">union</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_omniglot</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_fc100</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_cifarfs</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">):</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">union</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_omniglot</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_fc100</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset_cifarfs</span><span class="o">.</span><span class="n">labels_to_indices</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Union was successful&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Something is wrong!&#39;</span><span class="p">)</span>
@@ -1255,19 +1255,19 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>(out): Union was successful</p>
 </blockquote>
 <p>To retrieve a data sample using index, <code>UnionMetaDataset</code> iterates over all the individual datasets as follows:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># For sake of example, consider item = 1690</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># For sake of example, consider item = 1690</span>
 <span class="c1"># Union of 2 datasets having [1600, 20] and [600, 10] samples &amp; labels respectively</span>
 <span class="c1"># Thus, item is in D2 having index 89 and say has label as 3</span>
 <span class="k">def</span> <span class="nf">get_item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">union</span><span class="p">):</span>
@@ -1288,11 +1288,11 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <h3 id="filteredmetadataset-filter-out-unwanted-labels">FilteredMetaDataset - Filter out unwanted labels<a class="headerlink" href="#filteredmetadataset-filter-out-unwanted-labels" title="Permanent link">&para;</a></h3>
 <p><code>FilteredMetaDataset</code> is a wrapper that takes in a <code>MetaDataset</code> and filters it to only include a subset of the desired labels.</p>
 <p>The labels included are not remapped, and the label value from the original dataset is retained.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">toy_omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~\data&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">toy_omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;~\data&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">data_transform</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">toy_omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">toy_omniglot</span><span class="p">)</span>
 <span class="n">filtered</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="n">toy_omniglot</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original Labels:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">toy_omniglot</span><span class="o">.</span><span class="n">labels</span><span class="p">))</span>
@@ -1308,17 +1308,17 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>Another argument that <code>TaskDataset</code> takes as input is <code>num_tasks</code> <em>(an integer value)</em>. The value is set depending on how many tasks the user wants to generate. By default, it is kept as <code>-1</code>, meaning infinite number of tasks will be generated, and a new task is generated on sampling. In the former case, the descriptions of the task will be cached in a dictionary such that if a given task is called again, the description can be loaded instantly rather than generating it once again.</p>
 <h4 id="what-is-a-task-description">What is a task description?<a class="headerlink" href="#what-is-a-task-description" title="Permanent link">&para;</a></h4>
 <p>A <code>task_description</code> is a list of <code>DataDescription</code> objects with two attributes: <code>index</code>, and <code>transforms</code>. <code>Index</code> corresponds to the index of a sample in the dataset, and <code>transforms</code> is a list of transformations that will be applied to the sample.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Transforms: [NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels, RandomClassRotation]</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Transforms: [NWays, KShots, LoadData, RemapLabels, ConsecutiveLabels, RandomClassRotation]</span>
 
 <span class="n">description</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>
@@ -1335,13 +1335,13 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p><strong>STEP 1</strong></p>
 <p>An index between <code>[0, num_tasks)</code> is randomly generated.\
 (If <code>num_tasks = -1</code>, then index is always 0.)</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="n">num_tasks</span><span class="p">):</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_tasks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -1365,13 +1365,13 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p><strong>NOTE -</strong> It is to be noted <code>task_description</code> and <code>data_description</code> are general methods and can be used for any type of task, be it a classification task, regression task, or even a timeseries task.</p>
 </blockquote>
 <p>Below code discusses both the methods.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Method 1: Cached Description</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Method 1: Cached Description</span>
 <span class="c1"># If there&#39;s a cached description for the given index, the `task_description` is assigned the cached description. </span>
 
 <span class="n">sampled_descriptions</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># a dictionary for caching descriptions</span>
@@ -1380,17 +1380,17 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <span class="n">task_description</span> <span class="o">=</span> <span class="n">sampled_descriptions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 </code></pre></div>
 </td></tr></table>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Method 2: If method 1 fails, or num_tasks = -1</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Method 2: If method 1 fails, or num_tasks = -1</span>
 <span class="c1"># 2.Each transform takes the description returned by the previous transform as argument, and in turn returns a new description.</span>
 
 <span class="k">def</span> <span class="nf">sample_task_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1411,17 +1411,17 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>All the data samples generated in the list are accumulated and collated using <code>task_collate</code>. (by default, <code>task_collate</code> is assigned <code>collate.default_collate</code>)</p>
 <p><code>DataDescription</code> object has two attributes:
 <code>index</code> of the sample and any <code>transforms</code> that need to be applied on the sample. </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_description</span><span class="p">):</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_description</span><span class="p">):</span>
     <span class="c1">#  Given a task description, creates the corresponding batch of data.</span>
     <span class="n">all_data</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">data_description</span> <span class="ow">in</span> <span class="n">task_description</span><span class="p">:</span> <span class="c1"># iterate over all the samples in task description</span>
@@ -1456,8 +1456,8 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>When using <code>KShots</code> transform, query twice the samples required for training. The queried samples will need to be split in half, for training, and evaluation. <code>learn2learn</code> provides a nice utility called <code>partition_task()</code> to partition the data in support and query sets. Check <a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/data/utils.py#L87">this</a> to know more about it. A quick use case:</p>
 </li>
 </ol>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># k-shot learning scenario</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># k-shot learning scenario</span>
 <span class="p">(</span><span class="n">adapt_data</span><span class="p">,</span> <span class="n">adapt_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">eval_data</span><span class="p">,</span> <span class="n">eval_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">partition_task</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -1465,10 +1465,10 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <li><code>task_description</code> and <code>data_description</code> are general methods and can be used for any type of task, be it a classification task, regression task, or even a timeseries task.</li>
 </ol>
 <p>In the next section, we will examine how the <code>task_transforms</code> exactly modify the input dataset to generate a task.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DataDescription</span><span class="p">:</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DataDescription</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1489,12 +1489,12 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>It's a callable method, and is used as a function to write the <code>task_transform</code> specific functionality. Objects / variables that keep on changing are defined here.</p>
 <p><strong><code>new_task()</code> Method</strong></p>
 <p>If the <code>task_description</code> is empty (that is, <code>None</code>), then this method is called. This method loads all the samples present in the dataset to the <code>task_description</code>. For instance, check the code below. It loads all the samples present in the dataset to the <code>task_description</code> </p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">new_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">new_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
     <span class="n">task_description</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="c1"># generate an empty matrix</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -1512,17 +1512,17 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <li>Else, using <code>indices_to_labels</code> dictionary, it first identifies the unique labels present in the description. Next, it randomly samples <code>N</code> labels from the set of classes.</li>
 <li>Lastly, it iterates over all the indices present in the description. If the <code>index</code> belongs to the set of these <code>N</code> random labels, the sample is added in the new <code>task_description</code>.</li>
 </ul>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1 : When no task description is available, sample pool is entire dataset</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1 : When no task description is available, sample pool is entire dataset</span>
 <span class="n">classes</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Randomly sample K classes that will be used for generating the task</span>
 <span class="n">example</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">cl</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span> <span class="c1"># add only samples belonging to these classes </span>
@@ -1539,22 +1539,22 @@ defaultdict(<class 'int'>, {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6, ..., 32458: 1
 <p>(out): [14380, 14381, 14382, ..., 31196, 31197, 31198, 31199]
 Number of samples: 100</p>
 </blockquote>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 2 : If there&#39;s an existing task description, identify unique labels present in the description</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 2 : If there&#39;s an existing task description, identify unique labels present in the description</span>
 <span class="k">def</span> <span class="nf">unique_labels</span><span class="p">():</span>
     <span class="n">set_classes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="c1"># to remove repeated entries</span>
     <span class="k">for</span> <span class="n">dd</span> <span class="ow">in</span> <span class="n">task_description</span><span class="p">:</span>
@@ -1579,28 +1579,28 @@ Number of samples: 100</p>
 <li>Else, generate a <code>class_to_data</code> dictionary that stores label as key and corresponding samples as value.</li>
 <li>Lastly, <code>K</code> samples are sampled from each of the classes either with or without replacement.</li>
 </ul>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1 : Task description is None</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1 : Task description is None</span>
 <span class="c1"># Load all samples in dataset</span>
 <span class="n">task_description</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)):</span>
@@ -1629,9 +1629,9 @@ Number of samples: 100</p>
 </blockquote>
 <h4 id="d-loaddata">D) LoadData<a class="headerlink" href="#d-loaddata" title="Permanent link">&para;</a></h4>
 <p>Loads a sample from the dataset given its index. Does so by appending a transform <code>lambda x: self.dataset[x]</code> to <code>transforms</code> attribute present in DataDescription for each sample.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Loads the data using transforms which will be used when calling get_task() in task_dataset.pyx</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Loads the data using transforms which will be used when calling get_task() in task_dataset.pyx</span>
 <span class="k">for</span> <span class="n">data_description</span> <span class="ow">in</span> <span class="n">task_description</span><span class="p">:</span>
     <span class="n">data_description</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">dataset</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
 </code></pre></div>
@@ -1650,22 +1650,22 @@ Number of samples: 100</p>
 <blockquote>
 <p>If you are using FilterLabels transform, it is recommended to use it before NWays, and KShots transforms.</p>
 </blockquote>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1 : Generate filtered indices</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># Step 1 : Generate filtered indices</span>
 <span class="kn">import</span> <span class="nn">array</span>
 
 <span class="n">filtered_labels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
@@ -1685,25 +1685,25 @@ Number of samples: 100</p>
 </td></tr></table>
 <h4 id="f-consecutivelabels">F) ConsecutiveLabels<a class="headerlink" href="#f-consecutivelabels" title="Permanent link">&para;</a></h4>
 <p>The transform re-orders the samples present in the <code>task_description</code> according to the label order consecutively. If you are using <code>RemapLabels</code> transform and keeping <code>shuffle=True</code>, it is recommended to keep <code>ConsecutiveLabels</code> tranform after <code>RemapLabels</code>, otherwise, while they will be homogeneously clustered, the ordering would be random. If you are using <code>ConsecutiveLabels</code> transform before <code>RemapLabels</code>, and want ordered set of labels, then keep <code>shuffle=False</code>.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># How consecutive labels transform is implemented</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># How consecutive labels transform is implemented</span>
 <span class="n">pairs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">dd</span><span class="p">,</span> <span class="n">indices_to_labels</span><span class="p">[</span><span class="n">dd</span><span class="o">.</span><span class="n">index</span><span class="p">])</span> <span class="k">for</span> <span class="n">dd</span> <span class="ow">in</span> <span class="n">task_description</span><span class="p">]</span>
 <span class="n">pairs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># sort by labels x[0] : index, x[1] : label</span>
 <span class="nb">print</span><span class="p">([</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">])</span>
@@ -1732,21 +1732,21 @@ Number of samples: 100</p>
 <p>The transform maps the labels of input to <code>0, 1, ..., N</code> (given <code>N</code> unique set of labels). </p>
 <p><em>For example</em>, if input <code>task_description</code> consists of samples from 3 labels namely 71, 14 and 89, then the transform maps the labels to 0, 1 and 2. Compulsorily needs to be present after <code>LoadData</code> transform in the transform list, otherwise, will give a <code>TypeError: int is not iterable</code>.</p>
 <p>The error occurs because <code>RemapLabels</code> expects the input to be of iterable form. Thus, unless you load data using <code>LoadData</code> prior to it, it will try to iterate over sample <code>index</code>, which is an <code>int</code>, and not an iterable.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">traceback</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">traceback</span>
 
 <span class="n">toy_transforms</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">NWays</span><span class="p">(</span><span class="n">omniglot</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>  <span class="c1"># Samples N random classes per task (here, N=5)</span>
@@ -1763,22 +1763,22 @@ Number of samples: 100</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
 </code></pre></div>
 </td></tr></table>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="o">(</span>output<span class="o">)</span>:
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="o">(</span>output<span class="o">)</span>:
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-  File <span class="s2">&quot;&lt;ipython-input-27-4c0558e6745b&gt;&quot;</span>, line <span class="m">13</span>, in &lt;module&gt;
+  File <span class="s2">&quot;&lt;ipython-input-27-4c0558e6745b&gt;&quot;</span>, line <span class="m">13</span>, <span class="k">in</span> &lt;module&gt;
     print<span class="o">(</span>len<span class="o">(</span>toy_taskset.sample<span class="o">()))</span> <span class="c1"># Expected error as RemapLabels is used before LoadData</span>
-  File <span class="s2">&quot;learn2learn/data/task_dataset.pyx&quot;</span>, line <span class="m">158</span>, in learn2learn.data.task_dataset.CythonTaskDataset.sample
-  File <span class="s2">&quot;learn2learn/data/task_dataset.pyx&quot;</span>, line <span class="m">173</span>, in learn2learn.data.task_dataset.CythonTaskDataset.__getitem__
-  File <span class="s2">&quot;learn2learn/data/task_dataset.pyx&quot;</span>, line <span class="m">142</span>, in learn2learn.data.task_dataset.CythonTaskDataset.get_task
-  File <span class="s2">&quot;learn2learn/data/transforms.pyx&quot;</span>, line <span class="m">201</span>, in learn2learn.data.transforms.RemapLabels.remap
+  File <span class="s2">&quot;learn2learn/data/task_dataset.pyx&quot;</span>, line <span class="m">158</span>, <span class="k">in</span> learn2learn.data.task_dataset.CythonTaskDataset.sample
+  File <span class="s2">&quot;learn2learn/data/task_dataset.pyx&quot;</span>, line <span class="m">173</span>, <span class="k">in</span> learn2learn.data.task_dataset.CythonTaskDataset.__getitem__
+  File <span class="s2">&quot;learn2learn/data/task_dataset.pyx&quot;</span>, line <span class="m">142</span>, <span class="k">in</span> learn2learn.data.task_dataset.CythonTaskDataset.get_task
+  File <span class="s2">&quot;learn2learn/data/transforms.pyx&quot;</span>, line <span class="m">201</span>, <span class="k">in</span> learn2learn.data.transforms.RemapLabels.remap
 TypeError: <span class="s1">&#39;int&#39;</span> object is not iterable
 </code></pre></div>
 </td></tr></table>
@@ -1790,12 +1790,12 @@ TypeError: <span class="s1">&#39;int&#39;</span> object is not iterable
 </ol>
 <p><code>learn2learn</code> provides benchmarks for some of the commonly used computer vision datasets such as <code>omniglot</code>, <code>fc100</code>, <code>mini-imagenet</code>, <code>cirfarfs</code> and <code>tiered-imagenet</code>. The benchmarks are available at <a href="https://github.com/learnables/learn2learn/tree/master/learn2learn/vision/benchmarks">this</a> link. </p>
 <p>They are  very easy to use, and can be used as follows:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># data_name: &#39;omniglot&#39;, &#39;fc100&#39;, &#39;cifarfs&#39;, &#39;mini-imagenet&#39;, &#39;tiered-imagenet&#39;</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># data_name: &#39;omniglot&#39;, &#39;fc100&#39;, &#39;cifarfs&#39;, &#39;mini-imagenet&#39;, &#39;tiered-imagenet&#39;</span>
 <span class="c1"># N: No of ways, K: No of shots</span>
 <span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="n">data_name</span><span class="p">,</span> <span class="n">train_ways</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">train_samples</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="p">,</span> <span class="n">test_ways</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">test_samples</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">K</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">)</span>
 <span class="n">X1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>

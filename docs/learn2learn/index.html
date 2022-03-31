@@ -683,11 +683,11 @@
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.utils.clone_module">
+<h3 id="learn2learn.utils.clone_module" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">clone_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.utils.clone_module" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.utils.clone_module" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -707,10 +707,10 @@ parameters.</p>
 <li>(Module) - The cloned module.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">clone_module</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients are back-propagate all the way to net.</span>
@@ -727,11 +727,11 @@ parameters.</p>
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.utils.detach_module">
+<h3 id="learn2learn.utils.detach_module" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">detach_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">keep_requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.utils.detach_module" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.utils.detach_module" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -747,11 +747,11 @@ parameters.</p>
 will be the same as the pre-detached module.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">clone_module</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
 <span class="n">detach_module</span><span class="p">(</span><span class="n">clone</span><span class="p">,</span> <span class="n">keep_requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
@@ -769,11 +769,11 @@ will be the same as the pre-detached module.</li>
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.utils.update_module">
+<h3 id="learn2learn.utils.update_module" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">update_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.utils.update_module" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.utils.update_module" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -792,14 +792,14 @@ where <script type="math/tex">p</script> is the parameter, and <script type="mat
     of the model. If None, will use the tensors in .update attributes.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
     <span class="n">error</span><span class="p">,</span>
     <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
@@ -820,11 +820,11 @@ where <script type="math/tex">p</script> is the parameter, and <script type="mat
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.utils.magic_box">
+<h3 id="learn2learn.utils.magic_box" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">magic_box</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.utils.magic_box" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.utils.magic_box" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -850,8 +850,8 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
 <li>(Variable) - Tensor of 1, but it's gradient is the gradient of x.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">magic_box</span><span class="p">(</span><span class="n">cum_log_probs</span><span class="p">)</span> <span class="o">*</span> <span class="n">advantages</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># loss is the mean advantage</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">magic_box</span><span class="p">(</span><span class="n">cum_log_probs</span><span class="p">)</span> <span class="o">*</span> <span class="n">advantages</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># loss is the mean advantage</span>
 <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
@@ -866,11 +866,11 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.utils.clone_distribution">
+<h3 id="learn2learn.utils.clone_distribution" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">clone_distribution</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.utils.clone_distribution" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.utils.clone_distribution" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -885,11 +885,11 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.utils.detach_distribution">
+<h3 id="learn2learn.utils.detach_distribution" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">detach_distribution</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.utils.detach_distribution" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.utils.detach_distribution" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 

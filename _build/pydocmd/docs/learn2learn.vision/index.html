@@ -764,17 +764,17 @@
 <p><strong>Description</strong></p>
 <p>A set of commonly used models for meta-learning vision tasks.
 For simplicity, all models' <code>forward</code> conform to the following API:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">x</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="omniglotfc">OmniglotFC<a class="headerlink" href="#omniglotfc" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">output_size</span><span class="p">,</span> <span class="n">sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">[Source]</a></p>
@@ -791,15 +791,15 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 <li><strong>sizes</strong> (list, <em>optional</em>, default=None) - A list of hidden layer sizes.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">OmniglotFC</span><span class="p">(</span><span class="n">input_size</span><span class="o">=</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span>
                  <span class="n">output_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                  <span class="n">sizes</span><span class="o">=</span><span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">])</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="omniglotcnn">OmniglotCNN<a class="headerlink" href="#omniglotcnn" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/cnn4.py">Source</a></p>
@@ -817,16 +817,16 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 <li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">OmniglotCNN</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="cnn4">CNN4<a class="headerlink" href="#cnn4" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
      <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
      <span class="n">layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
      <span class="n">channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
@@ -850,18 +850,18 @@ For simplicity, all models' <code>forward</code> conform to the following API:</
 <li><strong>layers</strong> (int, <em>optional</em>, default=4) - The number of convolutional layers.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">CNN4</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="resnet12">ResNet12<a class="headerlink" href="#resnet12" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span>
          <span class="n">hidden_size</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span>
          <span class="n">avg_pool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
          <span class="n">wider</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -904,11 +904,11 @@ who share it under the Apache 2 license.</p>
 <li><strong>dropblock_size</strong> (int, <em>optional</em>, default=5) - Size of drop blocks.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">ResNet12</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="wrn28">WRN28<a class="headerlink" href="#wrn28" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">WRN28</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">WRN28</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/models/wrn28.py">[Source]</a></p>
@@ -931,15 +931,15 @@ who share it under the MIT license.</p>
 <li><strong>dropout</strong> (float, <em>optional</em>, default=0.0) - Dropout rate.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">WRN28</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">WRN28</span><span class="p">(</span><span class="n">output_size</span><span class="o">=</span><span class="n">ways</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">avg_pool</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="get_pretrained_backbone">get_pretrained_backbone<a class="headerlink" href="#get_pretrained_backbone" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_pretrained_backbone</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_pretrained_backbone</span><span class="p">(</span><span class="n">model</span><span class="p">,</span>
                         <span class="n">dataset</span><span class="p">,</span>
                         <span class="n">spec</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
                         <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/data&#39;</span><span class="p">,</span>
@@ -959,12 +959,12 @@ who share it under the MIT license.</p>
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Download the pretrained weights if not available?</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">backbone</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">get_pretrained_backbone</span><span class="p">(</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">backbone</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">get_pretrained_backbone</span><span class="p">(</span>
     <span class="n">model</span><span class="o">=</span><span class="s1">&#39;resnet12&#39;</span><span class="p">,</span>
     <span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">,</span>
     <span class="n">root</span><span class="o">=</span><span class="s1">&#39;~/.data&#39;</span><span class="p">,</span>
@@ -976,7 +976,7 @@ who share it under the MIT license.</p>
 <p><strong>Description</strong></p>
 <p>Some datasets commonly used in meta-learning vision tasks.</p>
 <h3 id="fullomniglot">FullOmniglot<a class="headerlink" href="#fullomniglot" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FullOmniglot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FullOmniglot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="">[Source]</a></p>
@@ -1001,14 +1001,14 @@ The background and evaluation splits are available in the <code>torchvision</cod
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">omniglot</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FullOmniglot</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span>
                                             <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
                                                 <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="n">LANCZOS</span><span class="p">),</span>
                                                 <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
@@ -1019,7 +1019,7 @@ The background and evaluation splits are available in the <code>torchvision</cod
 </code></pre></div>
 </td></tr></table>
 <h3 id="miniimagenet">MiniImagenet<a class="headerlink" href="#miniimagenet" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MiniImagenet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MiniImagenet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/mini_imagenet.py">[Source]</a></p>
@@ -1042,15 +1042,15 @@ The classes are sampled from the ImageNet dataset, and we use the splits from Ra
 <li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MiniImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MiniImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskGenerator</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="n">ways</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="tieredimagenet">TieredImagenet<a class="headerlink" href="#tieredimagenet" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TieredImagenet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">TieredImagenet</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/tiered_imagenet.py">[Source]</a></p>
@@ -1076,15 +1076,15 @@ Of these categories, 20 (351 classes; 448,695 images) are used for training,
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">TieredImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">TieredImagenet</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="fc100">FC100<a class="headerlink" href="#fc100" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FC100</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FC100</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fc100.py">[Source]</a></p>
@@ -1111,15 +1111,15 @@ Our data is downloaded from the link provided by [2].</p>
 <li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FC100</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="cifarfs">CIFARFS<a class="headerlink" href="#cifarfs" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CIFARFS</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CIFARFS</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cifarfs.py">[Source]</a></p>
@@ -1141,15 +1141,15 @@ The classes are sampled from the CIFAR-100 dataset, and we use the splits from B
 <li><strong>target_transform</strong> (Transform, <em>optional</em>, default=None) - Target pre-processing.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskGenerator</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="n">ways</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="vggflower102">VGGFlower102<a class="headerlink" href="#vggflower102" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">VGGFlower102</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">VGGFlower102</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/vgg_flowers.py">[Source]</a></p>
@@ -1173,15 +1173,15 @@ We provide the raw (unprocessed) images, and follow the train-validation-test sp
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">VGGFlower102</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">VGGFlower102</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="fgvcaircraft">FGVCAircraft<a class="headerlink" href="#fgvcaircraft" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCAircraft</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCAircraft</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_aircraft.py">[Source]</a></p>
@@ -1207,15 +1207,15 @@ to remove copyright information and ensure that only one plane is visible in the
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCAircraft</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCAircraft</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="fgvcfungi">FGVCFungi<a class="headerlink" href="#fgvcfungi" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCFungi</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">FGVCFungi</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/fgvc_fungi.py">[Source]</a></p>
@@ -1243,15 +1243,15 @@ More information here: <a href="https://github.com/visipedia/fgvcx_fungi_comp">h
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FGVCFungi</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="describabletextures">DescribableTextures<a class="headerlink" href="#describabletextures" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DescribableTextures</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">DescribableTextures</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/describable_textures.py">[Source]</a></p>
@@ -1279,15 +1279,15 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">DescribableTextures</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">DescribableTextures</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="cubirds200">CUBirds200<a class="headerlink" href="#cubirds200" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CUBirds200</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">CUBirds200</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/cu_birds200.py">[Source]</a></p>
@@ -1315,15 +1315,15 @@ They are omitted by default, but can be included by setting the <code>include_im
 <li><strong>include_imagenet_duplicates</strong> (bool, <em>optional</em>, default=False) - Whether to include images that are also present in the ImageNet 2012 dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CUBirds200</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CUBirds200</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="quickdraw">Quickdraw<a class="headerlink" href="#quickdraw" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Quickdraw</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">Quickdraw</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/datasets/quickdraw.py">[Source]</a></p>
@@ -1350,9 +1350,9 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <li><strong>download</strong> (bool, <em>optional</em>, default=False) - Whether to download the dataset.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">Quickdraw</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">)</span>
 <span class="n">train_dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
 <span class="n">train_generator</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TaskDataset</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">num_tasks</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </code></pre></div>
@@ -1361,7 +1361,7 @@ We follow the train-validation-test splits of Triantafillou et al., 2020.
 <p><strong>Description</strong></p>
 <p>A set of transformations commonly used in meta-learning vision tasks.</p>
 <h3 id="randomclassrotation">RandomClassRotation<a class="headerlink" href="#randomclassrotation" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RandomClassRotation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">degrees</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">RandomClassRotation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">degrees</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="">[Source]</a></p>
@@ -1373,7 +1373,7 @@ all images from a given class.</p>
 <li><strong>degrees</strong> (list) - The rotations to be sampled.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transform</span> <span class="o">=</span> <span class="n">RandomClassRotation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">])</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transform</span> <span class="o">=</span> <span class="n">RandomClassRotation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">])</span>
 </code></pre></div>
 </td></tr></table>
 <h2 id="learn2learnvisionbenchmarks">learn2learn.vision.benchmarks<a class="headerlink" href="#learn2learnvisionbenchmarks" title="Permanent link">&para;</a></h2>
@@ -1382,30 +1382,30 @@ It provides train/validation/test TaskDatasets and TaskTransforms for pre-define
 <p>This utility is useful for researchers to compare new algorithms against existing benchmarks.
 For a more fine-grained control over tasks and data, we recommend directly using <code>l2l.data.TaskDataset</code> and <code>l2l.data.TaskTransforms</code>.</p>
 <h3 id="list_tasksets">list_tasksets<a class="headerlink" href="#list_tasksets" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">list_tasksets</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">list_tasksets</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/vision/benchmarks/">[Source]</a></p>
 <p><strong>Description</strong></p>
 <p>Returns a list of all available benchmarks.</p>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">list_tasksets</span><span class="p">():</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">list_tasksets</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="get_tasksets">get_tasksets<a class="headerlink" href="#get_tasksets" title="Permanent link">&para;</a></h3>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">get_tasksets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span>
              <span class="n">train_ways</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
              <span class="n">train_samples</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
              <span class="n">test_ways</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
@@ -1434,13 +1434,13 @@ See <code>examples/vision/maml_miniimagenet.py</code> for an example.</p>
 <li><strong>root</strong> (str, <em>optional</em>, default='~/data') - Where the data is stored.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_tasks</span><span class="p">,</span> <span class="n">validation_tasks</span><span class="p">,</span> <span class="n">test_tasks</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train_tasks</span><span class="p">,</span> <span class="n">validation_tasks</span><span class="p">,</span> <span class="n">test_tasks</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
 <span class="n">batch</span> <span class="o">=</span> <span class="n">train_tasks</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
 
 <span class="ow">or</span><span class="p">:</span>

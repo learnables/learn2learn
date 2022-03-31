@@ -849,13 +849,14 @@
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.protonet.PrototypicalClassifier">
+<h3 id="learn2learn.nn.protonet.PrototypicalClassifier" class="doc doc-heading">
         <code>
-PrototypicalClassifier        </code>
+PrototypicalClassifier            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.protonet.PrototypicalClassifier" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.protonet.PrototypicalClassifier" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -874,11 +875,11 @@ PrototypicalClassifier        </code>
 <li>Snell et al. 2017. "Prototypical Networks for Few-shot Learning"</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">PrototypicalClassifier</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">PrototypicalClassifier</span><span class="p">()</span>
 <span class="n">support</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">support_data</span><span class="p">)</span>
 <span class="n">classifier</span><span class="o">.</span><span class="n">fit_</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 <span class="n">query</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">query_data</span><span class="p">)</span>
@@ -898,11 +899,11 @@ PrototypicalClassifier        </code>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.nn.protonet.PrototypicalClassifier.fit_">
+<h4 id="learn2learn.nn.protonet.PrototypicalClassifier.fit_" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">fit_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.nn.protonet.PrototypicalClassifier.fit_" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.nn.protonet.PrototypicalClassifier.fit_" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -930,13 +931,14 @@ corresponding labels.</p>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.metaoptnet.SVClassifier">
+<h3 id="learn2learn.nn.metaoptnet.SVClassifier" class="doc doc-heading">
         <code>
-SVClassifier        </code>
+SVClassifier            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.metaoptnet.SVClassifier" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.metaoptnet.SVClassifier" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -957,11 +959,11 @@ SVClassifier        </code>
 <li>Lee et al. 2019. "Prototypical Networks for Few-shot Learning"</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">SVMClassifier</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">SVMClassifier</span><span class="p">()</span>
 <span class="n">support</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">support_data</span><span class="p">)</span>
 <span class="n">classifier</span><span class="o">.</span><span class="n">fit_</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 <span class="n">query</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">query_data</span><span class="p">)</span>
@@ -981,11 +983,11 @@ SVClassifier        </code>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.nn.metaoptnet.SVClassifier.fit_">
+<h4 id="learn2learn.nn.metaoptnet.SVClassifier.fit_" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">fit_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">ways</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_reg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.nn.metaoptnet.SVClassifier.fit_" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.nn.metaoptnet.SVClassifier.fit_" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -1011,13 +1013,14 @@ SVClassifier        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.kroneckers.KroneckerLinear">
+<h3 id="learn2learn.nn.kroneckers.KroneckerLinear" class="doc doc-heading">
         <code>
-KroneckerLinear        </code>
+KroneckerLinear            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.kroneckers.KroneckerLinear" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.kroneckers.KroneckerLinear" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1048,11 +1051,11 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 <li>Arnold et al. 2019. "When MAML can adapt fast and how to assist when it cannot".</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">kronecker</span> <span class="o">=</span> <span class="n">KroneckerLinear</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">kronecker</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1072,13 +1075,14 @@ from <script type="math/tex">\mathcal{O}(n^2 \cdot m^2)</script> to <script type
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.kroneckers.KroneckerRNN">
+<h3 id="learn2learn.nn.kroneckers.KroneckerRNN" class="doc doc-heading">
         <code>
-KroneckerRNN        </code>
+KroneckerRNN            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.kroneckers.KroneckerRNN" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.kroneckers.KroneckerRNN" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1098,12 +1102,12 @@ KroneckerRNN        </code>
 <li>Jose et al. 2018. "Kronecker recurrent units".</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">kronecker</span> <span class="o">=</span> <span class="n">KroneckerRNN</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
@@ -1124,13 +1128,14 @@ KroneckerRNN        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.kroneckers.KroneckerLSTM">
+<h3 id="learn2learn.nn.kroneckers.KroneckerLSTM" class="doc doc-heading">
         <code>
-KroneckerLSTM        </code>
+KroneckerLSTM            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.kroneckers.KroneckerLSTM" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.kroneckers.KroneckerLSTM" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1150,12 +1155,12 @@ KroneckerLSTM        </code>
 <li>Jose et al. 2018. "Kronecker recurrent units".</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">h</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">kronecker</span> <span class="o">=</span> <span class="n">KroneckerLSTM</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
@@ -1177,13 +1182,14 @@ KroneckerLSTM        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.misc.Lambda">
+<h3 id="learn2learn.nn.misc.Lambda" class="doc doc-heading">
         <code>
-Lambda        </code>
+Lambda            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.misc.Lambda" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.misc.Lambda" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1195,10 +1201,10 @@ Lambda        </code>
 <li><strong>lmb</strong> (callable) - The function to call in the forward pass.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mean23</span> <span class="o">=</span> <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>  <span class="c1"># mean23 is a Module</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mean23</span> <span class="o">=</span> <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>  <span class="c1"># mean23 is a Module</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">features</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">mean23</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -1217,13 +1223,14 @@ Lambda        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.misc.Scale">
+<h3 id="learn2learn.nn.misc.Scale" class="doc doc-heading">
         <code>
-Scale        </code>
+Scale            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.misc.Scale" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.misc.Scale" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1237,9 +1244,9 @@ Scale        </code>
     scaling factor.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">scale</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">scale</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>  <span class="c1"># [.5, .5, .5]</span>
 </code></pre></div>
@@ -1257,13 +1264,14 @@ Scale        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.nn.misc.Flatten">
+<h3 id="learn2learn.nn.misc.Flatten" class="doc doc-heading">
         <code>
-Flatten        </code>
+Flatten            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.nn.misc.Flatten" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.nn.misc.Flatten" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1271,10 +1279,10 @@ Flatten        </code>
 <p><strong>Description</strong></p>
 <p>Utility Module to flatten inputs to <code>(batch_size, -1)</code> shape.</p>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">flatten</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">flatten</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># (5, 3072)</span>

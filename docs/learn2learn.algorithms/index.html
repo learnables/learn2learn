@@ -877,13 +877,14 @@
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.maml.MAML">
+<h3 id="learn2learn.algorithms.maml.MAML" class="doc doc-heading">
         <code>
-MAML        </code>
+MAML            (<span title="learn2learn.algorithms.base_learner.BaseLearner">BaseLearner</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.maml.MAML" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.maml.MAML" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -910,12 +911,12 @@ upon initialization.</p>
 <li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">linear</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">clone</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
@@ -936,11 +937,11 @@ upon initialization.</p>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.algorithms.maml.MAML.adapt">
+<h4 id="learn2learn.algorithms.maml.MAML.adapt" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.algorithms.maml.MAML.adapt" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.algorithms.maml.MAML.adapt" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -969,11 +970,11 @@ upon initialization.</p>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.algorithms.maml.MAML.clone">
+<h4 id="learn2learn.algorithms.maml.MAML.clone" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.algorithms.maml.MAML.clone" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.algorithms.maml.MAML.clone" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -1013,13 +1014,14 @@ of unused parameters. Defaults to self.allow_unused.</li>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.meta_sgd.MetaSGD">
+<h3 id="learn2learn.algorithms.meta_sgd.MetaSGD" class="doc doc-heading">
         <code>
-MetaSGD        </code>
+MetaSGD            (<span title="learn2learn.algorithms.base_learner.BaseLearner">BaseLearner</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.meta_sgd.MetaSGD" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.meta_sgd.MetaSGD" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1043,12 +1045,12 @@ are learned for fast-adaptation.</p>
 <li>Li et al. 2017. “Meta-SGD: Learning to Learn Quickly for Few-Shot Learning.” arXiv.</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MetaSGD</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MetaSGD</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">linear</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">clone</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
@@ -1069,11 +1071,11 @@ are learned for fast-adaptation.</p>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.algorithms.meta_sgd.MetaSGD.adapt">
+<h4 id="learn2learn.algorithms.meta_sgd.MetaSGD.adapt" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.algorithms.meta_sgd.MetaSGD.adapt" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.algorithms.meta_sgd.MetaSGD.adapt" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -1093,11 +1095,11 @@ per-parameter learning rates.</p>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.algorithms.meta_sgd.MetaSGD.clone">
+<h4 id="learn2learn.algorithms.meta_sgd.MetaSGD.clone" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.algorithms.meta_sgd.MetaSGD.clone" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.algorithms.meta_sgd.MetaSGD.clone" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -1125,13 +1127,14 @@ learning rates.</p>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.gbml.GBML">
+<h3 id="learn2learn.algorithms.gbml.GBML" class="doc doc-heading">
         <code>
-GBML        </code>
+GBML            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.gbml.GBML" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.gbml.GBML" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1167,25 +1170,25 @@ KFO from [5].</p>
 <li>Arnold et al. 2019. “When MAML Can Adapt Fast and How to Assist When It Cannot.”</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">SmallCNN</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">SmallCNN</span><span class="p">()</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>
 <span class="n">gbml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">GBML</span><span class="p">(</span>
     <span class="n">module</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
@@ -1219,11 +1222,11 @@ KFO from [5].</p>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.algorithms.gbml.GBML.adapt">
+<h4 id="learn2learn.algorithms.gbml.GBML.adapt" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.algorithms.gbml.GBML.adapt" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.algorithms.gbml.GBML.adapt" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -1253,11 +1256,11 @@ KFO from [5].</p>
 
 
 
-<h4 class="doc doc-heading" id="learn2learn.algorithms.gbml.GBML.clone">
+<h4 id="learn2learn.algorithms.gbml.GBML.clone" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_order</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_unused</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">allow_nograd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">adapt_transform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.algorithms.gbml.GBML.clone" title="Permanent link">&para;</a></h4>
+<a href="#learn2learn.algorithms.gbml.GBML.clone" class="headerlink" title="Permanent link">&para;</a></h4>
 
     <div class="doc doc-contents ">
 
@@ -1294,13 +1297,14 @@ of unused parameters. Defaults to self.allow_unused.</li>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_maml.LightningMAML">
+<h3 id="learn2learn.algorithms.lightning.lightning_maml.LightningMAML" class="doc doc-heading">
         <code>
-LightningMAML        </code>
+LightningMAML            (<span title="learn2learn.algorithms.lightning.lightning_episodic_module.LightningEpisodicModule">LightningEpisodicModule</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_maml.LightningMAML" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.lightning.lightning_maml.LightningMAML" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1324,12 +1328,12 @@ LightningMAML        </code>
 <li>Finn et al. 2017. "Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks."</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OmniglotFC</span><span class="p">(</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ways</span><span class="p">)</span>
 <span class="n">maml</span> <span class="o">=</span> <span class="n">LightningMAML</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">adaptation_lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
 <span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
@@ -1350,13 +1354,14 @@ LightningMAML        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_anil.LightningANIL">
+<h3 id="learn2learn.algorithms.lightning.lightning_anil.LightningANIL" class="doc doc-heading">
         <code>
-LightningANIL        </code>
+LightningANIL            (<span title="learn2learn.algorithms.lightning.lightning_episodic_module.LightningEpisodicModule">LightningEpisodicModule</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_anil.LightningANIL" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.lightning.lightning_anil.LightningANIL" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1381,12 +1386,12 @@ LightningANIL        </code>
 <li>Raghu et al. 2020. "Rapid Learning or Feature Reuse? Towards Understanding the Effectiveness of MAML"</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;omniglot&#39;</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">OmniglotFC</span><span class="p">(</span><span class="mi">28</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ways</span><span class="p">)</span>
 <span class="n">anil</span> <span class="o">=</span> <span class="n">LightningANIL</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">classifier</span><span class="p">,</span> <span class="n">adaptation_lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
 <span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
@@ -1407,13 +1412,14 @@ LightningANIL        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks">
+<h3 id="learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" class="doc doc-heading">
         <code>
-LightningPrototypicalNetworks        </code>
+LightningPrototypicalNetworks            (<span title="learn2learn.algorithms.lightning.lightning_episodic_module.LightningEpisodicModule">LightningEpisodicModule</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1440,12 +1446,12 @@ LightningPrototypicalNetworks        </code>
 <li>Snell et al. 2017. "Prototypical Networks for Few-shot Learning"</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">)</span>
 <span class="n">features</span> <span class="o">=</span> <span class="n">Convnet</span><span class="p">()</span>  <span class="c1"># init model</span>
 <span class="n">protonet</span> <span class="o">=</span> <span class="n">LightningPrototypicalNetworks</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
 <span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
@@ -1466,13 +1472,14 @@ LightningPrototypicalNetworks        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet">
+<h3 id="learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet" class="doc doc-heading">
         <code>
-LightningMetaOptNet        </code>
+LightningMetaOptNet            (<a title="learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks" href="#learn2learn.algorithms.lightning.lightning_protonet.LightningPrototypicalNetworks">LightningPrototypicalNetworks</a>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.algorithms.lightning.lightning_metaoptnet.LightningMetaOptNet" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1500,12 +1507,12 @@ LightningMetaOptNet        </code>
 <li>Lee et al. 2019. "Meta-Learning with Differentiable Convex Optimization"</li>
 </ol>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">tasksets</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">get_tasksets</span><span class="p">(</span><span class="s1">&#39;mini-imagenet&#39;</span><span class="p">)</span>
 <span class="n">features</span> <span class="o">=</span> <span class="n">Convnet</span><span class="p">()</span>  <span class="c1"># init model</span>
 <span class="n">metaoptnet</span> <span class="o">=</span> <span class="n">LightningMetaOptNet</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="o">**</span><span class="n">dict_args</span><span class="p">)</span>
 <span class="n">episodic_data</span> <span class="o">=</span> <span class="n">EpisodicBatcher</span><span class="p">(</span><span class="n">tasksets</span><span class="o">.</span><span class="n">train</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">validation</span><span class="p">,</span> <span class="n">tasksets</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>

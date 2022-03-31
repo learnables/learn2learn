@@ -666,7 +666,7 @@ It retains compatibility with <a href="https://pytorch.org/vision/">torchvision<
 <li>Slack: <a href="http://slack.learn2learn.net/">http://slack.learn2learn.net/</a></li>
 </ul>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>pip install learn2learn
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>pip install learn2learn
 </code></pre></div>
 </td></tr></table>
 <h2 id="snippets-examples">Snippets &amp; Examples<a class="headerlink" href="#snippets-examples" title="Permanent link">&para;</a></h2>
@@ -679,16 +679,16 @@ For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) re
 Most of them can be implemented with with the `GBML` wrapper. (<a href="http://learn2learn.net/docs/learn2learn.algorithms/#gbml">documentation</a>).
 
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">maml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">maml</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">MAML</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">maml</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">opt</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
@@ -709,17 +709,17 @@ Most of them can be implemented with with the `GBML` wrapper. (<a href="http://l
 Learn any kind of optimization algorithm with the `LearnableOptimizer`. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)
 
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ModuleTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Scale</span><span class="p">)</span>
 <span class="n">metaopt</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">LearnableOptimizer</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>  <span class="c1"># metaopt has .step()</span>
 <span class="n">opt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">metaopt</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>  <span class="c1"># metaopt also has .parameters()</span>
@@ -743,16 +743,16 @@ Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) ar
 (<a href="http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets">documentation</a>)
 
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>  <span class="c1"># any PyTorch dataset</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>  <span class="c1"># any PyTorch dataset</span>
 <span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>  <span class="c1"># Easy to define your own transform</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -774,17 +774,17 @@ Parallelize your own meta-environments with `AsyncVectorEnv`, or use the standar
 (<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)
 
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">make_env</span><span class="p">():</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">make_env</span><span class="p">():</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">gym</span><span class="o">.</span><span class="n">HalfCheetahForwardBackwardEnv</span><span class="p">()</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">cherry</span><span class="o">.</span><span class="n">envs</span><span class="o">.</span><span class="n">ActionSpaceScaler</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">env</span>
@@ -808,19 +808,19 @@ Learn and differentiate through updates of PyTorch Modules.
 (<a href="http://learn2learn.net/docs/learn2learn.optim/#parameterupdate">documentation</a>)
 
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
 <span class="n">transform</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">KroneckerTransform</span><span class="p">(</span><span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">KroneckerLinear</span><span class="p">)</span>
 <span class="n">learned_update</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">ParameterUpdate</span><span class="p">(</span>  <span class="c1"># learnable update function</span>
         <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">transform</span><span class="p">)</span>
@@ -846,27 +846,27 @@ Learn and differentiate through updates of PyTorch Modules.
 <p>Arnold, Sebastien M. R., Praateek Mahajan, Debajyoti Datta, Ian Bunner, and Konstantinos Saitas Zarkias. 2020. “learn2learn: A Library for Meta-Learning Research.” arXiv [cs.LG]. http://arxiv.org/abs/2008.12284.</p>
 </blockquote>
 <p>You can also use the following Bibtex entry.</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">Arnold2020-ss</span><span class="p">,</span>
-  <span class="na">title</span>         <span class="p">=</span> <span class="s">&quot;learn2learn: A Library for {Meta-Learning} Research&quot;</span><span class="p">,</span>
-  <span class="na">author</span>        <span class="p">=</span> <span class="s">&quot;Arnold, S{\&#39;e}bastien M R and Mahajan, Praateek and Datta,</span>
-<span class="s">                   Debajyoti and Bunner, Ian and Zarkias, Konstantinos Saitas&quot;</span><span class="p">,</span>
-  <span class="na">month</span>         <span class="p">=</span>  <span class="nv">aug</span><span class="p">,</span>
-  <span class="na">year</span>          <span class="p">=</span>  <span class="m">2020</span><span class="p">,</span>
-  <span class="na">url</span>           <span class="p">=</span> <span class="s">&quot;http://arxiv.org/abs/2008.12284&quot;</span><span class="p">,</span>
-  <span class="na">archivePrefix</span> <span class="p">=</span> <span class="s">&quot;arXiv&quot;</span><span class="p">,</span>
-  <span class="na">primaryClass</span>  <span class="p">=</span> <span class="s">&quot;cs.LG&quot;</span><span class="p">,</span>
-  <span class="na">eprint</span>        <span class="p">=</span> <span class="s">&quot;2008.12284&quot;</span>
-<span class="p">}</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">Arnold2020-ss</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">title</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;learn2learn: A Library for {Meta-Learning} Research&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">author</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;Arnold, S{\&#39;e}bastien M R and Mahajan, Praateek and Datta,</span>
+<span class="s">                   Debajyoti and Bunner, Ian and Zarkias, Konstantinos Saitas&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">month</span><span class="w">         </span><span class="p">=</span><span class="w">  </span><span class="nv">aug</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">year</span><span class="w">          </span><span class="p">=</span><span class="w">  </span><span class="m">2020</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">url</span><span class="w">           </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;http://arxiv.org/abs/2008.12284&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">archivePrefix</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;arXiv&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">primaryClass</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;cs.LG&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="na">eprint</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;2008.12284&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </td></tr></table>
 <h3 id="acknowledgements-friends">Acknowledgements &amp; Friends<a class="headerlink" href="#acknowledgements-friends" title="Permanent link">&para;</a></h3>

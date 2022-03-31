@@ -589,7 +589,7 @@
                 
                 <h1 id="learn2learn">learn2learn<a class="headerlink" href="#learn2learn" title="Permanent link">&para;</a></h1>
 <h2 id="clone_module">clone_module<a class="headerlink" href="#clone_module" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">clone_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">clone_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
@@ -608,17 +608,17 @@ parameters.</p>
 <li>(Module) - The cloned module.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">clone_module</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">error</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients are back-propagate all the way to net.</span>
 </code></pre></div>
 </td></tr></table>
 <h2 id="detach_module">detach_module<a class="headerlink" href="#detach_module" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">detach_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">detach_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
@@ -630,11 +630,11 @@ parameters.</p>
 <li><strong>module</strong> (Module) - Module to be detached.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">clone</span> <span class="o">=</span> <span class="n">clone_module</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
 <span class="n">detach_module</span><span class="p">(</span><span class="n">clone</span><span class="p">)</span>
 <span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">clone</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
@@ -642,7 +642,7 @@ parameters.</p>
 </code></pre></div>
 </td></tr></table>
 <h2 id="update_module">update_module<a class="headerlink" href="#update_module" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">update_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">update_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
@@ -660,14 +660,14 @@ where <script type="math/tex">p</script> is the parameter, and <script type="mat
     of the model. If None, will use the tensors in .update attributes.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">error</span> <span class="o">=</span> <span class="n">loss</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">grads</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
     <span class="n">error</span><span class="p">,</span>
     <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
@@ -678,7 +678,7 @@ where <script type="math/tex">p</script> is the parameter, and <script type="mat
 </code></pre></div>
 </td></tr></table>
 <h2 id="magic_box">magic_box<a class="headerlink" href="#magic_box" title="Permanent link">&para;</a></h2>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">magic_box</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">magic_box</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py">[Source]</a></p>
@@ -703,8 +703,8 @@ For more informations, please refer to the DiCE paper. (Reference 1)</p>
 <li>(Variable) - Tensor of 1, but it's gradient is the gradient of x.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">magic_box</span><span class="p">(</span><span class="n">cum_log_probs</span><span class="p">)</span> <span class="o">*</span> <span class="n">advantages</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># loss is the mean advantage</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">magic_box</span><span class="p">(</span><span class="n">cum_log_probs</span><span class="p">)</span> <span class="o">*</span> <span class="n">advantages</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># loss is the mean advantage</span>
 <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
 </code></pre></div>
 </td></tr></table>

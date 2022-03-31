@@ -417,15 +417,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#learn2learn.data.task_dataset.TaskDataset" class="md-nav__link">
     TaskDataset
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -746,15 +746,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#learn2learn.data.task_dataset.TaskDataset" class="md-nav__link">
     TaskDataset
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -881,13 +881,14 @@
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.meta_dataset.MetaDataset">
+<h3 id="learn2learn.data.meta_dataset.MetaDataset" class="doc doc-heading">
         <code>
-MetaDataset        </code>
+MetaDataset            (<span title="torch.utils.data.dataset.Dataset">Dataset</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.meta_dataset.MetaDataset" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.meta_dataset.MetaDataset" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -910,8 +911,8 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 <li><strong>indices_to_labels</strong> (dict, <strong>optional</strong>, default=None) -  A dictionary mapping sample indices to their corresponding label.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">mnist</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">mnist</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">mnist</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -928,13 +929,14 @@ This caching strategy is useful for large datasets (e.g. ImageNet-1k) where the 
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.meta_dataset.UnionMetaDataset">
+<h3 id="learn2learn.data.meta_dataset.UnionMetaDataset" class="doc doc-heading">
         <code>
-UnionMetaDataset        </code>
+UnionMetaDataset            (<a title="learn2learn.data.meta_dataset.MetaDataset" href="#learn2learn.data.meta_dataset.MetaDataset">MetaDataset</a>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.meta_dataset.UnionMetaDataset" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.meta_dataset.UnionMetaDataset" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -947,14 +949,14 @@ UnionMetaDataset        </code>
 <li><strong>datasets</strong> (list of Dataset) -  A list of torch Datasets.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 <span class="n">valid</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;validation&quot;</span><span class="p">)</span>
 <span class="n">valid</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
@@ -977,13 +979,14 @@ UnionMetaDataset        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.meta_dataset.FilteredMetaDataset">
+<h3 id="learn2learn.data.meta_dataset.FilteredMetaDataset" class="doc doc-heading">
         <code>
-FilteredMetaDataset        </code>
+FilteredMetaDataset            (<a title="learn2learn.data.meta_dataset.MetaDataset" href="#learn2learn.data.meta_dataset.MetaDataset">MetaDataset</a>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.meta_dataset.FilteredMetaDataset" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.meta_dataset.FilteredMetaDataset" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -997,10 +1000,10 @@ FilteredMetaDataset        </code>
 <li><strong>labels</strong> (list of ints) - A list of labels to keep.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">CIFARFS</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;/tmp/mnist&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 <span class="n">filtered</span> <span class="o">=</span> <span class="n">FilteredMetaDataset</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
@@ -1019,13 +1022,14 @@ FilteredMetaDataset        </code>
 
 
 
-<h2 class="doc doc-heading" id="learn2learn.data.task_dataset.TaskDataset">
+<h3 id="learn2learn.data.task_dataset.TaskDataset" class="doc doc-heading">
         <code>
-TaskDataset        </code>
+TaskDataset            (<span title="learn2learn.data.task_dataset.CythonTaskDataset">CythonTaskDataset</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.task_dataset.TaskDataset" title="Permanent link">&para;</a></h2>
+<a href="#learn2learn.data.task_dataset.TaskDataset" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1048,15 +1052,15 @@ documentation of task transforms.</p>
 <li><strong>num_tasks</strong> (int, <em>optional</em>, default=-1) - Number of tasks to generate.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">MetaDataset</span><span class="p">(</span><span class="n">MyDataset</span><span class="p">())</span>
 <span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">NWays</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
     <span class="n">l2l</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">KShots</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
@@ -1082,13 +1086,14 @@ documentation of task transforms.</p>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.LoadData">
+<h3 id="learn2learn.data.transforms.LoadData" class="doc doc-heading">
         <code>
-LoadData        </code>
+LoadData            (<span title="learn2learn.data.transforms.TaskTransform">TaskTransform</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.LoadData" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.LoadData" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1112,13 +1117,14 @@ LoadData        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.NWays">
+<h3 id="learn2learn.data.transforms.NWays" class="doc doc-heading">
         <code>
-NWays        </code>
+NWays            (<span title="learn2learn.data.transforms.CythonNWays">CythonNWays</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.NWays" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.NWays" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1144,13 +1150,14 @@ NWays        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.KShots">
+<h3 id="learn2learn.data.transforms.KShots" class="doc doc-heading">
         <code>
-KShots        </code>
+KShots            (<span title="learn2learn.data.transforms.CythonKShots">CythonKShots</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.KShots" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.KShots" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1176,13 +1183,14 @@ KShots        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.FilterLabels">
+<h3 id="learn2learn.data.transforms.FilterLabels" class="doc doc-heading">
         <code>
-FilterLabels        </code>
+FilterLabels            (<span title="learn2learn.data.transforms.CythonFilterLabels">CythonFilterLabels</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.FilterLabels" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.FilterLabels" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1207,13 +1215,14 @@ FilterLabels        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.FusedNWaysKShots">
+<h3 id="learn2learn.data.transforms.FusedNWaysKShots" class="doc doc-heading">
         <code>
-FusedNWaysKShots        </code>
+FusedNWaysKShots            (<span title="learn2learn.data.transforms.CythonFusedNWaysKShots">CythonFusedNWaysKShots</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.FusedNWaysKShots" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.FusedNWaysKShots" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1243,13 +1252,14 @@ FusedNWaysKShots        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.RemapLabels">
+<h3 id="learn2learn.data.transforms.RemapLabels" class="doc doc-heading">
         <code>
-RemapLabels        </code>
+RemapLabels            (<span title="learn2learn.data.transforms.TaskTransform">TaskTransform</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.RemapLabels" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.RemapLabels" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1273,13 +1283,14 @@ RemapLabels        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.transforms.ConsecutiveLabels">
+<h3 id="learn2learn.data.transforms.ConsecutiveLabels" class="doc doc-heading">
         <code>
-ConsecutiveLabels        </code>
+ConsecutiveLabels            (<span title="learn2learn.data.transforms.TaskTransform">TaskTransform</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.transforms.ConsecutiveLabels" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.transforms.ConsecutiveLabels" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1308,13 +1319,14 @@ but in no specific order.</p>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.utils.OnDeviceDataset">
+<h3 id="learn2learn.data.utils.OnDeviceDataset" class="doc doc-heading">
         <code>
-OnDeviceDataset        </code>
+OnDeviceDataset            (<span title="torch.utils.data.dataset.TensorDataset">TensorDataset</span>)
+        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.utils.OnDeviceDataset" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.utils.OnDeviceDataset" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1330,14 +1342,14 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
 <li><strong>transform</strong> (transform, <em>optional</em>, default=None) - Transform to apply on the first variate of the dataset's samples X.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
     <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span>
@@ -1360,13 +1372,13 @@ If the device is cpu and cuda is available, the TensorDataset will live in pinne
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.utils.InfiniteIterator">
+<h3 id="learn2learn.data.utils.InfiniteIterator" class="doc doc-heading">
         <code>
 InfiniteIterator        </code>
 
 
 
-<a class="headerlink" href="#learn2learn.data.utils.InfiniteIterator" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.utils.InfiniteIterator" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1378,10 +1390,10 @@ InfiniteIterator        </code>
 <li><strong>dataloader</strong> (iterator) - Iterator to loop over.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
 <span class="n">inf_dataloader</span> <span class="o">=</span> <span class="n">InfiniteIterator</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>  <span class="c1"># guaranteed to reach 10,000 regardless of len(dataloader)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">inf_dataloader</span><span class="p">)</span>
@@ -1400,11 +1412,11 @@ InfiniteIterator        </code>
 
 
 
-<h3 class="doc doc-heading" id="learn2learn.data.utils.partition_task">
+<h3 id="learn2learn.data.utils.partition_task" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">partition_task</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#learn2learn.data.utils.partition_task" title="Permanent link">&para;</a></h3>
+<a href="#learn2learn.data.utils.partition_task" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents first">
 
@@ -1420,8 +1432,8 @@ InfiniteIterator        </code>
 <li><strong>shots</strong> (int, <em>optional</em>, default=1) - Number of data samples per class in the support set.</li>
 </ul>
 <p><strong>Example</strong></p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">taskset</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">taskset</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
 <span class="p">(</span><span class="n">X_support</span><span class="p">,</span> <span class="n">y_support</span><span class="p">),</span> <span class="p">(</span><span class="n">X_query</span><span class="p">,</span> <span class="n">y_query</span><span class="p">)</span> <span class="o">=</span> <span class="n">partition_task</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
