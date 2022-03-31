@@ -20,7 +20,7 @@ from collections import namedtuple
 from typing import Tuple
 from tqdm import tqdm
 
-from learn2learn.vision.models.cnn4_bnrs import CNN4_BNRS
+from learn2learn.vision.models.cnn4_metabatchnorm import CNN4_MetaBatchNorm
 from examples.vision.mamlpp.MAMLpp import MAMLpp
 
 
@@ -72,7 +72,7 @@ class MAMLppTrainer:
         )
 
         # Model
-        self._model = CNN4_BNRS(ways, adaptation_steps=steps)
+        self._model = CNN4_MetaBatchNorm(ways, steps)
         if self._use_cuda:
             self._model.cuda()
 

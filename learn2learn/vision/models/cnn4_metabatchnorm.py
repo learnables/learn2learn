@@ -20,10 +20,10 @@ class LinearBlock_MetaBatchNorm(torch.nn.Module):
         self.relu = torch.nn.ReLU()
         self.normalize = MetaBatchNorm(
             output_size,
+            adaptation_steps,
             affine=True,
             momentum=0.999,
             eps=1e-3,
-            adaptation_steps=adaptation_steps,
         )
         self.linear = torch.nn.Linear(input_size, output_size)
         fc_init_(self.linear)
@@ -38,12 +38,12 @@ class LinearBlock_MetaBatchNorm(torch.nn.Module):
 class ConvBlock_MetaBatchNorm(torch.nn.Module):
     def __init__(
         self,
+        adaptation_steps,
         in_channels,
         out_channels,
         kernel_size,
         max_pool=True,
         max_pool_factor=1.0,
-        adaptation_steps=1,
     ):
         super(ConvBlock_MetaBatchNorm, self).__init__()
         stride = (int(2 * max_pool_factor), int(2 * max_pool_factor))
@@ -58,8 +58,8 @@ class ConvBlock_MetaBatchNorm(torch.nn.Module):
             self.max_pool = lambda x: x
         self.normalize = MetaBatchNorm(
             out_channels,
+            adaptation_steps,
             affine=True,
-            adaptation_steps=adaptation_steps,
             # eps=1e-3,
             # momentum=0.999,
         )
@@ -92,32 +92,32 @@ class ConvBase_MetaBatchNorm(torch.nn.Sequential):
 
     def __init__(
         self,
+        adaptation_steps,
         hidden=64,
         channels=1,
         max_pool=False,
         layers=4,
         max_pool_factor=1.0,
-        adaptation_steps=1,
     ):
         core = [
             ConvBlock_MetaBatchNorm(
+                adaptation_steps,
                 channels,
                 hidden,
                 (3, 3),
                 max_pool=max_pool,
                 max_pool_factor=max_pool_factor,
-                adaptation_steps=adaptation_steps,
             ),
         ]
         for _ in range(layers - 1):
             core.append(
                 ConvBlock_MetaBatchNorm(
+                    adaptation_steps,
                     hidden,
                     hidden,
                     kernel_size=(3, 3),
                     max_pool=max_pool,
                     max_pool_factor=max_pool_factor,
-                    adaptation_steps=adaptation_steps,
                 )
             )
         super(ConvBase_MetaBatchNorm, self).__init__(*core)
@@ -131,22 +131,22 @@ class ConvBase_MetaBatchNorm(torch.nn.Sequential):
 class CNN4Backbone_MetaBatchNorm(ConvBase_MetaBatchNorm):
     def __init__(
         self,
+        adaptation_steps,
         hidden_size=64,
         layers=4,
         channels=3,
         max_pool=True,
         max_pool_factor=None,
-        adaptation_steps=1,
     ):
         if max_pool_factor is None:
             max_pool_factor = 4 // layers
         super(CNN4Backbone_MetaBatchNorm, self).__init__(
+            adaptation_steps,
             hidden=hidden_size,
             layers=layers,
             channels=channels,
             max_pool=max_pool,
             max_pool_factor=max_pool_factor,
-            adaptation_steps=adaptation_steps,
         )
 
     def forward(self, x, step):
@@ -162,19 +162,22 @@ class CNN4_MetaBatchNorm(torch.nn.Module):
 
     **Description**
 
-    The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle, 2017.
+    The convolutional network commonly used for MiniImagenet, as described by Ravi et Larochelle,
+    2017, using the MetaBatchNorm layer proposed by Antoniou et al. 2019.
 
     This network assumes inputs of shapes (3, 84, 84).
 
-    Instantiate `CNN4Backbone` if you only need the feature extractor.
+    Instantiate `CNN4Backbone_MetaBatchNorm` if you only need the feature extractor.
 
     **References**
 
     1. Ravi and Larochelle. 2017. “Optimization as a Model for Few-Shot Learning.” ICLR.
+    2. Antoniou et al. 2019. “How to train your MAML.“ ICLR.
 
     **Arguments**
 
     * **output_size** (int) - The dimensionality of the network's output.
+    * **adaptation_steps** (int) - Number of inner-loop adaptation steps.
     * **hidden_size** (int, *optional*, default=64) - The dimensionality of the hidden representation.
     * **layers** (int, *optional*, default=4) - The number of convolutional layers.
     * **channels** (int, *optional*, default=3) - The number of channels in input.
@@ -184,30 +187,30 @@ class CNN4_MetaBatchNorm(torch.nn.Module):
 
     **Example**
     ~~~python
-    model = CNN4(output_size=20, hidden_size=128, layers=3)
+    model = CNN4(output_size=20, adaptation_steps=5, hidden_size=128, layers=3)
     ~~~
     """
 
     def __init__(
         self,
         output_size,
+        adaptation_steps,
         hidden_size=64,
         layers=4,
         channels=3,
         max_pool=True,
         embedding_size=None,
-        adaptation_steps=1,
     ):
         super(CNN4_MetaBatchNorm, self).__init__()
         if embedding_size is None:
             embedding_size = 25 * hidden_size
         self.features = CNN4Backbone_MetaBatchNorm(
+            adaptation_steps,
             hidden_size=hidden_size,
             channels=channels,
             max_pool=max_pool,
             layers=layers,
             max_pool_factor=4 // layers,
-            adaptation_steps=adaptation_steps,
         )
         self.classifier = torch.nn.Linear(
             embedding_size,

@@ -27,11 +27,11 @@ class MetaBatchNorm(torch.nn.Module):
     def __init__(
         self,
         num_features,
+        adaptation_steps,
         eps=1e-5,
         momentum=0.1,
         affine=True,
         meta_batch_norm=True,
-        adaptation_steps: int = 1,
     ):
         super(MetaBatchNorm, self).__init__()
         self.num_features = num_features
