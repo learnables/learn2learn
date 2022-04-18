@@ -98,15 +98,13 @@ class MetaBatchNorm(torch.nn.Module):
         step's parameters and running statistics. When set to `False`, automatically infers the
         current adaptation step.
         """
-        step = self._current_step
-        if inference:
-            step = self._steps - 1
+        step = self._current_step if not inference else self._steps - 1
         output = F.batch_norm(
             input,
-            self.running_mean[self._current_step],
-            self.running_var[self._current_step],
-            self.weight[self._current_step],
-            self.bias[self._current_step],
+            self.running_mean[step],
+            self.running_var[step],
+            self.weight[step],
+            self.bias[step],
             training=True,
             momentum=self.momentum,
             eps=self.eps,
