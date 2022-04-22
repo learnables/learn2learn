@@ -33,6 +33,41 @@ class PerStepLR(torch.nn.Module):
 
 
 class PerLayerPerStepLRTransform:
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/layer_step_lr_transform.py)
+
+    **Description**
+
+    The PerLayerPerStepLRTransform creates a per-step transform for each layer of a given module.
+
+    This can be used with the GBML algorithm to reproduce the *LSLR* improvement of MAML++ proposed by
+    Antoniou et al.
+
+    **Arguments**
+
+    * **init_lr** (float) - The initial learning rate for each adaptation step and layer.
+    * **steps** (int) - The number of adaptation steps.
+    * **model** (torch.nn.Module) - The module being updated with the learning rates. This is
+        needed to define the learning rates for each layer.
+
+    **Example**
+    ~~~python
+    model = torch.nn.Sequential(
+        torch.nn.Linear(128, 24), torch.nn.Linear(24, 16), torch.nn.Linear(16, 10)
+    )
+    transform = PerLayerPerStepLRTransform(1e-3, N_STEPS, model)
+    metamodel = l2l.algorithms.GBML(
+        model,
+        transform,
+        allow_nograd=True,
+        lr=0.001,
+        adapt_transform=False,
+        pass_param_names=True,  # This is needed for this transform to find the module's layers
+    )
+    opt = torch.optim.Adam(metamodel.parameters(), lr=1.0)
+    ~~~
+    """
+
     def __init__(self, init_lr, steps, model):
         self._lslr = {}
         for layer_name, layer in model.named_modules():
@@ -65,6 +100,36 @@ class PerLayerPerStepLRTransform:
 
 
 class PerStepLRTransform:
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/optim/transforms/layer_step_lr_transform.py)
+
+    **Description**
+
+    The PerStepLRTransform creates a per-step transform for inner-loop-based algorithms.
+
+    This can be used with the GBML algorithm to reproduce the *LSLR* improvement of MAML++ proposed by
+    Antoniou et al, with the same learning rates for all layers.
+
+    **Arguments**
+
+    * **init_lr** (float) - The initial learning rate for each adaptation step.
+    * **steps** (int) - The number of adaptation steps.
+
+    **Example**
+    ~~~python
+    model = torch.nn.Linear(128, 10)
+    transform = PerStepLRTransform(1e-3, N_STEPS)
+    metamodel = l2l.algorithms.GBML(
+        model,
+        transform,
+        allow_nograd=True,
+        lr=0.001,
+        adapt_transform=False,
+    )
+    opt = torch.optim.Adam(metamodel.parameters(), lr=1.0)
+    ~~~
+    """
+
     def __init__(self, init_lr, steps):
         self._obj = PerStepLR(init_lr, steps)
 

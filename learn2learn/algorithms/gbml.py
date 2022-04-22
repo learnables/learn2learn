@@ -27,6 +27,8 @@ class GBML(torch.nn.Module):
     * **lr** (float) - Fast adaptation learning rate.
     * **adapt_transform** (bool, *optional*, default=False) - Whether to update the transform's
         parameters during fast-adaptation.
+    * **pass_param_names** (bool, *optional*, default=False) - Whether to pass the parameters'
+        names to the transform.
     * **first_order** (bool, *optional*, default=False) - Whether to use the first-order
         approximation.
     * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation

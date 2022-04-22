@@ -26,6 +26,8 @@ class ParameterUpdate(torch.nn.Module):
     * **parameters** (list) - Parameters of the model to update.
     * **transform** (callable) - A callable that returns an instantiated
         transform given a parameter.
+    * **pass_param_names** (bool, *optional*, default=False) - Whether to pass the parameters'
+        names to the transform.
 
     **Example**
     ~~~python
