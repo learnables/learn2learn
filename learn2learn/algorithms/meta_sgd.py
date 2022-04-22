@@ -109,6 +109,7 @@ class MetaSGD(BaseLearner):
             lrs = nn.ParameterList([nn.Parameter(lr) for lr in lrs])
         self.lrs = lrs
         self.first_order = first_order
+        self.update_func = meta_sgd_update
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
@@ -138,7 +139,7 @@ class MetaSGD(BaseLearner):
                          self.module.parameters(),
                          retain_graph=second_order,
                          create_graph=second_order)
-        self.module = meta_sgd_update(self.module, self.lrs, gradients)
+        self.module = self.update_func(self.module, self.lrs, gradients)
 
 
 if __name__ == '__main__':

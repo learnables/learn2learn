@@ -102,6 +102,7 @@ class MAML(BaseLearner):
         if allow_unused is None:
             allow_unused = allow_nograd
         self.allow_unused = allow_unused
+        self.update_func = maml_update
 
     def forward(self, *args, **kwargs):
         return self.module(*args, **kwargs)
@@ -166,7 +167,7 @@ class MAML(BaseLearner):
                 print('learn2learn: Maybe try with allow_nograd=True and/or allow_unused=True ?')
 
         # Update the module
-        self.module = maml_update(self.module, self.lr, gradients)
+        self.module = self.update_func(self.module, self.lr, gradients)
 
     def clone(self, first_order=None, allow_unused=None, allow_nograd=None):
         """
