@@ -51,7 +51,7 @@ def main(
         meta_lr=0.003,
         fast_lr=0.5,
         meta_batch_size=32,
-        adaptation_steps=3,
+        adaptation_steps=1,
         num_iterations=60000,
         cuda=True,
         seed=42,
@@ -77,8 +77,7 @@ def main(
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)
     model.to(device)
-    maml = l2l.optim.LSLR(l2l.algorithms.MAML(model, lr=fast_lr, first_order=False),
-            init_lr=fast_lr, adaptation_steps=adaptation_steps)
+    maml = l2l.algorithms.MAML(model, lr=fast_lr, first_order=False)
     opt = optim.Adam(maml.parameters(), meta_lr)
     loss = nn.CrossEntropyLoss(reduction='mean')
 
@@ -125,8 +124,6 @@ def main(
         print('Meta Valid Accuracy', meta_valid_accuracy / meta_batch_size)
 
         # Average the accumulated gradients and optimize
-        for name, p in maml.named_parameters():
-            print(name)
         for p in maml.parameters():
             p.grad.data.mul_(1.0 / meta_batch_size)
         opt.step()

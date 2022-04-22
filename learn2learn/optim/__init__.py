@@ -8,4 +8,3 @@ from .parameter_update import ParameterUpdate
 from .learnable_optimizer import LearnableOptimizer
 from .update_rules import *
 from .transforms import *
-from .lslr import LSLR
