@@ -311,6 +311,12 @@ class MAMLppTrainer:
 
 
 if __name__ == "__main__":
+    random.seed(1234)
+    np.random.seed(1234)
+    torch.manual_seed(1234)
+    random.seed(1234)
+    np.random.seed(1234)
+    torch.manual_seed(1234)
     mamlPlusPlus = MAMLppTrainer()
     model = mamlPlusPlus.train()
     mamlPlusPlus.test(model)
