@@ -19,12 +19,14 @@ class PerStepLR(torch.nn.Module):
             requires_grad=True,
         )
         self._current_step = 0
+        self._steps = steps
 
     def forward(self, grad):
-        updates = -self.lrs[self._current_step] * grad
-        self._current_step += 1
-        self._current_step = min(
-            len(self.lrs) - 1, self._current_step
+        # The update is positive because it is applied as `grad.mul(-self.lr)` in
+        # DifferentiableSGD of the GBML, where lr=1.
+        updates = self.lrs[self._current_step] * grad
+        self._current_step = (
+            self._current_step + 1 if self._current_step < (self._steps - 1) else 0
         )  # avoids overflow
         return updates
 
@@ -70,6 +72,7 @@ class PerLayerPerStepLRTransform:
 
     def __init__(self, init_lr, steps, model):
         self._lslr = {}
+        # TODO: Improve this to automatically merge modules such as "normalize"/"conv" (effectively the same layer)
         for layer_name, layer in model.named_modules():
             # If the layer has learnable parameters
             if (
@@ -161,7 +164,7 @@ if __name__ == "__main__":
     # the *adapt* function, which is not what we want. We want it to compute gradients during
     # eval_loss.backward() only, so that it's updated in opt.step().
     metamodel = l2l.algorithms.GBML(
-        model, transform, allow_nograd=True, lr=0.001, adapt_transform=False
+        model, transform, lr=1.0, adapt_transform=False
     )
     opt = torch.optim.Adam(metamodel.parameters(), lr=1.0)
     print("\nPre-learning")
@@ -201,8 +204,7 @@ if __name__ == "__main__":
     metamodel = l2l.algorithms.GBML(
         model,
         transform,
-        allow_nograd=True,
-        lr=0.001,
+        lr=1.0,
         adapt_transform=False,
         pass_param_names=True,
     )
