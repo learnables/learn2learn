@@ -136,7 +136,7 @@ def clone_module(module, memo=None):
                 else:
                     cloned = buff.clone()
                     clone._buffers[buffer_key] = cloned
-                    memo[param_ptr] = cloned
+                    memo[buff_ptr] = cloned
 
     # Then, recurse for each submodule
     if hasattr(clone, '_modules'):
