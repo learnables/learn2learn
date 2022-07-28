@@ -5,6 +5,7 @@
 Per-Layer and Per-Layer Per-Step Learning Rate transforms for the GBML algorithm.
 """
 
+from typing import Any, Dict
 import learn2learn as l2l
 import numpy as np
 import random
@@ -51,13 +52,17 @@ class PerLayerPerStepLRTransform:
     * **steps** (int) - The number of adaptation steps.
     * **model** (torch.nn.Module) - The module being updated with the learning rates. This is
         needed to define the learning rates for each layer.
+    * **layer_names** (List[str], *optional*, default=None) - If not None, only layers named with
+    one of the list elements will have a per-step learning rate. Otherwise, all layers will have
+    one. It may be more efficient to specify the layer names as to avoid redundant layers
+    introducing extra parameters, such as a "BatchNorm" layer followed by a "Conv" layer.
 
     **Example**
     ~~~python
     model = torch.nn.Sequential(
         torch.nn.Linear(128, 24), torch.nn.Linear(24, 16), torch.nn.Linear(16, 10)
     )
-    transform = PerLayerPerStepLRTransform(1e-3, N_STEPS, model)
+    transform = PerLayerPerStepLRTransform(1e-3, N_STEPS, model, ["conv", "linear"])
     metamodel = l2l.algorithms.GBML(
         model,
         transform,
@@ -70,23 +75,31 @@ class PerLayerPerStepLRTransform:
     ~~~
     """
 
-    def __init__(self, init_lr, steps, model):
+    def __init__(self, init_lr, steps, model, layer_names=None):
         self._lslr = {}
-        # TODO: Improve this to automatically merge modules such as "normalize"/"conv" (effectively the same layer)
         for layer_name, layer in model.named_modules():
             # If the layer has learnable parameters
-            if (
-                len(
-                    [
-                        name
-                        for name, param in layer.named_parameters(recurse=False)
-                        if param.requires_grad
-                    ]
-                )
-                > 0
-            ):
+            if len(
+                [
+                    name
+                    for name, param in layer.named_parameters(recurse=False)
+                    if param.requires_grad
+                ]
+            ) > 0 and (layer_names is None or layer_name.lower() in [name.lower() for name in layer_names]):
                 # lslr[layer_name.replace("module.", "").replace(".", "-")] = torch.nn.Parameter(
                 self._lslr[layer_name] = PerStepLR(init_lr, steps)
+
+    def load_state_dict(self, lr_state_dicts: Dict[str, Dict[str, Any]]):
+        assert (
+            type(lr_state_dicts) is dict
+        ), "Argument lr_state_dicts must be a dictionary!"
+        for layer_name, state_dict in lr_state_dicts.items():
+            self._lslr[layer_name].load_state_dict(state_dict)
+
+    def state_dict(self) -> Dict[str, Dict[str, Any]]:
+        return {
+            layer_name: pslr.state_dict() for layer_name, pslr in self._lslr.items()
+        }
 
     def __call__(self, name, param):
         name = name[
@@ -145,6 +158,12 @@ class PerStepLRTransform:
     def parameters(self):
         return self._obj.parameters()
 
+    def load_state_dict(self, state_dict: Dict[str, Any]):
+        self._obj.load_state_dict(state_dict)
+
+    def state_dict(self) -> Dict[str, Any]:
+        return self._obj.state_dict()
+
 
 if __name__ == "__main__":
 
@@ -164,7 +183,11 @@ if __name__ == "__main__":
     # the *adapt* function, which is not what we want. We want it to compute gradients during
     # eval_loss.backward() only, so that it's updated in opt.step().
     metamodel = l2l.algorithms.GBML(
-        model, transform, lr=1.0, adapt_transform=False
+        model,
+        transform,
+        lr=1.0,
+        adapt_transform=False,
+        allow_nograd=True,
     )
     opt = torch.optim.Adam(metamodel.parameters(), lr=1.0)
     print("\nPre-learning")
@@ -191,6 +214,8 @@ if __name__ == "__main__":
     print("Transform parameters: ", transform)
     for name, p in metamodel.named_parameters():
         print(name, ":", p.norm())
+
+    print("Transform state_dict: ", transform.state_dict())
 
     print("\n\n--------------------------")
     print("[*] Testing per-layer per-step LR with three linear layers")
@@ -207,6 +232,7 @@ if __name__ == "__main__":
         lr=1.0,
         adapt_transform=False,
         pass_param_names=True,
+        allow_nograd=True,
     )
     opt = torch.optim.Adam(metamodel.parameters(), lr=1.0)
     print("\nPre-learning")
@@ -233,3 +259,5 @@ if __name__ == "__main__":
     print("Transform parameters: ", transform)
     for name, p in metamodel.named_parameters():
         print(name, ":", p.norm())
+
+    print("Transform state_dict: ", transform.state_dict())
