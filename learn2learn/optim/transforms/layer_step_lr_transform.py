@@ -79,15 +79,22 @@ class PerLayerPerStepLRTransform:
         self._lslr = {}
         for layer_name, layer in model.named_modules():
             # If the layer has learnable parameters
-            if len(
-                [
-                    name
-                    for name, param in layer.named_parameters(recurse=False)
-                    if param.requires_grad
-                ]
-            ) > 0 and (layer_names is None or layer_name.lower() in [name.lower() for name in layer_names]):
-                # lslr[layer_name.replace("module.", "").replace(".", "-")] = torch.nn.Parameter(
-                self._lslr[layer_name] = PerStepLR(init_lr, steps)
+            if (
+                len(
+                    [
+                        name
+                        for name, param in layer.named_parameters(recurse=False)
+                        if param.requires_grad
+                    ]
+                )
+                > 0
+            ):
+                if layer_names is None or layer_name.lower().split(".")[-1] in [
+                    name.lower() for name in layer_names
+                ]:
+                    self._lslr[layer_name] = PerStepLR(init_lr, steps)
+                else:
+                    self._lslr[layer_name] = None
 
     def load_state_dict(self, lr_state_dicts: Dict[str, Dict[str, Any]]):
         assert (

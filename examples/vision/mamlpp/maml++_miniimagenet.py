@@ -202,7 +202,7 @@ class MAMLppTrainer:
         val_interval=1,
     ):
         print("[*] Training...")
-        transform = PerLayerPerStepLRTransform(fast_lr, self._steps, self._model)
+        transform = PerLayerPerStepLRTransform(fast_lr, self._steps, self._model, ["conv"])
         # Setting adapt_transform=True means that the transform will be updated in
         # the *adapt* function, which is not what we want. We want it to compute gradients during
         # eval_loss.backward() only, so that it's updated in opt.step().
@@ -294,7 +294,7 @@ class MAMLppTrainer:
         meta_bsz=5,
     ):
         self._model.load_state_dict(model_state_dict)
-        transform = PerLayerPerStepLRTransform(fast_lr, self._steps, self._model)
+        transform = PerLayerPerStepLRTransform(fast_lr, self._steps, self._model, ["conv"])
         transform.load_state_dict(trasnform_state_dict)
         # Setting adapt_transform=True means that the transform will be updated in
         # the *adapt* function, which is not what we want. We want it to compute gradients during
