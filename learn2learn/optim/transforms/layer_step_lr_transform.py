@@ -5,7 +5,7 @@
 Per-Layer and Per-Layer Per-Step Learning Rate transforms for the GBML algorithm.
 """
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 import learn2learn as l2l
 import numpy as np
 import random
@@ -103,9 +103,9 @@ class PerLayerPerStepLRTransform:
         for layer_name, state_dict in lr_state_dicts.items():
             self._lslr[layer_name].load_state_dict(state_dict)
 
-    def state_dict(self) -> Dict[str, Dict[str, Any]]:
+    def state_dict(self) -> Dict[str, Optional[Dict[str, Any]]]:
         return {
-            layer_name: pslr.state_dict() for layer_name, pslr in self._lslr.items()
+            layer_name: (pslr.state_dict() if pslr is not None else None) for layer_name, pslr in self._lslr.items()
         }
 
     def __call__(self, name, param):
