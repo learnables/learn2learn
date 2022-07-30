@@ -101,7 +101,8 @@ class PerLayerPerStepLRTransform:
             type(lr_state_dicts) is dict
         ), "Argument lr_state_dicts must be a dictionary!"
         for layer_name, state_dict in lr_state_dicts.items():
-            self._lslr[layer_name].load_state_dict(state_dict)
+            if self._lslr[layer_name] is not None:
+                self._lslr[layer_name].load_state_dict(state_dict)
 
     def state_dict(self) -> Dict[str, Optional[Dict[str, Any]]]:
         return {
