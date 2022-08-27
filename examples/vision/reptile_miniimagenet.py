@@ -52,6 +52,7 @@ def main(
         train_shots=15,
         test_shots=5,
         meta_lr=1.0,
+        meta_lr_final=1.0,
         meta_bsz=5,
         fast_lr=0.001,
         train_bsz=10,
@@ -108,7 +109,7 @@ def main(
 
         # anneal meta-lr
         frac_done = float(iteration) / iterations
-        new_lr = frac_done * meta_lr + (1 - frac_done) * meta_lr
+        new_lr = frac_done * meta_lr_final + (1 - frac_done) * meta_lr
         for pg in opt.param_groups:
             pg['lr'] = new_lr
 
