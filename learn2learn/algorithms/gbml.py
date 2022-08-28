@@ -27,6 +27,8 @@ class GBML(torch.nn.Module):
     * **lr** (float) - Fast adaptation learning rate.
     * **adapt_transform** (bool, *optional*, default=False) - Whether to update the transform's
         parameters during fast-adaptation.
+    * **pass_param_names** (bool, *optional*, default=False) - Whether to pass the parameters'
+        names to the transform.
     * **first_order** (bool, *optional*, default=False) - Whether to use the first-order
         approximation.
     * **allow_unused** (bool, *optional*, default=None) - Whether to allow differentiation
@@ -73,6 +75,7 @@ class GBML(torch.nn.Module):
             transform,
             lr=1.0,
             adapt_transform=False,
+            pass_param_names=False,
             first_order=False,
             allow_unused=False,
             allow_nograd=False,
@@ -90,8 +93,9 @@ class GBML(torch.nn.Module):
             self.compute_update = kwargs.get('compute_update')
         else:
             self.compute_update = l2l.optim.ParameterUpdate(
-                    parameters=self.module.parameters(),
+                    parameters=self.module.named_parameters(),
                     transform=transform,
+                    pass_param_names=pass_param_names,
             )
         self.diff_sgd = l2l.optim.DifferentiableSGD(lr=self.lr)
         # Whether the module params have already been updated with the

@@ -26,6 +26,8 @@ class ParameterUpdate(torch.nn.Module):
     * **parameters** (list) - Parameters of the model to update.
     * **transform** (callable) - A callable that returns an instantiated
         transform given a parameter.
+    * **pass_param_names** (bool, *optional*, default=False) - Whether to pass the parameters'
+        names to the transform.
 
     **Example**
     ~~~python
@@ -47,13 +49,13 @@ class ParameterUpdate(torch.nn.Module):
     ~~~
     """
 
-    def __init__(self, parameters, transform):
+    def __init__(self, parameters, transform, pass_param_names=False):
         super(ParameterUpdate, self).__init__()
         transforms_indices = []
         transform_modules = []
         module_counter = 0
-        for param in parameters:
-            t = transform(param)
+        for name, param in parameters:
+            t = transform(param) if not pass_param_names else transform(name, param)
             if t is None:
                 idx = None
             elif isinstance(t, torch.nn.Module):

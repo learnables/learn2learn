@@ -7,6 +7,7 @@ Transforms are usually parameterized, and those parameters can be learned by
 gradient descent, allow you to learn optimization functions from data.
 """
 
+from .layer_step_lr_transform import PerStepLRTransform, PerLayerPerStepLRTransform
 from .module_transform import ModuleTransform, ReshapedTransform
 from .kronecker_transform import KroneckerTransform
 from .transform_dictionary import TransformDictionary
