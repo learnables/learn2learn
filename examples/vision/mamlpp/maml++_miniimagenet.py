@@ -20,7 +20,7 @@ from collections import namedtuple
 from typing import Tuple
 from tqdm import tqdm
 
-from examples.vision.mamlpp.cnn4_bnrs import CNN4_BNRS
+from learn2learn.vision.models.cnn4_metabatchnorm import CNN4_MetaBatchNorm
 from examples.vision.mamlpp.MAMLpp import MAMLpp
 
 
@@ -72,7 +72,7 @@ class MAMLppTrainer:
         )
 
         # Model
-        self._model = CNN4_BNRS(ways, adaptation_steps=steps)
+        self._model = CNN4_MetaBatchNorm(ways, steps)
         if self._use_cuda:
             self._model.cuda()
 
@@ -147,19 +147,19 @@ class MAMLppTrainer:
         # Adapt the model on the support set
         for step in range(self._steps):
             # forward + backward + optimize
-            pred = learner(s_inputs, step)
+            pred = learner(s_inputs)
             support_loss = self._inner_criterion(pred, s_labels)
             learner.adapt(support_loss, first_order=not second_order, step=step)
             # Multi-Step Loss
             if msl:
-                q_pred = learner(q_inputs, step)
+                q_pred = learner(q_inputs)
                 query_loss += self._step_weights[step] * self._inner_criterion(
                     q_pred, q_labels
                 )
 
         # Evaluate the adapted model on the query set
         if not msl:
-            q_pred = learner(q_inputs, self._steps-1)
+            q_pred = learner(q_inputs, inference=True)
             query_loss = self._inner_criterion(q_pred, q_labels)
         acc = accuracy(q_pred, q_labels).detach()
 
@@ -180,12 +180,12 @@ class MAMLppTrainer:
         # Adapt the model on the support set
         for step in range(self._steps):
             # forward + backward + optimize
-            pred = learner(s_inputs, step)
+            pred = learner(s_inputs)
             support_loss = self._inner_criterion(pred, s_labels)
             learner.adapt(support_loss, step=step)
 
         # Evaluate the adapted model on the query set
-        q_pred = learner(q_inputs, self._steps-1)
+        q_pred = learner(q_inputs, inference=True)
         query_loss = self._inner_criterion(q_pred, q_labels).detach()
         acc = accuracy(q_pred, q_labels)
 

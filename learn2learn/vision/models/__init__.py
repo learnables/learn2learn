@@ -31,6 +31,14 @@ from .cnn4 import (
     CNN4Backbone,
 )
 
+from .cnn4_metabatchnorm import (
+    LinearBlock_MetaBatchNorm,
+    ConvBlock_MetaBatchNorm,
+    ConvBase_MetaBatchNorm,
+    CNN4Backbone_MetaBatchNorm,
+    CNN4_MetaBatchNorm,
+)
+
 from .resnet12 import ResNet12, ResNet12Backbone
 from .wrn28 import WRN28, WRN28Backbone
 
@@ -49,6 +57,11 @@ __all__ = [
     'ResNet12Backbone',
     'WRN28',
     'WRN28Backbone',
+    'LinearBlock_MetaBatchNorm',
+    'ConvBlock_MetaBatchNorm',
+    'ConvBase_MetaBatchNorm',
+    'CNN4Backbone_MetaBatchNorm',
+    'CNN4_MetaBatchNorm',
 ]
 
 _BACKBONE_URLS = {

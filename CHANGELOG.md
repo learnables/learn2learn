@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* New vision example: MAML++. (@[DubiousCactus](https://github.com/DubiousCactus))
+* New BatchNorm layer with per-step running statistics and weights & biases from MAML++. (@[Théo Morales](https://github.com/DubiousCactus))
+* New vision example: MAML++. (@[Théo Morales](https://github.com/DubiousCactus))
 * Add tutorial: "Demystifying Task Transforms", ([Varad Pimpalkhute](https://github.com/nightlessbaron/))
 
 ### Changed
