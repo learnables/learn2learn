@@ -1,5 +1,5 @@
 pygments
-pymdown-extensions==8.2
+pymdown-extensions==10.0
 cython>=0.28.5
 twine
 mkdocs==1.2.3
