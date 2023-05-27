@@ -86,3 +86,51 @@ class Scale(torch.nn.Module):
 
     def forward(self, x):
         return x * self.alpha
+
+
+def freeze(module):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    Prevents all parameters in `module` to get gradients.
+
+    **Arguments**
+
+    * **module** (Module) - The module to freeze.
+
+    **Example**
+    ~~~python
+    linear = torch.nn.Linear(128, 4)
+    l2l.nn.freeze(linear)
+    ~~~
+    """
+    for p in module.parameters():
+        p.detach_()
+        if hasattr(p, 'requires_grad'):
+            p.requires_grad = False
+
+
+def unfreeze(module):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    Enables all parameters in `module` to compute gradients.
+
+    **Arguments**
+
+    * **module** (Module) - The module to unfreeze.
+
+    **Example**
+    ~~~python
+    linear = torch.nn.Linear(128, 4)
+    l2l.nn.freeze(linear)
+    l2l.nn.unfreeze(linear)
+    ~~~
+    """
+    for p in module.parameters():
+        if hasattr(p, 'requires_grad'):
+            p.requires_grad = True
