@@ -22,7 +22,7 @@ class Model(nn.Module):
     def __init__(self):
         super(Model, self).__init__()
         self.mu = nn.Parameter(th.randn(DIM))
-        self.sigma = nn.Parameter(th.randn(DIM))
+        self.sigma = nn.Parameter(th.abs(th.randn(DIM)))
 
     def forward(self, x=None):
         return dist.Normal(self.mu, self.sigma)

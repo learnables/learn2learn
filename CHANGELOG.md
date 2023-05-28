@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-* New vision example: MAML++. (@[DubiousCactus](https://github.com/DubiousCactus))
+* New vision example: MAML++. (@[Theo Morales](https://github.com/DubiousCactus))
 * Add tutorial: "Demystifying Task Transforms", ([Varad Pimpalkhute](https://github.com/nightlessbaron/))
 * Add `l2l.nn.MetaModule` and `l2l.nn.ParameterTransform` for parameter-efficient finetuning.
 * Add `l2l.nn.freeze`and `l2l.nn.unfreeze`.
@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* MAML Toy example. (@[Theo Morales](https://github.com/DubiousCactus))
 * Example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
 * Loading duplicate FGVC Aircraft images.
 
