@@ -13,6 +13,18 @@
       members:
         - fit_
 
+## MetaLayers
+
+### ::: learn2learn.nn.MetaModule
+    selection:
+      members:
+        - module
+
+### ::: learn2learn.nn.ParameterTransform
+    selection:
+      members:
+        - 
+
 ## Kroneckers
 
 ### ::: learn2learn.nn.KroneckerLinear
@@ -47,3 +59,6 @@
       members:
         -
 
+### ::: learn2learn.nn.freeze
+
+### ::: learn2learn.nn.unfreeze
