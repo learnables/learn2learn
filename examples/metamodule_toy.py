@@ -7,7 +7,8 @@ Here we simply append a layer norm after each linear layer and swap the relu act
 """
 
 import torch
-import metalayers as ml
+import learn2learn as l2l
+import learn2learn.nn.metalayers as ml
 
 if __name__ == "__main__":
     original = torch.nn.Sequential(
@@ -22,7 +23,7 @@ if __name__ == "__main__":
 
     wrapped = ml.MetaModule(
         module=original,
-        transforms={
+        substitutions={
             torch.nn.Linear: lambda linear: torch.nn.Sequential(
                 linear,
                 torch.nn.LayerNorm(linear.in_features),
@@ -36,6 +37,6 @@ if __name__ == "__main__":
     print('\n')
 
     # Note that the original parameters are frozen in wrapped:
-    print('Parameters in wrapped which require gradients:')
+    print('Parameters in wrapped which require gradients (only layer norms):')
     for name, param in wrapped.named_parameters():
         print(f'{name:<30} | {param.requires_grad!s:>6}')

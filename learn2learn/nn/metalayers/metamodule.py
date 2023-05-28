@@ -27,13 +27,15 @@ class MetaModule(torch.nn.Module):
 
     **Arguments**
 
-    * **module** (Module) - The model to update.
-    * **substitutions** (dict) - The learning rate used to update the model.
+    * **module** (Module) - The model to wrap.
+    * **substitutions** (dict) - Map of class -> construction substitutions.
     * **freeze_module** (bool, *optional*, default=True) - Whether to freeze the original `module` parameters.
 
     **Example**
 
     ~~~python
+    import learn2learn.nn.metalayers as ml
+
     single_layer = torch.nn.Sequential(
         torch.nn.Linear(768, 10),
         torch.nn.ReLU(),
