@@ -96,6 +96,8 @@ def freeze(module):
 
     Prevents all parameters in `module` to get gradients.
 
+    Note: the module is modified in-place.
+
     **Arguments**
 
     * **module** (Module) - The module to freeze.
@@ -110,6 +112,7 @@ def freeze(module):
         p.detach_()
         if hasattr(p, 'requires_grad'):
             p.requires_grad = False
+    return module
 
 
 def unfreeze(module):
@@ -120,11 +123,14 @@ def unfreeze(module):
 
     Enables all parameters in `module` to compute gradients.
 
+    Note: the module is modified in-place.
+
     **Arguments**
 
     * **module** (Module) - The module to unfreeze.
 
     **Example**
+
     ~~~python
     linear = torch.nn.Linear(128, 4)
     l2l.nn.freeze(linear)
@@ -134,3 +140,4 @@ def unfreeze(module):
     for p in module.parameters():
         if hasattr(p, 'requires_grad'):
             p.requires_grad = True
+    return module
