@@ -15,7 +15,7 @@ class MetaModule(torch.nn.Module):
     The substitution is passed based on a dictionary (`substitutions`) which maps module classes to substitution functions.
     For example, to append a second Linear module after all Linear submodules:
 
-    ```
+    ```python
     substitutions[torch.nn.Linear] = lambda linear: torch.nn.Sequential(
         linear,
         torch.nn.Linear(linear.out_features, linear.out_features),
