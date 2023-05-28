@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/img/favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-4.6.3">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-4.6.3">
     
     
       
@@ -478,6 +478,53 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#metalayers" class="md-nav__link">
+    MetaLayers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.metamodule.MetaModule" class="md-nav__link">
+    MetaModule
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.metamodule.MetaModule--description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.metamodule.MetaModule.module" class="md-nav__link">
+    module()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.parameter_transform.ParameterTransform" class="md-nav__link">
+    ParameterTransform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kroneckers" class="md-nav__link">
     Kroneckers
   </a>
@@ -536,6 +583,20 @@
           <li class="md-nav__item">
   <a href="#learn2learn.nn.misc.Flatten" class="md-nav__link">
     Flatten
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.freeze" class="md-nav__link">
+    freeze()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.unfreeze" class="md-nav__link">
+    unfreeze()
   </a>
   
 </li>
@@ -755,6 +816,53 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#metalayers" class="md-nav__link">
+    MetaLayers
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.metamodule.MetaModule" class="md-nav__link">
+    MetaModule
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.metamodule.MetaModule--description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.metamodule.MetaModule.module" class="md-nav__link">
+    module()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.metalayers.parameter_transform.ParameterTransform" class="md-nav__link">
+    ParameterTransform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#kroneckers" class="md-nav__link">
     Kroneckers
   </a>
@@ -813,6 +921,20 @@
           <li class="md-nav__item">
   <a href="#learn2learn.nn.misc.Flatten" class="md-nav__link">
     Flatten
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.freeze" class="md-nav__link">
+    freeze()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn2learn.nn.misc.unfreeze" class="md-nav__link">
+    unfreeze()
   </a>
   
 </li>
@@ -1001,6 +1123,220 @@ SVClassifier            (<span title="torch.nn.modules.module.Module">Module</sp
 
 
   </div>
+
+    </div>
+
+  </div>
+
+<h2 id="metalayers">MetaLayers<a class="headerlink" href="#metalayers" title="Permanent link">&para;</a></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="learn2learn.nn.metalayers.metamodule.MetaModule" class="doc doc-heading">
+        <code>
+MetaModule            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
+
+
+
+<a href="#learn2learn.nn.metalayers.metamodule.MetaModule" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metalayers/metamodule.py">[Source]</a></p>
+<h5 id="learn2learn.nn.metalayers.metamodule.MetaModule--description">Description<a class="headerlink" href="#learn2learn.nn.metalayers.metamodule.MetaModule--description" title="Permanent link">&para;</a></h5>
+<p>Takes a module and recursively replaces its submodules with others.</p>
+<p>The substitution is passed based on a dictionary (<code>substitutions</code>) which maps module classes to substitution functions.
+For example, to append a second Linear module after all Linear submodules:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">substitutions</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">linear</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">linear</span><span class="p">,</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">linear</span><span class="o">.</span><span class="n">out_features</span><span class="p">,</span> <span class="n">linear</span><span class="o">.</span><span class="n">out_features</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>Optionally, the original module parameters can be frozen (<code>requires_grad = False</code>) by setting <code>freeze_module = True</code>.
+This is helpful when only the substitution modules need to be updated.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>module</strong> (Module) - The model to wrap.</li>
+<li><strong>substitutions</strong> (dict) - Map of class -&gt; construction substitutions.</li>
+<li><strong>freeze_module</strong> (bool, <em>optional</em>, default=True) - Whether to freeze the original <code>module</code> parameters.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">learn2learn.nn.metalayers</span> <span class="k">as</span> <span class="nn">ml</span>
+
+<span class="n">single_layer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+<span class="p">)</span>
+
+<span class="n">double_layers</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">MetaModule</span><span class="p">(</span>
+    <span class="n">module</span><span class="o">=</span><span class="n">single_layer</span><span class="p">,</span>
+    <span class="n">substitutions</span><span class="o">=</span><span class="p">{</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">linear</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">linear</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">linear</span><span class="o">.</span><span class="n">out_features</span><span class="p">,</span> <span class="n">linear</span><span class="o">.</span><span class="n">out_features</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">},</span>
+    <span class="n">freeze_module</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">double_layers</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+<p>Output:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">MetaModule</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">wrapped_module</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Sequential</span><span class="p">(</span>
+      <span class="p">(</span><span class="mi">0</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">768</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">):</span> <span class="n">ReLU</span><span class="p">()</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="learn2learn.nn.metalayers.metamodule.MetaModule.module" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">module</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#learn2learn.nn.metalayers.metamodule.MetaModule.module" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p><strong>Description</strong></p>
+<p>Returns the original <code>module</code>.</p>
+<p><strong>Example</strong></p>
+<p>(continued from above)</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">single_layer</span> <span class="o">=</span> <span class="n">double_layers</span><span class="o">.</span><span class="n">module</span><span class="p">()</span>
+</code></pre></div>
+</td></tr></table>
+
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h3 id="learn2learn.nn.metalayers.parameter_transform.ParameterTransform" class="doc doc-heading">
+        <code>
+ParameterTransform            (<span title="torch.nn.modules.module.Module">Module</span>)
+        </code>
+
+
+
+<a href="#learn2learn.nn.metalayers.parameter_transform.ParameterTransform" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/metalayers/parameter_transforms.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Calls <code>module</code> after have transformed its parameters via <code>transform</code>.</p>
+<p>After the forward pass, the parameters of <code>module</code> are reverted to their original values.</p>
+<p>Useful to implement learnable (and constrained) updates of module weights (e.g., LoRA).
+Best used in conjunction with <code>MetaModule</code>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>module</strong> (Module) - The model to wrap.</li>
+<li><strong>transform</strong> (callable) - Function to be called on all parameters of <code>module</code> <em>before</em> its forward
+    pass. Possibly a module itself, which is learnable.</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>Where we only learn to a scalar factor of the original weights.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">learn2learn.nn.metalayers</span> <span class="k">as</span> <span class="nn">ml</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">meta_model</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">MetaModule</span><span class="p">(</span>
+    <span class="n">module</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">substitutions</span><span class="o">=</span><span class="p">{</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">linear</span><span class="p">:</span> <span class="n">ml</span><span class="o">.</span><span class="n">ParameterTransform</span><span class="p">(</span>
+            <span class="n">module</span><span class="o">=</span><span class="n">linear</span><span class="p">,</span>
+            <span class="n">transform</span><span class="o">=</span><span class="k">lambda</span> <span class="n">param</span><span class="p">:</span> <span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Scale</span><span class="p">(),</span>
+        <span class="p">),</span>
+    <span class="p">},</span>
+    <span class="n">freeze_module</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+
 
     </div>
 
@@ -1294,6 +1630,74 @@ Flatten            (<span title="torch.nn.modules.module.Module">Module</span>)
     </div>
 
   </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="learn2learn.nn.misc.freeze" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">freeze</span><span class="p">(</span><span class="n">module</span><span class="p">)</span></code>
+
+
+<a href="#learn2learn.nn.misc.freeze" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Prevents all parameters in <code>module</code> to get gradients.</p>
+<p>Note: the module is modified in-place.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>module</strong> (Module) - The module to freeze.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="n">linear</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="learn2learn.nn.misc.unfreeze" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">unfreeze</span><span class="p">(</span><span class="n">module</span><span class="p">)</span></code>
+
+
+<a href="#learn2learn.nn.misc.unfreeze" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents first">
+
+      <p><a href="https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py">[Source]</a></p>
+<p><strong>Description</strong></p>
+<p>Enables all parameters in <code>module</code> to compute gradients.</p>
+<p>Note: the module is modified in-place.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>module</strong> (Module) - The module to unfreeze.</li>
+</ul>
+<p><strong>Example</strong></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">linear</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="n">linear</span><span class="p">)</span>
+<span class="n">l2l</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">unfreeze</span><span class="p">(</span><span class="n">linear</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+    </div>
+
+  </div>
                 
                   
                 
@@ -1377,7 +1781,7 @@ Flatten            (<span title="torch.nn.modules.module.Module">Module</span>)
     
       <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.2.3",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.2.4",url:{base:"../.."}})</script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
       

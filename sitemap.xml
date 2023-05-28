@@ -2,177 +2,177 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://learn2learn.net/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/changelog/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/community/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/paper_list/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/changelog/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/community/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/examples.optim/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/examples.rl/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/examples.vision/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/paper_list/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.algorithms/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.data/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.gym/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.nn/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.optim/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.text/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/docs/learn2learn.vision/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/tutorials/getting_started/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/_build/pydocmd/tutorials/anil_tutorial/ANIL_tutorial/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn.algorithms/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn.data/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn.gym/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn.nn/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn.optim/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/docs/learn2learn.vision/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/examples/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/examples/optim/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/examples/rl/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/examples/vision/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/tutorials/getting_started/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/tutorials/anil_tutorial/ANIL_tutorial/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://learn2learn.net/tutorials/task_transform_tutorial/transform_tutorial/</loc>
-         <lastmod>2022-03-31</lastmod>
+         <lastmod>2023-05-28</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
