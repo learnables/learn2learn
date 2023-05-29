@@ -147,7 +147,26 @@ class FGVCAircraft(Dataset):
                     if chunk:
                         archive.write(chunk)
         with tarfile.open(tar_path) as tar_file:
-            tar_file.extractall(data_path)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar_file, data_path)
         family_names = ['images_family_train.txt',
                         'images_family_val.txt',
                         'images_family_test.txt']
