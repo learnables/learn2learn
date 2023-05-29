@@ -11,7 +11,10 @@ import torch.utils.data as data
 
 from PIL import Image
 
-from learn2learn.data.utils import download_file_from_google_drive
+from learn2learn.data.utils import (
+    download_file_from_google_drive,
+    download_file,
+)
 
 
 class TieredImagenet(data.Dataset):
@@ -79,12 +82,28 @@ class TieredImagenet(data.Dataset):
             self.labels = self.labels['label_specific']
 
     def download(self, file_id, destination):
-        archive_path = os.path.join(destination, 'tiered_imagenet.tar')
         print('Downloading tiered ImageNet. (12Gb) Please be patient.')
-        download_file_from_google_drive(file_id, archive_path)
-        archive_file = tarfile.open(archive_path)
-        archive_file.extractall(destination)
-        os.remove(archive_path)
+        try:
+            archive_dir = os.path.join(destination, 'tiered-imagenet')
+            os.makedirs(archive_dir, exist_ok=True)
+            files_to_download = [
+                'tiered-imagenet-synsets.txt',
+            ]
+            for file_url in files_to_download:
+                file_dest = os.path.join(
+                    archive_dir,
+                    os.path.basename(file_url).replace('tiered-imagenet-', '')
+                )
+                download_file(
+                    source=file_url,
+                    destination=file_dest,
+                )
+        except:
+            archive_path = os.path.join(destination, 'tiered_imagenet.tar')
+            download_file_from_google_drive(file_id, archive_path)
+            archive_file = tarfile.open(archive_path)
+            archive_file.extractall(destination)
+            os.remove(archive_path)
 
     def __getitem__(self, idx):
         image = Image.open(io.BytesIO(self.images[idx]))

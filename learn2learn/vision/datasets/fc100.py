@@ -8,11 +8,10 @@ import torch.utils.data as data
 
 from PIL import Image
 
-from learn2learn.data.utils import download_file_from_google_drive, download_file
-
-
-GOOGLE_DRIVE_FILE_ID = '1_ZsLyqI487NRDQhwvI7rg86FK3YAZvz1'
-DROPBOX_LINK = 'https://www.dropbox.com/s/ftsjuwsu6lfp0fz/FC100.zip?dl=1'
+from learn2learn.data.utils import (
+    download_file_from_google_drive,
+    download_file,
+)
 
 
 class FC100(data.Dataset):
@@ -54,6 +53,10 @@ class FC100(data.Dataset):
 
     """
 
+    GOOGLE_DRIVE_FILE_ID = '1_ZsLyqI487NRDQhwvI7rg86FK3YAZvz1'
+    DROPBOX_LINK = 'https://www.dropbox.com/s/ftsjuwsu6lfp0fz/FC100.zip?dl=1'
+    ZENODO_LINK = ''
+
     def __init__(self,
                  root,
                  mode='train',
@@ -85,17 +88,23 @@ class FC100(data.Dataset):
     def download(self):
         archive_path = os.path.join(self.root, 'fc100.zip')
         print('Downloading FC100. (160Mb)')
-        try:  # Download from Google Drive first
-            download_file_from_google_drive(GOOGLE_DRIVE_FILE_ID,
-                                            archive_path)
+        try:
+            download_file(FC100.ZENODO_LINK, archive_path)
             archive_file = zipfile.ZipFile(archive_path)
             archive_file.extractall(self.root)
             os.remove(archive_path)
-        except zipfile.BadZipFile:
-            download_file(DROPBOX_LINK, archive_path)
-            archive_file = zipfile.ZipFile(archive_path)
-            archive_file.extractall(self.root)
-            os.remove(archive_path)
+        except:
+            try:  # Download from Google Drive first
+                download_file_from_google_drive(FC100.GOOGLE_DRIVE_FILE_ID,
+                                                archive_path)
+                archive_file = zipfile.ZipFile(archive_path)
+                archive_file.extractall(self.root)
+                os.remove(archive_path)
+            except zipfile.BadZipFile:
+                download_file(FC100.DROPBOX_LINK, archive_path)
+                archive_file = zipfile.ZipFile(archive_path)
+                archive_file.extractall(self.root)
+                os.remove(archive_path)
 
     def __getitem__(self, idx):
         image = self.images[idx]
@@ -116,6 +125,7 @@ class FC100(data.Dataset):
 
 
 if __name__ == '__main__':
+    __import__('pdb').set_trace()
     dataset = FC100(root='~/data')
     img, tgt = dataset[43]
     dataset = FC100(root='~/data', mode='validation')
