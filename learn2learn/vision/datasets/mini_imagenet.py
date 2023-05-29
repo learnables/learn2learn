@@ -109,7 +109,7 @@ class MiniImagenet(data.Dataset):
                 download_file(dropbox_file_link, pickle_file)
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
-        except:
+        except Exception:
             try:
                 if not self._check_exists() and download:
                     print('Downloading mini-ImageNet --', mode)
@@ -136,7 +136,7 @@ class MiniImagenet(data.Dataset):
         data = self.x[idx]
         if self.transform:
             data = self.transform(data)
-        return data, self.y[idx]
+        return data, int(self.y[idx])
 
     def __len__(self):
         return len(self.x)
