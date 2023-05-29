@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
 * Loading duplicate FGVC Aircraft images.
 * Move vision datasets to Zenodo. (mini-ImageNet, tiered-ImageNet, FC100, CIFAR-FS)
+* mini-ImageNet targets are now ints (not np.float64).
 
 ## v0.1.7
 
