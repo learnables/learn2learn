@@ -105,7 +105,7 @@ class TieredImagenet(data.Dataset):
                     source=file_url,
                     destination=file_dest,
                 )
-        except:
+        except Exception:
             archive_path = os.path.join(destination, 'tiered_imagenet.tar')
             download_file_from_google_drive(file_id, archive_path)
             archive_file = tarfile.open(archive_path)
