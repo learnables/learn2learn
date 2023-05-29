@@ -19,12 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Documentation: uses `mkdocstrings` instead of `pydoc-markdown`.
+* Remove `text/news_topic_classification.py` example.
 
 ### Fixed
 
 * MAML Toy example. (@[Theo Morales](https://github.com/DubiousCactus))
 * Example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
 * Loading duplicate FGVC Aircraft images.
+* Move vision datasets to Zenodo. (mini-ImageNet, tiered-ImageNet, FC100, CIFAR-FS)
 
 ## v0.1.7
 
