@@ -52,7 +52,7 @@ jobs:
               run: |
                   python3 --version
                   python3 -m pip install -U pip
-                  pip3 install --install-option="--no-cython-compile" cython
+                  pip3 install cython
                   pip3 install torch==${{ matrix.pytorch }}
                   pip3 install torchvision==${{ matrix.torchvision }}
                   pip3 install chardet==3.0.4  # can be remove when fix in: https://github.com/aio-libs/aiohttp/issues/5366
