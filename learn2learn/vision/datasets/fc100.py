@@ -55,7 +55,7 @@ class FC100(data.Dataset):
 
     GOOGLE_DRIVE_FILE_ID = '1_ZsLyqI487NRDQhwvI7rg86FK3YAZvz1'
     DROPBOX_LINK = 'https://www.dropbox.com/s/ftsjuwsu6lfp0fz/FC100.zip?dl=1'
-    ZENODO_LINK = ''
+    ZENODO_LINK = 'https://zenodo.org/record/7978538/files/fc100.zip'
 
     def __init__(self,
                  root,

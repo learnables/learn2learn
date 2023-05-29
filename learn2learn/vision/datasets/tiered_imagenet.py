@@ -87,7 +87,14 @@ class TieredImagenet(data.Dataset):
             archive_dir = os.path.join(destination, 'tiered-imagenet')
             os.makedirs(archive_dir, exist_ok=True)
             files_to_download = [
-                'tiered-imagenet-synsets.txt',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-class_names.txt',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-synsets.txt',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-test_images_png.pkl',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-test_labels.pkl',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-train_images_png.pkl',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-train_labels.pkl',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-val_images_png.pkl',
+                'https://zenodo.org/record/7978538/files/tiered-imagenet-val_labels.pkl',
             ]
             for file_url in files_to_download:
                 file_dest = os.path.join(

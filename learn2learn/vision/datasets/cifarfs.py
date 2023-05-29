@@ -89,7 +89,7 @@ class CIFARFS(ImageFolder):
         zip_file = os.path.join(self.root, 'cifarfs.zip')
         try:
             download_file(
-                source='',
+                source='https://zenodo.org/record/7978538/files/cifar100.zip',
                 destination=zip_file,
             )
             with zipfile.ZipFile(zip_file, 'r') as zfile:
