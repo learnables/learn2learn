@@ -148,7 +148,7 @@ def main(
         print('adaptation_reward', adaptation_reward)
 
         # ProMP meta-optimization
-        for ppo_step in tqdm(range(ppo_steps), leave=False, desc='Optim'):
+        for _ in tqdm(range(ppo_steps), leave=False, desc='Optim'):
             promp_loss = 0.0
             kl_total = 0.0
             for task_replays, old_policies in zip(iteration_replays, iteration_policies):

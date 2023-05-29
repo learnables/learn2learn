@@ -51,7 +51,7 @@ def tiered_imagenet_tasksets(
             normalize,
         ])
     else:
-        raise('Invalid data_augmentation argument.')
+        raise ValueError('Invalid data_augmentation argument.')
 
     train_dataset = l2l.vision.datasets.TieredImagenet(
         root=root,

@@ -10,14 +10,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* New vision example: MAML++. (@[Theo Morales](https://github.com/DubiousCactus))
+* Add tutorial: "Demystifying Task Transforms", ([Varad Pimpalkhute](https://github.com/nightlessbaron/))
+* Add `l2l.nn.MetaModule` and `l2l.nn.ParameterTransform` for parameter-efficient finetuning.
+* Add `l2l.nn.freeze`and `l2l.nn.unfreeze`.
+* Add Adapters and LoRA examples.
+
+### Changed
+
+* Documentation: uses `mkdocstrings` instead of `pydoc-markdown`.
+* Remove `text/news_topic_classification.py` example.
+
+### Fixed
+
+* MAML Toy example. (@[Theo Morales](https://github.com/DubiousCactus))
+* Example for `detach_module`. ([Nimish Sanghi](https://github.com/nsanghi))
+* Loading duplicate FGVC Aircraft images.
+* Move vision datasets to Zenodo. (mini-ImageNet, tiered-ImageNet, FC100, CIFAR-FS)
+* mini-ImageNet targets are now ints (not np.float64).
+
+## v0.1.7
+
+### Added
+
+* Bounding box cropping for Aircraft and CUB200.
+* Pretrained weights for vision models with: `l2l.vision.models.get_pretrained_backbone()`.
+* Add `keep_requires_grad` flag to `detach_module`. ([Zhaofeng Wu](https://github.com/ZhaofengWu))
+
+### Changed
+
+### Fixed
+
+* Fix arguments when instantiating `l2l.nn.Scale`.
+* Fix `train_loss` logging in `LightningModule` implementations with PyTorch-Lightning 1.5.
+* Fix `RandomClassRotation` ([#283](https://github.com/learnables/learn2learn/pull/283)) to incorporate multi-channelled inputs. ([Varad Pimpalkhute](https://github.com/nightlessbaron/)) 
+* Fix memory leak in `maml.py` and `meta-sgd.py` and add tests to `maml_test.py` and `metasgd_test.py` to check for possible future memory leaks. ([#284](https://github.com/learnables/learn2learn/issues/284)) ([Kevin Zhang](https://github.com/kzhang2)) 
+
+
+## v0.1.6
+
+### Added
+
 * PyTorch Lightning interface to MAML, ANIL, ProtoNet, MetaOptNet.
-* Automatic batcher for Lighting: `l2l.data.EpisodicBatcher`.
+* Automatic batcher for Lightning: `l2l.data.EpisodicBatcher`.
 * `l2l.nn.PrototypicalClassifier` and `l2l.nn.SVMClassifier`.
 * Add `l2l.vision.models.WRN28`.
 * Separate modules for `CNN4Backbone`, `ResNet12Backbone`, `WRN28Backbones` w/ pretrained weights.
 * Add `l2l.data.OnDeviceDataset` and implement `device` parameter for benchmarks.
+* (Beta) Add `l2l.data.partition_task` and `l2l.data.InfiniteIterator`.
 
 ### Changed
+
+* Renamed and clarify dropout parameters for `ResNet12`.
 
 ### Fixed
 

@@ -1,0 +1,88 @@
+
+nav:
+  - Home: index.md
+  - Tutorials:
+      - Getting Started: tutorials/getting_started.md
+      - Feature Reuse with ANIL: tutorials/anil_tutorial/ANIL_tutorial.md
+      - Demystifying Task-Transforms: tutorials/task_transform_tutorial/transform_tutorial.md
+  - Documentation:
+      - learn2learn: docs/learn2learn.md
+      - learn2learn.data: docs/learn2learn.data.md
+      - learn2learn.algorithms: docs/learn2learn.algorithms.md
+      - learn2learn.optim: docs/learn2learn.optim.md
+      - learn2learn.nn: docs/learn2learn.nn.md
+      - learn2learn.vision: docs/learn2learn.vision.md
+      - learn2learn.gym: docs/learn2learn.gym.md
+  - Examples:
+      - Computer Vision: examples/vision.md
+      - Reinforcement Learning: examples/rl.md
+      - Optimization: examples/optim.md
+  - Community: community.md
+  - Changelog: changelog.md
+  #- Paper List: paper_list.md
+  - GitHub: https://github.com/learnables/learn2learn/
+
+docs_dir: ./docs
+site_name: learn2learn
+site_url: http://learn2learn.net
+site_author: 'Séb Arnold'
+google_analytics: ['UA-68693545-3', 'seba-1511.github.com']
+repo_name: 'learnables/learn2learn'
+repo_url: 'https://github.com/learnables/learn2learn'
+theme:
+  name: 'material'
+  logo: 'assets/img/learn2learn_white.png'
+  favicon: 'assets/img/favicons/favicon.ico'
+  palette:
+      primary: 'blue'
+      accent: 'orange'
+  font:
+      text: 'Source Sans Pro'
+      code: 'Ubuntu Mono'
+
+extra_javascript:
+    - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js
+    - https://cdn.jsdelivr.net/npm/katex/dist/contrib/mathtex-script-type.min.js
+
+extra_css:
+    - https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css
+    - 'assets/css/l2l_material.css'
+
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/learnables'
+    - type: 'twitter'
+      link: 'https://twitter.com/seba1511'
+    - type: 'bug'
+      link: 'https://github.com/learnables/learn2learn/issues/new'
+
+plugins:
+- search
+- mkdocstrings:
+    default_handler: python
+    handlers:
+      python:
+        rendering:
+          show_source: false
+          show_root_heading: true
+          show_root_full_path: false
+          show_category_heading: true
+          show_signature: true
+          show_signature_annotations: false
+          separate_signature: true
+          group_by_category: false
+          member_order: 'alphabetical'
+          show_bases: true
+          show_if_no_docstring: true
+          show_submodules: false
+          heading_level: 3
+
+markdown_extensions:
+    - mdx_math
+    - admonition
+    - codehilite:
+        guess_lang: true
+        linenums: true
+    - toc:
+        permalink: true

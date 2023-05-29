@@ -63,7 +63,7 @@ class Scale(torch.nn.Module):
 
     **Arguments**
 
-    * **shape** (int or tuple) - The shape of the scaling matrix.
+    * **shape** (int or tuple, *optional*, default=1) - The shape of the scaling matrix.
     * **alpha** (float, *optional*, default=1.0) - Initial value for the
         scaling factor.
 
@@ -75,12 +75,69 @@ class Scale(torch.nn.Module):
     ~~~
     """
 
-    def __init__(self, shape, alpha=1.0):
+    def __init__(self, shape=None, alpha=1.0):
         super(Scale, self).__init__()
         if isinstance(shape, int):
             shape = (shape, )
-        alpha = torch.ones(**shape) * alpha
+        elif shape is None:
+            shape = (1, )
+        alpha = torch.ones(*shape) * alpha
         self.alpha = torch.nn.Parameter(alpha)
 
     def forward(self, x):
         return x * self.alpha
+
+
+def freeze(module):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    Prevents all parameters in `module` to get gradients.
+
+    Note: the module is modified in-place.
+
+    **Arguments**
+
+    * **module** (Module) - The module to freeze.
+
+    **Example**
+    ~~~python
+    linear = torch.nn.Linear(128, 4)
+    l2l.nn.freeze(linear)
+    ~~~
+    """
+    for p in module.parameters():
+        p.detach_()
+        if hasattr(p, 'requires_grad'):
+            p.requires_grad = False
+    return module
+
+
+def unfreeze(module):
+    """
+    [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/nn/misc.py)
+
+    **Description**
+
+    Enables all parameters in `module` to compute gradients.
+
+    Note: the module is modified in-place.
+
+    **Arguments**
+
+    * **module** (Module) - The module to unfreeze.
+
+    **Example**
+
+    ~~~python
+    linear = torch.nn.Linear(128, 4)
+    l2l.nn.freeze(linear)
+    l2l.nn.unfreeze(linear)
+    ~~~
+    """
+    for p in module.parameters():
+        if hasattr(p, 'requires_grad'):
+            p.requires_grad = True
+    return module

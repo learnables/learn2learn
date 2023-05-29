@@ -9,7 +9,10 @@ import numpy as np
 import torch
 import torch.utils.data as data
 
-from learn2learn.data.utils import download_file_from_google_drive, download_file
+from learn2learn.data.utils import (
+    download_file_from_google_drive,
+    download_file,
+)
 
 
 def download_pkl(google_drive_id, data_root, mode):
@@ -56,6 +59,7 @@ class MiniImagenet(data.Dataset):
         Must be 'train', 'validation', or 'test'.
     * **transform** (Transform, *optional*, default=None) - Input pre-processing.
     * **target_transform** (Transform, *optional*, default=None) - Target pre-processing.
+    * **download** (bool, *optional*, default=False) - Download the dataset if it's not available.
 
     **Example**
 
@@ -67,12 +71,14 @@ class MiniImagenet(data.Dataset):
 
     """
 
-    def __init__(self,
-                 root,
-                 mode='train',
-                 transform=None,
-                 target_transform=None,
-                 download=False):
+    def __init__(
+        self,
+        root,
+        mode='train',
+        transform=None,
+        target_transform=None,
+        download=False,
+    ):
         super(MiniImagenet, self).__init__()
         self.root = os.path.expanduser(root)
         if not os.path.exists(self.root):
@@ -84,28 +90,38 @@ class MiniImagenet(data.Dataset):
         if self.mode == 'test':
             google_drive_file_id = '1wpmY-hmiJUUlRBkO9ZDCXAcIpHEFdOhD'
             dropbox_file_link = 'https://www.dropbox.com/s/ye9jeb5tyz0x01b/mini-imagenet-cache-test.pkl?dl=1'
+            zenodo_file_link = 'https://zenodo.org/record/7978538/files/mini-imagenet-cache-test.pkl'
         elif self.mode == 'train':
             google_drive_file_id = '1I3itTXpXxGV68olxM5roceUMG8itH9Xj'
             dropbox_file_link = 'https://www.dropbox.com/s/9g8c6w345s2ek03/mini-imagenet-cache-train.pkl?dl=1'
+            zenodo_file_link = 'https://zenodo.org/record/7978538/files/mini-imagenet-cache-train.pkl'
         elif self.mode == 'validation':
             google_drive_file_id = '1KY5e491bkLFqJDp0-UWou3463Mo8AOco'
             dropbox_file_link = 'https://www.dropbox.com/s/ip1b7se3gij3r1b/mini-imagenet-cache-validation.pkl?dl=1'
+            zenodo_file_link = 'https://zenodo.org/record/7978538/files/mini-imagenet-cache-validation.pkl'
         else:
-            raise ('ValueError', 'Needs to be train, test or validation')
+            raise ValueError('Needs to be train, test or validation')
 
         pickle_file = os.path.join(self.root, 'mini-imagenet-cache-' + mode + '.pkl')
         try:
             if not self._check_exists() and download:
                 print('Downloading mini-ImageNet --', mode)
-                download_pkl(google_drive_file_id, self.root, mode)
-            with open(pickle_file, 'rb') as f:
-                self.data = pickle.load(f)
-        except pickle.UnpicklingError:
-            if not self._check_exists() and download:
-                print('Download failed. Re-trying mini-ImageNet --', mode)
                 download_file(dropbox_file_link, pickle_file)
             with open(pickle_file, 'rb') as f:
                 self.data = pickle.load(f)
+        except Exception:
+            try:
+                if not self._check_exists() and download:
+                    print('Downloading mini-ImageNet --', mode)
+                    download_pkl(google_drive_file_id, self.root, mode)
+                with open(pickle_file, 'rb') as f:
+                    self.data = pickle.load(f)
+            except pickle.UnpicklingError:
+                if not self._check_exists() and download:
+                    print('Download failed. Re-trying mini-ImageNet --', mode)
+                    download_file(dropbox_file_link, pickle_file)
+                with open(pickle_file, 'rb') as f:
+                    self.data = pickle.load(f)
 
         self.x = torch.from_numpy(self.data["image_data"]).permute(0, 3, 1, 2).float()
         self.y = np.ones(len(self.x))
@@ -120,7 +136,7 @@ class MiniImagenet(data.Dataset):
         data = self.x[idx]
         if self.transform:
             data = self.transform(data)
-        return data, self.y[idx]
+        return data, int(self.y[idx])
 
     def __len__(self):
         return len(self.x)

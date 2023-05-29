@@ -49,8 +49,8 @@ The following snippets provide a sneak peek at the functionalities of learn2lear
 <details>
 <summary><b>Few-Shot Learning with MAML</b></summary>
 
-For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the [examples](https://github.com/learnables/learn2learn/tree/master/examples/vision) folder.
-Most of them can be implemented with with the `GBML` wrapper. ([documentation](http://learn2learn.net/docs/learn2learn.algorithms/#gbml)).
+For more algorithms (ProtoNets, ANIL, Meta-SGD, Reptile, Meta-Curvature, KFO) refer to the <a href="https://github.com/learnables/learn2learn/tree/master/examples/vision">examples</a> folder.
+Most of them can be implemented with with the `GBML` wrapper. (<a href="http://learn2learn.net/docs/learn2learn.algorithms/#gbml">documentation</a>).
     
 ~~~python
 maml = l2l.algorithms.MAML(model, lr=0.1)
@@ -69,7 +69,7 @@ for iteration in range(10):
 <details>
 <summary><b>Meta-Descent with Hypergradient</b></summary>
     
-Learn any kind of optimization algorithm with the `LearnableOptimizer`. ([example](https://github.com/learnables/learn2learn/tree/master/examples/optimization) and [documentation](http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer))
+Learn any kind of optimization algorithm with the `LearnableOptimizer`. (<a href="https://github.com/learnables/learn2learn/tree/master/examples/optimization">example</a> and <a href="http://learn2learn.net/docs/learn2learn.optim/#learnableoptimizer">documentation</a>)
 
 ~~~python
 linear = nn.Linear(784, 10)
@@ -92,7 +92,7 @@ metaopt.step()  # update linear
 <summary><b>Custom Few-Shot Dataset</b></summary>
 
 Many standardized datasets (Omniglot, mini-/tiered-ImageNet, FC100, CIFAR-FS) are readily available in `learn2learn.vision.datasets`.
-([documentation](http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets))
+(<a href="http://learn2learn.net/docs/learn2learn.vision/#learn2learnvisiondatasets">documentation</a>)
 
 ~~~python
 dataset = l2l.data.MetaDataset(MyDataset())  # any PyTorch dataset
@@ -113,7 +113,7 @@ for task in taskset:
 <summary><b>Environments and Utilities for Meta-RL</b></summary>
 
 Parallelize your own meta-environments with `AsyncVectorEnv`, or use the standardized ones.
-([documentation](http://learn2learn.net/docs/learn2learn.gym/#metaenv))
+(<a href="http://learn2learn.net/docs/learn2learn.gym/#metaenv">documentation</a>)
 
 ~~~python
 def make_env():
@@ -136,7 +136,7 @@ for task_config in env.sample_tasks(20):
 <summary><b>Differentiable Optimization</b></summary>
 
 Learn and differentiate through updates of PyTorch Modules.
-([documentation](http://learn2learn.net/docs/learn2learn.optim/#parameterupdate))
+(<a href="http://learn2learn.net/docs/learn2learn.optim/#parameterupdate">documentation</a>)
     
 ~~~python
 

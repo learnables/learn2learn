@@ -51,6 +51,10 @@ def clone_parameters(param_list):
     return [p.clone() for p in param_list]
 
 
+def clone_named_parameters(param_dict):
+    return {k: p.clone() for k, p in param_dict.items()}
+
+
 def clone_module(module, memo=None):
     """
 
@@ -87,9 +91,6 @@ def clone_module(module, memo=None):
     # TODO: This function might require that module.forward()
     #       was called in order to work properly, if forward() instanciates
     #       new variables.
-    # TODO: We can probably get away with a shallowcopy.
-    #       However, since shallow copy does not recurse, we need to write a
-    #       recursive version of shallow copy.
     # NOTE: This can probably be implemented more cleanly with
     #       clone = recursive_shallow_copy(model)
     #       clone._apply(lambda t: t.clone())
@@ -136,7 +137,7 @@ def clone_module(module, memo=None):
                 else:
                     cloned = buff.clone()
                     clone._buffers[buffer_key] = cloned
-                    memo[param_ptr] = cloned
+                    memo[buff_ptr] = cloned
 
     # Then, recurse for each submodule
     if hasattr(clone, '_modules'):
@@ -154,7 +155,7 @@ def clone_module(module, memo=None):
     return clone
 
 
-def detach_module(module):
+def detach_module(module, keep_requires_grad=False):
     """
 
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/utils.py)
@@ -168,13 +169,16 @@ def detach_module(module):
     **Arguments**
 
     * **module** (Module) - Module to be detached.
+    * **keep_requires_grad** (bool) - By default, all parameters of the detached module will have
+    `requires_grad` set to `False`. If this flag is set to `True`, then the `requires_grad` field
+    will be the same as the pre-detached module.
 
     **Example**
 
     ~~~python
-    net = nn.Sequential(Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
+    net = nn.Sequential(nn.Linear(20, 10), nn.ReLU(), nn.Linear(10, 2))
     clone = clone_module(net)
-    detach_module(clone)
+    detach_module(clone, keep_requires_grad=True)
     error = loss(clone(X), y)
     error.backward()  # Gradients are back-propagate on clone, not net.
     ~~~
@@ -184,17 +188,22 @@ def detach_module(module):
     # First, re-write all parameters
     for param_key in module._parameters:
         if module._parameters[param_key] is not None:
+            requires_grad = module._parameters[param_key].requires_grad
             detached = module._parameters[param_key].detach_()
+            if keep_requires_grad and requires_grad:
+                module._parameters[param_key].requires_grad_()
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         if module._buffers[buffer_key] is not None and \
                 module._buffers[buffer_key].requires_grad:
             module._buffers[buffer_key] = module._buffers[buffer_key].detach_()
+            if keep_requires_grad:  # requires_grad checked above
+                module._buffers[buffer_key].requires_grad_()
 
     # Then, recurse for each submodule
     for module_key in module._modules:
-        detach_module(module._modules[module_key])
+        detach_module(module._modules[module_key], keep_requires_grad=keep_requires_grad)
 
 
 def clone_distribution(dist):
@@ -208,7 +217,7 @@ def clone_distribution(dist):
                 clone.__dict__[param_key] = dist.__dict__[param_key].clone()
         elif isinstance(item, torch.nn.Module):
             clone.__dict__[param_key] = clone_module(dist.__dict__[param_key])
-        elif isinstance(item, torch.Distribution):
+        elif isinstance(item, torch.distributions.Distribution):
             clone.__dict__[param_key] = clone_distribution(dist.__dict__[param_key])
 
     return clone
@@ -223,7 +232,7 @@ def detach_distribution(dist):
                 dist.__dict__[param_key] = dist.__dict__[param_key].detach()
         elif isinstance(item, torch.nn.Module):
             dist.__dict__[param_key] = detach_module(dist.__dict__[param_key])
-        elif isinstance(item, torch.Distribution):
+        elif isinstance(item, torch.distributions.Distribution):
             dist.__dict__[param_key] = detach_distribution(dist.__dict__[param_key])
     return dist
 
@@ -275,22 +284,24 @@ def update_module(module, updates=None, memo=None):
     # Update the params
     for param_key in module._parameters:
         p = module._parameters[param_key]
-        if p is not None and hasattr(p, 'update') and p.update is not None:
-            if p in memo:
-                module._parameters[param_key] = memo[p]
-            else:
+        if p in memo:
+            module._parameters[param_key] = memo[p]
+        else:
+            if p is not None and hasattr(p, 'update') and p.update is not None:
                 updated = p + p.update
+                p.update = None
                 memo[p] = updated
                 module._parameters[param_key] = updated
 
     # Second, handle the buffers if necessary
     for buffer_key in module._buffers:
         buff = module._buffers[buffer_key]
-        if buff is not None and hasattr(buff, 'update') and buff.update is not None:
-            if buff in memo:
-                module._buffers[buffer_key] = memo[buff]
-            else:
+        if buff in memo:
+            module._buffers[buffer_key] = memo[buff]
+        else:
+            if buff is not None and hasattr(buff, 'update') and buff.update is not None:
                 updated = buff + buff.update
+                buff.update = None
                 memo[buff] = updated
                 module._buffers[buffer_key] = updated
 

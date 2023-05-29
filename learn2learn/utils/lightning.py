@@ -67,7 +67,7 @@ class EpisodicBatcher(pl.LightningDataModule):
         )
 
 
-class NoLeaveProgressBar(pl.callbacks.ProgressBar):
+class NoLeaveProgressBar(pl.callbacks.TQDMProgressBar):
 
     def init_test_tqdm(self):
         bar = tqdm.tqdm(

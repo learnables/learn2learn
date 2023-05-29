@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -167,10 +166,10 @@ class ResNet12Backbone(nn.Module):
 
     def __init__(
         self,
-        keep_prob=1.0,  # dropout for embedding
         avg_pool=True,  # Set to False for 16000-dim embeddings
         wider=True,  # True mimics MetaOptNet, False mimics TADAM
-        drop_rate=0.1,  # dropout for residual layers
+        embedding_dropout=0.0,  # dropout for embedding
+        dropblock_dropout=0.1,  # dropout for residual layers
         dropblock_size=5,
         channels=3,
     ):
@@ -186,19 +185,19 @@ class ResNet12Backbone(nn.Module):
             block,
             num_filters[0],
             stride=2,
-            drop_rate=drop_rate,
+            dropblock_dropout=dropblock_dropout,
         )
         self.layer2 = self._make_layer(
             block,
             num_filters[1],
             stride=2,
-            drop_rate=drop_rate,
+            dropblock_dropout=dropblock_dropout,
         )
         self.layer3 = self._make_layer(
             block,
             num_filters[2],
             stride=2,
-            drop_rate=drop_rate,
+            dropblock_dropout=dropblock_dropout,
             drop_block=True,
             block_size=dropblock_size,
         )
@@ -206,7 +205,7 @@ class ResNet12Backbone(nn.Module):
             block,
             num_filters[3],
             stride=2,
-            drop_rate=drop_rate,
+            dropblock_dropout=dropblock_dropout,
             drop_block=True,
             block_size=dropblock_size,
         )
@@ -215,10 +214,10 @@ class ResNet12Backbone(nn.Module):
         else:
             self.avgpool = l2l.nn.Lambda(lambda x: x)
         self.flatten = l2l.nn.Flatten()
-        self.keep_prob = keep_prob
+        self.embedding_dropout = embedding_dropout
         self.keep_avg_pool = avg_pool
-        self.dropout = nn.Dropout(p=1.0 - self.keep_prob, inplace=False)
-        self.drop_rate = drop_rate
+        self.dropout = nn.Dropout(p=self.embedding_dropout, inplace=False)
+        self.dropblock_dropout = dropblock_dropout
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -236,7 +235,7 @@ class ResNet12Backbone(nn.Module):
         block,
         planes,
         stride=1,
-        drop_rate=0.0,
+        dropblock_dropout=0.0,
         drop_block=False,
         block_size=1,
     ):
@@ -253,7 +252,7 @@ class ResNet12Backbone(nn.Module):
             planes,
             stride,
             downsample,
-            drop_rate,
+            dropblock_dropout,
             drop_block,
             block_size)
         )
@@ -301,14 +300,14 @@ class ResNet12(nn.Module):
 
     **Arguments**
 
-    * **output_size** (int) - The dimensionality of the output.
+    * **output_size** (int) - The dimensionality of the output (eg, number of classes).
     * **hidden_size** (list, *optional*, default=640) - Size of the embedding once features are extracted.
         (640 is for mini-ImageNet; used for the classifier layer)
-    * **keep_prob** (float, *optional*, default=1.0) - Dropout rate on the embedding layer.
     * **avg_pool** (bool, *optional*, default=True) - Set to False for the 16k-dim embeddings of Lee et al, 2019.
     * **wider** (bool, *optional*, default=True) - True uses (64, 160, 320, 640) filters akin to Lee et al, 2019.
         False uses (64, 128, 256, 512) filters, akin to Oreshkin et al, 2018.
-    * **drop_rate** (float, *optional*, default=0.1) - Dropout rate for the residual layers.
+    * **embedding_dropout** (float, *optional*, default=0.0) - Dropout rate on the flattened embedding layer.
+    * **dropblock_dropout** (float, *optional*, default=0.1) - Dropout rate for the residual layers.
     * **dropblock_size** (int, *optional*, default=5) - Size of drop blocks.
 
     **Example**
@@ -321,19 +320,19 @@ class ResNet12(nn.Module):
         self,
         output_size,
         hidden_size=640,  # mini-ImageNet images, used for the classifier
-        keep_prob=1.0,  # dropout for embedding
         avg_pool=True,  # Set to False for 16000-dim embeddings
         wider=True,  # True mimics MetaOptNet, False mimics TADAM
-        drop_rate=0.1,  # dropout for residual layers
+        embedding_dropout=0.0,  # dropout for embedding
+        dropblock_dropout=0.1,  # dropout for residual layers
         dropblock_size=5,
         channels=3,
     ):
         super(ResNet12, self).__init__()
         self.features = ResNet12Backbone(
-            keep_prob=keep_prob,
             avg_pool=avg_pool,
             wider=wider,
-            drop_rate=drop_rate,
+            embedding_dropout=embedding_dropout,
+            dropblock_dropout=dropblock_dropout,
             dropblock_size=dropblock_size,
             channels=channels,
         )
@@ -346,10 +345,9 @@ class ResNet12(nn.Module):
 
 
 if __name__ == '__main__':
-    model = ResNet12(output_size=5, avg_pool=False, drop_rate=0.0)
+    model = ResNet12(output_size=5, avg_pool=False, dropblock_dropout=0.0)
     img = torch.randn(5, 3, 84, 84)
     model = model.to('cuda')
     img = img.to('cuda')
     out = model.features(img)
     print(out.shape)
-    __import__('pdb').set_trace()
