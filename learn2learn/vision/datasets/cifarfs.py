@@ -8,7 +8,10 @@ import torch
 import torch.utils.data as data
 
 from torchvision.datasets import ImageFolder
-from learn2learn.data.utils import download_file_from_google_drive
+from learn2learn.data.utils import (
+    download_file_from_google_drive,
+    download_file,
+)
 
 
 class CIFARFS(ImageFolder):
@@ -84,11 +87,20 @@ class CIFARFS(ImageFolder):
         if not os.path.exists(self.root):
             os.mkdir(self.root)
         zip_file = os.path.join(self.root, 'cifarfs.zip')
-        download_file_from_google_drive('1pTsCCMDj45kzFYgrnO67BWVbKs48Q3NI',
-                                        zip_file)
-        with zipfile.ZipFile(zip_file, 'r') as zfile:
-            zfile.extractall(self.raw_path)
-        os.remove(zip_file)
+        try:
+            download_file(
+                source='https://zenodo.org/record/7978538/files/cifar100.zip',
+                destination=zip_file,
+            )
+            with zipfile.ZipFile(zip_file, 'r') as zfile:
+                zfile.extractall(self.raw_path)
+            os.remove(zip_file)
+        except:
+            download_file_from_google_drive('1pTsCCMDj45kzFYgrnO67BWVbKs48Q3NI',
+                                            zip_file)
+            with zipfile.ZipFile(zip_file, 'r') as zfile:
+                zfile.extractall(self.raw_path)
+            os.remove(zip_file)
 
     def _process_zip(self):
         print('Creating CIFARFS splits')
