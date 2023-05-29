@@ -93,7 +93,7 @@ class FC100(data.Dataset):
             archive_file = zipfile.ZipFile(archive_path)
             archive_file.extractall(self.root)
             os.remove(archive_path)
-        except:
+        except Exception:
             try:  # Download from Google Drive first
                 download_file_from_google_drive(FC100.GOOGLE_DRIVE_FILE_ID,
                                                 archive_path)
