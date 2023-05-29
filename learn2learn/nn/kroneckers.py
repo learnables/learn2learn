@@ -12,7 +12,7 @@ def kronecker_addmm(mat1, mat2, mat3, bias=None, alpha=1.0, beta=1.0):
     res = mat1 @ mat3 @ mat2
     res.mul_(alpha)
     if bias is not None:
-        res.add_(beta, bias)
+        res.add_(alpha=beta, other=bias)
     return res
 
 
@@ -169,12 +169,13 @@ class KroneckerLSTM(nn.Module):
 
     **Example**
     ~~~python
-    m, n = 2, 3
-    x = torch.randn(6)
-    h = torch.randn(6)
+    n, m = 2, 3
+    x = torch.randn(n, m)
+    h = torch.randn(n, m)
+    c = torch.zeros(n, m)
     kronecker = KroneckerLSTM(n, m)
-    y, new_h = kronecker(x, h)
-    y.shape  # (6, )
+    y, new_h = kronecker(x, (h, c))
+    y.shape  # (2, 3)
     ~~~
     """
 
