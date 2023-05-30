@@ -21,7 +21,7 @@
         - __init__
         - __getitem__
 
-::: learn2learn.data.TaskDataset
+::: learn2learn.data.Taskset
     selection:
       members:
         - __init__

@@ -11,7 +11,7 @@ In this tutorial, we will explore in depth one of the core utilities [learn2lear
 *   We will first discuss the motivation behind generating tasks. *(Those familiar with meta-learning can skip this section.)*
 *   Next, we will have a high-level overview of the overall pipeline used for generating tasks using `learn2learn`.
 *   `MetaDataset` is used fast indexing, and accelerates the process of generating few-shot learning tasks. `UnionMetaDataset` and `FilteredMetaDataset` are extensions of `MetaDataset` that can further provide customised utility. `UnionMetaDataset` builds up on `MetaDataset` to construct a union of multiple input datasets, and `FilteredMetaDataset` takes in a `MetaDataset` and filters it to include only the required labels.
-*   `TaskDataset` is the core module that generates tasks from input dataset. Tasks are lazily sampled upon indexing or calling `.sample()` method.
+*   `Taskset` is the core module that generates tasks from input dataset. Tasks are lazily sampled upon indexing or calling `.sample()` method.
 *   Lastly, we study different `task transforms` defined in `learn2learn` that modifies the input data such that a customised `task` is generated. 
 
 ## Motivation for generating tasks
@@ -109,7 +109,7 @@ transforms = [
                     ]
 
 # 5. Generate set of tasks using the dataset, and transforms
-taskset = l2l.data.TaskDataset(dataset=omniglot, task_transforms=transforms, num_tasks=10) # Creates sets of tasks from the dataset 
+taskset = l2l.data.Taskset(dataset=omniglot, task_transforms=transforms, num_tasks=10) # Creates sets of tasks from the dataset 
 
 # Now sample a task from the taskset
 X, y = taskset.sample()
@@ -270,7 +270,7 @@ print('Original Labels:', len(toy_omniglot.labels))
 print('Filtered Labels:', len(filtered.labels))
 ~~~
 
-## TaskDataset - Core module
+## Taskset - Core module
 
 #### Introduction
 
@@ -278,7 +278,7 @@ This is one of the core module of `learn2learn` that is used to generate a task 
 
 > If there are no task transforms, then the task consists of all the samples in the entire dataset.
 
-Another argument that `TaskDataset` takes as input is `num_tasks` *(an integer value)*. The value is set depending on how many tasks the user wants to generate. By default, it is kept as `-1`, meaning infinite number of tasks will be generated, and a new task is generated on sampling. In the former case, the descriptions of the task will be cached in a dictionary such that if a given task is called again, the description can be loaded instantly rather than generating it once again.
+Another argument that `Taskset` takes as input is `num_tasks` *(an integer value)*. The value is set depending on how many tasks the user wants to generate. By default, it is kept as `-1`, meaning infinite number of tasks will be generated, and a new task is generated on sampling. In the former case, the descriptions of the task will be cached in a dictionary such that if a given task is called again, the description can be loaded instantly rather than generating it once again.
 
 #### What is a task description?
 
@@ -627,7 +627,7 @@ toy_transforms = [
                 ConsecutiveLabels(omniglot), # Re-orders samples s.t. they are sorted in consecutive order 
                 RandomClassRotation(omniglot, [0, 90, 180, 270]) # Randomly rotate sample over x degrees (only for vision tasks)
                 ]
-toy_taskset = l2l.data.TaskDataset(omniglot, toy_transforms, num_tasks=20000)
+toy_taskset = l2l.data.Taskset(omniglot, toy_transforms, num_tasks=20000)
 try:
     print(len(toy_taskset.sample())) # Expected error as RemapLabels is used before LoadData
 except TypeError:
@@ -639,9 +639,9 @@ except TypeError:
 Traceback (most recent call last):
   File "<ipython-input-27-4c0558e6745b>", line 13, in <module>
     print(len(toy_taskset.sample())) # Expected error as RemapLabels is used before LoadData
-  File "learn2learn/data/task_dataset.pyx", line 158, in learn2learn.data.task_dataset.CythonTaskDataset.sample
-  File "learn2learn/data/task_dataset.pyx", line 173, in learn2learn.data.task_dataset.CythonTaskDataset.__getitem__
-  File "learn2learn/data/task_dataset.pyx", line 142, in learn2learn.data.task_dataset.CythonTaskDataset.get_task
+  File "learn2learn/data/task_dataset.pyx", line 158, in learn2learn.data.task_dataset.CythonTaskset.sample
+  File "learn2learn/data/task_dataset.pyx", line 173, in learn2learn.data.task_dataset.CythonTaskset.__getitem__
+  File "learn2learn/data/task_dataset.pyx", line 142, in learn2learn.data.task_dataset.CythonTaskset.get_task
   File "learn2learn/data/transforms.pyx", line 201, in learn2learn.data.transforms.RemapLabels.remap
 TypeError: 'int' object is not iterable
 ~~~
