@@ -30,6 +30,13 @@ class AircraftTests(unittest.TestCase):
         path = os.path.join(root, 'fgvc_aircraft')
         self.assertTrue(os.path.exists(path))
 
+        full_aircrafts = l2l.vision.datasets.FGVCAircraft(root=root, mode='all')
+
+        label_set = set()
+        for item in full_aircrafts:
+            label_set.add(item[1])
+        self.assertTrue(len(label_set) == 100)
+
 
 if __name__ == '__main__':
     unittest.main()

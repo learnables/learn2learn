@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Loading duplicate FGVC Aircraft images.
 * Move vision datasets to Zenodo. (mini-ImageNet, tiered-ImageNet, FC100, CIFAR-FS)
 * mini-ImageNet targets are now ints (not np.float64).
+* Swap family for variants in FGVCAircraft, as in MetaDataset.
 
 ## v0.1.7
 
