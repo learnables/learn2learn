@@ -115,7 +115,8 @@ class FGVCAircraft(Dataset):
         self.transform = transform
         self.target_transform = target_transform
         self.bounding_box_crop = bounding_box_crop
-        self._bookkeeping_path = os.path.join(self.root, 'fgvc-aircraft-' + mode + '-bookkeeping.pkl')
+        self._bookkeeping_path = os.path.join(
+            self.root, 'fgvc-aircraft-' + mode + '-bookkeeping.pkl')
 
         if not self._check_exists() and download:
             self.download()
@@ -147,24 +148,30 @@ class FGVCAircraft(Dataset):
                     if chunk:
                         archive.write(chunk)
         with tarfile.open(tar_path) as tar_file:
-
             def is_within_directory(directory, target):
+
                 abs_directory = os.path.abspath(directory)
                 abs_target = os.path.abspath(target)
+
                 prefix = os.path.commonprefix([abs_directory, abs_target])
+
                 return prefix == abs_directory
 
             def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+
                 for member in tar.getmembers():
                     member_path = os.path.join(path, member.name)
                     if not is_within_directory(path, member_path):
                         raise Exception("Attempted Path Traversal in Tar File")
+
                 tar.extractall(path, members, numeric_owner=numeric_owner)
 
             safe_extract(tar_file, data_path)
-        family_names = ['images_family_train.txt',
-                        'images_family_val.txt',
-                        'images_family_test.txt']
+        family_names = [
+            'images_variant_train.txt',
+            'images_variant_val.txt',
+            'images_variant_test.txt',
+        ]
         images_labels = []
         for family in family_names:
             with open(os.path.join(data_path, DATA_DIR, family), 'r') as family_file:
@@ -205,7 +212,8 @@ class FGVCAircraft(Dataset):
         # read images from disk
         for image, label in image_labels:
             if label in split:
-                image_path = os.path.join(data_path, IMAGES_DIR, image + '.jpg')
+                image_path = os.path.join(
+                    data_path, IMAGES_DIR, image + '.jpg')
                 if self.bounding_box_crop:
                     self.bounding_boxes[image_path] = bbox_content[image]
                 label = split.index(label)
@@ -229,7 +237,8 @@ class FGVCAircraft(Dataset):
 
 
 if __name__ == '__main__':
-    assert len(SPLITS['all']) == len(SPLITS['train']) + len(SPLITS['valid']) + len(SPLITS['test'])
+    assert len(SPLITS['all']) == len(SPLITS['train']) + \
+        len(SPLITS['valid']) + len(SPLITS['test'])
     aircraft = FGVCAircraft('~/data', download=True, bounding_box_crop=True)
     img = aircraft[0]
     print(len(aircraft))
@@ -242,3 +251,18 @@ if __name__ == '__main__':
     for img, label in tqdm.tqdm(data):
         min_size = min(min_size, *np.array(img).shape[:2])
     print('min_size:', min_size)
+
+    data = FGVCAircraft(
+        root="test_data/",
+        mode="all",
+        download=True,
+        bounding_box_crop=False,
+    )
+
+    label_set = set()
+
+    with tqdm.tqdm(total=len(data)) as pbar:
+        for item in data:
+            label_set.add(item[1])
+            pbar.update(1)
+            pbar.set_description(f"Found {len(label_set)} labels")
