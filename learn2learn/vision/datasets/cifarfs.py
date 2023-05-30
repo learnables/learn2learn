@@ -95,7 +95,7 @@ class CIFARFS(ImageFolder):
             with zipfile.ZipFile(zip_file, 'r') as zfile:
                 zfile.extractall(self.raw_path)
             os.remove(zip_file)
-        except:
+        except Exception:
             download_file_from_google_drive('1pTsCCMDj45kzFYgrnO67BWVbKs48Q3NI',
                                             zip_file)
             with zipfile.ZipFile(zip_file, 'r') as zfile:
