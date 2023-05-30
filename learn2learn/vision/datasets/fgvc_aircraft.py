@@ -261,7 +261,7 @@ if __name__ == '__main__':
 
     label_set = set()
 
-    with tqdm(total=len(data)) as pbar:
+    with tqdm.tqdm(total=len(data)) as pbar:
         for item in data:
             label_set.add(item[1])
             pbar.update(1)
