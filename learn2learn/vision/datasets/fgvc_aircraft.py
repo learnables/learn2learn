@@ -254,7 +254,7 @@ if __name__ == '__main__':
 
     data = FGVCAircraft(
         root="test_data/",
-        mode="train",
+        mode="all",
         download=True,
         bounding_box_crop=False,
     )
