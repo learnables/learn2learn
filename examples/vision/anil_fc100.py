@@ -96,9 +96,11 @@ def main(
         RemapLabels(train_dataset),
         ConsecutiveLabels(train_dataset),
     ]
-    train_tasks = l2l.data.TaskDataset(train_dataset,
-                                       task_transforms=train_transforms,
-                                       num_tasks=20000)
+    train_tasks = l2l.data.Taskset(
+        train_dataset,
+        task_transforms=train_transforms,
+        num_tasks=20000,
+    )
 
     valid_transforms = [
         FusedNWaysKShots(valid_dataset, n=ways, k=2*shots),
@@ -106,9 +108,11 @@ def main(
         ConsecutiveLabels(valid_dataset),
         RemapLabels(valid_dataset),
     ]
-    valid_tasks = l2l.data.TaskDataset(valid_dataset,
-                                       task_transforms=valid_transforms,
-                                       num_tasks=600)
+    valid_tasks = l2l.data.Taskset(
+        valid_dataset,
+        task_transforms=valid_transforms,
+        num_tasks=600,
+    )
 
     test_transforms = [
         FusedNWaysKShots(test_dataset, n=ways, k=2*shots),
@@ -116,9 +120,11 @@ def main(
         RemapLabels(test_dataset),
         ConsecutiveLabels(test_dataset),
     ]
-    test_tasks = l2l.data.TaskDataset(test_dataset,
-                                      task_transforms=test_transforms,
-                                      num_tasks=600)
+    test_tasks = l2l.data.Taskset(
+        test_dataset,
+        task_transforms=test_transforms,
+        num_tasks=600,
+    )
 
 
     # Create model

@@ -15,11 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Add `l2l.nn.MetaModule` and `l2l.nn.ParameterTransform` for parameter-efficient finetuning.
 * Add `l2l.nn.freeze`and `l2l.nn.unfreeze`.
 * Add Adapters and LoRA examples.
+* Add TasksetSampler, compatible with PyTorch's Dataloaders.
 
 ### Changed
 
 * Documentation: uses `mkdocstrings` instead of `pydoc-markdown`.
 * Remove `text/news_topic_classification.py` example.
+* Rename TaskDataset to Taskset.
 
 ### Fixed
 

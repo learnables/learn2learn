@@ -47,7 +47,7 @@ cdef class DataDescription:
         self.transforms = []
 
 
-class TaskDataset(CythonTaskDataset):
+class Taskset(CythonTaskDataset):
 
     """
     [[Source]](https://github.com/learnables/learn2learn/blob/master/learn2learn/data/task_dataset.py)
@@ -89,11 +89,21 @@ class TaskDataset(CythonTaskDataset):
     """
 
     def __init__(self, dataset, task_transforms=None, num_tasks=-1, task_collate=None):
-        super(TaskDataset, self).__init__(
+        super(Taskset, self).__init__(
             dataset=dataset,
             task_transforms=task_transforms,
             num_tasks=num_tasks,
             task_collate=task_collate,
+        )
+
+
+class TaskDataset(Taskset):
+
+    def __init__(self, *args, **kwargs):
+        super(TaskDataset, self).__init__(*args, **kwargs)
+        l2l.utils.warn_once(
+            message='TaskDataset is deprecated, use Taskset instead.',
+            severity='deprecation',
         )
 
 
