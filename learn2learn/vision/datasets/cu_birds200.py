@@ -436,7 +436,7 @@ class CUBirds200(torch.utils.data.Dataset):
 if __name__ == '__main__':
     import torchvision as tv
     cub = CUBirds200(
-        root='./zenodo_data',
+        root='~/data',
         mode='train',
         download=True,
         include_imagenet_duplicates=False,
