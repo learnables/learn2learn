@@ -85,9 +85,11 @@ def main(
         l2l.data.transforms.ConsecutiveLabels(dataset),
         l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
     ]
-    train_tasks = l2l.data.TaskDataset(dataset,
-                                       task_transforms=train_transforms,
-                                       num_tasks=20000)
+    train_tasks = l2l.data.Taskset(
+        dataset,
+        task_transforms=train_transforms,
+        num_tasks=20000,
+    )
 
     valid_transforms = [
         l2l.data.transforms.FusedNWaysKShots(dataset,
@@ -99,9 +101,11 @@ def main(
         l2l.data.transforms.ConsecutiveLabels(dataset),
         l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
     ]
-    valid_tasks = l2l.data.TaskDataset(dataset,
-                                       task_transforms=valid_transforms,
-                                       num_tasks=1024)
+    valid_tasks = l2l.data.Taskset(
+        dataset,
+        task_transforms=valid_transforms,
+        num_tasks=1024,
+    )
 
     test_transforms = [
         l2l.data.transforms.FusedNWaysKShots(dataset,
@@ -113,9 +117,11 @@ def main(
         l2l.data.transforms.ConsecutiveLabels(dataset),
         l2l.vision.transforms.RandomClassRotation(dataset, [0.0, 90.0, 180.0, 270.0])
     ]
-    test_tasks = l2l.data.TaskDataset(dataset,
-                                      task_transforms=test_transforms,
-                                      num_tasks=1024)
+    test_tasks = l2l.data.Taskset(
+        dataset,
+        task_transforms=test_transforms,
+        num_tasks=1024,
+    )
 
     # Create model
     model = l2l.vision.models.OmniglotFC(28 ** 2, ways)

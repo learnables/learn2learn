@@ -11,6 +11,7 @@ from collections import defaultdict
 import numpy as np
 import torch
 from torch.utils.data import Dataset
+import learn2learn as l2l
 
 
 class MetaDataset(Dataset):

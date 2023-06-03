@@ -406,7 +406,7 @@ class Quickdraw(Dataset):
     ~~~python
     train_dataset = l2l.vision.datasets.Quickdraw(root='./data', mode='train')
     train_dataset = l2l.data.MetaDataset(train_dataset)
-    train_generator = l2l.data.TaskDataset(dataset=train_dataset, num_tasks=1000)
+    train_generator = l2l.data.Taskset(dataset=train_dataset, num_tasks=1000)
     ~~~
 
     """

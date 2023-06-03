@@ -4,6 +4,7 @@ import copy
 import torch
 import argparse
 import dataclasses
+import warnings
 
 
 def magic_box(x):
@@ -373,3 +374,27 @@ class _ImportRaiser(object):
 
     def __call__(self, *args, **kwargs):
         self.raise_import()
+
+
+class _SingleWarning(object):
+
+    def __init__(self):
+        self.warned_messages = []
+        self.warning_categories = {
+            'default': UserWarning,
+            'deprecation': DeprecationWarning,
+        }
+
+    def __call__(self, message, severity=None):
+        if message not in self.warned_messages:
+            if severity is None:
+                severity = 'default'
+            if severity == 'error':
+                raise RuntimeError(message)
+            elif isinstance(severity, str):
+                severity = self.warning_categories[severity]
+            warnings.warn(message, category=severity)
+            self.warned_messages.append(message)
+
+
+warn_once = _SingleWarning()

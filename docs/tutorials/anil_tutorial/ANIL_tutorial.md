@@ -93,12 +93,12 @@ train_transforms = [
     RemapLabels(train_dataset),
     ConsecutiveLabels(train_dataset),
 ]
-train_tasks = l2l.data.TaskDataset(train_dataset,
+train_tasks = l2l.data.Taskset(train_dataset,
                                    task_transforms=train_transforms,
                                    num_tasks=20000)
 ~~~
 
-`l2l.data.TaskDataset` creates a set of tasks from the MetaDataset using a list of task transformations:
+`l2l.data.Taskset` creates a set of tasks from the MetaDataset using a list of task transformations:
 
 * `FusedNWaysKShots(dataset, n=ways, k=2*shots)`: efficient implementation to keep \(k\) data samples from \(n\) randomly sampled labels.
 

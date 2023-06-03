@@ -53,15 +53,17 @@ def main(lr=0.005, maml_lr=0.01, iterations=1000, ways=5, shots=1, tps=32, fas=5
                                              download=True,
                                              transform=transformations))
 
-    train_tasks = l2l.data.TaskDataset(mnist_train,
-                                       task_transforms=[
-                                            l2l.data.transforms.NWays(mnist_train, ways),
-                                            l2l.data.transforms.KShots(mnist_train, 2*shots),
-                                            l2l.data.transforms.LoadData(mnist_train),
-                                            l2l.data.transforms.RemapLabels(mnist_train),
-                                            l2l.data.transforms.ConsecutiveLabels(mnist_train),
-                                       ],
-                                       num_tasks=1000)
+    train_tasks = l2l.data.Taskset(
+        mnist_train,
+        task_transforms=[
+            l2l.data.transforms.NWays(mnist_train, ways),
+            l2l.data.transforms.KShots(mnist_train, 2*shots),
+            l2l.data.transforms.LoadData(mnist_train),
+            l2l.data.transforms.RemapLabels(mnist_train),
+            l2l.data.transforms.ConsecutiveLabels(mnist_train),
+        ],
+        num_tasks=1000,
+    )
 
     model = Net(ways)
     model.to(device)

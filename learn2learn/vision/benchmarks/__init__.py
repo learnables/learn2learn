@@ -2,10 +2,10 @@
 
 """
 The benchmark modules provides a convenient interface to standardized benchmarks in the literature.
-It provides train/validation/test TaskDatasets and TaskTransforms for pre-defined datasets.
+It provides train/validation/test Tasksets and TaskTransforms for pre-defined datasets.
 
 This utility is useful for researchers to compare new algorithms against existing benchmarks.
-For a more fine-grained control over tasks and data, we recommend directly using `l2l.data.TaskDataset` and `l2l.data.TaskTransforms`.
+For a more fine-grained control over tasks and data, we recommend directly using `l2l.data.Taskset` and `l2l.data.TaskTransforms`.
 """
 
 import os
@@ -70,7 +70,7 @@ def get_tasksets(
     Returns the tasksets for a particular benchmark, using literature standard data and task transformations.
 
     The returned object is a namedtuple with attributes `train`, `validation`, `test` which
-    correspond to their respective TaskDatasets.
+    correspond to their respective Tasksets.
     See `examples/vision/maml_miniimagenet.py` for an example.
 
     **Arguments**
@@ -80,7 +80,7 @@ def get_tasksets(
     * **train_samples** (int, *optional*, default=10) - The number of samples per train tasks.
     * **test_ways** (int, *optional*, default=5) - The number of classes per test tasks. Also used for validation tasks.
     * **test_samples** (int, *optional*, default=10) - The number of samples per test tasks. Also used for validation tasks.
-    * **num_tasks** (int, *optional*, default=-1) - The number of tasks in each TaskDataset.
+    * **num_tasks** (int, *optional*, default=-1) - The number of tasks in each Taskset.
     * **device** (torch.Device, *optional*, default=None) - If not None, tasksets are loaded as Tensors on `device`.
     * **root** (str, *optional*, default='~/data') - Where the data is stored.
 
@@ -109,17 +109,17 @@ def get_tasksets(
     train_transforms, validation_transforms, test_transforms = transforms
 
     # Instantiate the tasksets
-    train_tasks = l2l.data.TaskDataset(
+    train_tasks = l2l.data.Taskset(
         dataset=train_dataset,
         task_transforms=train_transforms,
         num_tasks=num_tasks,
     )
-    validation_tasks = l2l.data.TaskDataset(
+    validation_tasks = l2l.data.Taskset(
         dataset=validation_dataset,
         task_transforms=validation_transforms,
         num_tasks=num_tasks,
     )
-    test_tasks = l2l.data.TaskDataset(
+    test_tasks = l2l.data.Taskset(
         dataset=test_dataset,
         task_transforms=test_transforms,
         num_tasks=num_tasks,
