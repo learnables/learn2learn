@@ -337,10 +337,10 @@ def flatten_config(args, prefix=None):
         return flat_args
     elif dataclasses.is_dataclass(args):
         keys = dataclasses.fields(args)
-        def getvalue(x): getattr(args, x.name)
+        def getvalue(x): return getattr(args, x.name)
     elif isinstance(args, dict):
         keys = args.keys()
-        def getvalue(x): args[x]
+        def getvalue(x): return args[x]
     else:
         raise 'Unknown args'
     for key in keys:
