@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 
+## v0.2.1
+
+### Changed
+
+* Make qpth dependency optional.
+
 ## v0.2.0
 
 ### Added
