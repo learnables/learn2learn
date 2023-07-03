@@ -30,7 +30,7 @@ class MetaEnv(Env):
     """
 
     def __init__(self, task=None):
-        super(MetaEnv, self).__init__()
+        Env.__init__(self)
         if task is None:
             task = self.sample_tasks(1)[0]
         self.set_task(task)
