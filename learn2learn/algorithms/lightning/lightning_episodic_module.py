@@ -5,6 +5,7 @@
 
 try:
     from pytorch_lightning import LightningModule
+    from pytorch_lightning.trainer.states import TrainerFn
 except ImportError:
     from learn2learn.utils import _ImportRaiser
 

@@ -4,7 +4,7 @@
 """
 import numpy as np
 import torch
-
+from typing import Any
 from torch import nn
 from learn2learn.utils import accuracy
 from learn2learn.nn import PrototypicalClassifier
@@ -139,3 +139,7 @@ class LightningPrototypicalNetworks(LightningEpisodicModule):
         eval_loss = self.loss(logits, query_labels)
         eval_accuracy = accuracy(logits, query_labels)
         return eval_loss, eval_accuracy
+
+    def predict_step(self, batch: Any, batch_idx: int, dataloader_idx: int = 0):
+        embeddings = self.features(batch)
+        return self.classifier(embeddings)
