@@ -1,16 +1,50 @@
 #!/usr/bin/env python3
 
+import os
+import tarfile
+import zipfile
+
 import torch
 import requests
 import tqdm
 
 CHUNK_SIZE = 1 * 1024 * 1024
+DOWNLOAD_TIMEOUT = 60
+
+
+def _is_within_directory(directory, target):
+    abs_directory = os.path.abspath(directory)
+    abs_target = os.path.abspath(target)
+    prefix = os.path.commonprefix([abs_directory, abs_target])
+    return prefix == abs_directory
+
+
+def safe_extract(archive, destination='.'):
+    """
+    Extracts an open TarFile or ZipFile while guarding against path traversal
+    (a.k.a. Zip-Slip), where a malicious archive writes files outside of
+    `destination` via entries such as `../../etc/passwd`.
+    """
+    if isinstance(archive, tarfile.TarFile):
+        names = [member.name for member in archive.getmembers()]
+    elif isinstance(archive, zipfile.ZipFile):
+        names = archive.namelist()
+    else:
+        raise TypeError(
+            'safe_extract expects a TarFile or ZipFile, got '
+            + type(archive).__name__
+        )
+    for name in names:
+        member_path = os.path.join(destination, name)
+        if not _is_within_directory(destination, member_path):
+            raise Exception('Attempted path traversal in archive: ' + name)
+    archive.extractall(destination)
 
 
 def download_file(source, destination, size=None):
     if size is None:
         size = 0
-    req = requests.get(source, stream=True)
+    req = requests.get(source, stream=True, timeout=DOWNLOAD_TIMEOUT)
     with open(destination, 'wb') as archive:
         for chunk in tqdm.tqdm(
             req.iter_content(chunk_size=CHUNK_SIZE),
@@ -24,11 +58,15 @@ def download_file(source, destination, size=None):
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
     session = requests.Session()
-    response = session.get(URL, params={'id': id}, stream=True)
+    response = session.get(
+        URL, params={'id': id}, stream=True, timeout=DOWNLOAD_TIMEOUT,
+    )
     token = get_confirm_token(response)
     if token:
         params = {'id': id, 'confirm': token}
-        response = session.get(URL, params=params, stream=True)
+        response = session.get(
+            URL, params=params, stream=True, timeout=DOWNLOAD_TIMEOUT,
+        )
     save_response_content(response, destination)
 
 

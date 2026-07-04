@@ -10,9 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* `l2l.data.utils.safe_extract` helper that guards archive extraction against path traversal (Zip-Slip). (@[Garthigan](https://github.com/Garthigan))
+
 ### Changed
 
+* Remove unused `distutils` import from `setup.py` so installation works on Python 3.12+ (distutils was removed from the stdlib in PEP 632). (@[Garthigan](https://github.com/Garthigan))
+* Add request timeouts to all dataset/file downloads. (@[Garthigan](https://github.com/Garthigan))
+
 ### Fixed
+
+* Guard all dataset archive extraction against path traversal (Zip-Slip) by routing `tarfile`/`zipfile` extraction through `safe_extract`. (@[Garthigan](https://github.com/Garthigan))
+* Load downloaded pretrained backbones with `torch.load(..., weights_only=True)` to avoid arbitrary code execution from tampered checkpoints. (@[Garthigan](https://github.com/Garthigan))
+* Close `zipfile.ZipFile` handles in `FC100` (and `tiered-ImageNet` tar handle) via context managers to avoid file-descriptor leaks. (@[Garthigan](https://github.com/Garthigan))
 
 
 ## v0.2.1

@@ -13,6 +13,8 @@ except ImportError:
 
 from torch.utils.data import Dataset
 
+from learn2learn.data.utils import safe_extract
+
 
 class NewsClassification(Dataset):
     """
@@ -56,9 +58,9 @@ class NewsClassification(Dataset):
             if train:
                 download_file_url = 'https://www.dropbox.com/s/o71z7fq7mydbznc/train_sample.csv.zip?dl=1'
 
-            r = requests.get(download_file_url)
-            z = zipfile.ZipFile(io.BytesIO(r.content))
-            z.extractall(path=root)
+            r = requests.get(download_file_url, timeout=60)
+            with zipfile.ZipFile(io.BytesIO(r.content)) as z:
+                safe_extract(z, root)
 
         if root:
 

@@ -8,6 +8,7 @@ from PIL import Image
 from learn2learn.data.utils import (
     download_file_from_google_drive,
     download_file,
+    safe_extract,
 )
 
 DATA_DIR = 'cubirds200'
@@ -360,13 +361,13 @@ class CUBirds200(torch.utils.data.Dataset):
         try:
             download_file(ZENODO_URL, tar_path)
             tar_file = tarfile.open(tar_path)
-            tar_file.extractall(data_path)
+            safe_extract(tar_file, data_path)
             tar_file.close()
             os.remove(tar_path)
         except Exception:
             download_file_from_google_drive(ARCHIVE_ID, tar_path)
             tar_file = tarfile.open(tar_path)
-            tar_file.extractall(data_path)
+            safe_extract(tar_file, data_path)
             tar_file.close()
             os.remove(tar_path)
 

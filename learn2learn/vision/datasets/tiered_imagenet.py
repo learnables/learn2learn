@@ -14,6 +14,7 @@ from PIL import Image
 from learn2learn.data.utils import (
     download_file_from_google_drive,
     download_file,
+    safe_extract,
 )
 
 
@@ -108,8 +109,8 @@ class TieredImagenet(data.Dataset):
         except Exception:
             archive_path = os.path.join(destination, 'tiered_imagenet.tar')
             download_file_from_google_drive(file_id, archive_path)
-            archive_file = tarfile.open(archive_path)
-            archive_file.extractall(destination)
+            with tarfile.open(archive_path) as archive_file:
+                safe_extract(archive_file, destination)
             os.remove(archive_path)
 
     def __getitem__(self, idx):

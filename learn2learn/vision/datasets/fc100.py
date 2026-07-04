@@ -11,6 +11,7 @@ from PIL import Image
 from learn2learn.data.utils import (
     download_file_from_google_drive,
     download_file,
+    safe_extract,
 )
 
 
@@ -90,20 +91,20 @@ class FC100(data.Dataset):
         print('Downloading FC100. (160Mb)')
         try:
             download_file(FC100.ZENODO_LINK, archive_path)
-            archive_file = zipfile.ZipFile(archive_path)
-            archive_file.extractall(self.root)
+            with zipfile.ZipFile(archive_path) as archive_file:
+                safe_extract(archive_file, self.root)
             os.remove(archive_path)
         except Exception:
             try:  # Download from Google Drive first
                 download_file_from_google_drive(FC100.GOOGLE_DRIVE_FILE_ID,
                                                 archive_path)
-                archive_file = zipfile.ZipFile(archive_path)
-                archive_file.extractall(self.root)
+                with zipfile.ZipFile(archive_path) as archive_file:
+                    safe_extract(archive_file, self.root)
                 os.remove(archive_path)
             except zipfile.BadZipFile:
                 download_file(FC100.DROPBOX_LINK, archive_path)
-                archive_file = zipfile.ZipFile(archive_path)
-                archive_file.extractall(self.root)
+                with zipfile.ZipFile(archive_path) as archive_file:
+                    safe_extract(archive_file, self.root)
                 os.remove(archive_path)
 
     def __getitem__(self, idx):

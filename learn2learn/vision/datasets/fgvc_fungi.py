@@ -11,7 +11,7 @@ from collections import defaultdict
 from PIL import Image
 from torch.utils.data import Dataset
 
-from learn2learn.data.utils import download_file
+from learn2learn.data.utils import download_file, safe_extract
 
 DATA_DIR = 'fgvc_fungi'
 DATA_URL = 'https://labs.gbif.org/fgvcx/2018/fungi_train_val.tgz'
@@ -1494,13 +1494,13 @@ class FGVCFungi(Dataset):
 
         # Extract data
         tar_file = tarfile.open(data_tar_path)
-        tar_file.extractall(data_path)
+        safe_extract(tar_file, data_path)
         tar_file.close()
         os.remove(data_tar_path)
 
         # Extract annotations
         tar_file = tarfile.open(annotations_tar_path)
-        tar_file.extractall(data_path)
+        safe_extract(tar_file, data_path)
         tar_file.close()
         os.remove(annotations_tar_path)
 

@@ -6,7 +6,7 @@ import tarfile
 from PIL import Image
 from torch.utils.data import Dataset
 
-from learn2learn.data.utils import download_file
+from learn2learn.data.utils import download_file, safe_extract
 from torchvision.datasets.folder import default_loader
 
 DATA_DIR = 'describable_textures'
@@ -144,7 +144,7 @@ class DescribableTextures(Dataset):
         print('Downloading Describable Textures dataset (600Mb)')
         download_file(ARCHIVE_URL, tar_path)
         tar_file = tarfile.open(tar_path)
-        tar_file.extractall(data_path)
+        safe_extract(tar_file, data_path)
         tar_file.close()
         os.remove(tar_path)
 

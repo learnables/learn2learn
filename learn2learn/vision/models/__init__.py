@@ -131,6 +131,6 @@ def get_pretrained_backbone(model, dataset, spec='default', root='~/data', downl
     elif model == 'wrn28':
         pretrained = WRN28Backbone()
 
-    weights = torch.load(destination, map_location='cpu')
+    weights = torch.load(destination, map_location='cpu', weights_only=True)
     pretrained.load_state_dict(weights)
     return pretrained

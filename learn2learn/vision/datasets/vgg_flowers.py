@@ -8,11 +8,11 @@ import scipy.io
 from PIL import Image
 from torch.utils.data import Dataset
 
-from learn2learn.data.utils import download_file
+from learn2learn.data.utils import download_file, safe_extract
 
 DATA_DIR = 'vgg_flower102'
-IMAGES_URL = 'http://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz'
-LABELS_URL = 'http://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat'
+IMAGES_URL = 'https://www.robots.ox.ac.uk/~vgg/data/flowers/102/102flowers.tgz'
+LABELS_URL = 'https://www.robots.ox.ac.uk/~vgg/data/flowers/102/imagelabels.mat'
 IMAGES_DIR = 'jpg'
 LABELS_PATH = 'imagelabels.mat'
 
@@ -92,12 +92,12 @@ class VGGFlower102(Dataset):
         print('Downloading VGG Flower102 dataset (330Mb)')
         download_file(IMAGES_URL, tar_path)
         tar_file = tarfile.open(tar_path)
-        tar_file.extractall(data_path)
+        safe_extract(tar_file, data_path)
         tar_file.close()
         os.remove(tar_path)
 
         label_path = os.path.join(data_path, os.path.basename(LABELS_URL))
-        req = requests.get(LABELS_URL)
+        req = requests.get(LABELS_URL, timeout=60)
         with open(label_path, 'wb') as label_file:
             label_file.write(req.content)
 

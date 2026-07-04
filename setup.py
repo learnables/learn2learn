@@ -3,7 +3,6 @@
 import sys
 import re
 
-from distutils.core import setup
 from setuptools import (
     setup as install,
     find_packages,

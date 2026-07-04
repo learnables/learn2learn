@@ -11,6 +11,7 @@ from torchvision.datasets import ImageFolder
 from learn2learn.data.utils import (
     download_file_from_google_drive,
     download_file,
+    safe_extract,
 )
 
 
@@ -93,13 +94,13 @@ class CIFARFS(ImageFolder):
                 destination=zip_file,
             )
             with zipfile.ZipFile(zip_file, 'r') as zfile:
-                zfile.extractall(self.raw_path)
+                safe_extract(zfile, self.raw_path)
             os.remove(zip_file)
         except Exception:
             download_file_from_google_drive('1pTsCCMDj45kzFYgrnO67BWVbKs48Q3NI',
                                             zip_file)
             with zipfile.ZipFile(zip_file, 'r') as zfile:
-                zfile.extractall(self.raw_path)
+                safe_extract(zfile, self.raw_path)
             os.remove(zip_file)
 
     def _process_zip(self):
